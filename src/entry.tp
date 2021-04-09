@@ -1,0 +1,171 @@
+{
+  "sdk": 1,
+  "version": 1,
+  "name": "TP_ETS2_Plugin",
+  "id": "TP_ETS2_Plugin",
+  "configuration": {
+    "colorDark": "#f54242",
+    "colorLight": "#f5a442"
+  },
+  
+  "categories": [
+    {
+      "id": "Main",
+      "name": "ETS2",
+	  "imagepath": "%TP_PLUGIN_FOLDER%ETS2_Dashboard\\icon.png",
+      "events": [],
+      "states": [
+		    {
+          "id": "Nybo.ETS2.Dashboard.Connected",
+          "type": "text",
+          "desc": "Connection Status",
+          "default": "Not Connected"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Game",
+          "type": "text",
+          "desc": "Game",
+          "default": "Nothing Found!"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Speed",
+          "type": "text",
+          "desc": "Speed",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.SpeedGauge",
+          "type": "text",
+          "desc": "SpeedGauge",
+          "default": ""
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.CruiseControlSpeed",
+          "type": "text",
+          "desc": "CruiseControlSpeed",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.CruiseControlOn",
+          "type": "text",
+          "desc": "CruiseControlOn",
+          "default": "Cruise Control Offline"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Gear",
+          "type": "text",
+          "desc": "Gear",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.RPM",
+          "type": "text",
+          "desc": "RPM",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.RPMGauge",
+          "type": "text",
+          "desc": "RPM",
+          "default": ""
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Fuel",
+          "type": "text",
+          "desc": "Fuel",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.FuelCap",
+          "type": "text",
+          "desc": "FuelCap",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Engine",
+          "type": "text",
+          "desc": "Engine",
+          "default": "Off"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Electric",
+          "type": "text",
+          "desc": "Electric",
+          "default": "Off"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Wipers",
+          "type": "text",
+          "desc": "Wipers",
+          "default": "Off"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.BlinkerRightOn",
+          "type": "text",
+          "desc": "BlinkerRightOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.BlinkerLeftOn",
+          "type": "text",
+          "desc": "BlinkerLeftOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.HazardLights",
+          "type": "text",
+          "desc": "HazardLightsOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.LightsParkingOn",
+          "type": "text",
+          "desc": "LightsParkingOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.LightsBeamLowOn",
+          "type": "text",
+          "desc": "LightsBeamLowOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.LightsBeamHighOn",
+          "type": "text",
+          "desc": "LightsBeamHighOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.LightsBeaconOn",
+          "type": "text",
+          "desc": "LightsBeaconOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.LightsBrakeOn",
+          "type": "text",
+          "desc": "LightsBrakeOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.LightsDashboardOn",
+          "type": "text",
+          "desc": "LightsDashboardOn",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.TrailerAttached",
+          "type": "text",
+          "desc": "TrailerAttached",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.Speedlimit",
+          "type": "text",
+          "desc": "Speedlimit",
+          "default": "0"
+        }
+      ]
+    }
+  ]
+}
