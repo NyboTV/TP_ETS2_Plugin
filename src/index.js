@@ -9,56 +9,56 @@ const exec = require('child_process').exec
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
-
-  const isRunning = (query, cb) => {
-    let platform = process.platform;
-    let cmd = '';
-    switch (platform) {
+  
+  const Dashboard = async (GaugeOn, BlinkerOn) => {
+    
+    const isRunning = (query, cb) => {
+      let platform = process.platform;
+      let cmd = '';
+      switch (platform) {
         case 'win32' : cmd = `tasklist`; break;
         case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
         case 'linux' : cmd = `ps -A`; break;
         default: break;
-    }
-    exec(cmd, (err, stdout, stderr) => {
+      }
+      exec(cmd, (err, stdout, stderr) => {
         cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-    });
-  }
-
-  isRunning('Ets2Telemetry.exe', (status) => {
-    if(status === false) {
-      exec('./server/Ets2Telemetry.exe')
-      console.log(status)
+      });
     }
-  })
-
-  let Status_Connected = "Disconnected"
-  let Game = "Nothing Found!"
-  let Speed = "0"
-  let SpeedGauge = ""
-  let CruiseControlSpeed = "0"
-  let CruiseControlOn = "false"
-  let Gear = "0"
-  let RPM = "0"
-  let Fuel = "0"
-  let FuelCap = "0"
-  let Engine = "Off"
-  let Electric = "Off"
-  let Wipers = "Off"
-  let BlinkerRightOn = "false"
-  let BlinkerLeftOn = "false"
-  let HazardLightsOn = "false"
-  let LightsParkingOn = "false"
-  let LightsBeamLowOn = "false"
-  let LightsBeamHighOn = "false"
-  let LightsBeaconOn = "false"
-  let LightsBrakeOn = "false"
-  let LightsDashboardOn = "false"
-  let TrailerAttached = "false"
-  let Speedlimit = 0
-
-  const Dashboard = async (GaugeOn, BlinkerOn) => {
+    
+    isRunning('Ets2Telemetry.exe', (status) => {
+      if(status === false) {
+        exec('./server/Ets2Telemetry.exe')
+      }
+    })
+    
+    let Status_Connected = "Disconnected"
+    let Game = "Nothing Found!"
+    let Speed = "0"
+    let SpeedGauge = ""
+    let CruiseControlSpeed = "0"
+    let CruiseControlOn = "false"
+    let Gear = "0"
+    let RPM = "0"
+    let Fuel = "0"
+    let FuelCap = "0"
+    let Engine = "Off"
+    let Electric = "Off"
+    let Wipers = "Off"
+    let BlinkerRightOn = "false"
+    let BlinkerLeftOn = "false"
+    let HazardLightsOn = "false"
+    let LightsParkingOn = "false"
+    let LightsBeamLowOn = "false"
+    let LightsBeamHighOn = "false"
+    let LightsBeaconOn = "false"
+    let LightsBrakeOn = "false"
+    let LightsDashboardOn = "false"
+    let TrailerAttached = "false"
+    let Speedlimit = 0
+    
     http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
-      let data = '';
+      let data = '';  
 
       resp.on('data', (chunk) => {
         data += chunk;
