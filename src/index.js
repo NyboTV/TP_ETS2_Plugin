@@ -10,28 +10,37 @@ TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
   
-  const Dashboard = async (GaugeOn, BlinkerOn) => {
+  const Dashboard = async (GaugeOn, BlinkerOn, ServerTest) => {
     
-    const isRunning = (query, cb) => {
-      let platform = process.platform;
-      let cmd = '';
-      switch (platform) {
-        case 'win32' : cmd = `tasklist`; break;
-        case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
-        case 'linux' : cmd = `ps -A`; break;
-        default: break;
+    if(ServerTest === 1) {
+
+      const isRunning = (query, cb) => {
+        let platform = process.platform;
+        let cmd = '';
+        switch (platform) {
+          case 'win32' : cmd = `tasklist`; break;
+          case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
+          case 'linux' : cmd = `ps -A`; break;
+          default: break;
+        }
+        exec(cmd, (err, stdout, stderr) => {
+          cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
+        });
       }
-      exec(cmd, (err, stdout, stderr) => {
-        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-      });
+      
+      isRunning('Ets2Telemetry.exe', (status) => {
+        if(status === false) {
+          exec('./server/Ets2Telemetry.exe')
+          logIt("WARN","Telemetry Server not Found!");
+          setTimeout(() => {
+            Dashboard(1, 1, 1)
+          }, 2000);
+        } else {
+          Dashboard(1, 1, 0)
+        }
+      })
     }
-    
-    isRunning('Ets2Telemetry.exe', (status) => {
-      if(status === false) {
-        exec('./server/Ets2Telemetry.exe')
-      }
-    })
-    
+      
     let Status_Connected = "Disconnected"
     let Game = "Nothing Found!"
     let Speed = "0"
@@ -236,7 +245,7 @@ TPClient.on("Info", (data) => {
   }
 
   setInterval(() => {
-    Dashboard(1, 1)
+    Dashboard(1, 1, 1)
   }, 900);
 
 });
