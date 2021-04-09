@@ -3,6 +3,7 @@
   "version": 1,
   "name": "TP_ETS2_Plugin",
   "id": "TP_ETS2_Plugin",
+  "plugin_start_cmd": "\"%TP_PLUGIN_FOLDER%OpenHardwareMonitor\\ets2_plugin.exe\"",
   "configuration": {
     "colorDark": "#f54242",
     "colorLight": "#f5a442"
@@ -12,26 +13,25 @@
     {
       "id": "Main",
       "name": "ETS2",
-	  "imagepath": "%TP_PLUGIN_FOLDER%ETS2_Dashboard\\icon.png",
       "events": [],
       "states": [
 		    {
           "id": "Nybo.ETS2.Dashboard.Connected",
           "type": "text",
           "desc": "Connection Status",
-          "default": "Not Connected"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Game",
           "type": "text",
           "desc": "Game",
-          "default": "Nothing Found!"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Speed",
           "type": "text",
           "desc": "Speed",
-          "default": "0"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.SpeedGauge",
@@ -43,43 +43,43 @@
           "id": "Nybo.ETS2.Dashboard.CruiseControlSpeed",
           "type": "text",
           "desc": "CruiseControlSpeed",
-          "default": "0"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.CruiseControlOn",
           "type": "text",
           "desc": "CruiseControlOn",
-          "default": "Cruise Control Offline"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Gear",
           "type": "text",
           "desc": "Gear",
-          "default": "0"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.RPM",
           "type": "text",
           "desc": "RPM",
-          "default": "0"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.RPMGauge",
           "type": "text",
-          "desc": "RPMGauge",
+          "desc": "RPM",
           "default": ""
         },
         {
           "id": "Nybo.ETS2.Dashboard.Fuel",
           "type": "text",
           "desc": "Fuel",
-          "default": "0"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.FuelCap",
           "type": "text",
           "desc": "FuelCap",
-          "default": "0"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Engine",
@@ -163,7 +163,7 @@
           "id": "Nybo.ETS2.Dashboard.Speedlimit",
           "type": "text",
           "desc": "Speedlimit",
-          "default": "0"
+          "default": "-"
         }
       ]
     }
