@@ -4,10 +4,32 @@ const pluginId = 'TP_ETS2_Plugin';
 const http = require('http');
 const fs = require('fs')
 const Jimp = require('jimp')
+const exec = require('child_process').exec
 
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
+
+  const isRunning = (query, cb) => {
+    let platform = process.platform;
+    let cmd = '';
+    switch (platform) {
+        case 'win32' : cmd = `tasklist`; break;
+        case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
+        case 'linux' : cmd = `ps -A`; break;
+        default: break;
+    }
+    exec(cmd, (err, stdout, stderr) => {
+        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
+    });
+  }
+
+  isRunning('Ets2Telemetry.exe', (status) => {
+    if(status === false) {
+      exec('./server/Ets2Telemetry.exe')
+      console.log(status)
+    }
+  })
 
   let Status_Connected = "Disconnected"
   let Game = "Nothing Found!"
@@ -143,21 +165,16 @@ TPClient.on("Info", (data) => {
            
             image.rotate(rotate)
             image.resize(400, 400)
-            .write('images/Gauge0.png')
-
-            setTimeout(async() => {
-              const image = await Jimp.read
-              ('images/SpeedGauge.png');
-              const image2 = await Jimp.read
-              ('images/Gauge0.png');
-              image.composite(image2, 0, 0)
-              .write('images/Speed.png')
-
-              setTimeout(() => {
-                SpeedGauge = fs.readFileSync('images/Speed.png', 'base64');            
-              }, 100);
+            const image2 = await Jimp.read
+            ('images/SpeedGauge.png');
+            image2.composite(image, 0, 0)
+            .write('images/Speed.png')
+            
+            setTimeout(() => {
+              SpeedGauge = fs.readFileSync('images/Speed.png', 'base64');            
             }, 100);
           }
+          
 
           if(Speed < 1) {
             main(17) //17
