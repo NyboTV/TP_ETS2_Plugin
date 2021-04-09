@@ -15,7 +15,6 @@
     "fs": "^0.0.1-security",
     "http": "^0.0.1-security",
     "jimp": "^0.16.1",
-    "merge-images": "^2.0.0",
     "touchportal-api": "^2.0.1"
   }
 }
