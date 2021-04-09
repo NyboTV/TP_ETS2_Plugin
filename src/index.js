@@ -5,15 +5,22 @@ const http = require('http');
 const fs = require('fs')
 const Jimp = require('jimp')
 const exec = require('child_process').exec
+const execute = require('child_process').execFile
 
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
+
+  var Retry = 0
   
   const Dashboard = async (GaugeOn, BlinkerOn, ServerTest) => {
+
+    if(Retry === 5) {
+      logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
+      process.exit()
+    }
     
     if(ServerTest === 1) {
-
       const isRunning = (query, cb) => {
         let platform = process.platform;
         let cmd = '';
@@ -30,17 +37,23 @@ TPClient.on("Info", (data) => {
       
       isRunning('Ets2Telemetry.exe', (status) => {
         if(status === false) {
-          exec('./server/Ets2Telemetry.exe')
-          logIt("WARN","Telemetry Server not Found!");
+          execute('./server/Ets2Telemetry.exe', function(err, data) {
+            if(err) {
+              logIt("WARN","Telemetry Server could not be Started!");
+            }
+          })
+          logIt("WARN","Telemetry Server not Found! Retry in 5 Seconds!");
+          Retry = Math.floor(Retry + 1)
           setTimeout(() => {
             Dashboard(1, 1, 1)
-          }, 2000);
+          }, 5000);
         } else {
           Dashboard(1, 1, 0)
         }
       })
+      return;
     }
-      
+    
     let Status_Connected = "Disconnected"
     let Game = "Nothing Found!"
     let Speed = "0"
@@ -153,7 +166,6 @@ TPClient.on("Info", (data) => {
             HazardLightsOn = "false"
           }
 
-          //console.log(`${BlinkerLeftOn} || ${BlinkerRightOn}`)
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.HazardLightsOn", `${HazardLightsOn}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerRightOn", `${BlinkerRightOn}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerLeftOn", `${BlinkerLeftOn}`);
@@ -242,11 +254,14 @@ TPClient.on("Info", (data) => {
         
       })
     })
+    //*/
+
+    setTimeout(() => {
+      Dashboard(1, 1, 0)
+    }, 800);
   }
 
-  setInterval(() => {
-    Dashboard(1, 1, 1)
-  }, 900);
+  Dashboard(1, 1, 1)
 
 });
 
@@ -276,5 +291,6 @@ function logIt() {
   var curTime = new Date().toISOString();
   var message = [...arguments];
   var type = message.shift();
-  //console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
+  console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
+  fs.writeFileSync('./log.log', `${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }
