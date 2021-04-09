@@ -196,46 +196,49 @@ TPClient.on("Info", (data) => {
             }, 100);
           }
           
+          function getSpeed() {
+            if(Speed < 1) {
+              main(17) //17
+            }
+            if(Speed > 10 && Speed < 20) {
+              main(5)
+            }
+            if(Speed > 20 && Speed < 30) {
+              main(-8)
+            } 
+            if(Speed > 30 && Speed < 40) {
+              main(-20)
+            }
+            if(Speed > 40 && Speed < 50) {
+              main(-33)
+            }
+            if(Speed > 50 && Speed < 60) {
+              main(-48)
+            }
+            if(Speed > 60 && Speed < 70) {
+              main(-60)
+            }
+            if(Speed > 70 && Speed < 80) {
+              main(-73)
+            }
+            if(Speed > 80 && Speed < 90) {
+              main(-85)
+            }
+            if(Speed > 90 && Speed < 100) {
+              main(-98)
+            }
+            if(Speed > 100 && Speed < 110) {
+              main(-112)
+            }
+            if(Speed > 110 && Speed < 120) {
+              main(-125)
+            }
+            if(Speed > 120) {
+              main(-137)
+            }
+          }
 
-          if(Speed < 1) {
-            main(17) //17
-          }
-          if(Speed > 10 && Speed < 20) {
-            main(5)
-          }
-          if(Speed > 20 && Speed < 30) {
-            main(-8)
-          } 
-          if(Speed > 30 && Speed < 40) {
-            main(-20)
-          }
-          if(Speed > 40 && Speed < 50) {
-            main(-33)
-          }
-          if(Speed > 50 && Speed < 60) {
-            main(-48)
-          }
-          if(Speed > 60 && Speed < 70) {
-            main(-60)
-          }
-          if(Speed > 70 && Speed < 80) {
-            main(-73)
-          }
-          if(Speed > 80 && Speed < 90) {
-            main(-85)
-          }
-          if(Speed > 90 && Speed < 100) {
-            main(-98)
-          }
-          if(Speed > 100 && Speed < 110) {
-            main(-112)
-          }
-          if(Speed > 110 && Speed < 120) {
-            main(-125)
-          }
-          if(Speed > 120) {
-            main(-137)
-          }
+          getSpeed()
 
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed", `${Speed}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.SpeedGauge", `${SpeedGauge}`);
