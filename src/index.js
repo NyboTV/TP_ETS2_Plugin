@@ -62,6 +62,7 @@ TPClient.on("Info", (data) => {
     let CruiseControlOn = "false"
     let Gear = "0"
     let RPM = "0"
+    let RPMGauge = ""
     let Fuel = "0"
     let FuelCap = "0"
     let Engine = "Off"
@@ -70,13 +71,13 @@ TPClient.on("Info", (data) => {
     let BlinkerRightOn = "false"
     let BlinkerLeftOn = "false"
     let HazardLightsOn = "false"
-    let LightsParkingOn = "false"
-    let LightsBeamLowOn = "false"
-    let LightsBeamHighOn = "false"
-    let LightsBeaconOn = "false"
-    let LightsBrakeOn = "false"
-    let LightsDashboardOn = "false"
-    let TrailerAttached = "false"
+    let LightsParkingOn = "Off"
+    let LightsBeamLowOn = "Off"
+    let LightsBeamHighOn = "Off"
+    let LightsBeaconOn = "Off"
+    let LightsBrakeOn = "Off"
+    let LightsDashboardOn = "Off"
+    let TrailerAttached = "Not Attached"
     let Speedlimit = 0
     
     http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
@@ -127,16 +128,46 @@ TPClient.on("Info", (data) => {
           Wipers = "Off"
         }
 
-        if(data.truck.wipersOn === true) {
-          Wipers = "On"
-        } else if (data.game.wipersOn === false) {
-          Wipers = "Off"
-        }
-
         if(data.trailer.attached === true) {
           TrailerAttached = "Attached"
         } else if (data.trailer.attached === false) {
           TrailerAttached = "Not Attached"
+        }
+
+        if(data.truck.lightsParkingOn === true) {
+          LightsParkingOn = "On"
+        } else if (data.trailer.attached === false) {
+          LightsParkingOn = "Off"
+        }
+
+        if(data.truck.lightsBeamLowOn === true) {
+          LightsBeamLowOn = "On"
+        } else if (data.truck.lightsBeamLowOn === false) {
+          LightsBeamLowOn = "Off"
+        }
+
+        if(data.truck.lightsBeamHighOn === true) {
+          LightsBeamHighOn = "On"
+        } else if (data.truck.lightsBeamHighOn === false) {
+          LightsBeamHighOn = "Off"
+        }
+
+        if(data.truck.lightsBeaconOn === true) {
+          LightsBeaconOn = "On"
+        } else if (data.truck.lightsBeaconOn === false) {
+          LightsBeaconOn = "Off"
+        }
+
+        if(data.truck.lightsBrakeOn === true) {
+          LightsBrakeOn = "On"
+        } else if (data.truck.lightsBrakeOn === false) {
+          LightsBrakeOn = "Off"
+        }
+
+        if(data.truck.lightsDashboardOn === true) {
+          LightsDashboardOn = "On"
+        } else if (data.truck.lightsDashboardOn === false) {
+          LightsDashboardOn = "Off"
         }
         
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.Connected", `${Status_Connected}`);
@@ -144,8 +175,15 @@ TPClient.on("Info", (data) => {
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlOn", `${CruiseControlOn}`);
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.Engine", `${Engine}`);
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.Electric", `${Electric}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Electric", `${Wipers}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Electric", `${TrailerAttached}`);
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Wipers", `${Wipers}`);
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.TrailerAttached", `${TrailerAttached}`);
+
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsParkingOn", `${LightsParkingOn}`);
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamLowOn", `${LightsBeamLowOn}`);
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamHighOn", `${LightsBeamHighOn}`);
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeaconOn", `${LightsBeaconOn}`);
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBrakeOn", `${LightsBrakeOn}`);
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsDashboardOn", `${LightsDashboardOn}`);
         
         const DashboardBlinkers = async () => {
           if(data.truck.blinkerRightActive === true) {
@@ -180,68 +218,241 @@ TPClient.on("Info", (data) => {
           FuelCap = Math.round(data.truck.fuelCapacity)
           Speedlimit = data.navigation.speedLimit
           
-          async function main(rotate) {
+          function isBetween(n, a, b) {
+            return (n - a) * (n - b) <= 0
+          }
+
+          async function getSpeedGauge(rotate) {
+            var getSpeedGaugeRotate = -2
             const image = await Jimp.read
             ('images/Gauge.png');
            
-            image.rotate(rotate)
+            image.rotate(Math.floor(getSpeedGaugeRotate - rotate))
             image.resize(400, 400)
             const image2 = await Jimp.read
             ('images/SpeedGauge.png');
             image2.composite(image, 0, 0)
             .write('images/Speed.png')
             
-            setTimeout(() => {
-              SpeedGauge = fs.readFileSync('images/Speed.png', 'base64');            
-            }, 100);
+            SpeedGauge = fs.readFileSync('images/Speed.png', 'base64')
+            TPClient.stateUpdate("Nybo.ETS2.Dashboard.SpeedGauge", `${SpeedGauge}`);
           }
-          
-          function getSpeed() {
-            if(Speed < 1) {
-              main(17) //17
-            }
-            if(Speed > 10 && Speed < 20) {
-              main(5)
-            }
-            if(Speed > 20 && Speed < 30) {
-              main(-8)
-            } 
-            if(Speed > 30 && Speed < 40) {
-              main(-20)
-            }
-            if(Speed > 40 && Speed < 50) {
-              main(-33)
-            }
-            if(Speed > 50 && Speed < 60) {
-              main(-48)
-            }
-            if(Speed > 60 && Speed < 70) {
-              main(-60)
-            }
-            if(Speed > 70 && Speed < 80) {
-              main(-73)
-            }
-            if(Speed > 80 && Speed < 90) {
-              main(-85)
-            }
-            if(Speed > 90 && Speed < 100) {
-              main(-98)
-            }
-            if(Speed > 100 && Speed < 110) {
-              main(-112)
-            }
-            if(Speed > 110 && Speed < 120) {
-              main(-125)
-            }
-            if(Speed > 120) {
-              main(-137)
+
+          async function getRPMGauge(rotate) {
+            var getRPMGaugeRotate = -2
+            const image = await Jimp.read
+            ('images/Gauge.png');
+           
+            image.rotate(Math.floor(getRPMGaugeRotate - rotate))
+            image.resize(400, 400)
+            const image2 = await Jimp.read
+            ('images/RPMGauge.png');
+            image2.composite(image, 0, 0)
+            .write('images/RPM.png')
+            
+            RPMGauge = fs.readFileSync('images/RPM.png', 'base64'); 
+            TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPMGauge", `${RPMGauge}`);           
+            
+          }
+
+          function getSpeed() { // 8 5 3
+            switch(true) {
+              case isBetween(Speed, 0, 3):
+              getSpeedGauge(-20)
+              break;
+              case isBetween(Speed, 3, 5):
+              getSpeedGauge(-17)
+              break;
+              case isBetween(Speed, 5, 8):
+              getSpeedGauge(-12)
+              break;
+              case isBetween(Speed, 8, 10):
+              getSpeedGauge(-8)
+              break;
+              case isBetween(Speed, 10, 13):
+              getSpeedGauge(-5)
+              break;
+              case isBetween(Speed, 13, 15):
+              getSpeedGauge(-2)
+              break;
+              case isBetween(Speed, 15, 18):
+              getSpeedGauge(1)
+              break;
+              case isBetween(Speed, 18, 20):
+              getSpeedGauge(4)
+              break;
+              case isBetween(Speed, 20, 23):
+              getSpeedGauge(7)
+              break;
+              case isBetween(Speed, 23, 25):
+              getSpeedGauge(10)
+              break;
+              case isBetween(Speed, 25, 28):
+              getSpeedGauge(13)
+              break;
+              case isBetween(Speed, 28, 30):
+              getSpeedGauge(16)
+              break;
+              case isBetween(Speed, 30, 33):
+              getSpeedGauge(19)
+              break;
+              case isBetween(Speed, 33, 35):
+              getSpeedGauge(22)
+              break;
+              case isBetween(Speed, 35, 38):
+              getSpeedGauge(25)
+              break;
+              case isBetween(Speed, 38, 40):
+              getSpeedGauge(28)
+              break;
+              case isBetween(Speed, 40, 43):
+              getSpeedGauge(32)
+              break;
+              case isBetween(Speed, 43, 45):
+              getSpeedGauge(35)
+              break;
+              case isBetween(Speed, 45, 48):
+              getSpeedGauge(39)
+              break;
+              case isBetween(Speed, 48, 50):
+              getSpeedGauge(43)
+              break;
+              case isBetween(Speed, 50, 53):
+              getSpeedGauge(46)
+              break;
+              case isBetween(Speed, 53, 55):
+              getSpeedGauge(50)
+              break;
+              case isBetween(Speed, 55, 58):
+              getSpeedGauge(57)
+              break;
+              case isBetween(Speed, 58, 60):
+              getSpeedGauge(60)
+              break;
+              case isBetween(Speed, 60, 63):
+              getSpeedGauge(63)
+              break;
+              case isBetween(Speed, 63, 65):
+              getSpeedGauge(66)
+              break;
+              case isBetween(Speed, 65, 68):
+              getSpeedGauge(69)
+              break;
+              case isBetween(Speed, 68, 70):
+              getSpeedGauge(72)
+              break;
+              case isBetween(Speed, 70, 73):
+              getSpeedGauge(75)
+              break;
+              case isBetween(Speed, 73, 75):
+              getSpeedGauge(78)
+              break;
+              case isBetween(Speed, 75, 78):
+              getSpeedGauge(81)
+              break;
+              case isBetween(Speed, 78, 80):
+              getSpeedGauge(84)
+              break;
+              case isBetween(Speed, 80, 83):
+              getSpeedGauge(87)
+              break;
+              case isBetween(Speed, 83, 85):
+              getSpeedGauge(90)
+              break;
+              case isBetween(Speed, 85, 88):
+              getSpeedGauge(93)
+              break;
+              case isBetween(Speed, 88, 90):
+              getSpeedGauge(95)
+              break;
+              case isBetween(Speed, 90, 93):
+              getSpeedGauge(100)
+              break;
+              case isBetween(Speed, 93, 95):
+              getSpeedGauge(103)
+              break;
+              case isBetween(Speed, 98, 100):
+              getSpeedGauge(105)
+              break;
+              case isBetween(Speed, 100, 103):
+              getSpeedGauge(110)
+              break;
+              case isBetween(Speed, 103, 105):
+              getSpeedGauge(113)
+              break;
+              case isBetween(Speed, 105, 108):
+              getSpeedGauge(117)
+              break;
+              case isBetween(Speed, 108, 110):
+              getSpeedGauge(120)
+              break;
+              case isBetween(Speed, 110, 113):
+              getSpeedGauge(123)
+              break;
+              case isBetween(Speed, 113, 115):
+              getSpeedGauge(125)
+              break;
+              case isBetween(Speed, 116, 118):
+              getSpeedGauge(130)
+              break;
+              case isBetween(Speed, 118, 120):
+              getSpeedGauge(135) 
+              break;
+              
             }
           }
 
+          function getRPM() {
+            switch(true) {
+              case isBetween(RPM, 0, 100): 
+                getRPMGauge(0) 
+              break;
+              case isBetween(RPM, 100, 300): 
+                getRPMGauge(10) 
+              break;
+              case isBetween(RPM, 300, 400): 
+                getRPMGauge(20) 
+              break;
+              case isBetween(RPM, 400, 700): 
+                getRPMGauge(30) 
+              break;
+              case isBetween(RPM, 700, 850): 
+                getRPMGauge(40) 
+              break;
+              case isBetween(RPM, 850, 1000): 
+                getRPMGauge(50) 
+              break;
+              case isBetween(RPM, 1000, 1200): 
+                getRPMGauge(60) 
+              break;
+              case isBetween(RPM, 1300, 1500): 
+                getRPMGauge(70) 
+              break;
+              case isBetween(RPM, 1500, 1700): 
+                getRPMGauge(80) 
+              break;
+              case isBetween(RPM, 1700, 1850): 
+                getRPMGauge(90) 
+              break;
+              case isBetween(RPM, 1850, 2000): 
+                getRPMGauge(100) 
+              break;
+              case isBetween(RPM, 2000, 2300): 
+                getRPMGauge(110) 
+              break;
+              case isBetween(RPM, 2300, 2400): 
+                getRPMGauge(120) 
+              break;
+              case isBetween(RPM, 2400, 2600): 
+                getRPMGauge(130) 
+              break;
+            }
+          }
+
+          getRPM()
           getSpeed()
 
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed", `${Speed}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.SpeedGauge", `${SpeedGauge}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPM", `${RPM}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Gear", `${Gear}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlSpeed", `${CruiseControlSpeed}`);
@@ -261,7 +472,7 @@ TPClient.on("Info", (data) => {
 
     setTimeout(() => {
       Dashboard(1, 1, 0)
-    }, 800);
+    }, 1200);
   }
 
   Dashboard(1, 1, 1)

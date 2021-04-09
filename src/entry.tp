@@ -66,7 +66,7 @@
         {
           "id": "Nybo.ETS2.Dashboard.RPMGauge",
           "type": "text",
-          "desc": "RPM",
+          "desc": "RPMGauge",
           "default": ""
         },
         {
@@ -85,79 +85,79 @@
           "id": "Nybo.ETS2.Dashboard.Engine",
           "type": "text",
           "desc": "Engine",
-          "default": "Off"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Electric",
           "type": "text",
           "desc": "Electric",
-          "default": "Off"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Wipers",
           "type": "text",
           "desc": "Wipers",
-          "default": "Off"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.BlinkerRightOn",
           "type": "text",
           "desc": "BlinkerRightOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.BlinkerLeftOn",
           "type": "text",
           "desc": "BlinkerLeftOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.HazardLights",
           "type": "text",
           "desc": "HazardLightsOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsParkingOn",
           "type": "text",
           "desc": "LightsParkingOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeamLowOn",
           "type": "text",
           "desc": "LightsBeamLowOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeamHighOn",
           "type": "text",
           "desc": "LightsBeamHighOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeaconOn",
           "type": "text",
           "desc": "LightsBeaconOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBrakeOn",
           "type": "text",
           "desc": "LightsBrakeOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsDashboardOn",
           "type": "text",
           "desc": "LightsDashboardOn",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.TrailerAttached",
           "type": "text",
           "desc": "TrailerAttached",
-          "default": "false"
+          "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Speedlimit",
