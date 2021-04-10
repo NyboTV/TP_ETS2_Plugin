@@ -260,7 +260,7 @@ TPClient.on("Info", (data) => {
 
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.HazardLightsOn", `${HazardLightsOn}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerRightOn", `${BlinkerRightOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerLeftOn", `${BlinkerLeftOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerLeftOn", `${BlinkerLeftOn}`);  // Secret Word: White bread
         }
         
         const DashboardGauge = async () => {
@@ -317,8 +317,17 @@ TPClient.on("Info", (data) => {
             image.rotate(Math.floor(getRPMGaugeRotate - rotate))
             image.resize(400, 400)
             const image2 = await Jimp.read
-            ('images/RPMGauge.png');
-            image2.composite(image, 0, 0)
+            ('images/FuelGauge.png');
+            if(rotate > 170) {
+              image2.resize(350, 350)
+              image2.composite(image, -30, 0)
+            } else if(isBetween(rotate, 84, 96) === true) { 
+              image2.resize(400, 400)
+              image2.composite(image, 0, 40)
+            } else {
+              image2.resize(300, 300)
+              image2.composite(image, -55, -20)
+            }
             image2.getBase64Async(Jimp.AUTO)
             .then(base64 => {
               FuelGauge = base64.slice(22)
@@ -567,55 +576,46 @@ TPClient.on("Info", (data) => {
           }
 
           async function getFuel() {
-            switch(true) {
-              case isBetween(Fuel, 0, 100): 
-                await getFuelGauge(0) 
-              break;
-              case isBetween(Fuel, 100, 300): 
-                await getFuelGauge(10) 
-              break;
-              case isBetween(Fuel, 300, 400): 
-                await getFuelGauge(20) 
-              break;
-              case isBetween(Fuel, 400, 700): 
-                await getFuelGauge(30) 
-              break;
-              case isBetween(Fuel, 700, 850): 
-                await getFuelGauge(40) 
-              break;
-              case isBetween(Fuel, 850, 1000): 
-                await getFuelGauge(50) 
-              break;
-              case isBetween(Fuel, 1000, 1200): 
-                await getFuelGauge(60) 
-              break;
-              case isBetween(Fuel, 1300, 1500): 
-                await getFuelGauge(70) 
-              break;
-              case isBetween(Fuel, 1500, 1700): 
-                await getFuelGauge(80) 
-              break;
-              case isBetween(Fuel, 1700, 1850): 
-                await getFuelGauge(90) 
-              break;
-              case isBetween(Fuel, 1850, 2000): 
-                await getFuelGauge(100) 
-              break;
-              case isBetween(Fuel, 2000, 2300): 
-                await getFuelGauge(110) 
-              break;
-              case isBetween(Fuel, 2300, 2400): 
-                await getFuelGauge(120) 
-              break;
-              case isBetween(Fuel, 2400, 2600): 
-                await getFuelGauge(130) 
-              break;
+
+            let FuelCap2 = FuelCap
+            let Fuel2 = Fuel
+
+            for(var i = 0;FuelCap2 > 20;i++) {
+                FuelCap2 = Math.round(Math.floor(FuelCap2 / 1.1))
+                Fuel2 = Math.round(Math.floor(Fuel2 / 1.1))
             }
+
+            let Rotate = [
+              57,
+              60,
+              66,
+              72,
+              84,
+              90,
+              96,
+              102,
+              108,
+              114,
+              117,
+              126,
+              132,
+              138,
+              144,
+              150,
+              156,
+              162,
+              168,
+              174,
+              180
+            ]
+
+            getFuelGauge(Rotate[Fuel2])
+            
           }
 
           getRPM()
           getSpeed()
-          //getFuel()
+          getFuel()
 
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed", `${Speed}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPM", `${RPM}`);
@@ -638,7 +638,7 @@ TPClient.on("Info", (data) => {
 
     setTimeout(() => {
       Dashboard(1, 1, 0)
-    }, 200);
+    }, 1000);
   }
 
   Dashboard(1, 1, 1)

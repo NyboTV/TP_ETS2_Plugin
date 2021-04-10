@@ -76,6 +76,12 @@
           "default": "-"
         },
         {
+          "id": "Nybo.ETS2.Dashboard.FuelGauge",
+          "type": "text",
+          "desc": "ETS2:FuelGauge",
+          "default": ""
+        },
+        {
           "id": "Nybo.ETS2.Dashboard.FuelCap",
           "type": "text",
           "desc": "ETS2:FuelCap",
