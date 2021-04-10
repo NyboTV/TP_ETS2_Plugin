@@ -59,6 +59,7 @@ TPClient.on("Info", (data) => {
     let CruiseControlOn = "false"
     let Speed = "0"
     let Gear = "0"
+    let Shifter = ""
     let RPM = "0"
     let Fuel = "0"
     let FuelCap = "0"
@@ -95,6 +96,9 @@ TPClient.on("Info", (data) => {
   
       resp.on('end', () => {
         data = JSON.parse(data)
+
+        Gear = data.truck.displayedGear
+        Shifter = data.truck.shifterType
 
         if(data.game.connected === false) {
           Status_Connected = "Disconnected"
@@ -175,6 +179,48 @@ TPClient.on("Info", (data) => {
         } else if (data.truck.lightsDashboardOn === false) {
           LightsDashboardOn = "Off"
         }
+
+        if (Shifter === "automatic") {
+          if (Gear === 0) {
+            Gear = "N"
+          } else if (Gear === 1) {
+            Gear = "D1"
+          } else if (Gear === 2) {
+            Gear = "D2"
+          } else if (Gear === 3) {
+            Gear = "D3"
+          } else if (Gear === 4) {
+            Gear = "D4"
+          } else if (Gear === 5) {
+            Gear = "D5"
+          } else if (Gear === 6) {
+            Gear = "D6"
+          } else if (Gear === 7) {
+            Gear = "D7"
+          } else if (Gear === 8) {
+            Gear = "D8"
+          } else if (Gear === 9) {
+            Gear = "D9"
+          } else if (Gear === 10) {
+            Gear = "D10"
+          } else if (Gear === 11) {
+            Gear = "D11"
+          } else if (Gear === 12) {
+            Gear = "D12"
+          } else if (Gear === -1) {
+            Gear = "R"
+          }
+        } else if (Shifter === "manual") {
+          if (Gear === 0) {
+            Gear = "N"
+          } else if (Gear === -1) {
+            Gear = "R1"
+          } else if (Gear === -2) {
+            Gear = "R2"
+          } else if (Gear === -2) {
+            Gear = "R3"
+          }
+        }
         
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.Connected", `${Status_Connected}`);
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.Game", `${Game}`);
@@ -183,6 +229,8 @@ TPClient.on("Info", (data) => {
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.Electric", `${Electric}`);
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.Wipers", `${Wipers}`);
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.TrailerAttached", `${TrailerAttached}`);
+
+        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Gear", `${Gear}`);
 
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsParkingOn", `${LightsParkingOn}`);
         TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamLowOn", `${LightsBeamLowOn}`);
@@ -218,7 +266,6 @@ TPClient.on("Info", (data) => {
         const DashboardGauge = async () => {
           Speed = Math.round(data.truck.speed)
           RPM = Math.round(data.truck.engineRpm)
-          Gear = data.truck.displayedGear
           CruiseControlSpeed = Math.round(data.truck.cruiseControlSpeed)
           Fuel = Math.round(data.truck.fuel)
           FuelCap = Math.round(data.truck.fuelCapacity)
@@ -282,6 +329,51 @@ TPClient.on("Info", (data) => {
 
           async function getSpeed() { // 8 5 3
             switch(true) {
+              case isBetween(Speed, -35, -38):
+                await getSpeedGauge(25)
+              break;
+              case isBetween(Speed, -33, -35):
+                await getSpeedGauge(22)
+              break;
+              case isBetween(Speed, -30, -33):
+                await getSpeedGauge(19)
+              break;
+              case isBetween(Speed, -28, -30):
+                await getSpeedGauge(16)
+              break;
+              case isBetween(Speed, -25, -28):
+                await getSpeedGauge(13)
+              break;
+              case isBetween(Speed, -23, -25):
+                await getSpeedGauge(10)
+              break;
+              case isBetween(Speed, -20, -23):
+                await getSpeedGauge(7)
+              break;
+              case isBetween(Speed, -18, -20):
+                await getSpeedGauge(4)
+              break;
+              case isBetween(Speed, -15, -18):
+                await getSpeedGauge(1)
+              break;
+              case isBetween(Speed, -13, -15):
+                await getSpeedGauge(-2)
+              break;
+              case isBetween(Speed, -10, -13):
+                await getSpeedGauge(-5)
+              break;
+              case isBetween(Speed, -8, -10):
+                await getSpeedGauge(-8)
+              break;
+              case isBetween(Speed, -5, -8):
+                await getSpeedGauge(-12)
+              break;
+              case isBetween(Speed, -3, -5):
+                await getSpeedGauge(-17)
+              break;
+              case isBetween(Speed, 0, -3):
+                await getSpeedGauge(-20)
+              break;
               case isBetween(Speed, 0, 3):
                 await getSpeedGauge(-20)
               break;
@@ -521,13 +613,12 @@ TPClient.on("Info", (data) => {
             }
           }
 
-          await getRPM()
-          await getSpeed()
-          //await getFuel()
+          getRPM()
+          getSpeed()
+          //getFuel()
 
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed", `${Speed}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPM", `${RPM}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Gear", `${Gear}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlSpeed", `${CruiseControlSpeed}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speedlimit", `${Speedlimit}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Fuel", `${Fuel}`);
