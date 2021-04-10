@@ -56,29 +56,35 @@ TPClient.on("Info", (data) => {
     
     let Status_Connected = "Disconnected"
     let Game = "Nothing Found!"
-    let Speed = "0"
-    let SpeedGauge = ""
-    let CruiseControlSpeed = "0"
     let CruiseControlOn = "false"
+    let Speed = "0"
     let Gear = "0"
     let RPM = "0"
-    let RPMGauge = ""
     let Fuel = "0"
     let FuelCap = "0"
     let Engine = "Off"
     let Electric = "Off"
     let Wipers = "Off"
+
     let BlinkerRightOn = "false"
     let BlinkerLeftOn = "false"
     let HazardLightsOn = "false"
+
     let LightsParkingOn = "Off"
     let LightsBeamLowOn = "Off"
     let LightsBeamHighOn = "Off"
     let LightsBeaconOn = "Off"
     let LightsBrakeOn = "Off"
     let LightsDashboardOn = "Off"
+
     let TrailerAttached = "Not Attached"
+
+    let CruiseControlSpeed = "0"
     let Speedlimit = 0
+
+    let RPMGauge = ""
+    let SpeedGauge = ""
+    let FuelGauge = ""
     
     http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
       let data = '';  
@@ -232,12 +238,11 @@ TPClient.on("Info", (data) => {
             const image2 = await Jimp.read
             ('images/SpeedGauge.png');
             image2.composite(image, 0, 0)
-            .write('images/Speed.png')
-
-            setTimeout(() => {
-              SpeedGauge = fs.readFileSync('images/Speed.png', 'base64')
+            image2.getBase64Async(Jimp.AUTO)
+            .then(base64 => {
+              SpeedGauge = base64.slice(22)
               TPClient.stateUpdate("Nybo.ETS2.Dashboard.SpeedGauge", `${SpeedGauge}`);
-            }, 200);
+            })
           }
 
           async function getRPMGauge(rotate) {
@@ -250,13 +255,30 @@ TPClient.on("Info", (data) => {
             const image2 = await Jimp.read
             ('images/RPMGauge.png');
             image2.composite(image, 0, 0)
-            .write('images/RPM.png')
-
-            setTimeout(() => {
-              RPMGauge = fs.readFileSync('images/RPM.png', 'base64'); 
+            image2.getBase64Async(Jimp.AUTO)
+            .then(base64 => {
+              RPMGauge = base64.slice(22)
               TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPMGauge", `${RPMGauge}`);
-            }, 200);
+            })
           }
+
+          async function getFuelGauge(rotate) {
+            var getRPMGaugeRotate = -2
+            const image = await Jimp.read
+            ('images/Gauge.png');
+           
+            image.rotate(Math.floor(getRPMGaugeRotate - rotate))
+            image.resize(400, 400)
+            const image2 = await Jimp.read
+            ('images/RPMGauge.png');
+            image2.composite(image, 0, 0)
+            image2.getBase64Async(Jimp.AUTO)
+            .then(base64 => {
+              FuelGauge = base64.slice(22)
+              TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelGauge", `${FuelGauge}`);
+            })
+          }
+
 
           async function getSpeed() { // 8 5 3
             switch(true) {
@@ -452,14 +474,64 @@ TPClient.on("Info", (data) => {
             }
           }
 
+          async function getFuel() {
+            switch(true) {
+              case isBetween(Fuel, 0, 100): 
+                await getFuelGauge(0) 
+              break;
+              case isBetween(Fuel, 100, 300): 
+                await getFuelGauge(10) 
+              break;
+              case isBetween(Fuel, 300, 400): 
+                await getFuelGauge(20) 
+              break;
+              case isBetween(Fuel, 400, 700): 
+                await getFuelGauge(30) 
+              break;
+              case isBetween(Fuel, 700, 850): 
+                await getFuelGauge(40) 
+              break;
+              case isBetween(Fuel, 850, 1000): 
+                await getFuelGauge(50) 
+              break;
+              case isBetween(Fuel, 1000, 1200): 
+                await getFuelGauge(60) 
+              break;
+              case isBetween(Fuel, 1300, 1500): 
+                await getFuelGauge(70) 
+              break;
+              case isBetween(Fuel, 1500, 1700): 
+                await getFuelGauge(80) 
+              break;
+              case isBetween(Fuel, 1700, 1850): 
+                await getFuelGauge(90) 
+              break;
+              case isBetween(Fuel, 1850, 2000): 
+                await getFuelGauge(100) 
+              break;
+              case isBetween(Fuel, 2000, 2300): 
+                await getFuelGauge(110) 
+              break;
+              case isBetween(Fuel, 2300, 2400): 
+                await getFuelGauge(120) 
+              break;
+              case isBetween(Fuel, 2400, 2600): 
+                await getFuelGauge(130) 
+              break;
+            }
+          }
+
           await getRPM()
           await getSpeed()
+          //await getFuel()
 
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed", `${Speed}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPM", `${RPM}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Gear", `${Gear}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlSpeed", `${CruiseControlSpeed}`);
           TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speedlimit", `${Speedlimit}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Fuel", `${Fuel}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelCap", `${FuelCap}`);
         }
 
         if(GaugeOn === 1) {

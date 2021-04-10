@@ -18,151 +18,151 @@
 		    {
           "id": "Nybo.ETS2.Dashboard.Connected",
           "type": "text",
-          "desc": "Connection Status",
+          "desc": "ETS2:Connection Status",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Game",
           "type": "text",
-          "desc": "Game",
+          "desc": "ETS2:Game",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Speed",
           "type": "text",
-          "desc": "Speed",
+          "desc": "ETS2:Speed",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.SpeedGauge",
           "type": "text",
-          "desc": "SpeedGauge",
+          "desc": "ETS2:SpeedGauge",
           "default": ""
         },
         {
           "id": "Nybo.ETS2.Dashboard.CruiseControlSpeed",
           "type": "text",
-          "desc": "CruiseControlSpeed",
+          "desc": "ETS2:CruiseControlSpeed",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.CruiseControlOn",
           "type": "text",
-          "desc": "CruiseControlOn",
+          "desc": "ETS2:CruiseControlOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Gear",
           "type": "text",
-          "desc": "Gear",
+          "desc": "ETS2:Gear",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.RPM",
           "type": "text",
-          "desc": "RPM",
+          "desc": "ETS2:RPM",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.RPMGauge",
           "type": "text",
-          "desc": "RPMGauge",
+          "desc": "ETS2:RPMGauge",
           "default": ""
         },
         {
           "id": "Nybo.ETS2.Dashboard.Fuel",
           "type": "text",
-          "desc": "Fuel",
+          "desc": "ETS2:Fuel",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.FuelCap",
           "type": "text",
-          "desc": "FuelCap",
+          "desc": "ETS2:FuelCap",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Engine",
           "type": "text",
-          "desc": "Engine",
+          "desc": "ETS2:Engine",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Electric",
           "type": "text",
-          "desc": "Electric",
+          "desc": "ETS2:Electric",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Wipers",
           "type": "text",
-          "desc": "Wipers",
+          "desc": "ETS2:Wipers",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.BlinkerRightOn",
           "type": "text",
-          "desc": "BlinkerRightOn",
+          "desc": "ETS2:BlinkerRightOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.BlinkerLeftOn",
           "type": "text",
-          "desc": "BlinkerLeftOn",
+          "desc": "ETS2:BlinkerLeftOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.HazardLights",
           "type": "text",
-          "desc": "HazardLightsOn",
+          "desc": "ETS2:HazardLightsOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsParkingOn",
           "type": "text",
-          "desc": "LightsParkingOn",
+          "desc": "ETS2:LightsParkingOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeamLowOn",
           "type": "text",
-          "desc": "LightsBeamLowOn",
+          "desc": "ETS2:LightsBeamLowOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeamHighOn",
           "type": "text",
-          "desc": "LightsBeamHighOn",
+          "desc": "ETS2:LightsBeamHighOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeaconOn",
           "type": "text",
-          "desc": "LightsBeaconOn",
+          "desc": "ETS2:LightsBeaconOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBrakeOn",
           "type": "text",
-          "desc": "LightsBrakeOn",
+          "desc": "ETS2:LightsBrakeOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsDashboardOn",
           "type": "text",
-          "desc": "LightsDashboardOn",
+          "desc": "ETS2:LightsDashboardOn",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.TrailerAttached",
           "type": "text",
-          "desc": "TrailerAttached",
+          "desc": "ETS2:TrailerAttached",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.Speedlimit",
           "type": "text",
-          "desc": "Speedlimit",
+          "desc": "ETS2:Speedlimit",
           "default": "-"
         }
       ]
