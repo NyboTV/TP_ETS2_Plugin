@@ -12,9 +12,9 @@ TPClient.on("Info", (data) => {
   logIt('INFO',`Starting process watcher for Windows`);
 
   var Retry = 0
-  
-  const Dashboard = async (GaugeOn, BlinkerOn, ServerTest) => {
 
+  const main = async (ServerTest) => {
+    
     if(Retry === 5) {
       logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
       process.exit()
@@ -45,10 +45,10 @@ TPClient.on("Info", (data) => {
           logIt("WARN","Telemetry Server not Found! Retry in 5 Seconds!");
           Retry = Math.floor(Retry + 1)
           setTimeout(() => {
-            Dashboard(1, 1, 1)
+            main(1)
           }, 5000);
         } else {
-          Dashboard(1, 1, 0)
+          main( 0)
         }
       })
       return;
@@ -66,204 +66,41 @@ TPClient.on("Info", (data) => {
     let Engine = "Off"
     let Electric = "Off"
     let Wipers = "Off"
-
+    
     let BlinkerRightOn = "false"
     let BlinkerLeftOn = "false"
     let HazardLightsOn = "false"
-
+    
     let LightsParkingOn = "Off"
     let LightsBeamLowOn = "Off"
     let LightsBeamHighOn = "Off"
     let LightsBeaconOn = "Off"
     let LightsBrakeOn = "Off"
     let LightsDashboardOn = "Off"
-
+    
     let TrailerAttached = "Not Attached"
-
+    
     let CruiseControlSpeed = "0"
     let Speedlimit = 0
-
+    
     let RPMGauge = ""
     let SpeedGauge = ""
     let FuelGauge = ""
     
     http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
       let data = '';  
-
+      
       resp.on('data', (chunk) => {
         data += chunk;
       })
-  
+      
       resp.on('end', () => {
-        data = JSON.parse(data)
 
-        Gear = data.truck.displayedGear
-        Shifter = data.truck.shifterType
-
-        if(data.game.connected === false) {
-          Status_Connected = "Disconnected"
-        } else if (data.game.connected === true) {
-          Status_Connected = "Connected"
-        } else {
-          Status_Connected = "Nothing??"
-        }
-
-        if(data.game.gameName === "ETS2") {
-          Game = "ETS2"
-        } else if(data.game.gameName === "ATS") {
-          Game = "ATS"
-        }
-
-        if(data.truck.cruiseControlOn === true) {
-          CruiseControlOn = "true"
-        } else if (data.game.cruiseControlOn === false) {
-          CruiseControlOn = "false"
-        }
-
-        if(data.truck.engineOn === true) {
-          Engine = "Started"
-        } else if (data.game.engineOn === false) {
-          Engine = "Off"
-        }
-
-        if(data.truck.electric === true) {
-          Electric = "On"
-        } else if (data.game.electric === false) {
-          Electric = "Off"
-        }
-
-        if(data.truck.wipersOn === true) {
-          Wipers = "On"
-        } else if (data.game.wipersOn === false) {
-          Wipers = "Off"
-        }
-
-        if(data.trailer.attached === true) {
-          TrailerAttached = "Attached"
-        } else if (data.trailer.attached === false) {
-          TrailerAttached = "Not Attached"
-        }
-
-        if(data.truck.lightsParkingOn === true) {
-          LightsParkingOn = "On"
-        } else if (data.trailer.attached === false) {
-          LightsParkingOn = "Off"
-        }
-
-        if(data.truck.lightsBeamLowOn === true) {
-          LightsBeamLowOn = "On"
-        } else if (data.truck.lightsBeamLowOn === false) {
-          LightsBeamLowOn = "Off"
-        }
-
-        if(data.truck.lightsBeamHighOn === true) {
-          LightsBeamHighOn = "On"
-        } else if (data.truck.lightsBeamHighOn === false) {
-          LightsBeamHighOn = "Off"
-        }
-
-        if(data.truck.lightsBeaconOn === true) {
-          LightsBeaconOn = "On"
-        } else if (data.truck.lightsBeaconOn === false) {
-          LightsBeaconOn = "Off"
-        }
-
-        if(data.truck.lightsBrakeOn === true) {
-          LightsBrakeOn = "On"
-        } else if (data.truck.lightsBrakeOn === false) {
-          LightsBrakeOn = "Off"
-        }
-
-        if(data.truck.lightsDashboardOn === true) {
-          LightsDashboardOn = "On"
-        } else if (data.truck.lightsDashboardOn === false) {
-          LightsDashboardOn = "Off"
-        }
-
-        if (Shifter === "automatic") {
-          if (Gear === 0) {
-            Gear = "N"
-          } else if (Gear === 1) {
-            Gear = "D1"
-          } else if (Gear === 2) {
-            Gear = "D2"
-          } else if (Gear === 3) {
-            Gear = "D3"
-          } else if (Gear === 4) {
-            Gear = "D4"
-          } else if (Gear === 5) {
-            Gear = "D5"
-          } else if (Gear === 6) {
-            Gear = "D6"
-          } else if (Gear === 7) {
-            Gear = "D7"
-          } else if (Gear === 8) {
-            Gear = "D8"
-          } else if (Gear === 9) {
-            Gear = "D9"
-          } else if (Gear === 10) {
-            Gear = "D10"
-          } else if (Gear === 11) {
-            Gear = "D11"
-          } else if (Gear === 12) {
-            Gear = "D12"
-          } else if (Gear === -1) {
-            Gear = "R"
-          }
-        } else if (Shifter === "manual") {
-          if (Gear === 0) {
-            Gear = "N"
-          } else if (Gear === -1) {
-            Gear = "R1"
-          } else if (Gear === -2) {
-            Gear = "R2"
-          } else if (Gear === -2) {
-            Gear = "R3"
-          }
-        }
-        
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Connected", `${Status_Connected}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Game", `${Game}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlOn", `${CruiseControlOn}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Engine", `${Engine}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Electric", `${Electric}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Wipers", `${Wipers}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.TrailerAttached", `${TrailerAttached}`);
-
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.Gear", `${Gear}`);
-
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsParkingOn", `${LightsParkingOn}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamLowOn", `${LightsBeamLowOn}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamHighOn", `${LightsBeamHighOn}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeaconOn", `${LightsBeaconOn}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBrakeOn", `${LightsBrakeOn}`);
-        TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsDashboardOn", `${LightsDashboardOn}`);
-        
-        const DashboardBlinkers = async () => {
-          if(data.truck.blinkerRightActive === true) {
-            BlinkerRightOn = "true"
-          } else {
-            BlinkerRightOn = "false"
-          }
-
-          if(data.truck.blinkerLeftActive === true) {
-            BlinkerLeftOn = "true"
-          } else {
-            BlinkerLeftOn = "false"
-          }
-
-          if(data.truck.blinkerLeftOn === true && data.truck.blinkerRightOn) {
-            HazardLightsOn = "true"
-          } else {
-            HazardLightsOn = "false"
-          }
-
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.HazardLightsOn", `${HazardLightsOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerRightOn", `${BlinkerRightOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerLeftOn", `${BlinkerLeftOn}`);  // Secret Word: White bread
-        }
-        
-        const DashboardGauge = async () => {
+        const asyncFunc = async () => {
+          data = JSON.parse(data)
+    
+          Gear = data.truck.displayedGear
+          Shifter = data.truck.shifterType 
           Speed = Math.round(data.truck.speed)
           RPM = Math.round(data.truck.engineRpm)
           CruiseControlSpeed = Math.round(data.truck.cruiseControlSpeed)
@@ -271,377 +108,551 @@ TPClient.on("Info", (data) => {
           FuelCap = Math.round(data.truck.fuelCapacity)
           Speedlimit = data.navigation.speedLimit
           
-          function isBetween(n, a, b) {
-            return (n - a) * (n - b) <= 0
-          }
-
-          async function getSpeedGauge(rotate) {
-            var getSpeedGaugeRotate = -2
-            const image = await Jimp.read
-            ('images/Gauge.png');
-           
-            image.rotate(Math.floor(getSpeedGaugeRotate - rotate))
-            image.resize(400, 400)
-            const image2 = await Jimp.read
-            ('images/SpeedGauge.png');
-            image2.composite(image, 0, 0)
-            image2.getBase64Async(Jimp.AUTO)
-            .then(base64 => {
-              SpeedGauge = base64.slice(22)
-              TPClient.stateUpdate("Nybo.ETS2.Dashboard.SpeedGauge", `${SpeedGauge}`);
-            })
-          }
-
-          async function getRPMGauge(rotate) {
-            var getRPMGaugeRotate = -2
-            const image = await Jimp.read
-            ('images/Gauge.png');
-           
-            image.rotate(Math.floor(getRPMGaugeRotate - rotate))
-            image.resize(400, 400)
-            const image2 = await Jimp.read
-            ('images/RPMGauge.png');
-            image2.composite(image, 0, 0)
-            image2.getBase64Async(Jimp.AUTO)
-            .then(base64 => {
-              RPMGauge = base64.slice(22)
-              TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPMGauge", `${RPMGauge}`);
-            })
-          }
-
-          async function getFuelGauge(rotate) {
-            var getRPMGaugeRotate = -2
-            const image = await Jimp.read
-            ('images/Gauge.png');
-           
-            image.rotate(Math.floor(getRPMGaugeRotate - rotate))
-            image.resize(400, 400)
-            const image2 = await Jimp.read
-            ('images/FuelGauge.png');
-            if(rotate > 170) {
-              image2.resize(350, 350)
-              image2.composite(image, -30, 0)
-            } else if(isBetween(rotate, 84, 96) === true) { 
-              image2.resize(400, 400)
-              image2.composite(image, 0, 40)
+          const Dashboard = async () => {
+            
+            if(data.game.connected === false) {
+              Status_Connected = "Disconnected"
+            } else if (data.game.connected === true) {
+              Status_Connected = "Connected"
             } else {
-              image2.resize(300, 300)
-              image2.composite(image, -55, -20)
+              Status_Connected = "Nothing??"
             }
-            image2.getBase64Async(Jimp.AUTO)
-            .then(base64 => {
-              FuelGauge = base64.slice(22)
-              TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelGauge", `${FuelGauge}`);
-            })
+            
+            if(data.game.gameName === "ETS2") {
+              Game = "ETS2"
+            } else if(data.game.gameName === "ATS") {
+              Game = "ATS"
+            }
+            
+            if(data.truck.cruiseControlOn === true) {
+              CruiseControlOn = "true"
+            } else if (data.game.cruiseControlOn === false) {
+              CruiseControlOn = "false"
+            }
+            
+            if(data.truck.engineOn === true) {
+              Engine = "Started"
+            } else if (data.game.engineOn === false) {
+              Engine = "Off"
+            }
+            
+            if(data.truck.electric === true) {
+              Electric = "On"
+            } else if (data.game.electric === false) {
+              Electric = "Off"
+            }
+            
+            if(data.truck.wipersOn === true) {
+              Wipers = "On"
+            } else if (data.game.wipersOn === false) {
+              Wipers = "Off"
+            }
+            
+            if(data.trailer.attached === true) {
+              TrailerAttached = "Attached"
+            } else if (data.trailer.attached === false) {
+              TrailerAttached = "Not Attached"
+            }
+            
+            if(data.truck.lightsParkingOn === true) {
+              LightsParkingOn = "On"
+            } else if (data.trailer.attached === false) {
+              LightsParkingOn = "Off"
+            }
+            
+            if(data.truck.lightsBeamLowOn === true) {
+              LightsBeamLowOn = "On"
+            } else if (data.truck.lightsBeamLowOn === false) {
+              LightsBeamLowOn = "Off"
+            }
+            
+            if(data.truck.lightsBeamHighOn === true) {
+              LightsBeamHighOn = "On"
+            } else if (data.truck.lightsBeamHighOn === false) {
+              LightsBeamHighOn = "Off"
+            }
+            
+            if(data.truck.lightsBeaconOn === true) {
+              LightsBeaconOn = "On"
+            } else if (data.truck.lightsBeaconOn === false) {
+              LightsBeaconOn = "Off"
+            }
+            
+            if(data.truck.lightsBrakeOn === true) {
+              LightsBrakeOn = "On"
+            } else if (data.truck.lightsBrakeOn === false) {
+              LightsBrakeOn = "Off"
+            }
+            
+            if(data.truck.lightsDashboardOn === true) {
+              LightsDashboardOn = "On"
+            } else if (data.truck.lightsDashboardOn === false) {
+              LightsDashboardOn = "Off"
+            }
+            
+            if (Shifter === "automatic") {
+              if (Gear === 0) {
+                Gear = "N"
+              } else if (Gear === 1) {
+                Gear = "D1"
+              } else if (Gear === 2) {
+                Gear = "D2"
+              } else if (Gear === 3) {
+                Gear = "D3"
+              } else if (Gear === 4) {
+                Gear = "D4"
+              } else if (Gear === 5) {
+                Gear = "D5"
+              } else if (Gear === 6) {
+                Gear = "D6"
+              } else if (Gear === 7) {
+                Gear = "D7"
+              } else if (Gear === 8) {
+                Gear = "D8"
+              } else if (Gear === 9) {
+                Gear = "D9"
+              } else if (Gear === 10) {
+                Gear = "D10"
+              } else if (Gear === 11) {
+                Gear = "D11"
+              } else if (Gear === 12) {
+                Gear = "D12"
+              } else if (Gear === -1) {
+                Gear = "R"
+              }
+            } else if (Shifter === "manual") {
+              if (Gear === 0) {
+                Gear = "N"
+              } else if (Gear === -1) {
+                Gear = "R1"
+              } else if (Gear === -2) {
+                Gear = "R2"
+              } else if (Gear === -2) {
+                Gear = "R3"
+              }
+            }
           }
-
-
-          async function getSpeed() { // 8 5 3
-            switch(true) {
-              case isBetween(Speed, -35, -38):
-                await getSpeedGauge(25)
-              break;
-              case isBetween(Speed, -33, -35):
-                await getSpeedGauge(22)
-              break;
-              case isBetween(Speed, -30, -33):
-                await getSpeedGauge(19)
-              break;
-              case isBetween(Speed, -28, -30):
-                await getSpeedGauge(16)
-              break;
-              case isBetween(Speed, -25, -28):
-                await getSpeedGauge(13)
-              break;
-              case isBetween(Speed, -23, -25):
-                await getSpeedGauge(10)
-              break;
-              case isBetween(Speed, -20, -23):
-                await getSpeedGauge(7)
-              break;
-              case isBetween(Speed, -18, -20):
-                await getSpeedGauge(4)
-              break;
-              case isBetween(Speed, -15, -18):
-                await getSpeedGauge(1)
-              break;
-              case isBetween(Speed, -13, -15):
-                await getSpeedGauge(-2)
-              break;
-              case isBetween(Speed, -10, -13):
-                await getSpeedGauge(-5)
-              break;
-              case isBetween(Speed, -8, -10):
-                await getSpeedGauge(-8)
-              break;
-              case isBetween(Speed, -5, -8):
-                await getSpeedGauge(-12)
-              break;
-              case isBetween(Speed, -3, -5):
-                await getSpeedGauge(-17)
-              break;
-              case isBetween(Speed, 0, -3):
-                await getSpeedGauge(-20)
-              break;
-              case isBetween(Speed, 0, 3):
-                await getSpeedGauge(-20)
-              break;
-              case isBetween(Speed, 3, 5):
-                await getSpeedGauge(-17)
-              break;
-              case isBetween(Speed, 5, 8):
-                await getSpeedGauge(-12)
-              break;
-              case isBetween(Speed, 8, 10):
-                await getSpeedGauge(-8)
-              break;
-              case isBetween(Speed, 10, 13):
-                await getSpeedGauge(-5)
-              break;
-              case isBetween(Speed, 13, 15):
-                await getSpeedGauge(-2)
-              break;
-              case isBetween(Speed, 15, 18):
-                await getSpeedGauge(1)
-              break;
-              case isBetween(Speed, 18, 20):
-                await getSpeedGauge(4)
-              break;
-              case isBetween(Speed, 20, 23):
-                await getSpeedGauge(7)
-              break;
-              case isBetween(Speed, 23, 25):
-                await getSpeedGauge(10)
-              break;
-              case isBetween(Speed, 25, 28):
-                await getSpeedGauge(13)
-              break;
-              case isBetween(Speed, 28, 30):
-                await getSpeedGauge(16)
-              break;
-              case isBetween(Speed, 30, 33):
-                await getSpeedGauge(19)
-              break;
-              case isBetween(Speed, 33, 35):
-                await getSpeedGauge(22)
-              break;
-              case isBetween(Speed, 35, 38):
-                await getSpeedGauge(25)
-              break;
-              case isBetween(Speed, 38, 40):
-                await getSpeedGauge(28)
-              break;
-              case isBetween(Speed, 40, 43):
-                await getSpeedGauge(32)
-              break;
-              case isBetween(Speed, 43, 45):
-                await getSpeedGauge(35)
-              break;
-              case isBetween(Speed, 45, 48):
-                await getSpeedGauge(39)
-              break;
-              case isBetween(Speed, 48, 50):
-                await getSpeedGauge(43)
-              break;
-              case isBetween(Speed, 50, 53):
-                await getSpeedGauge(46)
-              break;
-              case isBetween(Speed, 53, 55):
-                await getSpeedGauge(50)
-              break;
-              case isBetween(Speed, 55, 58):
-                await getSpeedGauge(57)
-              break;
-              case isBetween(Speed, 58, 60):
-                await getSpeedGauge(60)
-              break;
-              case isBetween(Speed, 60, 63):
-                await getSpeedGauge(63)
-              break;
-              case isBetween(Speed, 63, 65):
-                await getSpeedGauge(66)
-              break;
-              case isBetween(Speed, 65, 68):
-                await getSpeedGauge(69)
-              break;
-              case isBetween(Speed, 68, 70):
-                await getSpeedGauge(72)
-              break;
-              case isBetween(Speed, 70, 73):
-                await getSpeedGauge(75)
-              break;
-              case isBetween(Speed, 73, 75):
-                await getSpeedGauge(78)
-              break;
-              case isBetween(Speed, 75, 78):
-                await getSpeedGauge(81)
-              break;
-              case isBetween(Speed, 78, 80):
-                await getSpeedGauge(84)
-              break;
-              case isBetween(Speed, 80, 83):
-                await getSpeedGauge(87)
-              break;
-              case isBetween(Speed, 83, 85):
-                await getSpeedGauge(90)
-              break;
-              case isBetween(Speed, 85, 88):
-                await getSpeedGauge(93)
-              break;
-              case isBetween(Speed, 88, 90):
-                await getSpeedGauge(95)
-              break;
-              case isBetween(Speed, 90, 93):
-                await getSpeedGauge(100)
-              break;
-              case isBetween(Speed, 93, 95):
-                await getSpeedGauge(103)
-              break;
-              case isBetween(Speed, 98, 100):
-                await getSpeedGauge(105)
-              break;
-              case isBetween(Speed, 100, 103):
-                await getSpeedGauge(110)
-              break;
-              case isBetween(Speed, 103, 105):
-                await getSpeedGauge(113)
-              break;
-              case isBetween(Speed, 105, 108):
-                await getSpeedGauge(117)
-              break;
-              case isBetween(Speed, 108, 110):
-                await getSpeedGauge(120)
-              break;
-              case isBetween(Speed, 110, 113):
-                await getSpeedGauge(123)
-              break;
-              case isBetween(Speed, 113, 115):
-                await getSpeedGauge(125)
-              break;
-              case isBetween(Speed, 116, 118):
-                await getSpeedGauge(130)
-              break;
-              case isBetween(Speed, 118, 120):
-                await getSpeedGauge(135) 
-              break;
+    
+          const DashboardBlinkers = async () => {
+            if(data.truck.blinkerRightActive === true) {
+              BlinkerRightOn = "true"
+            } else {
+              BlinkerRightOn = "false"
+            }
+            
+            if(data.truck.blinkerLeftActive === true) {
+              BlinkerLeftOn = "true"
+            } else {
+              BlinkerLeftOn = "false"
+            }
+            
+            if(data.truck.blinkerLeftOn === true && data.truck.blinkerRightOn) {
+              HazardLightsOn = "true"
+            } else {
+              HazardLightsOn = "false"
+            }
+          }
+    
+          const DashboardGauge = async () => {
+           
+            function isBetween(n, a, b) {
+              return (n - a) * (n - b) <= 0
+            }
+            
+            async function getSpeedGauge(rotate) {
+              var getSpeedGaugeRotate = -2
+              const image = await Jimp.read
+              ('images/Gauge.png');
               
+              image.rotate(Math.floor(getSpeedGaugeRotate - rotate))
+              image.resize(400, 400)
+              const image2 = await Jimp.read
+              ('images/SpeedGauge.png');
+              image2.composite(image, 0, 0)
+              image2.getBase64Async(Jimp.AUTO)
+              .then(base64 => {
+                SpeedGauge = base64.slice(22)
+                TPClient.stateUpdate("Nybo.ETS2.Dashboard.SpeedGauge", `${SpeedGauge}`);
+              })
             }
-          }
-
-          async function getRPM() {
-            switch(true) {
-              case isBetween(RPM, 0, 100): 
+            
+            async function getRPMGauge(rotate) {
+              var getRPMGaugeRotate = -2
+              const image = await Jimp.read
+              ('images/Gauge.png');
+              
+              image.rotate(Math.floor(getRPMGaugeRotate - rotate))
+              image.resize(400, 400)
+              const image2 = await Jimp.read
+              ('images/RPMGauge.png');
+              image2.composite(image, 0, 0)
+              image2.getBase64Async(Jimp.AUTO)
+              .then(base64 => {
+                RPMGauge = base64.slice(22)
+                TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPMGauge", `${RPMGauge}`);
+              })
+            }
+            
+            async function getFuelGauge(rotate) {
+              var getRPMGaugeRotate = -2
+              const image = await Jimp.read
+              ('images/Gauge.png');
+              
+              image.rotate(Math.floor(getRPMGaugeRotate - rotate))
+              image.resize(400, 400)
+              const image2 = await Jimp.read
+              ('images/FuelGauge.png');
+              if(rotate > 170) {
+                image2.resize(350, 350)
+                image2.composite(image, -30, 0)
+              } else if(isBetween(rotate, 84, 96) === true) { 
+                image2.resize(400, 400)
+                image2.composite(image, 0, 40)
+              } else {
+                image2.resize(300, 300)
+                image2.composite(image, -55, -20)
+              }
+              image2.getBase64Async(Jimp.AUTO)
+              .then(base64 => {
+                FuelGauge = base64.slice(22)
+                TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelGauge", `${FuelGauge}`);
+              })
+            }
+            
+            
+            async function getSpeed() { // 8 5 3
+              switch(true) {
+                case isBetween(Speed, -35, -38):
+                  await getSpeedGauge(25)
+                  break;
+                  case isBetween(Speed, -33, -35):
+                    await getSpeedGauge(22)
+                    break;
+                    case isBetween(Speed, -30, -33):
+                      await getSpeedGauge(19)
+                      break;
+                      case isBetween(Speed, -28, -30):
+                        await getSpeedGauge(16)
+                        break;
+                        case isBetween(Speed, -25, -28):
+                          await getSpeedGauge(13)
+                          break;
+                          case isBetween(Speed, -23, -25):
+                            await getSpeedGauge(10)
+                            break;
+                            case isBetween(Speed, -20, -23):
+                              await getSpeedGauge(7)
+                              break;
+                              case isBetween(Speed, -18, -20):
+                                await getSpeedGauge(4)
+                                break;
+                                case isBetween(Speed, -15, -18):
+                                  await getSpeedGauge(1)
+                                  break;
+                                  case isBetween(Speed, -13, -15):
+                                    await getSpeedGauge(-2)
+                                    break;
+                                    case isBetween(Speed, -10, -13):
+                                      await getSpeedGauge(-5)
+                                      break;
+                                      case isBetween(Speed, -8, -10):
+                                        await getSpeedGauge(-8)
+                                        break;
+                                        case isBetween(Speed, -5, -8):
+                                          await getSpeedGauge(-12)
+                                          break;
+                                          case isBetween(Speed, -3, -5):
+                                            await getSpeedGauge(-17)
+                                            break;
+                                            case isBetween(Speed, 0, -3):
+                                              await getSpeedGauge(-20)
+                                              break;
+                                              case isBetween(Speed, 0, 3):
+                                                await getSpeedGauge(-20)
+                                                break;
+                                                case isBetween(Speed, 3, 5):
+                                                  await getSpeedGauge(-17)
+                                                  break;
+                                                  case isBetween(Speed, 5, 8):
+                                                    await getSpeedGauge(-12)
+                                                    break;
+                                                    case isBetween(Speed, 8, 10):
+                                                      await getSpeedGauge(-8)
+                                                      break;
+                                                      case isBetween(Speed, 10, 13):
+                                                        await getSpeedGauge(-5)
+                                                        break;
+                                                        case isBetween(Speed, 13, 15):
+                                                          await getSpeedGauge(-2)
+                                                          break;
+                                                          case isBetween(Speed, 15, 18):
+                                                            await getSpeedGauge(1)
+                                                            break;
+                                                            case isBetween(Speed, 18, 20):
+                                                              await getSpeedGauge(4)
+                                                              break;
+                                                              case isBetween(Speed, 20, 23):
+                                                                await getSpeedGauge(7)
+                                                                break;
+                                                                case isBetween(Speed, 23, 25):
+                                                                  await getSpeedGauge(10)
+                                                                  break;
+                                                                  case isBetween(Speed, 25, 28):
+                                                                    await getSpeedGauge(13)
+                                                                    break;
+                                                                    case isBetween(Speed, 28, 30):
+                                                                      await getSpeedGauge(16)
+                                                                      break;
+                                                                      case isBetween(Speed, 30, 33):
+                                                                        await getSpeedGauge(19)
+                                                                        break;
+                                                                        case isBetween(Speed, 33, 35):
+                                                                          await getSpeedGauge(22)
+                                                                          break;
+                                                                          case isBetween(Speed, 35, 38):
+                                                                            await getSpeedGauge(25)
+                                                                            break;
+                                                                            case isBetween(Speed, 38, 40):
+                                                                              await getSpeedGauge(28)
+                                                                              break;
+                                                                              case isBetween(Speed, 40, 43):
+                                                                                await getSpeedGauge(32)
+                                                                                break;
+                                                                                case isBetween(Speed, 43, 45):
+                                                                                  await getSpeedGauge(35)
+                                                                                  break;
+                                                                                  case isBetween(Speed, 45, 48):
+                                                                                    await getSpeedGauge(39)
+                                                                                    break;
+                                                                                    case isBetween(Speed, 48, 50):
+                                                                                      await getSpeedGauge(43)
+                                                                                      break;
+                                                                                      case isBetween(Speed, 50, 53):
+                                                                                        await getSpeedGauge(46)
+                                                                                        break;
+                                                                                        case isBetween(Speed, 53, 55):
+                                                                                          await getSpeedGauge(50)
+                                                                                          break;
+                                                                                          case isBetween(Speed, 55, 58):
+                                                                                            await getSpeedGauge(57)
+                                                                                            break;
+                                                                                            case isBetween(Speed, 58, 60):
+                                                                                              await getSpeedGauge(60)
+                                                                                              break;
+                                                                                              case isBetween(Speed, 60, 63):
+                                                                                                await getSpeedGauge(63)
+                                                                                                break;
+                                                                                                case isBetween(Speed, 63, 65):
+                                                                                                  await getSpeedGauge(66)
+                                                                                                  break;
+                                                                                                  case isBetween(Speed, 65, 68):
+                                                                                                    await getSpeedGauge(69)
+                                                                                                    break;
+                                                                                                    case isBetween(Speed, 68, 70):
+                                                                                                      await getSpeedGauge(72)
+                                                                                                      break;
+                                                                                                      case isBetween(Speed, 70, 73):
+                                                                                                        await getSpeedGauge(75)
+                                                                                                        break;
+                                                                                                        case isBetween(Speed, 73, 75):
+                                                                                                          await getSpeedGauge(78)
+                                                                                                          break;
+                                                                                                          case isBetween(Speed, 75, 78):
+                                                                                                            await getSpeedGauge(81)
+                                                                                                            break;
+                                                                                                            case isBetween(Speed, 78, 80):
+                                                                                                              await getSpeedGauge(84)
+                                                                                                              break;
+                                                                                                              case isBetween(Speed, 80, 83):
+                                                                                                                await getSpeedGauge(87)
+                                                                                                                break;
+                                                                                                                case isBetween(Speed, 83, 85):
+                                                                                                                  await getSpeedGauge(90)
+                                                                                                                  break;
+                                                                                                                  case isBetween(Speed, 85, 88):
+                                                                                                                    await getSpeedGauge(93)
+                                                                                                                    break;
+                                                                                                                    case isBetween(Speed, 88, 90):
+                                                                                                                      await getSpeedGauge(95)
+                                                                                                                      break;
+                                                                                                                      case isBetween(Speed, 90, 93):
+                                                                                                                        await getSpeedGauge(100)
+                                                                                                                        break;
+                                                                                                                        case isBetween(Speed, 93, 95):
+                                                                                                                          await getSpeedGauge(103)
+                                                                                                                          break;
+                                                                                                                          case isBetween(Speed, 98, 100):
+                                                                                                                            await getSpeedGauge(105)
+                                                                                                                            break;
+                                                                                                                            case isBetween(Speed, 100, 103):
+                                                                                                                              await getSpeedGauge(110)
+                                                                                                                              break;
+                                                                                                                              case isBetween(Speed, 103, 105):
+                                                                                                                                await getSpeedGauge(113)
+                                                                                                                                break;
+                                                                                                                                case isBetween(Speed, 105, 108):
+                                                                                                                                  await getSpeedGauge(117)
+                                                                                                                                  break;
+                                                                                                                                  case isBetween(Speed, 108, 110):
+                                                                                                                                    await getSpeedGauge(120)
+                                                                                                                                    break;
+                                                                                                                                    case isBetween(Speed, 110, 113):
+                                                                                                                                      await getSpeedGauge(123)
+                                                                                                                                      break;
+                                                                                                                                      case isBetween(Speed, 113, 115):
+                                                                                                                                        await getSpeedGauge(125)
+                                                                                                                                        break;
+                                                                                                                                        case isBetween(Speed, 116, 118):
+                                                                                                                                          await getSpeedGauge(130)
+                                                                                                                                          break;
+                                                                                                                                          case isBetween(Speed, 118, 120):
+                                                                                                                                            await getSpeedGauge(135) 
+                                                                                                                                            break;
+                                                                                                                                            
+                                                                                                                                            
+              }
+            }
+            
+            async function getRPM() {
+              switch(true) {
+                case isBetween(RPM, 0, 100): 
                 await getRPMGauge(0) 
-              break;
-              case isBetween(RPM, 100, 300): 
+                break;
+                case isBetween(RPM, 100, 300): 
                 await getRPMGauge(10) 
-              break;
-              case isBetween(RPM, 300, 400): 
+                break;
+                case isBetween(RPM, 300, 400): 
                 await getRPMGauge(20) 
-              break;
-              case isBetween(RPM, 400, 700): 
+                break;
+                case isBetween(RPM, 400, 700): 
                 await getRPMGauge(30) 
-              break;
-              case isBetween(RPM, 700, 850): 
+                break;
+                case isBetween(RPM, 700, 850): 
                 await getRPMGauge(40) 
-              break;
-              case isBetween(RPM, 850, 1000): 
+                break;
+                case isBetween(RPM, 850, 1000): 
                 await getRPMGauge(50) 
-              break;
-              case isBetween(RPM, 1000, 1200): 
+                break;
+                case isBetween(RPM, 1000, 1200): 
                 await getRPMGauge(60) 
-              break;
-              case isBetween(RPM, 1300, 1500): 
+                break;
+                case isBetween(RPM, 1300, 1500): 
                 await getRPMGauge(70) 
-              break;
-              case isBetween(RPM, 1500, 1700): 
+                break;
+                case isBetween(RPM, 1500, 1700): 
                 await getRPMGauge(80) 
-              break;
-              case isBetween(RPM, 1700, 1850): 
+                break;
+                case isBetween(RPM, 1700, 1850): 
                 await getRPMGauge(90) 
-              break;
-              case isBetween(RPM, 1850, 2000): 
+                break;
+                case isBetween(RPM, 1850, 2000): 
                 await getRPMGauge(100) 
-              break;
-              case isBetween(RPM, 2000, 2300): 
+                break;
+                case isBetween(RPM, 2000, 2300): 
                 await getRPMGauge(110) 
-              break;
-              case isBetween(RPM, 2300, 2400): 
+                break;
+                case isBetween(RPM, 2300, 2400): 
                 await getRPMGauge(120) 
-              break;
-              case isBetween(RPM, 2400, 2600): 
+                break;
+                case isBetween(RPM, 2400, 2600): 
                 await getRPMGauge(130) 
-              break;
+                break;
+              }
             }
-          }
-
-          async function getFuel() {
-
-            let FuelCap2 = FuelCap
-            let Fuel2 = Fuel
-
-            for(var i = 0;FuelCap2 > 20;i++) {
+            
+            async function getFuel() {
+              
+              let FuelCap2 = FuelCap
+              let Fuel2 = Fuel
+              
+              for(var i = 0;FuelCap2 > 20;i++) {
                 FuelCap2 = Math.round(Math.floor(FuelCap2 / 1.1))
                 Fuel2 = Math.round(Math.floor(Fuel2 / 1.1))
+              }
+              
+              let Rotate = [
+                57,
+                60,
+                66,
+                72,
+                84,
+                90,
+                96,
+                102,
+                108,
+                114,
+                117,
+                126,
+                132,
+                138,
+                144,
+                150,
+                156,
+                162,
+                168,
+                174,
+                180
+              ]
+              
+              getFuelGauge(Rotate[Fuel2])
+              
             }
-
-            let Rotate = [
-              57,
-              60,
-              66,
-              72,
-              84,
-              90,
-              96,
-              102,
-              108,
-              114,
-              117,
-              126,
-              132,
-              138,
-              144,
-              150,
-              156,
-              162,
-              168,
-              174,
-              180
-            ]
-
-            getFuelGauge(Rotate[Fuel2])
+            
+            getRPM()
+            getSpeed()
+            getFuel()
             
           }
-
-          getRPM()
-          getSpeed()
-          getFuel()
-
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed", `${Speed}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPM", `${RPM}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlSpeed", `${CruiseControlSpeed}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speedlimit", `${Speedlimit}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Fuel", `${Fuel}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelCap", `${FuelCap}`);
+          
+          await Dashboard()
+          await DashboardGauge()
+          await DashboardBlinkers()
+          
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Connected",           `${Status_Connected}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Game",                `${Game}`);
+    
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed",               `${Speed}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPM",                 `${RPM}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Gear",                `${Gear}`);
+    
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speedlimit",          `${Speedlimit}`);
+          
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Fuel",                `${Fuel}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelCap",             `${FuelCap}`);
+          
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlOn",     `${CruiseControlOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlSpeed",  `${CruiseControlSpeed}`);
+    
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Engine",              `${Engine}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Electric",            `${Electric}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Wipers",              `${Wipers}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.TrailerAttached",     `${TrailerAttached}`);
+          
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsParkingOn",     `${LightsParkingOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamLowOn",     `${LightsBeamLowOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamHighOn",    `${LightsBeamHighOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeaconOn",      `${LightsBeaconOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBrakeOn",       `${LightsBrakeOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsDashboardOn",   `${LightsDashboardOn}`);
+    
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.HazardLightsOn",      `${HazardLightsOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerRightOn",      `${BlinkerRightOn}`);
+          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerLeftOn",       `${BlinkerLeftOn}`);
+          
         }
 
-        if(GaugeOn === 1) {
-          DashboardGauge()
-        }
-        if(BlinkerOn === 1) {
-          DashboardBlinkers()
-        }
-        
+        asyncFunc()
+
       })
     })
     //*/
-
+    
     setTimeout(() => {
-      Dashboard(1, 1, 0)
+      main(0)
     }, 1000);
   }
 
-  Dashboard(1, 1, 1)
+  main(1)
 
 });
 
