@@ -170,6 +170,12 @@
           "type": "text",
           "desc": "ETS2:Speedlimit",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.SpeedlimitSign",
+          "type": "text",
+          "desc": "ETS2:SpeedlimitSign",
+          "default": "-"
         }
       ]
     }

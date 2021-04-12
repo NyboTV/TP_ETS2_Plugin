@@ -14,46 +14,7 @@ TPClient.on("Info", (data) => {
   var Retry = 0
 
   const main = async (ServerTest) => {
-    
-    if(Retry === 5) {
-      logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
-      process.exit()
-    }
-    
-    if(ServerTest === 1) {
-      const isRunning = (query, cb) => {
-        let platform = process.platform;
-        let cmd = '';
-        switch (platform) {
-          case 'win32' : cmd = `tasklist`; break;
-          case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
-          case 'linux' : cmd = `ps -A`; break;
-          default: break;
-        }
-        exec(cmd, (err, stdout, stderr) => {
-          cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-        });
-      }
-      
-      isRunning('Ets2Telemetry.exe', (status) => {
-        if(status === false) {
-          execute('./server/Ets2Telemetry.exe', function(err, data) {
-            if(err) {
-              logIt("WARN","Telemetry Server could not be Started!");
-            }
-          })
-          logIt("WARN","Telemetry Server not Found! Retry in 5 Seconds!");
-          Retry = Math.floor(Retry + 1)
-          setTimeout(() => {
-            main(1)
-          }, 5000);
-        } else {
-          main( 0)
-        }
-      })
-      return;
-    }
-    
+        
     let Status_Connected = "Disconnected"
     let Game = "Nothing Found!"
     let CruiseControlOn = "false"
@@ -87,6 +48,8 @@ TPClient.on("Info", (data) => {
     let SpeedGauge = ""
     let FuelGauge = ""
     
+    let SpeedLimitSign = ""
+    
     http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
       let data = '';  
       
@@ -103,6 +66,7 @@ TPClient.on("Info", (data) => {
           Shifter = data.truck.shifterType 
           Speed = Math.round(data.truck.speed)
           RPM = Math.round(data.truck.engineRpm)
+          RPMMax = Math.round(data.truck.engineRpmMax)
           CruiseControlSpeed = Math.round(data.truck.cruiseControlSpeed)
           Fuel = Math.round(data.truck.fuel)
           FuelCap = Math.round(data.truck.fuelCapacity)
@@ -231,6 +195,32 @@ TPClient.on("Info", (data) => {
                 Gear = "R3"
               }
             }
+
+            if (Speedlimit === 0) {
+              SpeedLimitSign = fs.readFileSync(`./images/noSpeedlimit.png`, `base64`)
+            } else {
+              const image = await Jimp.read
+              ('images/speedlimit.png');
+              image.resize(300, 300)
+              Jimp.loadFont(Jimp.FONT_SANS_128_BLACK).then(font => {
+                image.print(
+                  font, 
+                  0, 
+                  0,
+                  {
+                    text: `${Speedlimit}`,
+                    alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+                    alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
+                  },
+                  300,
+                  300,
+                )
+                image.getBase64Async(Jimp.AUTO)
+                .then(base64 => {
+                    SpeedLimitSign = base64.slice(22)
+                })
+              })
+            }
           }
     
           const DashboardBlinkers = async () => {
@@ -272,7 +262,6 @@ TPClient.on("Info", (data) => {
               image2.getBase64Async(Jimp.AUTO)
               .then(base64 => {
                 SpeedGauge = base64.slice(22)
-                TPClient.stateUpdate("Nybo.ETS2.Dashboard.SpeedGauge", `${SpeedGauge}`);
               })
             }
             
@@ -289,7 +278,6 @@ TPClient.on("Info", (data) => {
               image2.getBase64Async(Jimp.AUTO)
               .then(base64 => {
                 RPMGauge = base64.slice(22)
-                TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPMGauge", `${RPMGauge}`);
               })
             }
             
@@ -315,7 +303,6 @@ TPClient.on("Info", (data) => {
               image2.getBase64Async(Jimp.AUTO)
               .then(base64 => {
                 FuelGauge = base64.slice(22)
-                TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelGauge", `${FuelGauge}`);
               })
             }
             
@@ -514,50 +501,117 @@ TPClient.on("Info", (data) => {
             }
             
             async function getRPM() {
+              let RPM2 = 0
+
               switch(true) {
                 case isBetween(RPM, 0, 100): 
-                await getRPMGauge(0) 
+                RPM2 = 0
                 break;
                 case isBetween(RPM, 100, 300): 
-                await getRPMGauge(10) 
+                RPM2 = 1
                 break;
                 case isBetween(RPM, 300, 400): 
-                await getRPMGauge(20) 
+                RPM2 = 2
                 break;
                 case isBetween(RPM, 400, 700): 
-                await getRPMGauge(30) 
+                RPM2 = 3
                 break;
                 case isBetween(RPM, 700, 850): 
-                await getRPMGauge(40) 
+                RPM2 = 4
                 break;
                 case isBetween(RPM, 850, 1000): 
-                await getRPMGauge(50) 
+                RPM2 = 5
                 break;
                 case isBetween(RPM, 1000, 1200): 
-                await getRPMGauge(60) 
+                RPM2 = 6
                 break;
                 case isBetween(RPM, 1300, 1500): 
-                await getRPMGauge(70) 
+                RPM2 = 7
                 break;
                 case isBetween(RPM, 1500, 1700): 
-                await getRPMGauge(80) 
+                RPM2 = 8
                 break;
                 case isBetween(RPM, 1700, 1850): 
-                await getRPMGauge(90) 
+                RPM2 = 9
                 break;
                 case isBetween(RPM, 1850, 2000): 
-                await getRPMGauge(100) 
+                RPM2 = 10
                 break;
                 case isBetween(RPM, 2000, 2300): 
-                await getRPMGauge(110) 
+                RPM2 = 11
                 break;
                 case isBetween(RPM, 2300, 2400): 
-                await getRPMGauge(120) 
+                RPM2 = 12
                 break;
                 case isBetween(RPM, 2400, 2600): 
-                await getRPMGauge(130) 
+                RPM2 = 13
+                break;
+                case isBetween(RPM, 2600, 2800): 
+                RPM2 = 14
+                break;
+                case isBetween(RPM, 2800, 3000): 
+                RPM2 = 15
+                break;
+                case isBetween(RPM, 3000, 3200): 
+                RPM2 = 16
+                break;
+                case isBetween(RPM, 3200, 3400): 
+                RPM2 = 17
+                break;
+                case isBetween(RPM, 3400, 3600): 
+                RPM2 = 18
+                break;
+                case isBetween(RPM, 3600, 3800): 
+                RPM2 = 19
+                break;
+                case isBetween(RPM, 4000, 4200): 
+                RPM2 = 20
+                break;
+                case isBetween(RPM, 4200, 4400): 
+                RPM2 = 21
+                break;
+                case isBetween(RPM, 4600, 4800): 
+                RPM2 = 22
+                break;
+                case isBetween(RPM, 5000, 5200): 
+                RPM2 = 23
                 break;
               }
+
+              if(RPM > 5000) {
+                RPM2 = 24
+              }
+
+              let Rotate = [
+                0,
+                10,
+                20,
+                30,
+                40,
+                50,
+                60,
+                70,
+                80,
+                90,
+                100,
+                110,
+                120,
+                130,
+                140,
+                150,
+                160,
+                170,
+                180,
+                190,
+                200,
+                210,
+                220,
+                230,
+                240
+              ]
+              
+              getRPMGauge(Rotate[RPM2])
+              
             }
             
             async function getFuel() {
@@ -597,48 +651,64 @@ TPClient.on("Info", (data) => {
               getFuelGauge(Rotate[Fuel2])
               
             }
-            
-            getRPM()
-            getSpeed()
-            getFuel()
+
+            await getRPM()
+            await getSpeed()
+            await getFuel()
             
           }
           
           await Dashboard()
           await DashboardGauge()
           await DashboardBlinkers()
-          
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Connected",           `${Status_Connected}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Game",                `${Game}`);
-    
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speed",               `${Speed}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.RPM",                 `${RPM}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Gear",                `${Gear}`);
-    
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Speedlimit",          `${Speedlimit}`);
-          
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Fuel",                `${Fuel}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.FuelCap",             `${FuelCap}`);
-          
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlOn",     `${CruiseControlOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.CruiseControlSpeed",  `${CruiseControlSpeed}`);
-    
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Engine",              `${Engine}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Electric",            `${Electric}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.Wipers",              `${Wipers}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.TrailerAttached",     `${TrailerAttached}`);
-          
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsParkingOn",     `${LightsParkingOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamLowOn",     `${LightsBeamLowOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeamHighOn",    `${LightsBeamHighOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBeaconOn",      `${LightsBeaconOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsBrakeOn",       `${LightsBrakeOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.LightsDashboardOn",   `${LightsDashboardOn}`);
-    
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.HazardLightsOn",      `${HazardLightsOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerRightOn",      `${BlinkerRightOn}`);
-          TPClient.stateUpdate("Nybo.ETS2.Dashboard.BlinkerLeftOn",       `${BlinkerLeftOn}`);
-          
+
+          let states = [
+            { id: "Nybo.ETS2.Dashboard.Connected", value: `${Status_Connected}`},
+            { id: "Nybo.ETS2.Dashboard.Game", value: `${Game}`},
+
+            { id: "Nybo.ETS2.Dashboard.Speed", value: `${Speed}`},
+            { id: "Nybo.ETS2.Dashboard.RPM", value: `${RPM}`},
+            { id: "Nybo.ETS2.Dashboard.Gear", value: `${Gear}`},
+
+            { id: "Nybo.ETS2.Dashboard.Speedlimit", value: `${Speedlimit}`},
+
+            { id: "Nybo.ETS2.Dashboard.Fuel", value: `${Fuel}`},
+            { id: "Nybo.ETS2.Dashboard.FuelCap", value: `${FuelCap}`},
+
+            { id: "Nybo.ETS2.Dashboard.CruiseControlOn", value: `${CruiseControlOn}`},
+            { id: "Nybo.ETS2.Dashboard.CruiseControlSpeed", value: `${CruiseControlSpeed}`},
+
+            { id: "Nybo.ETS2.Dashboard.Wipers", value: `${Electric}`},
+            { id: "Nybo.ETS2.Dashboard.Engine", value: `${Engine}`},
+            { id: "Nybo.ETS2.Dashboard.Electric", value: `${Wipers}`},
+
+            { id: "Nybo.ETS2.Dashboard.TrailerAttached", value: `${TrailerAttached}`},
+
+            { id: "Nybo.ETS2.Dashboard.LightsParkingOn", value: `${LightsParkingOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBeamLowOn", value: `${LightsBeamLowOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBeamHighOn", value: `${LightsBeamHighOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBeaconOn", value: `${LightsBeaconOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBrakeOn", value: `${LightsBrakeOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsDashboardOn", value: `${LightsDashboardOn}`},
+
+            { id: "Nybo.ETS2.Dashboard.HazardLightsOn", value: `${HazardLightsOn}`},
+            { id: "Nybo.ETS2.Dashboard.BlinkerRightOn", value: `${BlinkerRightOn}`},
+            { id: "Nybo.ETS2.Dashboard.BlinkerLeftOn", value: `${BlinkerLeftOn}`},
+
+            { id: "Nybo.ETS2.Dashboard.SpeedGauge", value: `${SpeedGauge}`},
+            { id: "Nybo.ETS2.Dashboard.RPMGauge", value: `${RPMGauge}`},
+            { id: "Nybo.ETS2.Dashboard.FuelGauge", value: `${FuelGauge}`},
+
+            { id: "Nybo.ETS2.Dashboard.SpeedlimitSign", value: `${SpeedLimitSign}`},
+
+            { id: "", value: ``},
+            { id: "", value: ``}
+
+
+            //{ id: "", value: ``},
+          ];
+
+          TPClient.stateUpdateMany(states);
         }
 
         asyncFunc()
@@ -646,15 +716,61 @@ TPClient.on("Info", (data) => {
       })
     })
     //*/
-    
-    setTimeout(() => {
-      main(0)
-    }, 1000);
   }
 
-  main(1)
+  const refreshing = async () => {
+    let running = false
+    
+    if(Retry === 5) {
+        logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
+        process.exit()
+      }
+      
+      const isRunning = (query, cb) => {
+        let platform = process.platform;
+        let cmd = '';
+        switch (platform) {
+          case 'win32' : cmd = `tasklist`; break;
+          case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
+          case 'linux' : cmd = `ps -A`; break;
+          default: break;
+        }
+        exec(cmd, (err, stdout, stderr) => {
+          cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
+        });
+      }
+      
+      isRunning('Ets2Telemetry.exe', (status) => {
+        if(status === false) {
+          execute('./server/Ets2Telemetry.exe', function(err, data) {
+            if(err) {
+              logIt("WARN","Telemetry Server could not be Started!");
+            }
+          })
+          logIt("WARN","Telemetry Server not Found! Retry in 5 Seconds!");
+          Retry = Math.floor(Retry + 1)
+          running = false
+          setTimeout(() => {
+            refreshing()
+          }, 5000);
 
+        } else {
+          running = true
+          logIt("INFO", "Server loaded up! Script is starting!")
+          setInterval(() => {
+            if(running === true) {
+              main(0)
+            }
+          }, 800)
+        }
+      })
+      return;
+      
+  }
+
+  refreshing()
 });
+  
 
 TPClient.on("Settings",(data) => {
 
@@ -678,10 +794,15 @@ TPClient.on("Close", (data) => {
 //Connects and Pairs to Touch Portal via Sockete
 TPClient.connect({ pluginId });
 
+fs.appendFileSync('./log.log', `\n`)
+fs.appendFileSync('./log.log', `\n`)
+fs.appendFileSync('./log.log', `\n`)
+fs.appendFileSync('./log.log', `\n --------SCRIPT STARTED--------`)
+
 function logIt() {
   var curTime = new Date().toISOString();
   var message = [...arguments];
   var type = message.shift();
   console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
-  fs.writeFileSync('./log.log', `${curTime}:${pluginId}:${type}:${message.join(" ")}`)
+  fs.appendFileSync('./log.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }

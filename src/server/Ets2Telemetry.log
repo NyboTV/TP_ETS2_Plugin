@@ -397,3 +397,819 @@ netsh http show urlacl url=http://+:25555/
 '{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
 '{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
 '{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 01:00:40,474 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 01:00:40,604 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 01:00:40,604 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 01:00:40,609 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 01:00:40,612 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 01:00:41,139 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 01:00:41,139 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 01:00:41,382 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:02:56,462 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:02:56,586 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:02:56,586 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:02:56,591 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:02:56,593 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:02:57,127 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:02:57,127 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:08:00,986 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:08:01,304 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:08:01,305 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:08:01,317 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:08:01,319 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:08:11,815 [1   ] [ERROR] System.Exception: Failed to check Firewall rule status: 
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Edge (mDNS-In)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Microsoft Edge
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            5353
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Outlook
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            6004
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.YourPhone_1.21022.168.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.YourPhone/Resources/AppName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Ihr Smartphone
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               ETS2 TELEMETRY SERVER (PORT 25555)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            25555
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            57621-57631
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            57621
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            8088
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            8088
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            4381-4389
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            4371-4379
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Kernnetzwerk - Teredo (ICMPv6 eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Kernnetzwerk
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               ICMPv6
+                                         Typ     Code
+                                      128     Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Google Chrome (mDNS-In)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Google Chrome
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            5353
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.SeaofThieves_2.99.7774.2_x64__8wekyb3d8bbwe?ms-resource://Microsoft.SeaofThieves/Resources/PackageName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Sea of Thieves
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.WindowsStore_12101.1001.14.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.WindowsStore/Resources/StoreTitle}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Microsoft Store
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Cortana
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Cortana
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Amazon Alexa
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Amazon Alexa
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Xbox Game Bar
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Xbox Game Bar
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.ZuneMusic_10.20122.11121.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.ZuneMusic/resources/IDS_MANIFEST_MUSIC_APP_NAME}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Groove-Musik
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               OneNote for Windows 10
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             OneNote for Windows 10
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.Photos_2020.20120.4004.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.Windows.Photos/Resources/AppStoreName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Microsoft Fotos
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.ZuneVideo_10.21021.10311.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.ZuneVideo/resources/IDS_MANIFEST_VIDEO_APP_NAME}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Filme & TV
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Win32WebViewHost_10.0.19041.423_neutral_neutral_cw5n1h2txyewy?ms-resource://Windows.Win32WebViewHost/resources/DisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Desktop-App-Web-Viewer
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{microsoft.windowscommunicationsapps_16005.13426.20688.0_x64__8wekyb3d8bbwe?ms-resource://microsoft.windowscommunicationsapps/hxoutlookintl/AppManifest_OutlookDesktop_DisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Mail und Kalender
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.MicrosoftEdge_44.19041.423.0_neutral__8wekyb3d8bbwe?ms-resource://Microsoft.MicrosoftEdge/Resources/AppName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Microsoft Edge
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.Search_1.14.0.19041_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.Search/resources/PackageDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Windows Search
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.StartMenuExperienceHost_10.0.19041.610_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.StartMenuExperienceHost/StartMenuExperienceHost/PkgDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Starten
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.AAD.BrokerPlugin_1000.19041.423.0_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.AAD.BrokerPlugin/resources/PackageDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Gesch„fts- oder Schulkonto
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.CloudExperienceHost_10.0.19041.423_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.CloudExperienceHost/resources/appDescription}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Ihr Konto
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Acer Product Registration
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Acer Product Registration
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.XboxApp_48.72.4001.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.XboxApp/XboxApp.Resource/Resources/App_Title}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Xbox Console Companion
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Print 3D
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Print 3D
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.DesktopAppInstaller_1.4.3161.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.DesktopAppInstaller/Resources/appDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             App-Installer
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               opera.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               opera.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Steam
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Steam
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Steam Web Helper
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Steam Web Helper
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+
+   bei Funbit.Ets.Telemetry.Server.Helpers.ProcessHelper.RunNetShell(String arguments, String errorMessage)
+   bei Funbit.Ets.Telemetry.Server.Setup.FirewallSetup..ctor()
+2021-04-12 02:08:11,884 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:08:11,884 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:08:35,609 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:08:35,750 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:08:35,750 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:08:35,754 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:08:35,757 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:08:36,220 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:08:36,220 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:08:36,458 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:12:37,457 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:12:37,588 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:12:37,589 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:12:37,594 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:12:37,595 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:12:38,162 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:12:38,162 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:12:38,393 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:23:14,108 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:23:14,262 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:23:14,262 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:23:14,266 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:23:14,269 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:23:14,781 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:23:14,781 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:23:15,020 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:24:29,655 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:24:29,795 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:24:29,795 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:24:29,800 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:24:29,802 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:24:30,268 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:24:30,269 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:24:30,504 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:26:05,386 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:26:05,517 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:26:05,518 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:26:05,522 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:26:05,523 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:26:05,949 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:26:05,949 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:26:06,160 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:35:46,620 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:35:46,739 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:35:46,740 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:35:46,744 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:35:46,745 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:35:47,145 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:35:47,145 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:35:47,357 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:39:02,928 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:39:03,053 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:39:03,053 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:39:03,058 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:39:03,060 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:39:03,602 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:39:03,602 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:39:03,827 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-12 02:39:55,862 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-12 02:39:55,999 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-12 02:39:56,000 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-12 02:39:56,003 [1   ] [INFO ] Checking Firewall rule...
+2021-04-12 02:39:56,005 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-12 02:39:56,423 [1   ] [INFO ] Checking ACL rule status...
+2021-04-12 02:39:56,423 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-12 02:39:56,637 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
