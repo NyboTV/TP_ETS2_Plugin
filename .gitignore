@@ -4,3 +4,4 @@ src/node_modules/
 *.log
 *.log
 src/log.log
+src/log.log
