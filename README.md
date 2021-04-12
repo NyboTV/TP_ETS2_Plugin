@@ -46,7 +46,7 @@ Values: (Value1 | Value2 | ...)
     Fuel =                  "0 (up to ∞)"
     FuelCap =               "0 (up to ∞)"
 
-    Engine =                "Off | On"
+    Engine =                "Off | On" (On 0.2.5 and lower its: "Off | Started")
     Electric =              "Off | On"
     Wipers =                "Off | On"
     
