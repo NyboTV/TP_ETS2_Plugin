@@ -95,7 +95,7 @@ TPClient.on("Info", (data) => {
             }
             
             if(data.truck.engineOn === true) {
-              Engine = "Started"
+              Engine = "On"
             } else if (data.game.engineOn === false) {
               Engine = "Off"
             }
@@ -704,7 +704,6 @@ TPClient.on("Info", (data) => {
           ];
 
           TPClient.stateUpdateMany(states);
-          console.log(HazardLightsOn)
         }
 
         asyncFunc()
