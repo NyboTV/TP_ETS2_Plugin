@@ -236,7 +236,7 @@ TPClient.on("Info", (data) => {
               BlinkerLeftOn = "false"
             }
             
-            if(data.truck.blinkerLeftOn === true && data.truck.blinkerRightOn) {
+            if(data.truck.blinkerLeftOn === true) {
               HazardLightsOn = "true"
             } else {
               HazardLightsOn = "false"
@@ -661,7 +661,7 @@ TPClient.on("Info", (data) => {
           await Dashboard()
           await DashboardGauge()
           await DashboardBlinkers()
-
+          
           let states = [
             { id: "Nybo.ETS2.Dashboard.Connected", value: `${Status_Connected}`},
             { id: "Nybo.ETS2.Dashboard.Game", value: `${Game}`},
@@ -700,18 +700,15 @@ TPClient.on("Info", (data) => {
             { id: "Nybo.ETS2.Dashboard.FuelGauge", value: `${FuelGauge}`},
 
             { id: "Nybo.ETS2.Dashboard.SpeedlimitSign", value: `${SpeedLimitSign}`},
-
-            { id: "", value: ``},
-            { id: "", value: ``}
-
-
             //{ id: "", value: ``},
           ];
 
           TPClient.stateUpdateMany(states);
+          console.log(HazardLightsOn)
         }
 
         asyncFunc()
+
 
       })
     })
