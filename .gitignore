@@ -3,3 +3,4 @@ src/node_modules/
 /rawIMG/
 *.log
 *.log
+src/log.log
