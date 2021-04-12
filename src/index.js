@@ -42,7 +42,7 @@ TPClient.on("Info", (data) => {
     let TrailerAttached = "Not Attached"
     
     let CruiseControlSpeed = "0"
-    let Speedlimit = 0
+    let Speedlimit = "0"
     
     let RPMGauge = ""
     let SpeedGauge = ""
