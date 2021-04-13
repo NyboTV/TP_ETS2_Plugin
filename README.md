@@ -67,8 +67,6 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     
 ### Game Icons:
 
-
-    wawdad
     SpeedGauge =            Shows your Speed as an Image
     RPMGauge =              Shows your RPM as an Image    
     FuelGauge =             Shows your speed as an Image
