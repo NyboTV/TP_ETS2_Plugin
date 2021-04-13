@@ -18,7 +18,7 @@ Go into your Touch Portal, Click on the Wrench and click on "Import Plugin".
 
 ### How to use
 
-Create a new Page in your Touch Portal and create a new Button:
+Create a new Page in your Touch Portal and create a new Button and go to "Events" Tab. Then add an "Dynamic Text Updater" and click on the "+". Search for your Text and have Fun!:
 Now you have multiple ways to Display your Stuff.
 
 One: (The easiest)
@@ -67,3 +67,15 @@ Values: (Value1 | Value2 | ...)
     CruiseControlOn =       "false | true"
     CruiseControlSpeed =    "0 (up to ∞)"
     Speedlimit =            "0 | 10 | 20 | 30 | ..."
+
+
+Features comming soon:
+
+- More Dashboard Designs
+- MP Support
+- Some small Details
+- Some small Features
+
+If you wanna your Design or your Feature inside this Plugin create an "Pull requests" with your Wish for an Design or Feature.
+
+If you want to see how this Plugin is made check out my Twitch Channel: https://www.twitch.tv/lizard_und_nybo
