@@ -1,14 +1,23 @@
 {
   "sdk": 1,
   "version": 1,
-  "name": "TP_ETS2_Plugin",
+  "name": "TP ETS2 Plugin",
   "id": "TP_ETS2_Plugin",
   "plugin_start_cmd": "\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\ets2_plugin.exe\"",
   "configuration": {
     "colorDark": "#f54242",
     "colorLight": "#f5a442"
   },
-  
+  "settings": [
+    {
+      "name": "Truckers MP Server",
+      "default": "0",
+      "type": "number",
+      "maxength": 2,
+      "minValue": 0,
+      "maxValue": 15
+    }
+  ],
   "categories": [
     {
       "id": "Main",
@@ -60,7 +69,7 @@
         {
           "id": "Nybo.ETS2.Dashboard.FuelCap",
           "type": "text",
-          "desc": "ETS2:FuelCap",
+          "desc": "ETS2:Fuel Cap",
           "default": "-"
         },
 
@@ -68,13 +77,13 @@
         {
           "id": "Nybo.ETS2.Dashboard.CruiseControlSpeed",
           "type": "text",
-          "desc": "ETS2:CruiseControlSpeed",
+          "desc": "ETS2:Cruise Control Speed",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.CruiseControlOn",
           "type": "text",
-          "desc": "ETS2:CruiseControlOn",
+          "desc": "ETS2:Cruise Control",
           "default": "-"
         },
         {
@@ -86,7 +95,7 @@
         {
           "id": "Nybo.ETS2.Dashboard.SpeedlimitSign",
           "type": "text",
-          "desc": "ETS2:SpeedlimitSign",
+          "desc": "ETS2:Speedlimit Sign",
           "default": "-"
         },
 
@@ -114,19 +123,19 @@
         {
           "id": "Nybo.ETS2.Dashboard.BlinkerRightOn",
           "type": "text",
-          "desc": "ETS2:BlinkerRightOn",
+          "desc": "ETS2:Blinker Right",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.BlinkerLeftOn",
           "type": "text",
-          "desc": "ETS2:BlinkerLeftOn",
+          "desc": "ETS2:Blinker Left",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.HazardLights",
           "type": "text",
-          "desc": "ETS2:HazardLightsOn",
+          "desc": "ETS2:Hazard Lights",
           "default": "-"
         },
 
@@ -134,37 +143,37 @@
         {
           "id": "Nybo.ETS2.Dashboard.LightsParkingOn",
           "type": "text",
-          "desc": "ETS2:LightsParkingOn",
+          "desc": "ETS2:Lights Parking",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeamLowOn",
           "type": "text",
-          "desc": "ETS2:LightsBeamLowOn",
+          "desc": "ETS2:Lights BeamLow",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeamHighOn",
           "type": "text",
-          "desc": "ETS2:LightsBeamHighOn",
+          "desc": "ETS2:Lights BeamHigh",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBeaconOn",
           "type": "text",
-          "desc": "ETS2:LightsBeaconOn",
+          "desc": "ETS2:Lights Beacon",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsBrakeOn",
           "type": "text",
-          "desc": "ETS2:LightsBrakeOn",
+          "desc": "ETS2:Lights Brake ",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.LightsDashboardOn",
           "type": "text",
-          "desc": "ETS2:LightsDashboardOn",
+          "desc": "ETS2:Lights Dashboard",
           "default": "-"
         },
 
@@ -172,7 +181,7 @@
         {
           "id": "Nybo.ETS2.Dashboard.TrailerAttached",
           "type": "text",
-          "desc": "ETS2:TrailerAttached",
+          "desc": "ETS2:Trailer Attached",
           "default": "-"
         },
 
@@ -181,20 +190,48 @@
         {
           "id": "Nybo.ETS2.Dashboard.SpeedGauge",
           "type": "text",
-          "desc": "ETS2:SpeedGauge",
+          "desc": "ETS2:Speed Gauge",
           "default": ""
         },
         {
           "id": "Nybo.ETS2.Dashboard.RPMGauge",
           "type": "text",
-          "desc": "ETS2:RPMGauge",
+          "desc": "ETS2:RPM Gauge",
           "default": ""
         },
         {
           "id": "Nybo.ETS2.Dashboard.FuelGauge",
           "type": "text",
-          "desc": "ETS2:FuelGauge",
+          "desc": "ETS2:Fuel Gauge",
           "default": ""
+        },
+
+
+
+
+        {
+          "id": "Nybo.ETS2.Dashboard.Servers",
+          "type": "number",
+          "desc": "ETS2:TruckersMP Servers",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.ServerName",
+          "type": "text",
+          "desc": "ETS2:TruckersMP Server Name",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.ServerPlayers",
+          "type": "number",
+          "desc": "ETS2:TruckersMP Server Players",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.ServerPlayerQueue",
+          "type": "number",
+          "desc": "ETS2:TruckersMP Server Player Queue",
+          "default": "-"
         }
       ]
     }

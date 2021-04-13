@@ -2,6 +2,7 @@ const TouchPortalAPI = require('touchportal-api');
 const TPClient = new TouchPortalAPI.Client();
 const pluginId = 'TP_ETS2_Plugin';
 const http = require('http');
+const https = require('https')
 const fs = require('fs')
 const Jimp = require('jimp')
 const exec = require('child_process').exec
@@ -13,138 +14,182 @@ TPClient.on("Info", (data) => {
 
   var Retry = 0
 
-  const main = async () => {
-        
-    // MAIN STATES
-    let Status_Connected = "Disconnected"
-    let Game = "Nothing Found!"
-    
-    let Speed = "0"
-    let RPM = "0"
-
-    let Gear = "N"
-
-    let Fuel = "0"
-    let FuelCap = "0"
-
-    let CruiseControlSpeed = "0"
-    let CruiseControlOn = "false"
-    let Speedlimit = "0"
-    let SpeedLimitSign = ""
-    
-    let Electric = "Off"
-    let Engine = "Off"
-    let Wipers = "Off"
-    
-    let BlinkerRightOn = "false"
-    let BlinkerLeftOn = "false"
-    let HazardLightsOn = "false"
-    
-    let LightsParkingOn = "Off"
-    let LightsBeamLowOn = "Off"
-    let LightsBeamHighOn = "Off"
-    let LightsBeaconOn = "Off"
-    let LightsBrakeOn = "Off"
-    let LightsDashboardOn = "Off"
-    
-    let TrailerAttached = "Not Attached"
-        
-    let RPMGauge = ""
-    let SpeedGauge = ""
-    let FuelGauge = ""
-    
-
-    // SCRIPT STATES ONLY
-    let connection = false
-    let gameName = "" 
-
-    let cruiseControlOn = false
-
-    let engineOn = false
-    let electric = false
-    let wipersOn = false
-
-    let blinkerLeftActive = false
-    let blinkerRightActive = false
-    let blinkerLeftOn = false
-    let blinkerRightOn = false 
-
-    let attached = false
-
-    let lightsParkingOn = false
-    let lightsBeamLowOn = false
-    let lightsBeamHighOn = false
-    let lightsBeaconOn = false
-    let lightsBrakeOn = false
-    let lightsDashboardOn = false
-
-    let Shifter = ""
-    
-
-    const DashboardAPI = async () => {
-      http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
-        let data = '';  
-        
-        resp.on('data', (chunk) => {
-          data += chunk;
-        })
-        
-        resp.on('end', () => {
-          data = JSON.parse(data)
-
-          game = data.game
-          truck = data.truck
-          trailer = data.trailer
-          navigation = data.navigation
-
-
-          connection = game.connected
-          gameName = game.gameName
-
-          cruiseControlOn = truck.cruiseControlOn
-
-          engineOn = truck.engineOn
-          electric = truck.electric
-          wipersOn = truck.wipersOn
-
-          blinkerLeftActive = truck.blinkerLeftActive
-          blinkerRightActive = truck.blinkerRightActive
-          blinkerLeftOn = truck.blinkerLeftOn
-          blinkerRightOn = truck.blinkerRightOn
-
-          attached = trailer.attached
-
-          lightsParkingOn = truck.lightsParkingOn
-          lightsBeamLowOn = truck.lightsBeamLowOn
-          lightsBeamHighOn = truck.lightsBeamHighOn
-          lightsBeaconOn = truck.lightsBeaconOn
-          lightsBrakeOn = truck.lightsBrakeOn
-          lightsDashboardOn = truck.lightsDashboardOn
-      
-          Shifter = truck.shifterType 
-
-
-          Gear = truck.displayedGear
-          Speed = Math.round(truck.speed)
-          RPM = Math.round(truck.engineRpm)
-          RPMMax = Math.round(truck.engineRpmMax)
-          CruiseControlSpeed = Math.round(truck.cruiseControlSpeed)
-          Fuel = Math.round(truck.fuel)
-          FuelCap = Math.round(truck.fuelCapacity)
-          Speedlimit = navigation.speedLimit
   
+  // MAIN STATES
+  let Status_Connected = "Disconnected"
+  let Game = "Nothing Found!"
+  
+  let Speed = "0"
+  let RPM = "0"
+  
+  let Gear = "N"
+  
+  let Fuel = "0"
+  let FuelCap = "0"
+  
+  let CruiseControlSpeed = "0"
+  let CruiseControlOn = "false"
+  let Speedlimit = "0"
+  let SpeedLimitSign = ""
+  
+  let Electric = "Off"
+  let Engine = "Off"
+  let Wipers = "Off"
+  
+  let BlinkerRightOn = "false"
+  let BlinkerLeftOn = "false"
+  let HazardLightsOn = "false"
+  
+  let LightsParkingOn = "Off"
+  let LightsBeamLowOn = "Off"
+  let LightsBeamHighOn = "Off"
+  let LightsBeaconOn = "Off"
+  let LightsBrakeOn = "Off"
+  let LightsDashboardOn = "Off"
+  
+  let TrailerAttached = "Not Attached"
+  
+  let RPMGauge = ""
+  let SpeedGauge = ""
+  let FuelGauge = ""
+  
+  let TruckersMP_Status = ""
+  let Servers = ""
+  
+  // SCRIPT STATES ONLY
+  //MAIN
+  let connection = false
+  let gameName = "" 
+  
+  let cruiseControlOn = false
+  
+  let engineOn = false
+  let electric = false
+  let wipersOn = false
+  
+  let blinkerLeftActive = false
+  let blinkerRightActive = false
+  let blinkerLeftOn = false
+  let blinkerRightOn = false 
+  
+  let attached = false
+  
+  let lightsParkingOn = false
+  let lightsBeamLowOn = false
+  let lightsBeamHighOn = false
+  let lightsBeaconOn = false
+  let lightsBrakeOn = false
+  let lightsDashboardOn = false
+  
+  let Shifter = ""
+  
+  // SETTINGS
+  
+  let TruckersMPServer = 0
+  let ServerName = ""
+  let ServerPlayers = ""
+  let ServerPlayerQueue = ""
+  
+
+  const main = async (TruckersMPinterval) => {
+  
+    const DashboardAPI = async () => {
+      try {
+        http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
+          let data = '';  
+          
+          resp.on('data', (chunk) => {
+            data += chunk;
+          })
+          
+          resp.on('end', () => {
+            data = JSON.parse(data)
+  
+            game = data.game
+            truck = data.truck
+            trailer = data.trailer
+            navigation = data.navigation
+  
+  
+            connection = game.connected
+            gameName = game.gameName
+  
+            cruiseControlOn = truck.cruiseControlOn
+  
+            engineOn = truck.engineOn
+            electric = truck.electric
+            wipersOn = truck.wipersOn
+  
+            blinkerLeftActive = truck.blinkerLeftActive
+            blinkerRightActive = truck.blinkerRightActive
+            blinkerLeftOn = truck.blinkerLeftOn
+            blinkerRightOn = truck.blinkerRightOn
+  
+            attached = trailer.attached
+  
+            lightsParkingOn = truck.lightsParkingOn
+            lightsBeamLowOn = truck.lightsBeamLowOn
+            lightsBeamHighOn = truck.lightsBeamHighOn
+            lightsBeaconOn = truck.lightsBeaconOn
+            lightsBrakeOn = truck.lightsBrakeOn
+            lightsDashboardOn = truck.lightsDashboardOn
+        
+            Shifter = truck.shifterType 
+  
+  
+            Gear = truck.displayedGear
+            Speed = Math.round(truck.speed)
+            RPM = Math.round(truck.engineRpm)
+            RPMMax = Math.round(truck.engineRpmMax)
+            CruiseControlSpeed = Math.round(truck.cruiseControlSpeed)
+            Fuel = Math.round(truck.fuel)
+            FuelCap = Math.round(truck.fuelCapacity)
+            Speedlimit = navigation.speedLimit
+    
+          })
         })
-      })
+      } catch (error) {
+        logIt("WARN", `${error}`)
+      }
     }
 
     const TruckersMPAPI = async () => {
-
+      try {
+        https.get('https://api.truckersmp.com/v2/servers', (resp) => {
+          let data = '';  
+          
+          resp.on('data', (chunk) => {
+            data += chunk;
+          })
+          
+          resp.on('end', () => {
+            data = JSON.parse(data)
+  
+            Servers = data.response.length
+            Server = data.response[TruckersMPServer]
+  
+            ServerName = Server.name
+            ServerPlayers = Server.players
+            ServerPlayerQueue = Server.queue
+  
+  
+          })
+        })
+      } catch (error) {
+        logIt("WARN", `${error}`)
+      }
     }
     
     const asyncFunc = async () => {
       
+      if(TruckersMPinterval === 1) {
+        await TruckersMPAPI()
+      }
       await DashboardAPI()
-      await TruckersMPAPI()
+
+      const TruckersMP = async () => {
+        
+      }
       
       const Dashboard = async () => {
         
@@ -735,6 +780,9 @@ TPClient.on("Info", (data) => {
       await Dashboard()
       await DashboardGauge()
       await DashboardBlinkers()
+      if(TruckersMPinterval === 1) {
+        await TruckersMP()
+      }
       
       let states = [
         { id: "Nybo.ETS2.Dashboard.Connected", value: `${Status_Connected}`},
@@ -773,6 +821,11 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.SpeedGauge", value: `${SpeedGauge}`},
         { id: "Nybo.ETS2.Dashboard.RPMGauge", value: `${RPMGauge}`},
         { id: "Nybo.ETS2.Dashboard.FuelGauge", value: `${FuelGauge}`},
+
+        { id: "Nybo.ETS2.Dashboard.Servers", value: `${Servers}`},
+        { id: "Nybo.ETS2.Dashboard.ServerName", value: `${ServerName}`},
+        { id: "Nybo.ETS2.Dashboard.ServerPlayers", value: `${ServerPlayers}`},
+        { id: "Nybo.ETS2.Dashboard.ServerPlayerQueue", value: `${ServerPlayerQueue}`},
 
         //{ id: "", value: ``},
       ];
@@ -829,6 +882,12 @@ TPClient.on("Info", (data) => {
               main(0)
             }
           }, 800)
+
+          setInterval(() => {
+            if(running === true) {
+              main(1)
+            }
+          }, 5000)
         }
       })
       return;
@@ -841,11 +900,7 @@ TPClient.on("Info", (data) => {
 
 TPClient.on("Settings",(data) => {
 
-    //Do something with the Settings message here
-    // Note: this can be called any time settings are modified or saved in the TouchPortal Settings window.
-    /* 
-      [{"Setting 1":"Value 1"},{"Setting 2":"Value 2"},...,{"Setting N":"Value N"}]
-    */
+   TruckersMPServer = data[0]["Truckers MP Server"]
 
 });
 
