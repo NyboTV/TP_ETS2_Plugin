@@ -84,6 +84,7 @@ TPClient.on("Info", (data) => {
   let lightsDashboardOn = false
   
   let Shifter = ""
+  let Gears = 0
   
   //TruckersMP
   let Servers = ""
@@ -139,7 +140,7 @@ TPClient.on("Info", (data) => {
             Shifter = truck.shifterType 
   
   
-            Gear = truck.displayedGear
+            Gears = truck.displayedGear
             Speed = Math.round(truck.speed)
             RPM = Math.round(truck.engineRpm)
             RPMMax = Math.round(truck.engineRpmMax)
@@ -276,43 +277,43 @@ TPClient.on("Info", (data) => {
         }
         
         if (Shifter === "automatic") {
-          if (Gear === 0) {
+          if (Gears === 0) {
             Gear = "N"
-          } else if (Gear === 1) {
+          } else if (Gears === 1) {
             Gear = "D1"
-          } else if (Gear === 2) {
+          } else if (Gears === 2) {
             Gear = "D2"
-          } else if (Gear === 3) {
+          } else if (Gears === 3) {
             Gear = "D3"
-          } else if (Gear === 4) {
+          } else if (Gears === 4) {
             Gear = "D4"
-          } else if (Gear === 5) {
+          } else if (Gears === 5) {
             Gear = "D5"
-          } else if (Gear === 6) {
+          } else if (Gears === 6) {
             Gear = "D6"
-          } else if (Gear === 7) {
+          } else if (Gears === 7) {
             Gear = "D7"
-          } else if (Gear === 8) {
+          } else if (Gears === 8) {
             Gear = "D8"
-          } else if (Gear === 9) {
+          } else if (Gears === 9) {
             Gear = "D9"
-          } else if (Gear === 10) {
+          } else if (Gears === 10) {
             Gear = "D10"
-          } else if (Gear === 11) {
+          } else if (Gears === 11) {
             Gear = "D11"
-          } else if (Gear === 12) {
+          } else if (Gears === 12) {
             Gear = "D12"
-          } else if (Gear === -1) {
+          } else if (Gears === -1) {
             Gear = "R"
           }
         } else if (Shifter === "manual") {
-          if (Gear === 0) {
+          if (Gears === 0) {
             Gear = "N"
-          } else if (Gear === -1) {
+          } else if (Gears === -1) {
             Gear = "R1"
-          } else if (Gear === -2) {
+          } else if (Gears === -2) {
             Gear = "R2"
-          } else if (Gear === -2) {
+          } else if (Gears === -2) {
             Gear = "R3"
           }
         }
