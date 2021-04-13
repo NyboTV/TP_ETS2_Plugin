@@ -108,12 +108,14 @@ These Server list is getting Updated by myself. So it might be Possible that thi
 
 ### Settings
 You can set your Own Refresh interval:
-    Faster => needs more performance
+
+	Faster => needs more performance
     slower => Less performance
 
 If you changed the Refresh interval you have to restart Touch Portal
 
 You can setup the Server you want to Display.
+
     See Server List which Number is which Server
     If you changed it you have to restart Touch Portal
 
