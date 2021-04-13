@@ -30,6 +30,7 @@
     {
       "id": "Main",
       "name": "ETS2",
+      "events": [],
       "states": [
 		    {
           "id": "Nybo.ETS2.Dashboard.Connected",
@@ -214,11 +215,54 @@
         },
 
 
+        {
+          "id": "Nybo.ETS2.Dashboard.SleepTime",
+          "type": "text",
+          "desc": "ETS2:Sleep Timer",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.TrailerMass",
+          "type": "text",
+          "desc": "ETS2:Trailer Mass",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.JobIncome",
+          "type": "text",
+          "desc": "ETS2:Job Income",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.JobSourceCity",
+          "type": "text",
+          "desc": "ETS2:JOb Source City",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.JobSourceCompany",
+          "type": "text",
+          "desc": "ETS2:Job Source Company",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.JobDestinationCity",
+          "type": "text",
+          "desc": "ETS2:Job Destination City",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.JobDestinationCompany",
+          "type": "text",
+          "desc": "ETS2:Job Destination Company",
+          "default": "-"
+        },
+
 
 
         {
           "id": "Nybo.ETS2.Dashboard.Servers",
-          "type": "number",
+          "type": "text",
           "desc": "ETS2:TruckersMP Servers",
           "default": "-"
         },
@@ -230,13 +274,13 @@
         },
         {
           "id": "Nybo.ETS2.Dashboard.ServerPlayers",
-          "type": "number",
+          "type": "text",
           "desc": "ETS2:TruckersMP Server Players",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Dashboard.ServerPlayerQueue",
-          "type": "number",
+          "type": "text",
           "desc": "ETS2:TruckersMP Server Player Queue",
           "default": "-"
         }

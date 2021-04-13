@@ -37,6 +37,8 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 	Status_Connected =      "Disconnected | Connected"
     Game =                  "Nothing Found! | ETS2 | ATS"
 
+    SleepTime =             "Shows how long do you have until you have to sleep" (Idk yet in which format this is)
+
     Speed =                 "0 (up to ∞)"   [Value is an Number!]
     RPM =                   "0 (up to ∞)"   [Value is an Number!]
     Gear =                  "N (up to ∞) | D1 (up to ∞)"
@@ -64,7 +66,14 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     LightsDashboardOn =     "Off | On"
     
     TrailerAttached =       "Not Attached | Attached"
+    TrailerMass =           "Shows the Mass from a Trailer in Ton
+
+    JobSourceCity =         "Shows the Job Source City
+    JobSourceCompany =      "Shows the Job Source Company"
+    JobDestinationCity =    "Shows the Job Destination City
+    JobDestinationCompany = "Shows the Job Destination Company"
     
+
 ### Game Icons:
 
     SpeedGauge =            Shows your Speed as an Image
@@ -78,6 +87,7 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     ServerName =            "(Selected Server Name)"                    [You can Select the Server in Settings! Server List is down below!]
     ServerPLayers =         "(How Many Players are Online)"              [Value is an Number!]
     ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
+
 
 ### Server list:
 Enter the Number for following Server:
@@ -123,6 +133,12 @@ You can setup the Server you want to Display.
 - Some small Details
 - Some small Features
 - More Dashboard Designs
+
+## Todo: 
+
+1. More User Friendly Interface in Touch Portal
+2. Add some more Informations
+3. (Request more Features and it will be added here ;)
 
 ## Issue List:
 
