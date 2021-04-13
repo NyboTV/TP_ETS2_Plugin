@@ -79,7 +79,25 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     ServerPLayers =         "(How Many Players are Online"              [Value is an Number!]
     ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
 
+### Server list:
+Enter the Number for following Server:
 
+--ETS2--
+0 => EU SIM 1
+1 => EU SIM 2
+2 => EU SIM 3
+3 => US SIM
+4 => SGP SIM
+5 => EU ARC
+6 => EU PM 
+7 => EU PM ARC
+
+--ATS--
+8 => EU SIM 
+9 => US SIM
+10 => US ARC
+
+These Server list is getting Updated by myself. So it might be Possible that this list is NOT Up2Date. 
 
 
 ## Features comming soon:
