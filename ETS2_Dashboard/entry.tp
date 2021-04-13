@@ -27,6 +27,8 @@
           "desc": "ETS2:Game",
           "default": "-"
         },
+
+        
         {
           "id": "Nybo.ETS2.Dashboard.Speed",
           "type": "text",
@@ -34,11 +36,35 @@
           "default": "-"
         },
         {
-          "id": "Nybo.ETS2.Dashboard.SpeedGauge",
+          "id": "Nybo.ETS2.Dashboard.RPM",
           "type": "text",
-          "desc": "ETS2:SpeedGauge",
-          "default": ""
+          "desc": "ETS2:RPM",
+          "default": "-"
         },
+
+
+        {
+          "id": "Nybo.ETS2.Dashboard.Gear",
+          "type": "text",
+          "desc": "ETS2:Gear",
+          "default": "-"
+        },
+
+
+        {
+          "id": "Nybo.ETS2.Dashboard.Fuel",
+          "type": "text",
+          "desc": "ETS2:Fuel",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.FuelCap",
+          "type": "text",
+          "desc": "ETS2:FuelCap",
+          "default": "-"
+        },
+
+
         {
           "id": "Nybo.ETS2.Dashboard.CruiseControlSpeed",
           "type": "text",
@@ -52,39 +78,23 @@
           "default": "-"
         },
         {
-          "id": "Nybo.ETS2.Dashboard.Gear",
+          "id": "Nybo.ETS2.Dashboard.Speedlimit",
           "type": "text",
-          "desc": "ETS2:Gear",
+          "desc": "ETS2:Speedlimit",
           "default": "-"
         },
         {
-          "id": "Nybo.ETS2.Dashboard.RPM",
+          "id": "Nybo.ETS2.Dashboard.SpeedlimitSign",
           "type": "text",
-          "desc": "ETS2:RPM",
+          "desc": "ETS2:SpeedlimitSign",
           "default": "-"
         },
+
+
         {
-          "id": "Nybo.ETS2.Dashboard.RPMGauge",
+          "id": "Nybo.ETS2.Dashboard.Electric",
           "type": "text",
-          "desc": "ETS2:RPMGauge",
-          "default": ""
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.Fuel",
-          "type": "text",
-          "desc": "ETS2:Fuel",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.FuelGauge",
-          "type": "text",
-          "desc": "ETS2:FuelGauge",
-          "default": ""
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.FuelCap",
-          "type": "text",
-          "desc": "ETS2:FuelCap",
+          "desc": "ETS2:Electric",
           "default": "-"
         },
         {
@@ -94,17 +104,13 @@
           "default": "-"
         },
         {
-          "id": "Nybo.ETS2.Dashboard.Electric",
-          "type": "text",
-          "desc": "ETS2:Electric",
-          "default": "-"
-        },
-        {
           "id": "Nybo.ETS2.Dashboard.Wipers",
           "type": "text",
           "desc": "ETS2:Wipers",
           "default": "-"
         },
+
+
         {
           "id": "Nybo.ETS2.Dashboard.BlinkerRightOn",
           "type": "text",
@@ -123,6 +129,8 @@
           "desc": "ETS2:HazardLightsOn",
           "default": "-"
         },
+
+
         {
           "id": "Nybo.ETS2.Dashboard.LightsParkingOn",
           "type": "text",
@@ -159,23 +167,34 @@
           "desc": "ETS2:LightsDashboardOn",
           "default": "-"
         },
+
+
         {
           "id": "Nybo.ETS2.Dashboard.TrailerAttached",
           "type": "text",
           "desc": "ETS2:TrailerAttached",
           "default": "-"
         },
+
+
+
         {
-          "id": "Nybo.ETS2.Dashboard.Speedlimit",
+          "id": "Nybo.ETS2.Dashboard.SpeedGauge",
           "type": "text",
-          "desc": "ETS2:Speedlimit",
-          "default": "-"
+          "desc": "ETS2:SpeedGauge",
+          "default": ""
         },
         {
-          "id": "Nybo.ETS2.Dashboard.SpeedlimitSign",
+          "id": "Nybo.ETS2.Dashboard.RPMGauge",
           "type": "text",
-          "desc": "ETS2:SpeedlimitSign",
-          "default": "-"
+          "desc": "ETS2:RPMGauge",
+          "default": ""
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.FuelGauge",
+          "type": "text",
+          "desc": "ETS2:FuelGauge",
+          "default": ""
         }
       ]
     }

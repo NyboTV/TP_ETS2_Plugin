@@ -26,3 +26,27 @@
 2021-04-12T02:32:51.947Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
 2021-04-12T02:32:51.948Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
 2021-04-12T02:32:52.326Z:TP_ETS2_Plugin:INFO:Server loaded up! Script is starting!
+
+
+
+ --------SCRIPT STARTED--------
+2021-04-13T14:40:48.574Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
+2021-04-13T14:40:48.576Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
+2021-04-13T14:40:49.275Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
+2021-04-13T14:40:54.541Z:TP_ETS2_Plugin:INFO:Server loaded up! Script is starting!
+
+
+
+ --------SCRIPT STARTED--------
+2021-04-13T14:54:50.720Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
+2021-04-13T14:54:50.722Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
+2021-04-13T14:54:51.002Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
+2021-04-13T14:54:56.303Z:TP_ETS2_Plugin:INFO:Server loaded up! Script is starting!
+
+
+
+ --------SCRIPT STARTED--------
+2021-04-13T14:58:24.540Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
+2021-04-13T14:58:24.543Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
+2021-04-13T14:58:24.824Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
+2021-04-13T14:58:30.094Z:TP_ETS2_Plugin:INFO:Server loaded up! Script is starting!
