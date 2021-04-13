@@ -76,7 +76,7 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 
     Servers =               "(Depends How many Servers are Online)"     [Value is an Number!]
     ServerName =            "(Selected Server Name)"                    [You can Select the Server in Settings! Server List is down below!]
-    ServerPLayers =         "(How Many Players are Online"              [Value is an Number!]
+    ServerPLayers =         "(How Many Players are Online)"              [Value is an Number!]
     ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
 
 ### Server list:
