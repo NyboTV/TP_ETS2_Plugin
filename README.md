@@ -118,7 +118,6 @@ If you changed it you have to restart Touch Portal
 
 ## Features comming soon:
 
-- MP Support
 - More User Friendly Interface in Touch Portal
 - Some small Details
 - Some small Features
