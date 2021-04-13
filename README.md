@@ -82,7 +82,7 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 ### Server list:
 Enter the Number for following Server:
 
---ETS2--
+--ETS2
 0 => EU SIM 1
 1 => EU SIM 2
 2 => EU SIM 3
@@ -92,7 +92,7 @@ Enter the Number for following Server:
 6 => EU PM 
 7 => EU PM ARC
 
---ATS--
+--ATS
 8 => EU SIM 
 9 => US SIM
 10 => US ARC
