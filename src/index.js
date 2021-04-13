@@ -13,7 +13,7 @@ TPClient.on("Info", (data) => {
   logIt('INFO',`Starting process watcher for Windows`);
 
   var Retry = 0
-
+  
   
   // MAIN STATES
   let Status_Connected = "Disconnected"
@@ -54,7 +54,9 @@ TPClient.on("Info", (data) => {
   let FuelGauge = ""
   
   let TruckersMP_Status = ""
-  let Servers = ""
+  let ServerName = ""
+  let ServerPlayers = ""
+  let ServerPlayerQueue = ""
   
   // SCRIPT STATES ONLY
   //MAIN
@@ -83,14 +85,14 @@ TPClient.on("Info", (data) => {
   
   let Shifter = ""
   
-  // SETTINGS
-  
-  let TruckersMPServer = 0
-  let ServerName = ""
-  let ServerPlayers = ""
-  let ServerPlayerQueue = ""
-  
+  //TruckersMP
+  let Servers = ""
 
+
+  // SETTINGS
+  let TruckersMPServer = 0
+  let RefreshInterval = 800
+  
   const main = async (TruckersMPinterval) => {
   
     const DashboardAPI = async () => {
@@ -840,12 +842,13 @@ TPClient.on("Info", (data) => {
 
   const refreshing = async () => {
     let running = false
-    
-    if(Retry === 5) {
+
+    if(fs.existsSync(`./server`)) {
+      if(Retry === 5) {
         logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
         process.exit()
       }
-      
+  
       const isRunning = (query, cb) => {
         let platform = process.platform;
         let cmd = '';
@@ -873,7 +876,7 @@ TPClient.on("Info", (data) => {
           setTimeout(() => {
             refreshing()
           }, 5000);
-
+  
         } else {
           running = true
           logIt("INFO", "Server loaded up! Script is starting!")
@@ -881,8 +884,8 @@ TPClient.on("Info", (data) => {
             if(running === true) {
               main(0)
             }
-          }, 800)
-
+          }, RefreshInterval)
+  
           setInterval(() => {
             if(running === true) {
               main(1)
@@ -891,6 +894,18 @@ TPClient.on("Info", (data) => {
         }
       })
       return;
+    } else {
+
+      setInterval(() => {
+        main()
+      }, RefreshInterval);
+
+      setInterval(() => {
+        main(1)
+      }, 5000)
+    }
+    
+      
       
   }
 
@@ -900,7 +915,8 @@ TPClient.on("Info", (data) => {
 
 TPClient.on("Settings",(data) => {
 
-   TruckersMPServer = data[0]["Truckers MP Server"]
+  RefreshInterval = data[0]["Refresh Interval"]
+  TruckersMPServer = data[1]["Truckers MP Server"]
 
 });
 

@@ -10,6 +10,14 @@
   },
   "settings": [
     {
+      "name": "Refresh Interval",
+      "default": "800",
+      "type": "number",
+      "maxength": 4,
+      "minValue": 100,
+      "maxValue": 5000
+    },
+    {
       "name": "Truckers MP Server",
       "default": "0",
       "type": "number",
@@ -22,7 +30,6 @@
     {
       "id": "Main",
       "name": "ETS2",
-      "events": [],
       "states": [
 		    {
           "id": "Nybo.ETS2.Dashboard.Connected",
