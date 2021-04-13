@@ -124,6 +124,11 @@ You can setup the Server you want to Display.
 - Some small Features
 - More Dashboard Designs
 
+## Issue List:
+
+- Hazard Lights are not Working
+- some small Refresh issues (its taking sometimes longer)
+
 If you wanna your Design or your Feature inside this Plugin create an "Pull requests" with your Wish for an Design or Feature.
 
 If you want to see how this Plugin is made check out my Twitch Channel: https://www.twitch.tv/lizard_und_nybo
