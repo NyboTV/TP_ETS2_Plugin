@@ -6,10 +6,15 @@
 - Shows the Currect Speedlimit
 - Shows if your Blinkers are turned on
 - Wipers, Engine Status, Electric Status Support
+
+- MP Support
+
 - And more!
 
 How to Install
 =============
+
+You need "Touch Portal" and its Pro Version! 
 
 Just download the ".tpp" File. It is located in the "Release/Plugin" Folder.
 Go into your Touch Portal, Click on the Wrench and click on "Import Plugin".
@@ -19,32 +24,29 @@ Go into your Touch Portal, Click on the Wrench and click on "Import Plugin".
 ### How to use
 
 Create a new Page in your Touch Portal and create a new Button and go to "Events" Tab. Then add an "Dynamic Text Updater" and click on the "+". Search for the Value you want to Display and have Fun!:
-Now you have multiple ways to Display your Stuff.
 
-One: (The easiest)
+If you want to setup an "State" then you have to do something like this: 
+[Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618332385969.png)
 
-[![](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)
-
-Do something like this. It will display an Speedometer. Same with RPM.
-
-
-Two:
-You can setup your own images. Example: if RPM is 1500 Show this Pic and so on. Its kinda difficult but its Possible. If you wanna know how come to the Touch Portal Discord and ask in the #ets2-dashboard channel.
+If you want to Setup an "Image/Icon" then you have to do something like this:
+[Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)
 
 
-
-
-### Values: (Value1 | Value2 | ...)
+### Game States: ()
 
 	Status_Connected =      "Disconnected | Connected"
     Game =                  "Nothing Found! | ETS2 | ATS"
 
-    Speed =                 "0 (up to ∞)"
-    RPM =                   "0 (up to ∞)"
+    Speed =                 "0 (up to ∞)"   [Value is an Number!]
+    RPM =                   "0 (up to ∞)"   [Value is an Number!]
     Gear =                  "N (up to ∞) | D1 (up to ∞)"
 
-    Fuel =                  "0 (up to ∞)"
-    FuelCap =               "0 (up to ∞)"
+    Fuel =                  "0 (up to ∞)"   [Value is an Number!]
+    FuelCap =               "0 (up to ∞)"   [Value is an Number!]
+    
+    CruiseControlOn =       "false | true"
+    CruiseControlSpeed =    "0 (up to ∞)"
+    Speedlimit =            "0 | 10 | 20 | 30 | ..."   [Value is an Number!]
 
     Engine =                "Off | On" (On 0.2.5 and lower its: "Off | Started")
     Electric =              "Off | On"
@@ -63,18 +65,30 @@ You can setup your own images. Example: if RPM is 1500 Show this Pic and so on. 
     
     TrailerAttached =       "Not Attached | Attached"
     
-    
-    CruiseControlOn =       "false | true"
-    CruiseControlSpeed =    "0 (up to ∞)"
-    Speedlimit =            "0 | 10 | 20 | 30 | ..."
+### Game Icons:
+
+    SpeedGauge =            Shows your Speed as an Image
+    RPMGauge =              Shows your RPM as an Image    
+    FuelGauge =             Shows your speed as an Image
+
+
+### TruckersMP States:
+
+    Servers =               "(Depends How many Servers are Online)"     [Value is an Number!]
+    ServerName =            "(Selected Server Name)"                    [You can Select the Server in Settings! Server List is down below!]
+    ServerPLayers =         "(How Many Players are Online"              [Value is an Number!]
+    ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
+
+
 
 
 ## Features comming soon:
 
-- More Dashboard Designs
 - MP Support
+- More User Friendly Interface in Touch Portal
 - Some small Details
 - Some small Features
+- More Dashboard Designs
 
 If you wanna your Design or your Feature inside this Plugin create an "Pull requests" with your Wish for an Design or Feature.
 
