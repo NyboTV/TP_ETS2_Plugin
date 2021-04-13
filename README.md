@@ -18,7 +18,7 @@ Go into your Touch Portal, Click on the Wrench and click on "Import Plugin".
 
 ### How to use
 
-Create a new Page in your Touch Portal and create a new Button and go to "Events" Tab. Then add an "Dynamic Text Updater" and click on the "+". Search for your Text and have Fun!:
+Create a new Page in your Touch Portal and create a new Button and go to "Events" Tab. Then add an "Dynamic Text Updater" and click on the "+". Search for the Value you want to Display and have Fun!:
 Now you have multiple ways to Display your Stuff.
 
 One: (The easiest)
