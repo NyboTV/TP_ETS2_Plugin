@@ -34,7 +34,7 @@ You can setup your own images. Example: if RPM is 1500 Show this Pic and so on. 
 
 
 
-Values: (Value1 | Value2 | ...)
+### Values: (Value1 | Value2 | ...)
 
 	Status_Connected =      "Disconnected | Connected"
     Game =                  "Nothing Found! | ETS2 | ATS"
