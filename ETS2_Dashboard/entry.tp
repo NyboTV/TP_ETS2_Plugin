@@ -29,7 +29,7 @@
   "categories": [
     {
       "id": "Main",
-      "name": "ETS2",
+      "name": "Main",
       "events": [],
       "states": [
 		    {
@@ -43,10 +43,40 @@
           "type": "text",
           "desc": "ETS2:Game",
           "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Gauge",
+      "name": "Gauge",
+      "events": [],
+      "states": [
+		    {
+          "id": "Nybo.ETS2.Dashboard.SpeedGauge",
+          "type": "text",
+          "desc": "ETS2:Speed Gauge",
+          "default": ""
         },
-
-        
         {
+          "id": "Nybo.ETS2.Dashboard.RPMGauge",
+          "type": "text",
+          "desc": "ETS2:RPM Gauge",
+          "default": ""
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.FuelGauge",
+          "type": "text",
+          "desc": "ETS2:Fuel Gauge",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "id": "Dashboard",
+      "name": "Dashboard Stuff",
+      "events": [],
+      "states": [
+		    {
           "id": "Nybo.ETS2.Dashboard.Speed",
           "type": "text",
           "desc": "ETS2:Speed",
@@ -58,8 +88,6 @@
           "desc": "ETS2:RPM",
           "default": "-"
         },
-
-
         {
           "id": "Nybo.ETS2.Dashboard.Gear",
           "type": "text",
@@ -78,32 +106,6 @@
           "id": "Nybo.ETS2.Dashboard.FuelCap",
           "type": "text",
           "desc": "ETS2:Fuel Cap",
-          "default": "-"
-        },
-
-
-        {
-          "id": "Nybo.ETS2.Dashboard.CruiseControlSpeed",
-          "type": "text",
-          "desc": "ETS2:Cruise Control Speed",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.CruiseControlOn",
-          "type": "text",
-          "desc": "ETS2:Cruise Control",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.Speedlimit",
-          "type": "text",
-          "desc": "ETS2:Speedlimit",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.SpeedlimitSign",
-          "type": "text",
-          "desc": "ETS2:Speedlimit Sign",
           "default": "-"
         },
 
@@ -129,6 +131,57 @@
 
 
         {
+          "id": "Nybo.ETS2.Dashboard.SleepTime",
+          "type": "text",
+          "desc": "ETS2:Sleep Timer",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "SpeedLimit",
+      "name": "Speedlimit",
+      "events": [],
+      "states": [
+		    {
+          "id": "Nybo.ETS2.Dashboard.Speedlimit",
+          "type": "text",
+          "desc": "ETS2:Speedlimit",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.SpeedlimitSign",
+          "type": "text",
+          "desc": "ETS2:Speedlimit Sign",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "CruiseControl",
+      "name": "Cruise Control",
+      "events": [],
+      "states": [
+		    {
+          "id": "Nybo.ETS2.Dashboard.CruiseControlSpeed",
+          "type": "text",
+          "desc": "ETS2:Cruise Control Speed",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.CruiseControlOn",
+          "type": "text",
+          "desc": "ETS2:Cruise Control",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Indicator",
+      "name": "Indicator",
+      "events": [],
+      "states": [
+		    {
           "id": "Nybo.ETS2.Dashboard.BlinkerRightOn",
           "type": "text",
           "desc": "ETS2:Blinker Right",
@@ -145,10 +198,15 @@
           "type": "text",
           "desc": "ETS2:Hazard Lights",
           "default": "-"
-        },
-
-
-        {
+        }
+      ]
+    },
+    {
+      "id": "Lights",
+      "name": "Lights",
+      "events": [],
+      "states": [
+		    {
           "id": "Nybo.ETS2.Dashboard.LightsParkingOn",
           "type": "text",
           "desc": "ETS2:Lights Parking",
@@ -183,42 +241,18 @@
           "type": "text",
           "desc": "ETS2:Lights Dashboard",
           "default": "-"
-        },
-
-
-        {
+        }
+      ]
+    },
+    {
+      "id": "Trailer",
+      "name": "Trailer",
+      "events": [],
+      "states": [
+		    {
           "id": "Nybo.ETS2.Dashboard.TrailerAttached",
           "type": "text",
           "desc": "ETS2:Trailer Attached",
-          "default": "-"
-        },
-
-
-
-        {
-          "id": "Nybo.ETS2.Dashboard.SpeedGauge",
-          "type": "text",
-          "desc": "ETS2:Speed Gauge",
-          "default": ""
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.RPMGauge",
-          "type": "text",
-          "desc": "ETS2:RPM Gauge",
-          "default": ""
-        },
-        {
-          "id": "Nybo.ETS2.Dashboard.FuelGauge",
-          "type": "text",
-          "desc": "ETS2:Fuel Gauge",
-          "default": ""
-        },
-
-
-        {
-          "id": "Nybo.ETS2.Dashboard.SleepTime",
-          "type": "text",
-          "desc": "ETS2:Sleep Timer",
           "default": "-"
         },
         {
@@ -226,8 +260,15 @@
           "type": "text",
           "desc": "ETS2:Trailer Mass",
           "default": "-"
-        },
-        {
+        }
+      ]
+    },
+    {
+      "id": "Job",
+      "name": "Job",
+      "events": [],
+      "states": [
+		    {
           "id": "Nybo.ETS2.Dashboard.JobIncome",
           "type": "text",
           "desc": "ETS2:Job Income",
@@ -236,7 +277,7 @@
         {
           "id": "Nybo.ETS2.Dashboard.JobSourceCity",
           "type": "text",
-          "desc": "ETS2:JOb Source City",
+          "desc": "ETS2:Job Source City",
           "default": "-"
         },
         {
@@ -256,11 +297,15 @@
           "type": "text",
           "desc": "ETS2:Job Destination Company",
           "default": "-"
-        },
-
-
-
-        {
+        }
+      ]
+    },
+    {
+      "id": "TruckersMP",
+      "name": "TruckersMP",
+      "events": [],
+      "states": [
+		    {
           "id": "Nybo.ETS2.Dashboard.Servers",
           "type": "text",
           "desc": "ETS2:TruckersMP Servers",

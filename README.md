@@ -6,6 +6,7 @@
 - Shows the Currect Speedlimit
 - Shows if your Blinkers are turned on
 - Wipers, Engine Status, Electric Status Support
+- Job Informations
 
 - MP Support
 
@@ -129,16 +130,14 @@ You can setup the Server you want to Display.
 
 ## Features comming soon:
 
-- More User Friendly Interface in Touch Portal
 - Some small Details
 - Some small Features
 - More Dashboard Designs
 
 ## Todo: 
 
-1. More User Friendly Interface in Touch Portal
-2. Add some more Informations
-3. (Request more Features and it will be added here ;)
+1. Add some more Informations
+2. (Request more Features and it will be added here ;)
 
 ## Issue List:
 
