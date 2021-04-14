@@ -465,191 +465,190 @@ TPClient.on("Info", (data) => {
         switch(true) {
           case isBetween(Speed, -35, -38):
             await getSpeedGauge(25)
-            break;
-            case isBetween(Speed, -33, -35):
-              await getSpeedGauge(22)
-              break;
-              case isBetween(Speed, -30, -33):
-                await getSpeedGauge(19)
-                break;
-                case isBetween(Speed, -28, -30):
-                  await getSpeedGauge(16)
-                  break;
-                  case isBetween(Speed, -25, -28):
-                    await getSpeedGauge(13)
-                    break;
-                    case isBetween(Speed, -23, -25):
-                      await getSpeedGauge(10)
-                      break;
-                      case isBetween(Speed, -20, -23):
-                        await getSpeedGauge(7)
-                        break;
-                        case isBetween(Speed, -18, -20):
-                          await getSpeedGauge(4)
-                          break;
-                          case isBetween(Speed, -15, -18):
-                            await getSpeedGauge(1)
-                            break;
-                            case isBetween(Speed, -13, -15):
-                              await getSpeedGauge(-2)
-                              break;
-                              case isBetween(Speed, -10, -13):
-                                await getSpeedGauge(-5)
-                                break;
-                                case isBetween(Speed, -8, -10):
-                                  await getSpeedGauge(-8)
-                                  break;
-                                  case isBetween(Speed, -5, -8):
-                                    await getSpeedGauge(-12)
-                                    break;
-                                    case isBetween(Speed, -3, -5):
-                                      await getSpeedGauge(-17)
-                                      break;
-                                      case isBetween(Speed, 0, -3):
-                                        await getSpeedGauge(-20)
-                                        break;
-                                        case isBetween(Speed, 0, 3):
-                                          await getSpeedGauge(-20)
-                                          break;
-                                          case isBetween(Speed, 3, 5):
-                                            await getSpeedGauge(-17)
-                                            break;
-                                            case isBetween(Speed, 5, 8):
-                                              await getSpeedGauge(-12)
-                                              break;
-                                              case isBetween(Speed, 8, 10):
-                                                await getSpeedGauge(-8)
-                                                break;
-                                                case isBetween(Speed, 10, 13):
-                                                  await getSpeedGauge(-5)
-                                                  break;
-                                                  case isBetween(Speed, 13, 15):
-                                                    await getSpeedGauge(-2)
-                                                    break;
-                                                    case isBetween(Speed, 15, 18):
-                                                      await getSpeedGauge(1)
-                                                      break;
-                                                      case isBetween(Speed, 18, 20):
-                                                        await getSpeedGauge(4)
-                                                        break;
-                                                        case isBetween(Speed, 20, 23):
-                                                          await getSpeedGauge(7)
-                                                          break;
-                                                          case isBetween(Speed, 23, 25):
-                                                            await getSpeedGauge(10)
-                                                            break;
-                                                            case isBetween(Speed, 25, 28):
-                                                              await getSpeedGauge(13)
-                                                              break;
-                                                              case isBetween(Speed, 28, 30):
-                                                                await getSpeedGauge(16)
-                                                                break;
-                                                                case isBetween(Speed, 30, 33):
-                                                                  await getSpeedGauge(19)
-                                                                  break;
-                                                                  case isBetween(Speed, 33, 35):
-                                                                    await getSpeedGauge(22)
-                                                                    break;
-                                                                    case isBetween(Speed, 35, 38):
-                                                                      await getSpeedGauge(25)
-                                                                      break;
-                                                                      case isBetween(Speed, 38, 40):
-                                                                        await getSpeedGauge(28)
-                                                                        break;
-                                                                        case isBetween(Speed, 40, 43):
-                                                                          await getSpeedGauge(32)
-                                                                          break;
-                                                                          case isBetween(Speed, 43, 45):
-                                                                            await getSpeedGauge(35)
-                                                                            break;
-                                                                            case isBetween(Speed, 45, 48):
-                                                                              await getSpeedGauge(39)
-                                                                              break;
-                                                                              case isBetween(Speed, 48, 50):
-                                                                                await getSpeedGauge(43)
-                                                                                break;
-                                                                                case isBetween(Speed, 50, 53):
-                                                                                  await getSpeedGauge(46)
-                                                                                  break;
-                                                                                  case isBetween(Speed, 53, 55):
-                                                                                    await getSpeedGauge(50)
-                                                                                    break;
-                                                                                    case isBetween(Speed, 55, 58):
-                                                                                      await getSpeedGauge(57)
-                                                                                      break;
-                                                                                      case isBetween(Speed, 58, 60):
-                                                                                        await getSpeedGauge(60)
-                                                                                        break;
-                                                                                        case isBetween(Speed, 60, 63):
-                                                                                          await getSpeedGauge(63)
-                                                                                          break;
-                                                                                          case isBetween(Speed, 63, 65):
-                                                                                            await getSpeedGauge(66)
-                                                                                            break;
-                                                                                            case isBetween(Speed, 65, 68):
-                                                                                              await getSpeedGauge(69)
-                                                                                              break;
-                                                                                              case isBetween(Speed, 68, 70):
-                                                                                                await getSpeedGauge(72)
-                                                                                                break;
-                                                                                                case isBetween(Speed, 70, 73):
-                                                                                                  await getSpeedGauge(75)
-                                                                                                  break;
-                                                                                                  case isBetween(Speed, 73, 75):
-                                                                                                    await getSpeedGauge(78)
-                                                                                                    break;
-                                                                                                    case isBetween(Speed, 75, 78):
-                                                                                                      await getSpeedGauge(81)
-                                                                                                      break;
-                                                                                                      case isBetween(Speed, 78, 80):
-                                                                                                        await getSpeedGauge(84)
-                                                                                                        break;
-                                                                                                        case isBetween(Speed, 80, 83):
-                                                                                                          await getSpeedGauge(87)
-                                                                                                          break;
-                                                                                                          case isBetween(Speed, 83, 85):
-                                                                                                            await getSpeedGauge(90)
-                                                                                                            break;
-                                                                                                            case isBetween(Speed, 85, 88):
-                                                                                                              await getSpeedGauge(93)
-                                                                                                              break;
-                                                                                                              case isBetween(Speed, 88, 90):
-                                                                                                                await getSpeedGauge(95)
-                                                                                                                break;
-                                                                                                                case isBetween(Speed, 90, 93):
-                                                                                                                  await getSpeedGauge(100)
-                                                                                                                  break;
-                                                                                                                  case isBetween(Speed, 93, 95):
-                                                                                                                    await getSpeedGauge(103)
-                                                                                                                    break;
-                                                                                                                    case isBetween(Speed, 98, 100):
-                                                                                                                      await getSpeedGauge(105)
-                                                                                                                      break;
-                                                                                                                      case isBetween(Speed, 100, 103):
-                                                                                                                        await getSpeedGauge(110)
-                                                                                                                        break;
-                                                                                                                        case isBetween(Speed, 103, 105):
-                                                                                                                          await getSpeedGauge(113)
-                                                                                                                          break;
-                                                                                                                          case isBetween(Speed, 105, 108):
-                                                                                                                            await getSpeedGauge(117)
-                                                                                                                            break;
-                                                                                                                            case isBetween(Speed, 108, 110):
-                                                                                                                              await getSpeedGauge(120)
-                                                                                                                              break;
-                                                                                                                              case isBetween(Speed, 110, 113):
-                                                                                                                                await getSpeedGauge(123)
-                                                                                                                                break;
-                                                                                                                                case isBetween(Speed, 113, 115):
-                                                                                                                                  await getSpeedGauge(125)
-                                                                                                                                  break;
-                                                                                                                                  case isBetween(Speed, 116, 118):
-                                                                                                                                    await getSpeedGauge(130)
-                                                                                                                                    break;
-                                                                                                                                    case isBetween(Speed, 118, 120):
-                                                                                                                                      await getSpeedGauge(135) 
-                                                                                                                                      break;
-                                                                                                                                      
+          break;
+          case isBetween(Speed, -33, -35):
+            await getSpeedGauge(22)
+          break;
+          case isBetween(Speed, -30, -33):
+            await getSpeedGauge(19)
+          break;
+          case isBetween(Speed, -28, -30):
+            await getSpeedGauge(16)
+          break;
+          case isBetween(Speed, -25, -28):
+            await getSpeedGauge(13)
+          break;
+          case isBetween(Speed, -23, -25):
+            await getSpeedGauge(10)
+          break;
+          case isBetween(Speed, -20, -23):
+            await getSpeedGauge(7)
+          break;
+          case isBetween(Speed, -18, -20):
+            await getSpeedGauge(4)
+          break;
+          case isBetween(Speed, -15, -18):
+            await getSpeedGauge(1)
+          break;
+          case isBetween(Speed, -13, -15):
+            await getSpeedGauge(-2)
+          break;
+          case isBetween(Speed, -10, -13):
+            await getSpeedGauge(-5)
+          break;
+          case isBetween(Speed, -8, -10):
+            await getSpeedGauge(-8)
+          break;
+          case isBetween(Speed, -5, -8):
+            await getSpeedGauge(-12)
+          break;
+          case isBetween(Speed, -3, -5):
+            await getSpeedGauge(-17)
+          break;
+          case isBetween(Speed, 0, -3):
+            await getSpeedGauge(-20)
+          break;
+          case isBetween(Speed, 0, 3):
+            await getSpeedGauge(-20)
+          break;
+          case isBetween(Speed, 3, 5):
+            await getSpeedGauge(-17)
+          break;
+          case isBetween(Speed, 5, 8):
+            await getSpeedGauge(-12)
+          break;
+          case isBetween(Speed, 8, 10):
+            await getSpeedGauge(-8)
+          break;
+          case isBetween(Speed, 10, 13):
+            await getSpeedGauge(-5)
+          break;
+          case isBetween(Speed, 13, 15):
+            await getSpeedGauge(-2)
+          break;
+          case isBetween(Speed, 15, 18):
+            await getSpeedGauge(1)
+          break;
+          case isBetween(Speed, 18, 20):
+            await getSpeedGauge(4)
+          break;
+          case isBetween(Speed, 20, 23):
+            await getSpeedGauge(7)
+          break;
+          case isBetween(Speed, 23, 25):
+            await getSpeedGauge(10)
+          break;
+          case isBetween(Speed, 25, 28):
+            await getSpeedGauge(13)
+          break;
+          case isBetween(Speed, 28, 30):
+            await getSpeedGauge(16)
+          break;
+          case isBetween(Speed, 30, 33):
+            await getSpeedGauge(19)
+          break;
+          case isBetween(Speed, 33, 35):
+            await getSpeedGauge(22)
+          break;
+          case isBetween(Speed, 35, 38):
+            await getSpeedGauge(25)
+          break;
+          case isBetween(Speed, 38, 40):
+            await getSpeedGauge(28)
+          break;
+          case isBetween(Speed, 40, 43):
+            await getSpeedGauge(32)
+          break;
+          case isBetween(Speed, 43, 45):
+            await getSpeedGauge(35)
+          break;
+          case isBetween(Speed, 45, 48):
+            await getSpeedGauge(39)
+          break;
+          case isBetween(Speed, 48, 50):
+            await getSpeedGauge(43)
+          break;
+          case isBetween(Speed, 50, 53):
+            await getSpeedGauge(46)
+          break;
+          case isBetween(Speed, 53, 55):
+            await getSpeedGauge(50)
+          break;
+          case isBetween(Speed, 55, 58):
+            await getSpeedGauge(57)
+          break;
+          case isBetween(Speed, 58, 60):
+            await getSpeedGauge(60)
+          break;
+          case isBetween(Speed, 60, 63):
+            await getSpeedGauge(63)
+          break;
+          case isBetween(Speed, 63, 65):
+            await getSpeedGauge(66)
+          break;
+          case isBetween(Speed, 65, 68):
+            await getSpeedGauge(69)
+          break;
+          case isBetween(Speed, 68, 70):
+            await getSpeedGauge(72)
+          break;
+          case isBetween(Speed, 70, 73):
+            await getSpeedGauge(75)
+          break;
+          case isBetween(Speed, 73, 75):
+            await getSpeedGauge(78)
+          break;
+          case isBetween(Speed, 75, 78):
+            await getSpeedGauge(81)
+          break;
+          case isBetween(Speed, 78, 80):
+            await getSpeedGauge(84)
+          break;
+          case isBetween(Speed, 80, 83):
+            await getSpeedGauge(87)
+          break;
+          case isBetween(Speed, 83, 85):
+            await getSpeedGauge(90)
+          break;
+          case isBetween(Speed, 85, 88):
+            await getSpeedGauge(93)
+          break;
+          case isBetween(Speed, 88, 90):
+            await getSpeedGauge(95)
+          break;
+          case isBetween(Speed, 90, 93):
+            await getSpeedGauge(100)
+          break;
+          case isBetween(Speed, 93, 95):
+            await getSpeedGauge(103)
+          break;
+          case isBetween(Speed, 98, 100):
+            await getSpeedGauge(105)
+          break;
+          case isBetween(Speed, 100, 103):
+            await getSpeedGauge(110)
+          break;
+          case isBetween(Speed, 103, 105):
+            await getSpeedGauge(113)
+          break;
+          case isBetween(Speed, 105, 108):
+            await getSpeedGauge(117)
+          break;
+          case isBetween(Speed, 108, 110):
+            await getSpeedGauge(120)
+          break;
+          case isBetween(Speed, 110, 113):
+            await getSpeedGauge(123)
+          break;
+          case isBetween(Speed, 113, 115):
+            await getSpeedGauge(125)
+          break;
+          case isBetween(Speed, 116, 118):
+            await getSpeedGauge(130)
+          break;
+          case isBetween(Speed, 118, 120):
+            await getSpeedGauge(135) 
+          break;
                                                                                                                                       
         }
       }
