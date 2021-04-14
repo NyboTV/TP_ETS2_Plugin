@@ -13,9 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "fs": "^0.0.1-security",
-    "http": "^0.0.1-security",
     "https": "^1.0.0",
     "jimp": "^0.16.1",
+    "request": "^2.88.2",
     "touchportal-api": "^2.0.1"
   }
 }

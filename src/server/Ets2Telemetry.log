@@ -1415,3 +1415,569 @@ netsh http show urlacl url=http://+:25555/
 '{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
 '{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
 '{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:11:42,809 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:11:42,956 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:11:42,957 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:11:42,960 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:11:42,962 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:11:43,413 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:11:43,413 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:11:43,640 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:12:40,022 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:12:40,132 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:12:40,132 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:12:40,136 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:12:40,138 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:12:40,520 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:12:40,520 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:12:40,734 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:13:24,231 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:13:24,346 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:13:24,346 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:13:24,351 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:13:24,353 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:13:24,713 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:13:24,713 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:13:24,918 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:14:38,558 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:14:38,669 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:14:38,670 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:14:38,673 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:14:38,675 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:14:39,043 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:14:39,043 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:14:39,240 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:16:52,641 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:16:52,750 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:16:52,750 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:16:52,754 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:16:52,755 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:16:53,110 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:16:53,110 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:16:53,309 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:18:36,234 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:18:36,344 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:18:36,344 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:18:36,348 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:18:36,349 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:18:36,700 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:18:36,700 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:18:36,906 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:22:55,064 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:22:55,175 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:22:55,176 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:22:55,180 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:22:55,181 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:22:55,541 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:22:55,541 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:22:55,739 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:23:56,394 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:23:56,510 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:23:56,511 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:23:56,515 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:23:56,516 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:23:56,883 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:23:56,883 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:23:57,090 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:24:17,972 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:24:18,081 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:24:18,082 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:24:18,085 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:24:18,087 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:24:18,445 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:24:18,445 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:24:18,644 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:25:02,731 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:25:02,842 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:25:02,843 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:25:02,847 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:25:02,848 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:25:03,200 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:25:03,200 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:25:03,403 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:26:26,314 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:26:26,425 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:26:26,426 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:26:26,429 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:26:26,431 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:26:26,781 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:26:26,781 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:26:26,980 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:27:14,363 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:27:14,479 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:27:14,480 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:27:14,484 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:27:14,485 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:27:14,850 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:27:14,851 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:27:15,058 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:27:22,979 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:27:23,093 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:27:23,094 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:27:23,099 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:27:23,100 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:27:23,485 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:27:23,485 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:27:23,692 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:27:32,630 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:27:32,743 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:27:32,743 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:27:32,747 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:27:32,749 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:27:33,140 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:27:33,140 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:27:33,344 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:27:49,120 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:27:49,232 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:27:49,233 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:27:49,236 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:27:49,238 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:27:49,595 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:27:49,595 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:27:49,791 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:27:55,591 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:27:55,710 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:27:55,711 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:27:55,714 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:27:55,716 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:27:56,086 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:27:56,086 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:27:56,299 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:30:46,452 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:30:46,565 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:30:46,566 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:30:46,569 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:30:46,571 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:30:46,919 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:30:46,919 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:30:47,120 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:30:51,711 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:30:51,821 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:30:51,821 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:30:51,825 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:30:51,827 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:30:52,195 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:30:52,195 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:30:52,397 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:31:03,556 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:31:03,666 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:31:03,667 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:31:03,671 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:31:03,672 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:31:04,041 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:31:04,041 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:31:04,236 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:35:33,641 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:35:33,754 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:35:33,754 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:35:33,758 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:35:33,759 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:35:34,173 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:35:34,173 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:35:34,378 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:35:44,377 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:35:44,486 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:35:44,486 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:35:44,490 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:35:44,491 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:35:44,864 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:35:44,864 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:35:45,065 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:35:49,755 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:35:49,863 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:35:49,863 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:35:49,867 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:35:49,868 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:35:50,219 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:35:50,219 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:35:50,415 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:37:50,655 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:37:50,772 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:37:50,773 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:37:50,778 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:37:50,780 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:37:51,134 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:37:51,134 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:37:51,334 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:37:59,266 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:37:59,376 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:37:59,377 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:37:59,381 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:37:59,383 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:37:59,744 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:37:59,744 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:38:23,802 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:38:23,914 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:38:23,915 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:38:23,918 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:38:23,920 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:38:24,287 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:38:24,287 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:38:24,486 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:38:35,850 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:38:35,970 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:38:35,970 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:38:35,974 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:38:35,977 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:38:36,320 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:38:36,320 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:38:36,520 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:42:48,247 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:42:48,358 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:42:48,358 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:42:48,362 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:42:48,363 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:42:48,720 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:42:48,720 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:42:48,919 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:43:59,916 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:44:00,025 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:44:00,026 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:44:00,030 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:44:00,031 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:44:00,388 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:44:00,389 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:44:00,593 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:44:09,411 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:44:09,522 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:44:09,523 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:44:09,526 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:44:09,528 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:44:09,882 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:44:09,882 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:44:10,082 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:44:37,237 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:44:37,350 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:44:37,350 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:44:37,354 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:44:37,355 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-04-15 01:44:37,762 [1   ] [INFO ] Checking ACL rule status...
+2021-04-15 01:44:37,762 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-04-15 01:44:37,966 [1   ] [INFO ] Found following network interfaces: 
+'{E7866865-5E07-406D-AEEA-1E516D5AD60E}': 'Hamachi' (Up), 
+'{73AD02C9-8DE9-407C-85C8-5DE80F2B6214}': 'Ethernet' (Up), 
+'{66E2DA04-0D51-4F38-A4D0-CE13598BE77A}': 'LAN-Verbindung' (Down), 
+'{E2E97323-E848-4426-BE7D-7B86465259E8}': 'LAN-Verbindung 2' (Down), 
+'{EFAA69B5-DE43-4701-8CC4-A6553CAC5301}': 'WLAN' (Down), 
+'{3555B6A7-70D0-4DC0-A9DC-0F5E5E1AC1C7}': 'LAN-Verbindung* 1' (Down), 
+'{3FD1BFFC-C695-4A4A-AEF0-814A38F36D9F}': 'LAN-Verbindung* 2' (Down), 
+'{FA97FE05-F620-46FE-BBC1-07984128E200}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{B4910C04-5D12-11EB-819F-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-04-15 01:44:44,898 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-04-15 01:44:45,012 [1   ] [INFO ] Checking plugin DLL files...
+2021-04-15 01:44:45,012 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-04-15 01:44:45,015 [1   ] [INFO ] Checking Firewall rule...
+2021-04-15 01:44:45,018 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all

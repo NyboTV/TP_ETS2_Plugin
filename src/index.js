@@ -1,7 +1,7 @@
 const TouchPortalAPI = require('touchportal-api');
 const TPClient = new TouchPortalAPI.Client();
 const pluginId = 'TP_ETS2_Plugin';
-const http = require('http');
+const http = require('request');
 const https = require('https')
 const fs = require('fs')
 const Jimp = require('jimp')
@@ -12,8 +12,8 @@ TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
 
-  var Retry = 0
-  
+  let Retry = 0
+  let error = 0
   
   // MAIN STATES
   let Status_Connected = "Disconnected"
@@ -113,46 +113,48 @@ TPClient.on("Info", (data) => {
   // SETTINGS
   let TruckersMPServer = 0
   let RefreshInterval = 800
+
+  let test = 0
   
   const main = async (TruckersMPinterval) => {
   
     const DashboardAPI = async () => {
       try {
-        http.get('http://localhost:25555/api/ets2/telemetry', (resp) => {
+        http.get('http://localhost:25555/api/ets2/telemetry', function(err, resp, body) {
           let data = '';  
-          
-          resp.on('data', (chunk) => {
-            data += chunk;
-          })
-          
-          resp.on('end', () => {
+
+          if(err) {
+            console.log(err)
+          }
+          data = body
+          try {
             data = JSON.parse(data)
-  
+            
             game = data.game
             truck = data.truck
             trailer = data.trailer
             job = data.job
             navigation = data.navigation
-  
+            
             //Main
             SleepTime = game.nextRestStopTime
-
+            
             //Game
             connection = game.connected
             gameName = game.gameName
-  
+            
             //Truck
             cruiseControlOn = truck.cruiseControlOn
-  
+            
             engineOn = truck.engineOn
             electric = truck.electric
             wipersOn = truck.wipersOn
-  
+            
             blinkerLeftActive = truck.blinkerLeftActive
             blinkerRightActive = truck.blinkerRightActive
             blinkerLeftOn = truck.blinkerLeftOn
             blinkerRightOn = truck.blinkerRightOn
-  
+            
             lightsParkingOn = truck.lightsParkingOn
             lightsBeamLowOn = truck.lightsBeamLowOn
             lightsBeamHighOn = truck.lightsBeamHighOn
@@ -163,17 +165,17 @@ TPClient.on("Info", (data) => {
             //TRAILER
             attached = trailer.attached
             TrailerMass = trailer.mass
-
+            
             //JOB
             Jobincome = job.income
             JobSourceCity = job.sourceCity
             JobSourceCompany = job.sourceCompany
             JobDestinationCity = job.destinationCity
             JobDestinationCompany = job.destinationCompany
-
+            
             //SCRIPT
             Shifter = truck.shifterType
-  
+            
             Gears = truck.displayedGear
             Speed = Math.round(truck.speed)
             RPM = Math.round(truck.engineRpm)
@@ -182,8 +184,10 @@ TPClient.on("Info", (data) => {
             Fuel = Math.round(truck.fuel)
             FuelCap = Math.round(truck.fuelCapacity)
             Speedlimit = navigation.speedLimit
-    
-          })
+          } catch (error) {
+            logIt("WARN", `ERROR: ${error}`)
+            error = 1
+          }
         })
       } catch (error) {
         logIt("WARN", `${error}`)
@@ -881,20 +885,14 @@ TPClient.on("Info", (data) => {
       ];
 
       TPClient.stateUpdateMany(states);
-      console.log(SleepTimer)
       
-      setTimeout(() => {
-        main()
-      }, RefreshInterval);
     }
 
     asyncFunc()
-
-    //*/
   }
 
+  let running = false
   const refreshing = async () => {
-    let running = false
 
     if(fs.existsSync(`./server`)) {
       if(Retry === 5) {
@@ -931,19 +929,25 @@ TPClient.on("Info", (data) => {
           }, 5000);
   
         } else {
+          if(running === false) {
+            logIt("INFO", "Server loaded up! Script is starting!")
+          }
+
           running = true
-          logIt("INFO", "Server loaded up! Script is starting!")
           setTimeout(() => {
-            if(running === true) {
+            if(running === true && error === 0) {
               main(0)
+            } else if(error === 1) {
+              setTimeout(() => {
+                logIt("WARN", "ERROR ON LOCAL SERVER! RETRY IN 2 SECONDS!")
+                error = 0
+                refreshing()
+              }, 2000)
             }
-          }, 0)
+            refreshing()
+          }, RefreshInterval)
   
-          setInterval(() => {
-            if(running === true) {
-              main(1)
-            }
-          }, 5000)
+          
         }
       })
       return;
@@ -951,16 +955,16 @@ TPClient.on("Info", (data) => {
 
       setTimeout(() => {
         main()
-      }, 0);
-
-      setInterval(() => {
-        main(1)
-      }, 5000)
+        refreshing()
+      }, RefreshInterval);
     }
-    
-      
-      
   }
+
+  setInterval(() => {
+    if(running === true) {
+      main(1)
+    }
+  }, 5000)
 
   refreshing()
 });
@@ -985,10 +989,12 @@ TPClient.on("Close", (data) => {
 //Connects and Pairs to Touch Portal via Sockete
 TPClient.connect({ pluginId });
 
-fs.appendFileSync('./log.log', `\n`)
-fs.appendFileSync('./log.log', `\n`)
-fs.appendFileSync('./log.log', `\n`)
-fs.appendFileSync('./log.log', `\n --------SCRIPT STARTED--------`)
+let firstStart = 1
+
+if(firstStart === 1) {
+  fs.writeFileSync('./log.log', `\n --------SCRIPT STARTED--------`)
+  firstStart = 0
+}
 
 function logIt() {
   var curTime = new Date().toISOString();

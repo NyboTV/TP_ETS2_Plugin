@@ -147,3 +147,13 @@ You can setup the Server you want to Display.
 If you wanna your Design or your Feature inside this Plugin create an "Pull requests" with your Wish for an Design or Feature.
 
 If you want to see how this Plugin is made check out my Twitch Channel: https://www.twitch.tv/lizard_und_nybo
+
+
+# Changelog
+
+### Changelog 0.4.6
+- Added new Log System for better support
+- Added new Error handling. If the Server gets closed, it will restart on his own.
+
+
+Changelog has been Added in Update 0.4.6
