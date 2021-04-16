@@ -130,14 +130,16 @@ You can setup the Server you want to Display.
 
 ## Features comming soon:
 
+- ATS Support
 - Some small Details
 - Some small Features
 - More Dashboard Designs
 
 ## Todo: 
 
-1. Add some more Informations
-2. (Request more Features and it will be added here ;)
+1. ATS Support
+2. Add some more Informations
+3. (Request more Features and it will be added here ;)
 
 ## Issue List:
 
