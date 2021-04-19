@@ -1,3 +1,6 @@
+# PROJECT IS PAUSED! NO NEW FEATURES UNTIL 01.05.21
+Bugs still get fixed if reported!
+
 # TP_ETS2_Plugin
 
 ### Features
