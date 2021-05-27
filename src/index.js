@@ -19,9 +19,14 @@ TPClient.on("Info", (data) => {
   let Status_Connected = "Disconnected"
   let Game = "Nothing Found!"
 
+  let gameVersion = ""
+  let pause = "false"
+
   let SleepTime = ""
   
   //Truck
+  let truckType = ""
+
   let Speed = "0"
   let RPM = "0"
   
@@ -50,9 +55,21 @@ TPClient.on("Info", (data) => {
   let LightsBrakeOn = "Off"
   let LightsDashboardOn = "Off"
   
+  let parkBrakeOn = "false"
+  let motorBrakeOn = "false"
+
+  let licensePlate = ""
+
+  let batteryVoltageWarningOn = "false"
+  let oilPressureWarningOn = "false"
+  let waterTemperatureWarningOn = "false"
+  let adblueWarningOn = "false"
+  let fuelWarningOn = "false"
+
   //TRAILER
   let TrailerAttached = "Not Attached"
-  let TrailerMass = ""
+  let trailerMass = ""
+  let trailerBodyType = ""
   
   //JOB
   let Jobincome = ""
@@ -60,6 +77,14 @@ TPClient.on("Info", (data) => {
   let JobSourceCompany = ""
   let JobDestinationCity = ""
   let JobDestinationCompany = ""
+
+  //JOBEVENT
+  let jobEvent = ""
+
+  //CARGO
+  let cargoLoaded = "false"
+  let cargo = ""
+  let cargoDamage = ""
 
   //ICON
   let RPMGauge = ""
@@ -132,18 +157,24 @@ TPClient.on("Info", (data) => {
             
             game = data.game
             truck = data.truck
-            trailer = data.trailer
+            trailer1 = data.trailer1
+            cargo = data.cargo
             job = data.job
             navigation = data.navigation
-            
+            jobEvent = data.jobEvent
+
             //Main
             SleepTime = game.nextRestStopTime
             
             //Game
             connection = game.connected
             gameName = game.gameName
+            gameVersion = game.version
+            pause = game.paused
             
             //Truck
+            truckType = truck.make
+
             cruiseControlOn = truck.cruiseControlOn
             
             engineOn = truck.engineOn
@@ -154,6 +185,9 @@ TPClient.on("Info", (data) => {
             blinkerRightActive = truck.blinkerRightActive
             blinkerLeftOn = truck.blinkerLeftOn
             blinkerRightOn = truck.blinkerRightOn
+
+            parkBrakeOn = truck.parkBrakeOn
+            motorBrakeOn = truck.motorBrakeOn
             
             lightsParkingOn = truck.lightsParkingOn
             lightsBeamLowOn = truck.lightsBeamLowOn
@@ -161,10 +195,24 @@ TPClient.on("Info", (data) => {
             lightsBeaconOn = truck.lightsBeaconOn
             lightsBrakeOn = truck.lightsBrakeOn
             lightsDashboardOn = truck.lightsDashboardOn
+
+            licensePlate = truck.licensePlate
+
+            batteryVoltageWarningOn = truck.batteryVoltageWarningOn
+            oilPressureWarningOn = truck.oilPressureWarningOn
+            waterTemperatureWarningOn = truck.waterTemperatureWarningOn
+            adblueWarningOn = truck.adblueWarningOn
+            fuelWarningOn = truck.fuelWarningOn
             
             //TRAILER
-            attached = trailer.attached
-            TrailerMass = trailer.mass
+            attached = trailer1.attached
+            trailerMass = trailer1.mass
+            trailerBodyType = trailer1.bodyType
+
+            //CARGO
+            cargoLoaded = cargo.cargoLoaded
+            cargo = cargo.cargo
+            cargoDamage = jobEvent.cargoDamage
             
             //JOB
             Jobincome = job.income
@@ -378,7 +426,7 @@ TPClient.on("Info", (data) => {
       SleepTime = new Date(SleepTime)
       SleepTimer = SleepTime.getHours()
 
-      TrailerMass = Math.floor(TrailerMass / 1000)
+      trailerMass = Math.floor(trailerMass / 1000)
     }
 
     const DashboardBlinkers = async () => {
@@ -872,7 +920,7 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.ServerPlayerQueue", value: `${ServerPlayerQueue}`},
 
         { id: "Nybo.ETS2.Dashboard.SleepTime", value: `${SleepTimer}`},
-        { id: "Nybo.ETS2.Dashboard.TrailerMass", value: `${TrailerMass} Ton`},
+        { id: "Nybo.ETS2.Dashboard.TrailerMass", value: `${trailerMass} Ton`},
         { id: "Nybo.ETS2.Dashboard.JobIncome", value: `${Jobincome} €`},
 
         { id: "Nybo.ETS2.Dashboard.JobSourceCity", value: `${JobSourceCity}`},
@@ -881,10 +929,30 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.JobDestinationCity", value: `${JobDestinationCity}`},
         { id: "Nybo.ETS2.Dashboard.JobDestinationCompany", value: `${JobDestinationCompany}`},
 
-        //{ id: "", value: ``},
+        // NEW IN 0.5.0
+
+        { id: "Nybo.ETS2.Dashboard.gameVersion", value: `${gameVersion}`},
+        { id: "Nybo.ETS2.Dashboard.pause", value: `${pause}`},
+        { id: "Nybo.ETS2.Dashboard.truckType", value: `${truckType}`},
+        { id: "Nybo.ETS2.Dashboard.parkBrakeOn", value: `${parkBrakeOn}`},
+        { id: "Nybo.ETS2.Dashboard.motorBrakeOn", value: `${motorBrakeOn}`},
+        { id: "Nybo.ETS2.Dashboard.batteryLow", value: `${batteryVoltageWarningOn}`},
+        { id: "Nybo.ETS2.Dashboard.oilLow", value: `${oilPressureWarningOn}`},
+        { id: "Nybo.ETS2.Dashboard.waterTempHigh", value: `${waterTemperatureWarningOn}`},
+        { id: "Nybo.ETS2.Dashboard.adblueLow", value: `${adblueWarningOn}`},
+        { id: "Nybo.ETS2.Dashboard.fuelLow", value: `${fuelWarningOn}`},
+        { id: "Nybo.ETS2.Dashboard.trailerBodyType", value: `${trailerBodyType}`},
+        { id: "Nybo.ETS2.Dashboard.cargoLoaded", value: `${cargoLoaded}`},
+        { id: "Nybo.ETS2.Dashboard.cargo", value: `${cargo}`},
+        { id: "Nybo.ETS2.Dashboard.cargoDamage", value: `${cargoDamage}`},
+
+
+        //{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
       ];
 
       TPClient.stateUpdateMany(states);
+
+      console.log(`${gameVersion} || ${pause} || ${truckType} || ${parkBrakeOn} || ${motorBrakeOn} || ${batteryVoltageWarningOn} || ${oilPressureWarningOn} || ${waterTemperatureWarningOn} || ${adblueWarningOn} || ${fuelWarningOn} || ${trailerBodyType} || ${cargo} || ${cargoDamage} || ${cargoLoaded} `)
       
     }
 
