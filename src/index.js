@@ -19,7 +19,7 @@ TPClient.on("Info", (data) => {
   let Status_Connected = "Disconnected"
   let Game = "Nothing Found!"
 
-  let gameVersion = ""
+  let serverVersion = "0.5.0"
   let pause = "false"
 
   let SleepTime = ""
@@ -169,7 +169,7 @@ TPClient.on("Info", (data) => {
             //Game
             connection = game.connected
             gameName = game.gameName
-            gameVersion = game.version
+            serverVersion = serverVersion
             pause = game.paused
             
             //Truck
@@ -212,7 +212,7 @@ TPClient.on("Info", (data) => {
             //CARGO
             cargoLoaded = cargo.cargoLoaded
             cargo = cargo.cargo
-            cargoDamage = jobEvent.cargoDamage
+            cargoDamage = Math.round(jobEvent.cargoDamage)
             
             //JOB
             Jobincome = job.income
@@ -321,7 +321,7 @@ TPClient.on("Info", (data) => {
       
       if(lightsParkingOn === true) {
         LightsParkingOn = "On"
-      } else if (attached === false) {
+      } else if (lightsParkingOn === false) {
         LightsParkingOn = "Off"
       }
       
@@ -388,12 +388,37 @@ TPClient.on("Info", (data) => {
       } else if (Shifter === "manual") {
         if (Gears === 0) {
           Gear = "N"
+        } else if (Gears === 1) {
+          Gear = "1"
+        } else if (Gears === 2) {
+          Gear = "2"
+        } else if (Gears === 3) {
+          Gear = "3"
+        } else if (Gears === 4) {
+          Gear = "4"
+        } else if (Gears === 5) {
+          Gear = "5"
+        } else if (Gears === 6) {
+          Gear = "6"
+        } else if (Gears === 7) {
+          Gear = "7"
+        } else if (Gears === 8) {
+          Gear = "8"
+        } else if (Gears === 9) {
+          Gear = "9"
+        } else if (Gears === 10) {
+          Gear = "10"
+        } else if (Gears === 11) {
+          Gear = "11"
+        } else if (Gears === 12) {
+          Gear = "12"
+
         } else if (Gears === -1) {
-          Gear = "R1"
+          Gear = "1"
         } else if (Gears === -2) {
-          Gear = "R2"
+          Gear = "2"
         } else if (Gears === -2) {
-          Gear = "R3"
+          Gear = "3"
         }
       }
 
@@ -883,7 +908,7 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.Speed", value: `${Speed}`},
         { id: "Nybo.ETS2.Dashboard.RPM", value: `${RPM}`},
 
-        { id: "Nybo.ETS2.Dashboard.Gear", value: `${Gear}`},
+        { id: "Nybo.ETS2.Dashboard.Gear", value: `${Gears}`},
 
         { id: "Nybo.ETS2.Dashboard.Fuel", value: `${Fuel}`},
         { id: "Nybo.ETS2.Dashboard.FuelCap", value: `${FuelCap}`},
@@ -931,7 +956,7 @@ TPClient.on("Info", (data) => {
 
         // NEW IN 0.5.0
 
-        { id: "Nybo.ETS2.Dashboard.gameVersion", value: `${gameVersion}`},
+        { id: "Nybo.ETS2.Dashboard.serverVersion", value: `${serverVersion}`},
         { id: "Nybo.ETS2.Dashboard.pause", value: `${pause}`},
         { id: "Nybo.ETS2.Dashboard.truckType", value: `${truckType}`},
         { id: "Nybo.ETS2.Dashboard.parkBrakeOn", value: `${parkBrakeOn}`},
@@ -952,7 +977,7 @@ TPClient.on("Info", (data) => {
 
       TPClient.stateUpdateMany(states);
 
-      console.log(`${gameVersion} || ${pause} || ${truckType} || ${parkBrakeOn} || ${motorBrakeOn} || ${batteryVoltageWarningOn} || ${oilPressureWarningOn} || ${waterTemperatureWarningOn} || ${adblueWarningOn} || ${fuelWarningOn} || ${trailerBodyType} || ${cargo} || ${cargoDamage} || ${cargoLoaded} `)
+      console.log(`${LightsParkingOn} / ${truck.lightsParkingOn} || ${Gear} || ${Electric} `)
       
     }
 

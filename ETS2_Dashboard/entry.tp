@@ -43,6 +43,18 @@
           "type": "text",
           "desc": "ETS2:Game",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.serverVersion",
+          "type": "text",
+          "desc": "ETS2:Version",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.pause",
+          "type": "text",
+          "desc": "ETS2:Pause",
+          "default": "-"
         }
       ]
     },
@@ -134,6 +146,13 @@
           "id": "Nybo.ETS2.Dashboard.SleepTime",
           "type": "text",
           "desc": "ETS2:Sleep Timer",
+          "default": "-"
+        },
+
+        {
+          "id": "Nybo.ETS2.Dashboard.truckType",
+          "type": "text",
+          "desc": "ETS2:Truck Model",
           "default": "-"
         }
       ]
@@ -241,6 +260,48 @@
           "type": "text",
           "desc": "ETS2:Lights Dashboard",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.parkBrakeOn",
+          "type": "text",
+          "desc": "ETS2:Park Brake",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.motorBrakeOn",
+          "type": "text",
+          "desc": "ETS2:Motor Brake",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.batteryLow",
+          "type": "text",
+          "desc": "ETS2:Battery Low",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.oilLow",
+          "type": "text",
+          "desc": "ETS2:Oil Low",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.waterTempHigh",
+          "type": "text",
+          "desc": "ETS2:Water Temp",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.adblueLow",
+          "type": "text",
+          "desc": "ETS2:Adblue Low",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.fuelLow",
+          "type": "text",
+          "desc": "ETS2:Fuel Low",
+          "default": "-"
         }
       ]
     },
@@ -259,6 +320,30 @@
           "id": "Nybo.ETS2.Dashboard.TrailerMass",
           "type": "text",
           "desc": "ETS2:Trailer Mass",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.trailerBodyType",
+          "type": "text",
+          "desc": "ETS2:Trailer Model",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.cargoLoaded",
+          "type": "text",
+          "desc": "ETS2:Cargo Loaded",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.cargo",
+          "type": "text",
+          "desc": "ETS2:Cargo Type",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Dashboard.cargoDamage",
+          "type": "text",
+          "desc": "ETS2:Cargo Damage",
           "default": "-"
         }
       ]

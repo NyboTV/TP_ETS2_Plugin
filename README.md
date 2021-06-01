@@ -76,6 +76,23 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     JobSourceCompany =      "Shows the Job Source Company"
     JobDestinationCity =    "Shows the Job Destination City
     JobDestinationCompany = "Shows the Job Destination Company"
+
+## New Game States in 0.5.0
+
+    serverVersion =     "Shows the Server Version"
+    pause =             "false | true"
+    truckType =         "Shows the Truck Model Name"
+    parkBrakeOn =       "false | true"
+    motorBrakeOn =      "false | true"
+    batteryLow =        "false | true"
+    oilLow =            "false | true"
+    waterTempHigh =     "false | true"
+    adblueLow =         "false | true"
+    fuelLow =           "false | true"
+    trailerBodyType =   "Shows the Trailer Model name"
+    cargoLoaded =       "false | true"
+    cargo =             "Shows the loaded Cargo"
+    cargoDamage =       "Shows the Cargo Damage"
     
 
 ### Game Icons:
@@ -155,6 +172,12 @@ If you want to see how this Plugin is made check out my Twitch Channel: https://
 
 
 # Changelog
+
+### Changelog 0.5.0
+- New Server System
+- Added new States for more Details on the Dashboard
+- Fixed some Bugs
+- Some Script improvements
 
 ### Changelog 0.4.6
 - Added new Log System for better support
