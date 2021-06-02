@@ -244,6 +244,15 @@ TPClient.on("Info", (data) => {
 
     const TruckersMPAPI = async () => {
       try {
+        function IsJsonString(str) {
+          try {
+              JSON.parse(str);
+          } catch (e) {
+              return false;
+          }
+          return true;
+        }
+
         https.get('https://api.truckersmp.com/v2/servers', (resp) => {
           let data = '';  
           
@@ -252,14 +261,29 @@ TPClient.on("Info", (data) => {
           })
           
           resp.on('end', () => {
-            data = JSON.parse(data)
-  
-            Servers = data.response.length
-            Server = data.response[TruckersMPServer]
-  
-            ServerName = Server.name
-            ServerPlayers = Server.players
-            ServerPlayerQueue = Server.queue
+            let APIOnline = false
+
+            if(IsJsonString(data) === true) {
+              data = JSON.parse(data)
+    
+              Servers = data.response.length
+              Server = data.response[TruckersMPServer]
+    
+              ServerName = Server.name
+              ServerPlayers = Server.players
+              ServerPlayerQueue = Server.queue
+              APIOnline = true 
+            } else {
+
+              Servers = "TruckersMP API Error!"
+              Server = "TruckersMP API Error!"
+    
+              ServerName = "TruckersMP API Error!"
+              ServerPlayers = "TruckersMP API Error!"
+              ServerPlayerQueue = "TruckersMP API Error!"
+
+            }
+
   
   
           })
@@ -977,7 +1001,7 @@ TPClient.on("Info", (data) => {
 
       TPClient.stateUpdateMany(states);
 
-      console.log(`${LightsParkingOn} / ${truck.lightsParkingOn} || ${Gear} || ${Electric} `)
+      //console.log(`${LightsParkingOn} / ${truck.lightsParkingOn} || ${Gear} || ${Electric} `)
       
     }
 
