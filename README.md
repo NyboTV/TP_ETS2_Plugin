@@ -1,9 +1,9 @@
 # TP_ETS2_Plugin
 
-![Downloads](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total)
-![MIT License](https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin)
-![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin)
-![Release](https://img.shields.io/github/release/top/NyboTV/TP_ETS2_Plugin)
+![Downloads](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total?style=for-the-badge)
+![MIT License](https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
+![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
+![Release](https://img.shields.io/github/v/release/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 
 - [TouchPortal Advanced Hold Plugin](#tp_ets2_plugin)
   - [Description](#description)
