@@ -1,5 +1,4 @@
-# PROJECT IS PAUSED! NO NEW FEATURES UNTIL 01.05.21
-Bugs still get fixed if reported!
+# Project is still in Progress. But it might take some Time until a new Version comes out
 
 # TP_ETS2_Plugin
 
@@ -23,7 +22,14 @@ You need "Touch Portal" and its Pro Version!
 Just download the ".tpp" File. It is located in the "Release/Plugin" Folder.
 Go into your Touch Portal, Click on the Wrench and click on "Import Plugin".
 
+### Support
+You can get directly Support on the official TP Discord!
 
+If you want to request a Function:
+Feel free to create a "Pull Request"
+
+If you have an Problem with my Script:
+I would appreachate if you create an "Issue" on my Github. But i can get Support on the 
 
 ### How to use
 
