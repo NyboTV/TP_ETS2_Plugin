@@ -1,8 +1,23 @@
-# Project is still in Progress. But it might take some Time until a new Version comes out
-
 # TP_ETS2_Plugin
 
-### Features
+![Downloads](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total)
+![MIT License](https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin)
+![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin)
+
+- [TouchPortal Advanced Hold Plugin](#tp_ets2_plugin)
+  - [Description](#description)
+  - [Installation](#how-to-install)
+  - [Support](#support)
+  - [States](#game-states)
+  - [Settings](#settings)
+  - [Features Comming Soon](#features-comming-soon)
+  - [Todo](#todo)
+  - [Issues](#issue-list)
+  - [Changelog](#changelog)
+  - [Authors](#authors)
+  - [License](#license)
+
+## Description
 
 - Shows your Speed, RPM and Gear
 - Shows the Currect Speedlimit
@@ -14,15 +29,14 @@
 
 - And more!
 
-How to Install
-=============
+## How to Install
 
 You need "Touch Portal" and its Pro Version! 
 
 Just download the ".tpp" File. It is located in the "Release/Plugin" Folder.
 Go into your Touch Portal, Click on the Wrench and click on "Import Plugin".
 
-### Support
+## Support
 You can get directly Support on the official TP Discord!
 
 If you want to request a Function:
@@ -31,7 +45,7 @@ Feel free to create a "Pull Request"
 If you have an Problem with my Script:
 I would appreachate if you create an "Issue" on my Github. But i can get Support on the 
 
-### How to use
+## How to use
 
 Create a new Page in your Touch Portal and create a new Button and go to "Events" Tab. Then add an "Dynamic Text Updater" and click on the "+". Search for the Value you want to Display and have Fun!:
 
@@ -99,22 +113,22 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     cargoLoaded =       "false | true"
     cargo =             "Shows the loaded Cargo"
     cargoDamage =       "Shows the Cargo Damage"
-    
 
-### Game Icons:
-
-    SpeedGauge =            Shows your Speed as an Image
-    RPMGauge =              Shows your RPM as an Image    
-    FuelGauge =             Shows your speed as an Image
-
-
-### TruckersMP States:
+## TruckersMP States:
 
     Servers =               "(Depends How many Servers are Online)"     [Value is an Number!]
     ServerName =            "(Selected Server Name)"                    [You can Select the Server in Settings! Server List is down below!]
     ServerPLayers =         "(How Many Players are Online)"              [Value is an Number!]
     ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
 
+## Game Icons:
+
+    SpeedGauge =            Shows your Speed as an Image
+    RPMGauge =              Shows your RPM as an Image    
+    FuelGauge =             Shows your speed as an Image
+
+
+## Settings
 
 ### Server list:
 Enter the Number for following Server:
@@ -129,19 +143,15 @@ Enter the Number for following Server:
     6 => EU PM 
     7 => EU PM ARC
 
-
 ### ATS Server list
     8 => EU SIM 
     9 => US SIM
     10 => US ARC
 
-
-
-
 These Server list is getting Updated by myself. So it might be Possible that this list is NOT Up2Date. 
 
 
-### Settings
+### Interval
 You can set your Own Refresh interval:
 
 	Faster => needs more performance
@@ -153,6 +163,7 @@ You can setup the Server you want to Display.
 
     See Server List which Number is which Server
     If you changed it you have to restart Touch Portal
+
 
 ## Features comming soon:
 
@@ -191,3 +202,12 @@ If you want to see how this Plugin is made check out my Twitch Channel: https://
 
 
 Changelog has been Added in Update 0.4.6
+
+
+
+# Authors
+- **Nico** - Plugin Creator - [NyboTV](https://github.com/NyboTV)
+
+## License
+
+This project is licensed under the MIT - see the [LICENSE](LICENSE) file for details
