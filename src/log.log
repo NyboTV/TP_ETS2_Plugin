@@ -1,2 +1,5 @@
 
  --------SCRIPT STARTED--------
+2021-06-02T20:16:51.542Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
+2021-06-02T20:16:51.543Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
+2021-06-02T20:16:51.793Z:TP_ETS2_Plugin:INFO:Server loaded up! Script is starting!
