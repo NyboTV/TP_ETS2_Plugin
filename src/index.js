@@ -243,7 +243,6 @@ TPClient.on("Info", (data) => {
     }
 
     const TruckersMPAPI = async () => {
-      /*
       try {
         function IsJsonString(str) {
           try {
@@ -285,14 +284,11 @@ TPClient.on("Info", (data) => {
 
             }
 
-  
-  
           })
         })
       } catch (error) {
         logIt("WARN", `${error}`)
       }
-      */
     }
     
     const TruckersMP = async () => {
