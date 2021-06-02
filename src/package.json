@@ -4,13 +4,22 @@
   "description": "TP ETS2 Plugin",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "pkg": "pkg --targets node14-win-x64 .",
+    "build": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/ && cd ../Releases/Plugin/ && del ETS2_Dashboard.tpp && 7z a -tzip TPAdvancedHold-Win.tpp ../../ETS2_Dashboard"
   },
   "bin": {
     "main": "index.js"
   },
+  "keywords": [
+    "TouchPortal",
+    "TouchPortalPlugin"
+  ],
   "author": "NyboTV",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NyboTV/TP_ETS2_Plugin/issues"
+  },
   "dependencies": {
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
