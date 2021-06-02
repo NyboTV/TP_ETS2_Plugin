@@ -56,7 +56,7 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 [Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)
 
 
-### Game States: ()
+### Game States
 
 	Status_Connected =      "Disconnected | Connected"
     Game =                  "Nothing Found! | ETS2 | ATS"
@@ -114,7 +114,7 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     cargo =             "Shows the loaded Cargo"
     cargoDamage =       "Shows the Cargo Damage"
 
-## TruckersMP States:
+## TruckersMP States
 
     Servers =               "(Depends How many Servers are Online)"     [Value is an Number!]
     ServerName =            "(Selected Server Name)"                    [You can Select the Server in Settings! Server List is down below!]
@@ -128,9 +128,10 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     FuelGauge =             Shows your speed as an Image
 
 
+
 ## Settings
 
-### Server list:
+### Server list
 Enter the Number for following Server:
 
 ### ETS Server list
@@ -165,20 +166,20 @@ You can setup the Server you want to Display.
     If you changed it you have to restart Touch Portal
 
 
-## Features comming soon:
+## Features comming soon
 
 - ATS Support
 - Some small Details
 - Some small Features
 - More Dashboard Designs
 
-## Todo: 
+## Todo
 
 1. ATS Support
 2. Add some more Informations
 3. (Request more Features and it will be added here ;)
 
-## Issue List:
+## Issue List
 
 - Hazard Lights are not Working
 - some small Refresh issues (its taking sometimes longer)
