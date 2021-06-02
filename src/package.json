@@ -16,7 +16,7 @@
     "TouchPortalPlugin"
   ],
   "author": "NyboTV",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/NyboTV/TP_ETS2_Plugin/issues"
   },
