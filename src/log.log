@@ -1,8 +1,2 @@
 
  --------SCRIPT STARTED--------
-2021-06-02T16:27:32.397Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
-2021-06-02T16:27:32.398Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
-2021-06-02T16:27:32.643Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
-2021-06-02T16:27:37.881Z:TP_ETS2_Plugin:INFO:Server loaded up! Script is starting!
-2021-06-02T16:27:48.621Z:TP_ETS2_Plugin:WARN:ERROR: SyntaxError: Unexpected token u in JSON at position 0
-2021-06-02T16:27:48.788Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
