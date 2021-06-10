@@ -5,7 +5,6 @@
 ![MIT License](https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 ![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
-[![Coverage Status](https://coveralls.io/repos/github/NyboTV/TP_ETS2_Plugin/badge.svg?branch=master)](https://coveralls.io/github/NyboTV/TP_ETS2_Plugin?branch=master)
 
 - [TouchPortal Advanced Hold Plugin](#tp_ets2_plugin)
   - [Description](#description)
