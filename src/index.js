@@ -9,7 +9,7 @@ const exec = require('child_process').exec
 const execute = require('child_process').execFile
 
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
-  fs.rmdirSync('./tmp/ETS2_Dashboard')
+  fs.rmdirSync('./tmp/ETS2_Dashboard', { recursive: true })
 }
 
 TPClient.on("Info", (data) => {
