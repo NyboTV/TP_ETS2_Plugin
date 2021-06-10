@@ -7,7 +7,7 @@
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 
 - [TouchPortal Advanced Hold Plugin](#tp_ets2_plugin)
-  - [Description](#description)
+  - [Features](#features)
   - [Installation](#how-to-install)
   - [Support](#support)
   - [States](#game-states)
@@ -19,7 +19,9 @@
   - [Authors](#authors)
   - [License](#license)
 
-## Description
+## Features
+
+- Autoupdater
 
 - Shows your Speed, RPM and Gear
 - Shows the Currect Speedlimit
@@ -30,6 +32,7 @@
 - MP Support
 
 - And more!
+
 
 ## How to Install
 
@@ -192,6 +195,10 @@ If you want to see how this Plugin is made check out my Twitch Channel: https://
 
 
 # Changelog
+
+### Changelog 0.6.0
+- Added an Autoupdater
+- Fixed some small Script Bugs
 
 ### Changelog 0.5.0
 - New Server System
