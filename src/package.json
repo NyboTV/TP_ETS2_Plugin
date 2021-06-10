@@ -4,7 +4,7 @@
   "description": "TP ETS2 Plugin",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node .",
     "pkg": "pkg --targets node14-win-x64 .",
     "build": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/ && cd ../Releases/Plugin/ && del ETS2_Dashboard.tpp && 7z a -tzip ETS2_Dashboard.tpp ../../ETS2_Dashboard"
   },
@@ -20,7 +20,13 @@
   "bugs": {
     "url": "https://github.com/NyboTV/TP_ETS2_Plugin/issues"
   },
+  "auto-updater":{
+    "repo":"/NyboTV/TP_ETS2_Plugin",
+    "branch":"master"
+  },
   "dependencies": {
+    "auto-git-update": "^2.0.1",
+    "auto-updater": "^1.0.2",
     "fs": "^0.0.1-security",
     "https": "^1.0.0",
     "jimp": "^0.16.1",
