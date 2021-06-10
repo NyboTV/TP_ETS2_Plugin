@@ -8,6 +8,15 @@ const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile
 
+function Updater() {
+  fs.renameSync('./tmp/ETS2_Dashboard/updater.exe', '../../updater.exe')
+  fs.rmdirSync('./tmp/ETS2_Dashboard')
+}
+
+if(fs.existsSync('./tmp/ETS2_Dashboard')) {
+  Updater()
+}
+
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
@@ -149,7 +158,7 @@ TPClient.on("Info", (data) => {
           let data = '';  
 
           if(err) {
-            console.log(err)
+            logIt("WARN", `Error: ${err}`)
           }
           data = body
           try {
@@ -1084,7 +1093,6 @@ TPClient.on("Info", (data) => {
   refreshing()
 });
   
-
 TPClient.on("Settings",(data) => {
 
   RefreshInterval = data[0]["Refresh Interval"]
@@ -1103,13 +1111,6 @@ TPClient.on("Close", (data) => {
 
 //Connects and Pairs to Touch Portal via Sockete
 TPClient.connect({ pluginId });
-
-let firstStart = 1
-
-if(firstStart === 1) {
-  fs.writeFileSync('./log.log', `\n --------SCRIPT STARTED--------`)
-  firstStart = 0
-}
 
 function logIt() {
   var curTime = new Date().toISOString();
