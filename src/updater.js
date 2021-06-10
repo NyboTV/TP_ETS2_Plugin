@@ -1,4 +1,5 @@
 const fs = require('fs')
+const fse = require('fs-extra')
 const pluginId = 'TP_ETS2_Plugin';
 const https = require('https')
 const downloadRelease = require('download-github-release');
@@ -55,7 +56,7 @@ setTimeout(() => {
     } else {
         fs.mkdirSync('./tmp')
     }
-    console.log(Version + " " + config.version)
+    console.log("Online Version: " + Version + " | Lokale Version: " +  config.version)
     
     if (config.version === Version) {
         logIt("INFO", "Up to Date!")
@@ -86,16 +87,16 @@ setTimeout(() => {
     function Update() {
         logIt("INFO", "Update is installing...")
 
-        fs.renameSync('./tmp/ETS2_Dashboard.tpp', './tmp/ETS2_Dashboard.zip')
+        fse.renameSync('./tmp/ETS2_Dashboard.tpp', './tmp/ETS2_Dashboard.zip', { overwrite: true })
 
         var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
         zip.extractAllTo('./tmp/', true)
         fs.unlinkSync('./tmp/ETS2_Dashboard.zip')
 
-        fs.renameSync('./tmp/ETS2_Dashboard/server', '../../server')
-        fs.renameSync('./tmp/ETS2_Dashboard/images', '../../images')
-        fs.renameSync('./tmp/ETS2_Dashboard/entry.tp', '../../entry.tp')
-        fs.renameSync('./tmp/ETS2_Dashboard/ets2_plugin.exe', '../../ets2_plugin.exe')
+        fse.moveSync('./tmp/ETS2_Dashboard/server', '../../server', { overwrite: true })
+        fse.moveSync('./tmp/ETS2_Dashboard/images', '../../images', { overwrite: true })
+        fse.moveSync('./tmp/ETS2_Dashboard/entry.tp', '../../entry.tp', { overwrite: true })
+        fse.moveSync('./tmp/ETS2_Dashboard/ets2_plugin.exe', '../../ets2_plugin.exe', { overwrite: true })
         
         logIt("INFO", "Update is Installed!")
         logIt("INFO", "Starting Plugin...")
@@ -115,11 +116,11 @@ setTimeout(() => {
 
 
 
-if(firstStart === 1) {
-    fs.writeFileSync('./log.log', `\n --------SCRIPT STARTED--------`)
-    firstStart = 0
-}
 function logIt() {
+    if(firstStart === 1) {
+        fs.writeFileSync('./log.log', `\n --------SCRIPT STARTED--------`)
+        firstStart = 0
+    }
     var curTime = new Date().toISOString();
     var message = [...arguments];
     var type = message.shift();

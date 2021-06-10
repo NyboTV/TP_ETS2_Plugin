@@ -8,13 +8,8 @@ const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile
 
-function Updater() {
-  fs.renameSync('./tmp/ETS2_Dashboard/updater.exe', '../../updater.exe')
-  fs.rmdirSync('./tmp/ETS2_Dashboard')
-}
-
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
-  Updater()
+  fs.rmdirSync('./tmp/ETS2_Dashboard')
 }
 
 TPClient.on("Info", (data) => {
