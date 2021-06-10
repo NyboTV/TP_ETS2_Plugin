@@ -15,6 +15,10 @@ let firstStart = 1
 let Version = ""
 let config = ""
 
+if(fs.existsSync('update.bat')) {
+    fs.rmSync('update.bat')
+}
+
 logIt("INFO", "Searching new Version")
 
 const options = {
@@ -71,9 +75,7 @@ setTimeout(() => {
         }).catch(function(err) {
             console.error(err.message);
         });
-        
-        fs.writeFileSync('./config.json', `{\n "version": "${Version}"\n}`)
-        
+                
     }
     
     function filterRelease(release) {
@@ -101,7 +103,11 @@ setTimeout(() => {
         logIt("INFO", "Update is Installed!")
         logIt("INFO", "Starting Plugin...")
 
-        Start()
+        fs.writeFileSync('update.bat', `@Echo Off \ntitle ETS2 Dashboard Updater \necho Restarting TouchPortal \ntasklist /fi "ImageName eq javaw.exe" /fo csv 2>NUL | find /I "javaw.exe">NUL \nif "%ERRORLEVEL%"=="0" taskkill /F /IM javaw.exe \nping -n 5 localhost >nul \nstart "" "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk"`)
+        require('child_process').exec('cmd /c update.bat', function(){
+         });
+        
+        fs.writeFileSync('./config.json', `{\n "version": "${Version}"\n}`)
     }
 
     function Start() {

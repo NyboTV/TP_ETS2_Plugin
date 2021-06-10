@@ -1,14 +1,8 @@
 
  --------SCRIPT STARTED--------
-2021-06-10T20:50:15.734Z:TP_ETS2_Plugin:INFO:New Version Found! Updating...
-2021-06-10T21:22:21.723Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
-2021-06-10T21:22:21.725Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
-2021-06-10T21:22:22.122Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
-2021-06-10T21:22:27.378Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
-2021-06-10T21:22:48.966Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
-2021-06-10T21:22:48.968Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
-2021-06-10T21:22:49.230Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
-2021-06-10T21:22:54.489Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
-2021-06-10T21:23:19.415Z:TP_ETS2_Plugin:DEBUG:Info : We received info from Touch-Portal
-2021-06-10T21:23:19.417Z:TP_ETS2_Plugin:INFO:Starting process watcher for Windows
-2021-06-10T21:23:19.678Z:TP_ETS2_Plugin:WARN:Telemetry Server not Found! Retry in 5 Seconds!
+2021-06-10T22:39:38.699Z:TP_ETS2_Plugin:INFO:Searching new Version
+2021-06-10T22:39:40.243Z:TP_ETS2_Plugin:INFO:New Version Found! Updating...
+2021-06-10T22:40:03.676Z:TP_ETS2_Plugin:INFO:Update is Downloaded! Installing now...
+2021-06-10T22:40:03.678Z:TP_ETS2_Plugin:INFO:Update is installing...
+2021-06-10T22:40:07.897Z:TP_ETS2_Plugin:INFO:Update is Installed!
+2021-06-10T22:40:07.900Z:TP_ETS2_Plugin:INFO:Starting Plugin...
