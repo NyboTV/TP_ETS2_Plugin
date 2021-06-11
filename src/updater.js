@@ -24,6 +24,10 @@ if(fs.existsSync('./config.json')) {
     fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "autorestart": "no", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
     config = fs.readFileSync('./config.json')
     config = JSON.parse(config)
+
+    if(fs.existsSync('./log.log')){
+        fs.unlinkSync('./log.log')
+    }
 }
 
 if(config.autoupdate === "true") {
@@ -161,15 +165,23 @@ function Start() {
 
 
 function logIt() {
+    if(!fs.existsSync('./logs')) {
+        fs.mkdirSync('./logs')
+    }
+    if(!fs.existsSync('./logs/updater')) {
+        fs.mkdirSync('./logs/updater')
+    }
+
     if(firstStart === 1) {
-        fs.writeFileSync('./log.log', `\n --------SCRIPT STARTED--------`)
+        fs.writeFileSync('./logs/updater/latest.log', `\n --------SCRIPT STARTED--------`)
         firstStart = 0
     }
+
     var curTime = new Date().toISOString();
     var message = [...arguments];
     var type = message.shift();
     console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
-    fs.appendFileSync('./log.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
+    fs.appendFileSync('./logs/updater/latest.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }
 
     

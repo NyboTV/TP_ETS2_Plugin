@@ -1,9 +1,0 @@
-
- --------SCRIPT STARTED--------
-2021-06-11T00:38:31.142Z:TP_ETS2_Plugin:INFO:Searching new Version
-2021-06-11T00:38:32.671Z:TP_ETS2_Plugin:INFO:New Version Found! Updating...
-2021-06-11T00:38:55.264Z:TP_ETS2_Plugin:INFO:Update is Downloaded! Installing now...
-2021-06-11T00:38:55.268Z:TP_ETS2_Plugin:INFO:Update is installing...
-2021-06-11T00:38:59.639Z:TP_ETS2_Plugin:INFO:Update is Installed!
-2021-06-11T00:38:59.644Z:TP_ETS2_Plugin:INFO:Plugin has been Updated!
-2021-06-11T00:38:59.659Z:TP_ETS2_Plugin:ERROR:Error: spawn ets2_plugin.exe ENOENT

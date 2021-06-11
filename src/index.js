@@ -8,6 +8,12 @@ const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile
 const replace = require('replace-in-file');
+const AdmZip = require('adm-zip')
+
+var date_time = new Date().toISOString().
+  replace(/T/, '_').
+  replace(/\..+/, '')
+var firstStart = 1
 
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
   fs.rmdirSync('./tmp/ETS2_Dashboard', { recursive: true })
@@ -1170,16 +1176,36 @@ TPClient.on("Update", (curVersion, newVersion) => {
 TPClient.on("Close", (data) => {
   logIt("WARN","Closing due to TouchPortal sending closePlugin message"
   );
-  fs.appendFileSync('./log.log', `\n --------SCRIPT ENDED--------`)
+
+  logIt("INFO", "Packing latest Log Files...")
+
+  var zipUpdater = new AdmZip()
+  var zipIndex = new AdmZip()
+
+  zipUpdater.addLocalFile("./logs/updater/latest.log")
+  zipIndex.addLocalFile("./logs/index/latest.log")
+
+  zipUpdater.writeZip(`./logs/updater/${date_time}.zip`)
+  zipIndex.writeZip(`./logs/index/${date_time}.zip`)
 });
 
-//Connects and Pairs to Touch Portal via Sockete
 TPClient.connect({ pluginId });
 
 function logIt() {
-  var curTime = new Date().toISOString();
+  if(!fs.existsSync('./logs/index')) {
+    fs.mkdirSync('./logs/index')
+  }
+
+  if(firstStart === 1) {
+    fs.writeFileSync('./logs/index/latest.log', `\n --------SCRIPT STARTED--------`)
+    firstStart = 0
+  }
+
+  var curTime = new Date().toISOString().
+  replace(/T/, ' ').
+  replace(/\..+/, '')
   var message = [...arguments];
   var type = message.shift();
   console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
-  fs.appendFileSync('./log.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
+  fs.appendFileSync('./logs/index/latest.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }
