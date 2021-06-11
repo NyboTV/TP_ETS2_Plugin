@@ -79,10 +79,10 @@ I would appreachate if you create an "Issue" on my Github. But i can get Support
 Create a new Page in your Touch Portal and create a new Button and go to "Events" Tab. Then add an "Dynamic Text Updater" and click on the "+". Search for the Value you want to Display and have Fun!:
 
 If you want to setup an "State" then you have to do something like this: 
-[Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618332385969.png)
+![Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618332385969.png)
 
 If you want to Setup an "Image/Icon" then you have to do something like this:
-[Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)
+![Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)
 
 
 ### Game States
