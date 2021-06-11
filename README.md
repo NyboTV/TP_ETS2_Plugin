@@ -5,12 +5,16 @@
 
 ![MIT License](https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin)
 ![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin)
+[![Requirements Status](https://requires.io/github/NyboTV/TP_ETS2_Plugin/requirements.svg?branch=master)](https://requires.io/github/NyboTV/TP_ETS2_Plugin/requirements/?branch=master)
 
 ![Downloads](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total)
 ![Downloads Latest](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/latest/total)
 
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin)
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
+
+
+
 
 - [TouchPortal ETS2 Dashboard Plugin](#tp_ets2_plugin)
   - [Features](#features)
