@@ -6,6 +6,8 @@
 ![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 
+![Discord](https://img.shields.io/discord/548426182698467339?logo=TP%20Discord&style=for-the-badge)
+
 - [TouchPortal Advanced Hold Plugin](#tp_ets2_plugin)
   - [Features](#features)
   - [Installation](#how-to-install)
