@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "pkg": "pkg --targets node14-win-x64 .",
-    "build": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/             && pkg --targets node14-win-x64 updater.js && move updater.exe ../ETS2_Dashboard/ && cd ../Releases/Plugin/ && del ETS2_Dashboard.tpp && 7z a -tzip ETS2_Dashboard.tpp ../../ETS2_Dashboard"
+    "build": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/           && pkg --targets node14-win-x64 prestart.js && move prestart.exe ../ETS2_Dashboard             && pkg --targets node14-win-x64 updater.js && move updater.exe ../ETS2_Dashboard/ && cd ../Releases/Plugin/ && del ETS2_Dashboard.tpp && 7z a -tzip ETS2_Dashboard.tpp ../../ETS2_Dashboard"
   },
   "bin": {
     "main": "index.js"

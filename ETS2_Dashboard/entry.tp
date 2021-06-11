@@ -3,7 +3,7 @@
    "version":1,
    "name":"TP ETS2 Plugin",
    "id":"TP_ETS2_Plugin",
-   "plugin_start_cmd":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\updater.exe\"",
+   "plugin_start_cmd":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\prestart.exe\"",
    "configuration":{
       "colorDark":"#f54242",
       "colorLight":"#f5a442"
@@ -28,12 +28,6 @@
       {
        "name":"Auto Updater (!READ GITHUB!)",
        "default":"false",
-       "type":"text",
-       "maxlength":5
-      },
-      {
-       "name":"Auto Restart",
-       "default":"no",
        "type":"text",
        "maxlength":5
       },

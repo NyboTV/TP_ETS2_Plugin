@@ -1177,6 +1177,7 @@ TPClient.on("Close", (data) => {
   logIt("WARN","Closing due to TouchPortal sending closePlugin message"
   );
 
+  /*
   logIt("INFO", "Packing latest Log Files...")
 
   var zipUpdater = new AdmZip()
@@ -1187,6 +1188,7 @@ TPClient.on("Close", (data) => {
 
   zipUpdater.writeZip(`./logs/updater/${date_time}.zip`)
   zipIndex.writeZip(`./logs/index/${date_time}.zip`)
+  */
 });
 
 TPClient.connect({ pluginId });

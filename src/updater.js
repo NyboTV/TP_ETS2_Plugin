@@ -21,7 +21,7 @@ if(fs.existsSync('./config.json')) {
     config = fs.readFileSync('./config.json')
     config = JSON.parse(config)
 } else {
-    fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "autorestart": "no", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
+    fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "updateLatest": "update", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
     config = fs.readFileSync('./config.json')
     config = JSON.parse(config)
 
@@ -32,8 +32,8 @@ if(fs.existsSync('./config.json')) {
 
 if(config.autoupdate === "true") {
     
-    if(fs.existsSync('update.bat')) {
-        fs.rmSync('update.bat')
+    if(fs.existsSync('./update.bat')) {
+        fs.rmSync('./update.bat')
     }
     
     logIt("INFO", "Searching new Version")
@@ -77,78 +77,27 @@ if(config.autoupdate === "true") {
             logIt("INFO", "Up to Date!")
             Start()
         } else {
-            logIt("INFO", "New Version Found! Updating...")
-            
-            downloadRelease(user, repo, outputdir, filterRelease, filterAsset, leaveZipped)
-            .then(function() {
-                logIt("INFO", "Update is Downloaded! Installing now...")
-                Update()
-            }).catch(function(err) {
-                console.error(err.message);
-            });
-            
-        }
-        
-        function filterRelease(release) {
-            return release.prerelease === false;
-        }
-        
-        function filterAsset(asset) {
-            return asset.name.indexOf('ETS2_Dashboard') >= 0;
-        }
-        
-        function Update() {
-            logIt("INFO", "Update is installing...")
-            
-            fse.renameSync('./tmp/ETS2_Dashboard.tpp', './tmp/ETS2_Dashboard.zip', { overwrite: true })
-            
-            var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
-            zip.extractAllTo('./tmp/', true)
-            fs.unlinkSync('./tmp/ETS2_Dashboard.zip')
-            
-            fse.moveSync('./tmp/ETS2_Dashboard/server', '../../server', { overwrite: true })
-            fse.moveSync('./tmp/ETS2_Dashboard/images', '../../images', { overwrite: true })
-            fse.moveSync('./tmp/ETS2_Dashboard/entry.tp', '../../entry.tp', { overwrite: true })
-            fse.moveSync('./tmp/ETS2_Dashboard/ets2_plugin.exe', '../../ets2_plugin.exe', { overwrite: true })
-            
-            logIt("INFO", "Update is Installed!")
-            
-            var data = fs.readFileSync('./config.json')
-            data = JSON.parse(data)
+            logIt("INFO", "New Version Found! Plugin gets Updated after restart!")
             
             const options = {
                 files: './config.json',
-                from: `${data.version}`,
-                to: `${Version}`,
+                from: `${data.updateLatest}`,
+                to: `update`,
             };
             
             try {
-                var version = replace.sync(options);
-                
-                if(version[0].hasChanged === true) {
-                    logIt("INFO", "Plugin has been Updated!")
-                } 
+                var updateLatest = replace.sync(options);
+
+                if(updateLatest[0].hasChanged === true) {
+                    logIt("INFO", "Update Latest has been changed!")
+                }
             }
             catch (error) {
                 logIt("ERROR", error)
-            }
-
-            if(config.autorestart === "yes") {
-
-                var TPPath = config.TPpath
-
-                console.log(TPPath)
-                
-                fs.writeFileSync('update.bat', `@Echo Off \ntitle ETS2 Dashboard Updater \necho Restarting TouchPortal \ntasklist /fi "ImageName eq javaw.exe" /fo csv 2>NUL | find /I "javaw.exe">NUL \nif "%ERRORLEVEL%"=="0" taskkill /F /IM javaw.exe \nping -n 2 localhost >nul \nping -n 5 localhost >nul \nstart "" "${TPPath}"`)
-                require('child_process').exec('cmd /c update.bat', function(){
-                });
-                return;
-            } else {
-                Start()
-            }
+            }   
             
-            logIt("INFO", "Starting Plugin...")
         }
+        
     }, 1500);
     
 } else {
@@ -161,6 +110,7 @@ function Start() {
         logIt("ERROR", err)
         console.log(data.toString());                       
     }); 
+    return;
 }
 
 
