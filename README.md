@@ -1,12 +1,15 @@
 # TP_ETS2_Plugin
 
 ![Release](https://img.shields.io/github/v/release/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
-![Downloads](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total?style=for-the-badge)
+![Release Date](https://img.shields.io/github/release-date/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 ![MIT License](https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 ![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
-![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 
-![Discord](https://img.shields.io/discord/548426182698467339?logo=TP%20Discord&style=for-the-badge)
+![Downloads](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total?style=for-the-badge)
+![Downloads Latest](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/latest/total?style=for-the-badge)
+
+![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
+![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin?style=for-the-badge)
 
 - [TouchPortal Advanced Hold Plugin](#tp_ets2_plugin)
   - [Features](#features)
