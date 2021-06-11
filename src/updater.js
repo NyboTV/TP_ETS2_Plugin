@@ -16,19 +16,8 @@ let firstStart = 1
 let Version = ""
 let config = ""
 
-
-if(fs.existsSync('./config.json')) {
-    config = fs.readFileSync('./config.json')
-    config = JSON.parse(config)
-} else {
-    fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "updateLatest": "update", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
-    config = fs.readFileSync('./config.json')
-    config = JSON.parse(config)
-
-    if(fs.existsSync('./log.log')){
-        fs.unlinkSync('./log.log')
-    }
-}
+config = fs.readFileSync('./config.json')
+config = JSON.parse(config)
 
 if(config.autoupdate === "true") {
     

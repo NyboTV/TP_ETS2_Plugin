@@ -22,20 +22,37 @@ if(!fs.existsSync('./logs')) {
     fs.mkdirSync('./logs/index')
 }
 
+if(!fs.existsSync('./tmp')) {
+    fs.mkdirSync('./tmp')
+}
 
-config = fs.readFileSync('./config')
-config = JSON.parse(config)
+if(fs.existsSync('./config.json')) {
+    config = fs.readFileSync('./config.json')
+    config = JSON.parse(config)
+} else {
+    fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "updateLatest": "update", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
+    config = fs.readFileSync('./config.json')
+    config = JSON.parse(config)
+
+    if(fs.existsSync('./log.log')){
+        fs.unlinkSync('./log.log')
+    }
+}
 
 if(config.updateLatest === "update") {
-    logIt("INFO", "New Version Found! Updating...")
-
-    downloadRelease(user, repo, outputdir, filterRelease, filterAsset, leaveZipped)
-    .then(function() {
-        logIt("INFO", "Update is Downloaded! Installing now...")
-        Update()
-    }).catch(function(err) {
-        console.error(err.message);
-    });
+    if(config.autoupdate === "true") {
+        logIt("INFO", "New Version Found! Updating...")
+        
+        downloadRelease(user, repo, outputdir, filterRelease, filterAsset, leaveZipped)
+        .then(function() {
+            logIt("INFO", "Update is Downloaded! Installing now...")
+            Update()
+        }).catch(function(err) {
+            console.error(err.message);
+        });
+    } else {
+        Start()
+    }
 } else {
     Start()
 }
@@ -48,12 +65,12 @@ function filterAsset(asset) {
 }
 
 function Update() {
-    var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
     logIt("INFO", "Update is installing...")
     
     fse.renameSync('./tmp/ETS2_Dashboard.tpp', './tmp/ETS2_Dashboard.zip', { overwrite: true })
     
     
+    var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
     zip.extractAllTo('./tmp/', true)
     fs.unlinkSync('./tmp/ETS2_Dashboard.zip')
     
