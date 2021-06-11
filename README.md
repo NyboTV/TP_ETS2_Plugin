@@ -1,4 +1,4 @@
-# TP_ETS2_Plugin
+# [TP_ETS2_Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
 ![Release](https://img.shields.io/github/v/release/NyboTV/TP_ETS2_Plugin)
 ![Release Date](https://img.shields.io/github/release-date/NyboTV/TP_ETS2_Plugin)
