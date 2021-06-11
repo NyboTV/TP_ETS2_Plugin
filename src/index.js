@@ -7,10 +7,21 @@ const fs = require('fs')
 const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile
+const replace = require('replace-in-file');
+const { log } = require('util');
 
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
   fs.rmdirSync('./tmp/ETS2_Dashboard', { recursive: true })
 }
+
+if(fs.existsSync('./update.bat')) {
+  fs.rmSync('./update.bat')
+}
+
+let RefreshInterval = ""
+let TruckersMPServer = ""
+let AutoUpdater = ""
+let Path = ""
 
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
@@ -138,12 +149,6 @@ TPClient.on("Info", (data) => {
   //TruckersMP
   let Servers = ""
 
-
-  // SETTINGS
-  let TruckersMPServer = 0
-  let RefreshInterval = 800
-
-  let test = 0
   
   const main = async (TruckersMPinterval) => {
   
@@ -914,7 +919,66 @@ TPClient.on("Info", (data) => {
       
     }
 
+    const TPSettings = async () => {
+
+      const configAutoupdate = async () => {
+        var data = fs.readFileSync('./config.json')
+        data = JSON.parse(data)
+
+        const options = {
+          files: './config.json',
+          from: `${data.autoupdate}`,
+          to: `${AutoUpdater}`,
+        };
+        var autoupdate = replace.sync(options);
+
+        if(autoupdate[0].hasChanged === true) {
+          logIt("INFO", "AutoUpdater Setting has been changed!")
+        }
+      }
+
+      const configAutorestart = async () => {
+        var data = fs.readFileSync('./config.json')
+        data = JSON.parse(data)
+
+        const options = {
+          files: './config.json',
+          from: `${data.autorestart}`,
+          to: `${AutoRestart}`,
+        };
+        var autorestart = replace.sync(options);
+
+        if(autorestart[0].hasChanged === true) {
+          logIt("INFO", "Auto Restart Setting has been changed!")
+        }
+      }
+
+      const configTPpath = async () => {
+        var data = fs.readFileSync('./config.json')
+        data = JSON.parse(data)
+
+        const options = {
+          files: './config.json',
+          from: `${data.TPpath}`,
+          to: `${Path}`,
+        };
+        var TPpath = replace.sync(options);
+
+        if(TPpath[0].hasChanged === true) {
+          logIt("INFO", "TP Path Setting has been changed!")
+        }
+      }
+
+      await configAutoupdate()
+      await configAutorestart()
+      await configTPpath()
+      
+    }
+      
+    
     const asyncFunc = async () => {
+      
+      await TPSettings()
       
       if(TruckersMPinterval === 1) {
         await TruckersMPAPI()
@@ -1092,6 +1156,11 @@ TPClient.on("Settings",(data) => {
 
   RefreshInterval = data[0]["Refresh Interval"]
   TruckersMPServer = data[1]["Truckers MP Server"]
+  
+  AutoUpdater = data[2]["Auto Updater (!READ GITHUB!)"]
+  AutoRestart = data[3]["Auto Restart"]
+  Path = data[4]["TP Path"]
+
 
 });
 

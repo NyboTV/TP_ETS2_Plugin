@@ -11,6 +11,7 @@
   - [Installation](#how-to-install)
   - [Support](#support)
   - [States](#game-states)
+  - [AutoUpdater](#autoupdater)
   - [Settings](#settings)
   - [Features Comming Soon](#features-comming-soon)
   - [Todo](#todo)
@@ -134,6 +135,25 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 
 
 
+## Autoupdater
+
+You can now activate the "Autoupdater" function.
+Just go to your Plugin Settings and set the "Auto updater" to "true"
+
+If you want an Auto Restart of TP after the Update finished, just set "Auto restart" from "no" to "yes"
+
+### Autoupdater Features
+
+    - Auto Updater => Automaticly downloads the latest version of the Plugin and installs it.
+    - Auto Restart => Normaly you have to restart TP after an Update of the Plugin. You can just activate this Option so TP gets automaticly restarted after an Update
+    - TP path => If you installed TP on the default Path then dont touch this Setting! If you have it installed on another drive then copy the .exe Files Path and paste it in there like the Path inside the Setting.
+
+**WARNING**
+If you set "Auto Restart" to "yes"
+TP will get KILLED over the Task manager. 
+If you having Issues with other Plugins then disable the Function!!
+
+
 ## Settings
 
 ### Server list
@@ -169,6 +189,10 @@ You can setup the Server you want to Display.
 
     See Server List which Number is which Server
     If you changed it you have to restart Touch Portal
+
+
+### Auto Updater / Auto restart / Tp Path
+Read [AutoUpdater](#autoupdater)
 
 
 ## Features comming soon

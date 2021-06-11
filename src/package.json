@@ -35,6 +35,7 @@
     "jimp": "^0.16.1",
     "node-html-parser": "^3.3.5",
     "octokit": "^1.0.5",
+    "replace-in-file": "^6.2.0",
     "request": "^2.88.2",
     "touchportal-api": "^2.0.1"
   }
