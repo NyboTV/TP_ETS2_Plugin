@@ -85,8 +85,10 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 
     Status_Connected =      "Disconnected | Connected"
     Game =                  "Nothing Found! | ETS2 | ATS"
+    serverVersion =     "Shows the Server Version"
 
     SleepTime =             "Shows how long do you have until you have to sleep" (Idk yet in which format this is)
+    pause =             "false | true"
 
     Speed =                 "0 (up to ∞)"   [Value is an Number!]
     RPM =                   "0 (up to ∞)"   [Value is an Number!]
@@ -103,6 +105,14 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     Electric =              "Off | On"
     Wipers =                "Off | On"
     
+    parkBrakeOn =       "false | true"
+    motorBrakeOn =      "false | true"
+    batteryLow =        "false | true"
+    oilLow =            "false | true"
+    adblueLow =         "false | true"
+    fuelLow =           "false | true"
+    waterTempHigh =     "false | true"
+    
     BlinkerRightOn =        "false | true"
     BlinkerLeftOn =         "false | true"
     HazardLightsOn =        "false | true"
@@ -114,30 +124,21 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     LightsBrakeOn =         "Off | On"
     LightsDashboardOn =     "Off | On"
     
+    truckType =         "Shows the Truck Model Name"
+    
     TrailerAttached =       "Not Attached | Attached"
     TrailerMass =           "Shows the Mass from a Trailer in Ton
+    trailerBodyType =   "Shows the Trailer Model name"
+
+    cargoLoaded =       "false | true"
+    cargo =             "Shows the loaded Cargo"
+    cargoDamage =       "Shows the Cargo Damage"
 
     JobSourceCity =         "Shows the Job Source City
     JobSourceCompany =      "Shows the Job Source Company"
     JobDestinationCity =    "Shows the Job Destination City
     JobDestinationCompany = "Shows the Job Destination Company"
 
-## New Game States in 0.5.0
-
-    serverVersion =     "Shows the Server Version"
-    pause =             "false | true"
-    truckType =         "Shows the Truck Model Name"
-    parkBrakeOn =       "false | true"
-    motorBrakeOn =      "false | true"
-    batteryLow =        "false | true"
-    oilLow =            "false | true"
-    waterTempHigh =     "false | true"
-    adblueLow =         "false | true"
-    fuelLow =           "false | true"
-    trailerBodyType =   "Shows the Trailer Model name"
-    cargoLoaded =       "false | true"
-    cargo =             "Shows the loaded Cargo"
-    cargoDamage =       "Shows the Cargo Damage"
 
 ## TruckersMP States
 
