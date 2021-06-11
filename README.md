@@ -12,11 +12,14 @@
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin)
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
 
-- [TouchPortal Advanced Hold Plugin](#tp_ets2_plugin)
+- [TouchPortal ETS2 Dashboard Plugin](#tp_ets2_plugin)
   - [Features](#features)
   - [Installation](#how-to-install)
   - [Support](#support)
   - [States](#game-states)
+    - [Game States](#game-states)
+    - [TruckersMP States](#truckersmp-states)
+    - [Game Icons](#game-icons)
   - [AutoUpdater](#autoupdater)
   - [Settings](#settings)
   - [Features Comming Soon](#features-comming-soon)
@@ -43,10 +46,20 @@
 
 ## How to Install
 
-You need "Touch Portal" and its Pro Version! 
+Installing
+NOTE: The Default Plugin installation path is dictated by Touch Portal here: %APPDATA%\TouchPortal\plugins
 
-Just download the ".tpp" File. It is located in the "Release/Plugin" Folder.
-Go into your Touch Portal, Click on the Wrench and click on "Import Plugin".
+1. Download the Plugin [ETS2_Dashboard.tpp](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp) file.
+2. Open Touch Portal go to the Wrench and click on "Import plug-in"
+3. Choose your downloaded .tpp File and click "Open"
+4. After the Import you will see "Plug-in imported successful". Click on "ok"
+5. Now restart the Touch Portal app
+`NOTE: Make sure you fully close Touch Portal using System Tray icon to exit`
+
+6. After TP is open again, TP will ask you, if you want to trust the Plugin. Click on "Trust always".
+7. Now the Plugin is installed and you can create your first ETS2 Page!
+
+`NOTE: The Plugin has an Auto Updater. As long as NyboTV dont say "Update on your own" in the Discord Channel, you dont need to Update this Plugin!`
 
 ## Support
 You can get directly Support on the official TP Discord!
@@ -70,7 +83,7 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 
 ### Game States
 
-	Status_Connected =      "Disconnected | Connected"
+    Status_Connected =      "Disconnected | Connected"
     Game =                  "Nothing Found! | ETS2 | ATS"
 
     SleepTime =             "Shows how long do you have until you have to sleep" (Idk yet in which format this is)
@@ -133,7 +146,7 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     ServerPLayers =         "(How Many Players are Online)"              [Value is an Number!]
     ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
 
-## Game Icons:
+## Game Icons
 
     SpeedGauge =            Shows your Speed as an Image
     RPMGauge =              Shows your RPM as an Image    
