@@ -71,7 +71,7 @@ if(config.autoupdate === "true") {
             const options = {
                 files: './config.json',
                 from: `${data.updateLatest}`,
-                to: `update`,
+                to: `yes`,
             };
             
             try {

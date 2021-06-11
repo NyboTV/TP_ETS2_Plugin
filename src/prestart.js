@@ -30,7 +30,7 @@ if(fs.existsSync('./config.json')) {
     config = fs.readFileSync('./config.json')
     config = JSON.parse(config)
 } else {
-    fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "updateLatest": "update", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
+    fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "updateLatest": "yes", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
     config = fs.readFileSync('./config.json')
     config = JSON.parse(config)
 
@@ -39,7 +39,7 @@ if(fs.existsSync('./config.json')) {
     }
 }
 
-if(config.updateLatest === "update") {
+if(config.updateLatest === "yes") {
     if(config.autoupdate === "true") {
         logIt("INFO", "New Version Found! Updating...")
         
@@ -97,7 +97,7 @@ function Update() {
     const options2 = {
         files: './config.json',
         from: `${data.updateLatest}`,
-        to: `uptodate`,
+        to: `no`,
     };
     
     try {
@@ -105,7 +105,7 @@ function Update() {
         var updateLatest = replace.sync(options2);
 
         if(version[0].hasChanged === true) {
-            logIt("INFO", "Version has been Updated!")
+            logIt("INFO", `Version has been Updated to ${Version}!`)
         } 
         if(updateLatest[0].hasChanged === true) {
             logIt("INFO", "Update Latest has been changed!")

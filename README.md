@@ -228,9 +228,10 @@ Read [AutoUpdater](#autoupdater)
 
 ## Todo
 
-1. ATS Support
-2. Add some more Informations
-3. (Request more Features and it will be added here ;)
+1. Adding Support for your Designs
+2. ATS Support
+3. Add some more Informations
+4. (Request more Features and it will be added here ;)
 
 ## Issue List
 
