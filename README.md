@@ -239,7 +239,7 @@ If you want to see how this Plugin is made check out my Twitch Channel: https://
 
 
 # Changelog
-
+```
 ### Changelog 0.6.0
 - Added an Autoupdater
 - Fixed some small Script Bugs
@@ -256,7 +256,7 @@ If you want to see how this Plugin is made check out my Twitch Channel: https://
 
 
 Changelog has been Added in Update 0.4.6
-
+```
 
 
 # Authors
