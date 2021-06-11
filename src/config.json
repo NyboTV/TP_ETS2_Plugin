@@ -1,6 +1,6 @@
 { 
  "version": "1.0.0", 
- "autoupdate": "false", 
+ "autoupdate": "true", 
  "autorestart": "yes", 
  "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" 
 }

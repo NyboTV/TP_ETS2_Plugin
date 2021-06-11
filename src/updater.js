@@ -5,6 +5,7 @@ const https = require('https')
 const downloadRelease = require('download-github-release');
 const exec = require('child_process').execFile;
 const AdmZip = require("adm-zip");
+const replace = require('replace-in-file');
 
 var user = 'NyboTV'
 var repo = 'TP_ETS2_Plugin'
@@ -20,7 +21,7 @@ if(fs.existsSync('./config.json')) {
     config = fs.readFileSync('./config.json')
     config = JSON.parse(config)
 } else {
-    fs.writeFileSync('./config.json', '{ \n "version": "1.0.0", \n "autoupdate": "false", \n "autorestart": "no", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
+    fs.writeFileSync('./config.json', '{ \n "version": "0.0.0", \n "autoupdate": "false", \n "autorestart": "no", \n "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" \n}')
     config = fs.readFileSync('./config.json')
     config = JSON.parse(config)
 }
@@ -107,16 +108,6 @@ if(config.autoupdate === "true") {
             fse.moveSync('./tmp/ETS2_Dashboard/ets2_plugin.exe', '../../ets2_plugin.exe', { overwrite: true })
             
             logIt("INFO", "Update is Installed!")
-            logIt("INFO", "Starting Plugin...")
-
-            if(config.autorestart === true) {
-
-                var TPPath = fs.readFileSync('./config.json').TPpath
-
-                fs.writeFileSync('update.bat', `@Echo Off \ntitle ETS2 Dashboard Updater \necho Restarting TouchPortal \ntasklist /fi "ImageName eq javaw.exe" /fo csv 2>NUL | find /I "javaw.exe">NUL \nif "%ERRORLEVEL%"=="0" taskkill /F /IM javaw.exe \nping -n 5 localhost >nul \nstart "" "${TPPath}"`)
-                require('child_process').exec('cmd /c update.bat', function(){
-                });
-            }
             
             var data = fs.readFileSync('./config.json')
             data = JSON.parse(data)
@@ -135,10 +126,25 @@ if(config.autoupdate === "true") {
                 } 
             }
             catch (error) {
-                logIt("WARN", error)
+                logIt("ERROR", error)
             }
+
+            if(config.autorestart === "yes") {
+
+                var TPPath = config.TPpath
+
+                console.log(TPPath)
+                
+                fs.writeFileSync('update.bat', `@Echo Off \ntitle ETS2 Dashboard Updater \necho Restarting TouchPortal \ntasklist /fi "ImageName eq javaw.exe" /fo csv 2>NUL | find /I "javaw.exe">NUL \nif "%ERRORLEVEL%"=="0" taskkill /F /IM javaw.exe \nping -n 2 localhost >nul \nping -n 5 localhost >nul \nstart "" "${TPPath}"`)
+                require('child_process').exec('cmd /c update.bat', function(){
+                });
+                return;
+            } else {
+                Start()
+            }
+            
+            logIt("INFO", "Starting Plugin...")
         }
-        
     }, 1500);
     
 } else {
@@ -148,7 +154,7 @@ if(config.autoupdate === "true") {
     
 function Start() {
     exec('ets2_plugin.exe', function(err, data) {  
-        console.log(err)
+        logIt("ERROR", err)
         console.log(data.toString());                       
     }); 
 }

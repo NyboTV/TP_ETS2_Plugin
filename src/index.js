@@ -8,14 +8,13 @@ const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile
 const replace = require('replace-in-file');
-const { log } = require('util');
 
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
   fs.rmdirSync('./tmp/ETS2_Dashboard', { recursive: true })
 }
 
 if(fs.existsSync('./update.bat')) {
-  fs.rmSync('./update.bat')
+  fs.unlinkSync('./update.bat')
 }
 
 let RefreshInterval = ""
@@ -1171,6 +1170,7 @@ TPClient.on("Update", (curVersion, newVersion) => {
 TPClient.on("Close", (data) => {
   logIt("WARN","Closing due to TouchPortal sending closePlugin message"
   );
+  fs.appendFileSync('./log.log', `\n --------SCRIPT ENDED--------`)
 });
 
 //Connects and Pairs to Touch Portal via Sockete
