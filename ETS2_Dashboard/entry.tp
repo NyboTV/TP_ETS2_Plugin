@@ -3,7 +3,7 @@
    "version":1,
    "name":"TP ETS2 Plugin",
    "id":"TP_ETS2_Plugin",
-   "plugin_start_cmd":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\prestart.exe\"",
+   "plugin_start_cmd":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\updater.exe\"",
    "configuration":{
       "colorDark":"#f54242",
       "colorLight":"#f5a442"
