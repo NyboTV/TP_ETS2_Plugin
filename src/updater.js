@@ -108,19 +108,21 @@ function Update() {
     var entry_file = "entry.tp"
     var main_exe = "ets2_plugin.exe"
     var updater_exe = "updater.exe"
+    var config_file = "config.json"
     
     zip.extractAllTo('./tmp/', true)
-    fs.unlinkSync('./tmp/ETS2_Dashboard.zip')
-    
+    fs.unlinkSync('./tmp/ETS2_Dashboard.zip')    
 
-
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.moveSync(`./tmp/ETS2_Dashboard/${server_folder}`, `../../${server_folder}`, { overwrite: true }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${images_folder}`))  { fse.moveSync(`./tmp/ETS2_Dashboard/${images_folder}`, `../../${images_folder}`, { overwrite: true }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${entry_file}`))     { fse.moveSync(`./tmp/ETS2_Dashboard/${entry_file}`, `../../${entry_file}`, { overwrite: true }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${main_exe}`))       { fse.moveSync(`./tmp/ETS2_Dashboard/${main_exe}`, `../../${main_exe}`, { overwrite: true }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`./tmp/ETS2_Dashboard/${server_folder}`, `./${server_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${images_folder}`))  { fse.move(`./tmp/ETS2_Dashboard/${images_folder}`, `./${images_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${entry_file}`))     { fse.move(`./tmp/ETS2_Dashboard/${entry_file}`,    `./${entry_file}`,      { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${main_exe}`))       { fse.move(`./tmp/ETS2_Dashboard/${main_exe}`,          `./${main_exe}`,    { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${config_file}`))    { fse.move(`./tmp/ETS2_Dashboard/${config_file}`,   `./${config_file}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
 
     if(fs.existsSync(`./tmp/ETS2_Dashboard/${updater_exe}`)) { fs.unlinkSync(`./tmp/ETS2_Dashboard/${updater_exe}`) }
-    fs.rmdirSync('./tmp/ETS2_Dashboard')
+    setTimeout(() => {
+        fs.rmdirSync('./tmp/ETS2_Dashboard')
+    }, 1500);
     
     logIt("INFO", "Update is Installed!")
     
@@ -150,16 +152,18 @@ function Update() {
     catch (error) {
         logIt("ERROR", error)
     }   
-    logIt("INFO", "Starting Updater Script...")
+    logIt("INFO", "Starting Main Script...")
     Start()
 }    
     
 function Start() {
-    exec('ets2_plugin.exe', function(err, data) {  
-        logIt("ERROR", err)
-        console.log(data.toString());                       
-    }); 
-    return;
+    setTimeout(() => {
+        exec('ets2_plugin.exe', function(err, data) {  
+            logIt("ERROR", err)
+            console.log(data.toString());                       
+        }); 
+        return;
+    }, 1500);
 }
 
 function logIt() {
