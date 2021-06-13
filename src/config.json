@@ -1,6 +1,10 @@
 { 
- "version": "", 
- "autoupdate": "true", 
- "updateLatest": "no", 
- "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk" 
+    "version": "0.0.0", 
+    "autoupdate": "false", 
+    "updateLatest": "yes", 
+    "TPpath": "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk",
+   
+    "github_Username": "NyboTV",
+    "github_Repo": "TP_ETS2_Plugin",
+    "github_FileName": "ETS2_Dashboard_AutoUpdater"
 }

@@ -53,7 +53,7 @@
 Installing
 NOTE: The Default Plugin installation path is dictated by Touch Portal here: %APPDATA%\TouchPortal\plugins
 
-1. Download the Plugin [ETS2_Dashboard.tpp](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp) file.
+1. Download the [Plugin](#download) file.
 2. Open Touch Portal go to the Wrench and click on "Import plug-in"
 3. Choose your downloaded .tpp File and click "Open"
 4. After the Import you will see "Plug-in imported successful". Click on "ok"
@@ -64,6 +64,12 @@ NOTE: The Default Plugin installation path is dictated by Touch Portal here: %AP
 7. Now the Plugin is installed and you can create your first ETS2 Page!
 
 `NOTE: The Plugin has an Auto Updater. As long as NyboTV dont say "Update on your own" in the Discord Channel, you dont need to Update this Plugin!`
+
+## Download
+
+AutoUpdater => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
+
+Manual Install => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
 ## Support
 You can get directly Support on the official TP Discord!
@@ -163,8 +169,6 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 
 You can now activate the "Autoupdater" function.
 Just go to your Plugin Settings and set the "Auto updater" to "true"
-
-If you want an Auto Restart of TP after the Update finished, just set "Auto restart" from "no" to "yes"
 
 ### Autoupdater Features
 

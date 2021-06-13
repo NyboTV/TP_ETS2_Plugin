@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node .",
     "pkg": "pkg --targets node14-win-x64 .",
-    "build": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/           && pkg --targets node14-win-x64 prestart.js && move prestart.exe ../ETS2_Dashboard             && pkg --targets node14-win-x64 updater.js && move updater.exe ../ETS2_Dashboard/ && cd ../Releases/Plugin/ && del ETS2_Dashboard.tpp && 7z a -tzip ETS2_Dashboard.tpp ../../ETS2_Dashboard",
-    "test": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/           && pkg --targets node14-win-x64 prestart.js && move prestart.exe ../ETS2_Dashboard             && pkg --targets node14-win-x64 updater.js && move updater.exe ../ETS2_Dashboard/ && xcopy \"../ETS2_Dashboard\" \"C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard\" /y /E"
+    "build": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/            && pkg --targets node14-win-x64 updater.js && xcopy \"updater.exe\" \"../ETS2_Dashboard/updater.exe\" /y /E && xcopy \"entry.tp\" \"../ETS2_Dashboard/entry.tp\" /y /E  && xcopy \"entry.tp\" \"../AutoUpdater/entry.tp\" /y /E && xcopy \"config.json\" \"../AutoUpdater/config.json\" /y /E && move updater.exe ../AutoUpdater/ && cd ../Releases/Plugin/ && del ETS2_Dashboard_AutoUpdater.tpp && del ETS2_Dashboard.tpp && 7z a -tzip ETS2_Dashboard_AutoUpdater.tpp ../../ETS2_Dashboard && 7z a -tzip ETS2_Dashboard.tpp ../../AutoUpdater",
+    "test": "pkg --targets node14-win-x64 . && move ets2_plugin.exe ../ETS2_Dashboard/            && pkg --targets node14-win-x64 updater.js && xcopy \"updater.exe\" \"../ETS2_Dashboard/updater.exe\" /y /E && xcopy \"entry.tp\" \"../ETS2_Dashboard/entry.tp\" /y /E  && xcopy \"entry.tp\" \"../AutoUpdater/entry.tp\" /y /E && xcopy \"config.json\" \"../AutoUpdater/config.json\" /y /E && xcopy \"config.json\" \"../ETS2_Dashboard/config.json\" /y /E && move updater.exe ../AutoUpdater/ && xcopy \"../ETS2_Dashboard\" \"C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard\" /y /E"
 
   },
   "bin": {

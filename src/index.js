@@ -1163,8 +1163,7 @@ TPClient.on("Settings",(data) => {
   TruckersMPServer = data[1]["Truckers MP Server"]
   
   AutoUpdater = data[2]["Auto Updater (!READ GITHUB!)"]
-  AutoRestart = data[3]["Auto Restart"]
-  Path = data[4]["TP Path"]
+  Path = data[3]["TP Path"]
 
 
 });
