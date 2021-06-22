@@ -10,7 +10,6 @@
 
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin)
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
-
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin?ref=badge_large)
 
 # [TP_ETS2_Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
