@@ -2,7 +2,7 @@
 ![Release Date](https://img.shields.io/github/release-date/NyboTV/TP_ETS2_Plugin)
 
 ![MIT License](https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin)
 ![Language](https://img.shields.io/github/languages/top/NyboTV/TP_ETS2_Plugin)
 [![Requirements Status](https://requires.io/github/NyboTV/TP_ETS2_Plugin/requirements.svg?branch=master)](https://requires.io/github/NyboTV/TP_ETS2_Plugin/requirements/?branch=master)
 
