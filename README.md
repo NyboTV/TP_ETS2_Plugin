@@ -1,5 +1,3 @@
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin?ref=badge_large)
-
 ![Release](https://img.shields.io/github/v/release/NyboTV/TP_ETS2_Plugin)
 ![Release Date](https://img.shields.io/github/release-date/NyboTV/TP_ETS2_Plugin)
 
@@ -267,3 +265,6 @@ Changelog has been Added in Update 0.4.6
 ## License
 
 This project is licensed under the MIT - see the [LICENSE](LICENSE) file for details
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin?ref=badge_large)
+
