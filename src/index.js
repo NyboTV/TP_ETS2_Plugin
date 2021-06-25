@@ -18,7 +18,9 @@ var updater_exe = "updater.exe"
 
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
   if(fs.existsSync(`./tmp/ETS2_Dashboard/${updater_exe}`))    { fse.move(`./tmp/ETS2_Dashboard/${updater_exe}`,   `./${updater_exe}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
-  fs.rmdirSync('./tmp/ETS2_Dashboard', { recursive: true })
+  setTimeout(() => {
+    fs.rmdirSync('./tmp/ETS2_Dashboard', { recursive: true })
+  }, 1500);
 }
 
 let RefreshInterval = ""
@@ -940,22 +942,6 @@ TPClient.on("Info", (data) => {
         }
       }
 
-      const configAutorestart = async () => {
-        var data = fs.readFileSync('./config.json')
-        data = JSON.parse(data)
-
-        const options = {
-          files: './config.json',
-          from: `${data.autorestart}`,
-          to: `${AutoRestart}`,
-        };
-        var autorestart = replace.sync(options);
-
-        if(autorestart[0].hasChanged === true) {
-          logIt("INFO", "Auto Restart Setting has been changed!")
-        }
-      }
-
       const configTPpath = async () => {
         var data = fs.readFileSync('./config.json')
         data = JSON.parse(data)
@@ -973,7 +959,6 @@ TPClient.on("Info", (data) => {
       }
 
       await configAutoupdate()
-      await configAutorestart()
       await configTPpath()
       
     }

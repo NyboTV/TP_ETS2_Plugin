@@ -56,20 +56,20 @@ setTimeout(() => {
     Version = JSON.parse(Version).tag_name
     fs.unlinkSync('./tmp/updater.json')
     
-    logIt("INFO", `Online Version: ${Version} | Lokale Version: ${config.version}`)
+    logIt("INFO", `Online Version: ${Version} | Local Version: ${config.version}`)
     
     if(config.version === "0.0.0") {
         Download()
     } else {
         if (config.version === Version) {
             logIt("INFO", "Up to Date!")
-            Start()
+            End()
         } else {
             if(config.autoupdate === "true") {
                 Download()   
             } else {
                 logIt("INFO", "Skipping Autoupdate Function because set to 'false'!")
-                Start()
+                End()
             }
         }
     }
@@ -84,7 +84,7 @@ function Download() {
         Update()
     }).catch(function(err) {
         logIt("ERROR", `Update Failed! Reason: ${err.message}`)
-        Start()
+        End()
     });
     
     function filterRelease(release) {
@@ -126,39 +126,23 @@ function Update() {
         from: `${config.version}`,
         to: `${Version}`,
     };
-
-    const options2 = {
-        files: './config.json',
-        from: `${config.updateLatest}`,
-        to: `no`,
-    };
     
     try {
         var version = replace.sync(options);
-        var updateLatest = replace.sync(options2);
 
         if(version[0].hasChanged === true) {
             logIt("INFO", "Version has been Updated!")
-        } 
-        if(updateLatest[0].hasChanged === true) {
-            logIt("INFO", "Update Latest has been changed!")
         }
     }
     catch (error) {
         logIt("ERROR", error)
     }   
     logIt("INFO", "Starting Main Script...")
-    Start()
+    End()
 }    
     
-function Start() {
-    setTimeout(() => {
-        exec('ets2_plugin.exe', function(err, data) {  
-            logIt("ERROR", err)
-            console.log(data.toString());                       
-        }); 
-        return;
-    }, 1500);
+function End() {
+    process.exit()
 }
 
 function logIt() {
