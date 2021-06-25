@@ -118,11 +118,6 @@ function Update() {
     if(fs.existsSync(`./tmp/ETS2_Dashboard/${entry_file}`))     { fse.move(`./tmp/ETS2_Dashboard/${entry_file}`,    `./${entry_file}`,      { overwrite: true },    err => { if(err) return console.log(err) }) }
     if(fs.existsSync(`./tmp/ETS2_Dashboard/${main_exe}`))       { fse.move(`./tmp/ETS2_Dashboard/${main_exe}`,          `./${main_exe}`,    { overwrite: true },    err => { if(err) return console.log(err) }) }
     if(fs.existsSync(`./tmp/ETS2_Dashboard/${config_file}`))    { fse.move(`./tmp/ETS2_Dashboard/${config_file}`,   `./${config_file}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
-
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${updater_exe}`)) { fs.unlinkSync(`./tmp/ETS2_Dashboard/${updater_exe}`) }
-    setTimeout(() => {
-        fs.rmdirSync('./tmp/ETS2_Dashboard')
-    }, 1500);
     
     logIt("INFO", "Update is Installed!")
     

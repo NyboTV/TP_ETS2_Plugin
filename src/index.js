@@ -8,19 +8,17 @@ const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile
 const replace = require('replace-in-file');
-const AdmZip = require('adm-zip')
+const fse = require('fs-extra')
 
 var date_time = new Date().toISOString().
   replace(/T/, '_').
   replace(/\..+/, '')
 var firstStart = 1
+var updater_exe = "updater.exe"
 
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
+  if(fs.existsSync(`./tmp/ETS2_Dashboard/${updater_exe}`))    { fse.move(`./tmp/ETS2_Dashboard/${updater_exe}`,   `./${updater_exe}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
   fs.rmdirSync('./tmp/ETS2_Dashboard', { recursive: true })
-}
-
-if(fs.existsSync('./update.bat')) {
-  fs.unlinkSync('./update.bat')
 }
 
 let RefreshInterval = ""
