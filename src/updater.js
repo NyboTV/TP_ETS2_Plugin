@@ -2,7 +2,6 @@ const fs = require('fs')
 const fse = require('fs-extra')
 const pluginId = 'TP_ETS2_Plugin';
 const downloadRelease = require('download-github-release');
-const exec = require('child_process').execFile;
 const AdmZip = require("adm-zip");
 const replace = require('replace-in-file');
 const https = require('https');
@@ -103,21 +102,23 @@ function Update() {
     fse.renameSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp', './tmp/ETS2_Dashboard.zip', { overwrite: true })
     
     var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
-    var server_folder = "server"
-    var images_folder = "images"
-    var entry_file = "entry.tp"
-    var main_exe = "index.exe"
-    var updater_exe = "updater.exe"
-    var config_file = "config.json"
+    var tmp_path = "./tmp/ETS2_Dashboard"
+    var server_folder = `server`
+    var images_folder = `images`
+    var entry_file = `entry.tp`
+    var main_exe = `index.exe`
+    var config_file = `config.json`
     
     zip.extractAllTo('./tmp/', true)
     fs.unlinkSync('./tmp/ETS2_Dashboard.zip')    
 
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`./tmp/ETS2_Dashboard/${server_folder}`, `./${server_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${images_folder}`))  { fse.move(`./tmp/ETS2_Dashboard/${images_folder}`, `./${images_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${entry_file}`))     { fse.move(`./tmp/ETS2_Dashboard/${entry_file}`,    `./${entry_file}`,      { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${main_exe}`))       { fse.move(`./tmp/ETS2_Dashboard/${main_exe}`,          `./${main_exe}`,    { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${config_file}`))    { fse.move(`./tmp/ETS2_Dashboard/${config_file}`,   `./${config_file}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
+    console.log(fs.existsSync(`${tmp_path}/${server_folder}`))
+
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${server_folder}`, `./${server_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${images_folder}`, `./${images_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${entry_file}`,    `./${entry_file}`,      { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${main_exe}`,      `./${main_exe}`,        { overwrite: true },    err => { if(err) return console.log(err) }) }
+    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
     
     logIt("INFO", "Update is Installed!")
     
@@ -128,7 +129,7 @@ function Update() {
     };
     
     try {
-        var version = replace.sync(options);
+        //var version = replace.sync(options);
 
         if(version[0].hasChanged === true) {
             logIt("INFO", "Version has been Updated!")
