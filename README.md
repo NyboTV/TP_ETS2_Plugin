@@ -76,7 +76,7 @@ If you want to request a Function:
 Feel free to create a "Pull Request"
 
 If you have an Problem with my Script:
-I would appreachate if you create an "Issue" on my Github. But i can get Support on the 
+I would appreachate if you create an "Issue" on my Github. But i can give Support on the TP Discord too ;) 
 
 ## How to use
 
@@ -162,12 +162,6 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     FuelGauge =             Shows your speed as an Image
 
 
-
-## Autoupdater
-
-You can now activate the "Autoupdater" function.
-Just go to your Plugin Settings and set the "Auto updater" to "true"
-
 ### Autoupdater Features
 
     - Auto Updater => Automaticly downloads the latest version of the Plugin and installs it.
@@ -211,13 +205,20 @@ You can setup the Server you want to Display.
     If you changed it you have to restart Touch Portal
 
 
-### Auto Updater / Auto restart / Tp Path
-Read [AutoUpdater](#autoupdater)
+### Auto Updater 
+You can now activate the "Autoupdater" function.
+Just go to your Plugin Settings and set the "Auto updater" to "true"
+
+    Available Settings:
+    true | false
+
+every other setting will be an "false"
 
 
 ## Features comming soon
 
 - ATS Support
+- Support Bot (For Faster Support)
 - Some small Details
 - Some small Features
 - More Dashboard Designs

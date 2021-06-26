@@ -1,7 +1,7 @@
 {
    "sdk":1,
    "version":1,
-   "name":"TP ETS2 Plugin",
+   "name":"ETS2 Dashboard",
    "id":"TP_ETS2_Plugin",
    "plugin_start_cmd":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\ets2_plugin.exe\"",
    "configuration":{

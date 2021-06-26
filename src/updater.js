@@ -106,7 +106,7 @@ function Update() {
     var server_folder = "server"
     var images_folder = "images"
     var entry_file = "entry.tp"
-    var main_exe = "ets2_plugin.exe"
+    var main_exe = "index.exe"
     var updater_exe = "updater.exe"
     var config_file = "config.json"
     
