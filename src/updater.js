@@ -102,6 +102,7 @@ function Update() {
     fse.renameSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp', './tmp/ETS2_Dashboard.zip', { overwrite: true })
     
     var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
+
     var tmp_path = "./tmp/ETS2_Dashboard"
     var server_folder = `server`
     var images_folder = `images`
@@ -111,14 +112,14 @@ function Update() {
     
     zip.extractAllTo('./tmp/', true)
     fs.unlinkSync('./tmp/ETS2_Dashboard.zip')    
-
+    
     console.log(fs.existsSync(`${tmp_path}/${server_folder}`))
-
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${server_folder}`, `./${server_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${images_folder}`, `./${images_folder}`,   { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${entry_file}`,    `./${entry_file}`,      { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${main_exe}`,      `./${main_exe}`,        { overwrite: true },    err => { if(err) return console.log(err) }) }
-    if(fs.existsSync(`./tmp/ETS2_Dashboard/${server_folder}`))  { fse.move(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
+    
+    if(fs.existsSync(`${tmp_path}/${server_folder}`))  { fse.moveSync(`${tmp_path}/${server_folder}`, `./${server_folder}`,   { overwrite: true }) }
+    if(fs.existsSync(`${tmp_path}/${images_folder}`))  { fse.moveSync(`${tmp_path}/${images_folder}`, `./${images_folder}`,   { overwrite: true }) }
+    if(fs.existsSync(`${tmp_path}/${entry_file}`))     { fse.moveSync(`${tmp_path}/${entry_file}`,    `./${entry_file}`,      { overwrite: true }) }
+    if(fs.existsSync(`${tmp_path}/${main_exe}`))       { fse.moveSync(`${tmp_path}/${main_exe}`,      `./${main_exe}`,        { overwrite: true }) }
+    if(fs.existsSync(`${tmp_path}/${config_file}`))    { fse.moveSync(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true }) }
     
     logIt("INFO", "Update is Installed!")
     
@@ -129,8 +130,8 @@ function Update() {
     };
     
     try {
-        //var version = replace.sync(options);
-
+        var version = replace.sync(options);
+        
         if(version[0].hasChanged === true) {
             logIt("INFO", "Version has been Updated!")
         }
@@ -141,6 +142,7 @@ function Update() {
     logIt("INFO", "Starting Main Script...")
     End()
 }    
+
     
 function End() {
     process.exit()
