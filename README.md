@@ -206,14 +206,21 @@ You can setup the Server you want to Display.
 
 
 ### Auto Updater 
-You can now activate the "Autoupdater" function.
-Just go to your Plugin Settings and set the "Auto updater" to "true"
 
-    Available Settings:
-    true | false
+Fully new System! Just Install the Plugin and Insert your Discord ID into the Window :)
+To get your User ID read this: (How to get UserID)[#how-to-get-userid]
 
-every other setting will be an "false"
 
+### How to get UserID
+How to Find your Discord User ID
+To find your user ID in Discord, you first need to enable developer mode, and then simply right click / tap your name and select Copy ID. Here’s how to do that in more detail:
+
+1. Open Discord.
+2. Enable Developer Mode by navigating to Advanced > Developer Mode in Discord’s settings.
+3. Discord Developer Mode Switch.
+5. On any Discord Server: Find your username in the list of users, right click it, and then select Copy ID. You can also do this from chat if you can locate yourself there.
+6. Discord Copy User ID.
+7. Paste (Ctrl+V) the ID into the Window of my Plugin.
 
 ## Features comming soon
 

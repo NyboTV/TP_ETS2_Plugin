@@ -26,15 +26,10 @@
          "maxValue":15
       },
       {
-       "name":"Auto Updater (!READ GITHUB!)",
-       "default":"false",
+       "name":"Discord Bot",
+       "default":"true",
        "type":"text",
        "maxlength":5
-      },
-      {
-       "name":"TP Path",
-       "default":"C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Touch Portal/Touch Portal.lnk",
-       "type":"text"
       }
    ],
    "categories":[
