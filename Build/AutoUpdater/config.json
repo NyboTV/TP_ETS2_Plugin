@@ -1,10 +1,9 @@
-{ 
-    "version": "0.0.0", 
-    "autoupdate": "false",
-   
-    "github_Username": "NyboTV",
-    "github_Repo": "TP_ETS2_Plugin",
-    "github_FileName": "ETS2_Dashboard_AutoUpdater",
+{
+ "version": "0.0.0",
 
-    "userid": ""
+ "github_Username": "NyboTV",
+ "github_Repo": "TP_ETS2_Plugin",
+ "github_FileName": "ETS2_Dashboard_AutoUpdater",
+
+ "userid": ""
 }

@@ -1,11 +1,11 @@
 ::[Bat To Exe Converter]
 ::
-::YAwzoRdxOk+EWAjk
-::fBw5plQjdD+DJH2N8VE1OltkbzimM2CvC7AS/O3HyOOTilgfaNYPR6rv6eaxEOwG7UzqSYQswVN3v/cAAxxXMBuoYW8=
+::YAwzoRdxOk+EWAnk
+::fBw5plQjdG8=
 ::YAwzuBVtJxjWCl3EqQJgSA==
 ::ZR4luwNxJguZRRnk
 ::Yhs/ulQjdF+5
-::cxAkpRVqdFKZSzk=
+::cxAkpRVqdFKZSDk=
 ::cBs/ulQjdF+5
 ::ZR41oxFsdFKZSDk=
 ::eBoioBt6dFKZSDk=
@@ -31,8 +31,6 @@
 ::
 ::
 ::978f952a14a936cc963da21a135fa983
-@echo off
+@Echo Off
 Start /WAIT /B "Updater" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\updater.exe"
-
-Start /WAIT /B "ETS2 Dashboard" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\index.exe"
 exit

@@ -926,41 +926,16 @@ TPClient.on("Info", (data) => {
 
     const TPSettings = async () => {
 
-      const configAutoupdate = async () => {
-        var data = fs.readFileSync('./config.json')
-        data = JSON.parse(data)
+      var config = JSON.parse(fs.readFileSync('./config.json'))
 
-        const options = {
-          files: './config.json',
-          from: `${data.autoupdate}`,
-          to: `${AutoUpdater}`,
-        };
-        var autoupdate = replace.sync(options);
-
-        if(autoupdate[0].hasChanged === true) {
-          logIt("INFO", "AutoUpdater Setting has been changed!")
-        }
-      }
-
-      const configTPpath = async () => {
-        var data = fs.readFileSync('./config.json')
-        data = JSON.parse(data)
-
-        const options = {
-          files: './config.json',
-          from: `${data.TPpath}`,
-          to: `${Path}`,
-        };
-        var TPpath = replace.sync(options);
-
-        if(TPpath[0].hasChanged === true) {
-          logIt("INFO", "TP Path Setting has been changed!")
-        }
-      }
-
-      await configAutoupdate()
-      await configTPpath()
+      var config1 = config.version
+      var config2 = config.github_Username   
+      var config3 = config.github_Repo   
+      var config4 = config.github_FileName   
+      var config5 = config.userid 
       
+      fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}"\n "discordMessage": "${discordMessage}"\n}`)
+
     }
       
     
@@ -1144,10 +1119,8 @@ TPClient.on("Settings",(data) => {
 
   RefreshInterval = data[0]["Refresh Interval"]
   TruckersMPServer = data[1]["Truckers MP Server"]
-  
-  AutoUpdater = data[2]["Auto Updater (!READ GITHUB!)"]
-  Path = data[3]["TP Path"]
 
+  DiscordMessage = data[2]["Discord Bot"]
 
 });
 
