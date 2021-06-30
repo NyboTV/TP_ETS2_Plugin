@@ -208,7 +208,7 @@ You can setup the Server you want to Display.
 ### AutoUpdater 
 
 Fully new System! Just Install the Plugin and Insert your Discord ID into the Window :)
-To get your User ID read this: (How to get UserID)[#how-to-get-userid]
+To get your User ID read this: [How to get UserID](#how-to-get-userid)
 
 
 ### How to get UserID
