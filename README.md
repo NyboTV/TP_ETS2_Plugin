@@ -205,7 +205,7 @@ You can setup the Server you want to Display.
     If you changed it you have to restart Touch Portal
 
 
-### Auto Updater 
+### AutoUpdater 
 
 Fully new System! Just Install the Plugin and Insert your Discord ID into the Window :)
 To get your User ID read this: (How to get UserID)[#how-to-get-userid]
