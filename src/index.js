@@ -10,11 +10,11 @@ const execute = require('child_process').execFile
 const replace = require('replace-in-file');
 const fse = require('fs-extra')
 
-var date_time = new Date().toISOString().
+let date_time = new Date().toISOString().
   replace(/T/, '_').
   replace(/\..+/, '')
-var firstStart = 1
-var updater_exe = "updater.exe"
+let firstStart = 1
+let updater_exe = "updater.exe"
 
 if(fs.existsSync('./tmp/ETS2_Dashboard')) {
   if(fs.existsSync(`./tmp/ETS2_Dashboard/${updater_exe}`))    { fse.move(`./tmp/ETS2_Dashboard/${updater_exe}`,   `./${updater_exe}`,     { overwrite: true },    err => { if(err) return console.log(err) }) }
@@ -23,135 +23,135 @@ if(fs.existsSync('./tmp/ETS2_Dashboard')) {
   }, 1500);
 }
 
-let RefreshInterval = ""
-let TruckersMPServer = ""
-let discordMessage = ""
+letRefreshInterval = ""
+letTruckersMPServer = ""
+letdiscordMessage = ""
 
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
 
-  let Retry = 0
-  let error = 0
+  letRetry = 0
+  leterror = 0
   
   // MAIN STATES
-  let Status_Connected = "Disconnected"
-  let Game = "Nothing Found!"
+  letStatus_Connected = "Disconnected"
+  letGame = "Nothing Found!"
 
-  let serverVersion = "0.5.0"
-  let pause = "false"
+  letserverVersion = "0.5.0"
+  letpause = "false"
 
-  let SleepTime = ""
+  letSleepTime = ""
   
   //Truck
-  let truckType = ""
+  lettruckType = ""
 
-  let Speed = "0"
-  let RPM = "0"
+  letSpeed = "0"
+  letRPM = "0"
   
-  let Gear = "N"
+  letGear = "N"
   
-  let Fuel = "0"
-  let FuelCap = "0"
+  letFuel = "0"
+  letFuelCap = "0"
   
-  let CruiseControlSpeed = "0"
-  let CruiseControlOn = "false"
-  let Speedlimit = "0"
-  let SpeedLimitSign = ""
+  letCruiseControlSpeed = "0"
+  letCruiseControlOn = "false"
+  letSpeedlimit = "0"
+  letSpeedLimitSign = ""
   
-  let Electric = "Off"
-  let Engine = "Off"
-  let Wipers = "Off"
+  letElectric = "Off"
+  letEngine = "Off"
+  letWipers = "Off"
   
-  let BlinkerRightOn = "false"
-  let BlinkerLeftOn = "false"
-  let HazardLightsOn = "false"
+  letBlinkerRightOn = "false"
+  letBlinkerLeftOn = "false"
+  letHazardLightsOn = "false"
   
-  let LightsParkingOn = "Off"
-  let LightsBeamLowOn = "Off"
-  let LightsBeamHighOn = "Off"
-  let LightsBeaconOn = "Off"
-  let LightsBrakeOn = "Off"
-  let LightsDashboardOn = "Off"
+  letLightsParkingOn = "Off"
+  letLightsBeamLowOn = "Off"
+  letLightsBeamHighOn = "Off"
+  letLightsBeaconOn = "Off"
+  letLightsBrakeOn = "Off"
+  letLightsDashboardOn = "Off"
   
-  let parkBrakeOn = "false"
-  let motorBrakeOn = "false"
+  letparkBrakeOn = "false"
+  letmotorBrakeOn = "false"
 
-  let licensePlate = ""
+  letlicensePlate = ""
 
-  let batteryVoltageWarningOn = "false"
-  let oilPressureWarningOn = "false"
-  let waterTemperatureWarningOn = "false"
-  let adblueWarningOn = "false"
-  let fuelWarningOn = "false"
+  letbatteryVoltageWarningOn = "false"
+  letoilPressureWarningOn = "false"
+  letwaterTemperatureWarningOn = "false"
+  letadblueWarningOn = "false"
+  letfuelWarningOn = "false"
 
   //TRAILER
-  let TrailerAttached = "Not Attached"
-  let trailerMass = ""
-  let trailerBodyType = ""
+  letTrailerAttached = "Not Attached"
+  lettrailerMass = ""
+  lettrailerBodyType = ""
   
   //JOB
-  let Jobincome = ""
-  let JobSourceCity = ""
-  let JobSourceCompany = ""
-  let JobDestinationCity = ""
-  let JobDestinationCompany = ""
+  letJobincome = ""
+  letJobSourceCity = ""
+  letJobSourceCompany = ""
+  letJobDestinationCity = ""
+  letJobDestinationCompany = ""
 
   //JOBEVENT
-  let jobEvent = ""
+  letjobEvent = ""
 
   //CARGO
-  let cargoLoaded = "false"
-  let cargo = ""
-  let cargoDamage = ""
+  letcargoLoaded = "false"
+  letcargo = ""
+  letcargoDamage = ""
 
   //ICON
-  let RPMGauge = ""
-  let SpeedGauge = ""
-  let FuelGauge = ""
+  letRPMGauge = ""
+  letSpeedGauge = ""
+  letFuelGauge = ""
   
 
   //TruckersMP STATES
-  let TruckersMP_Status = ""
-  let ServerName = ""
-  let ServerPlayers = ""
-  let ServerPlayerQueue = ""
+  letTruckersMP_Status = ""
+  letServerName = ""
+  letServerPlayers = ""
+  letServerPlayerQueue = ""
   
 
 
 
   // SCRIPT STATES ONLY
   //MAIN
-  let connection = false
-  let gameName = "" 
+  letconnection = false
+  letgameName = "" 
   
-  let SleepTimer = ""
+  letSleepTimer = ""
 
-  let cruiseControlOn = false
+  letcruiseControlOn = false
   
-  let engineOn = false
-  let electric = false
-  let wipersOn = false
+  letengineOn = false
+  letelectric = false
+  letwipersOn = false
   
-  let blinkerLeftActive = false
-  let blinkerRightActive = false
-  let blinkerLeftOn = false
-  let blinkerRightOn = false 
+  letblinkerLeftActive = false
+  letblinkerRightActive = false
+  letblinkerLeftOn = false
+  letblinkerRightOn = false 
   
-  let attached = false
+  letattached = false
   
-  let lightsParkingOn = false
-  let lightsBeamLowOn = false
-  let lightsBeamHighOn = false
-  let lightsBeaconOn = false
-  let lightsBrakeOn = false
-  let lightsDashboardOn = false
+  letlightsParkingOn = false
+  letlightsBeamLowOn = false
+  letlightsBeamHighOn = false
+  letlightsBeaconOn = false
+  letlightsBrakeOn = false
+  letlightsDashboardOn = false
   
-  let Shifter = ""
-  let Gears = 0
+  letShifter = ""
+  letGears = 0
   
   //TruckersMP
-  let Servers = ""
+  letServers = ""
 
   
   const main = async (TruckersMPinterval) => {
@@ -159,7 +159,7 @@ TPClient.on("Info", (data) => {
     const DashboardAPI = async () => {
       try {
         http.get('http://localhost:25555/api/ets2/telemetry', function(err, resp, body) {
-          let data = '';  
+          letdata = '';  
 
           if(err) {
             logIt("WARN", `Error: ${err}`)
@@ -267,14 +267,14 @@ TPClient.on("Info", (data) => {
         }
 
         https.get('https://api.truckersmp.com/v2/servers', (resp) => {
-          let data = '';  
+          letdata = '';  
           
           resp.on('data', (chunk) => {
             data += chunk;
           })
           
           resp.on('end', () => {
-            let APIOnline = false
+            letAPIOnline = false
 
             if(IsJsonString(data) === true) {
               data = JSON.parse(data)
@@ -516,7 +516,7 @@ TPClient.on("Info", (data) => {
       }
       
       async function getSpeedGauge(rotate) {
-        var getSpeedGaugeRotate = -2
+        let getSpeedGaugeRotate = -2
         const image = await Jimp.read
         ('images/Gauge.png');
         
@@ -532,7 +532,7 @@ TPClient.on("Info", (data) => {
       }
       
       async function getRPMGauge(rotate) {
-        var getRPMGaugeRotate = -2
+        let getRPMGaugeRotate = -2
         const image = await Jimp.read
         ('images/Gauge.png');
         
@@ -548,7 +548,7 @@ TPClient.on("Info", (data) => {
       }
       
       async function getFuelGauge(rotate) {
-        var getRPMGaugeRotate = -2
+        let getRPMGaugeRotate = -2
         const image = await Jimp.read
         ('images/Gauge.png');
         
@@ -766,7 +766,7 @@ TPClient.on("Info", (data) => {
       }
       
       async function getRPM() {
-        let RPM2 = 0
+        letRPM2 = 0
 
         switch(true) {
           case isBetween(RPM, 0, 100): 
@@ -847,7 +847,7 @@ TPClient.on("Info", (data) => {
           RPM2 = 24
         }
 
-        let Rotate = [
+        letRotate = [
           0,
           10,
           20,
@@ -881,15 +881,15 @@ TPClient.on("Info", (data) => {
       
       async function getFuel() {
         
-        let FuelCap2 = FuelCap
-        let Fuel2 = Fuel
+        letFuelCap2 = FuelCap
+        letFuel2 = Fuel
         
-        for(var i = 0;FuelCap2 > 20;i++) {
+        for(let i = 0;FuelCap2 > 20;i++) {
           FuelCap2 = Math.round(Math.floor(FuelCap2 / 1.1))
           Fuel2 = Math.round(Math.floor(Fuel2 / 1.1))
         }
         
-        let Rotate = [
+        letRotate = [
           57,
           60,
           66,
@@ -925,13 +925,13 @@ TPClient.on("Info", (data) => {
 
     const TPSettings = async () => {
 
-      var config = JSON.parse(fs.readFileSync('./config.json'))
+      let config = JSON.parse(fs.readFileSync('./config.json'))
 
-      var config1 = config.version
-      var config2 = config.github_Username   
-      var config3 = config.github_Repo   
-      var config4 = config.github_FileName   
-      var config5 = config.userid 
+      let config1 = config.version
+      let config2 = config.github_Username   
+      let config3 = config.github_Repo   
+      let config4 = config.github_FileName   
+      let config5 = config.userid 
       
       fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": "${discordMessage}"\n}`)
 
@@ -953,7 +953,7 @@ TPClient.on("Info", (data) => {
       await DashboardGauge()
       await DashboardBlinkers()
       
-      let states = [
+      letstates = [
         { id: "Nybo.ETS2.Dashboard.Connected", value: `${Status_Connected}`},
         { id: "Nybo.ETS2.Dashboard.Game", value: `${Game}`},
 
@@ -1036,7 +1036,7 @@ TPClient.on("Info", (data) => {
     asyncFunc()
   }
 
-  let running = false
+  letrunning = false
   const refreshing = async () => {
 
     if(fs.existsSync(`./server`)) {
@@ -1046,8 +1046,8 @@ TPClient.on("Info", (data) => {
       }
   
       const isRunning = (query, cb) => {
-        let platform = process.platform;
-        let cmd = '';
+        letplatform = process.platform;
+        letcmd = '';
         switch (platform) {
           case 'win32' : cmd = `tasklist`; break;
           case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
@@ -1134,8 +1134,8 @@ TPClient.on("Close", (data) => {
   /*
   logIt("INFO", "Packing latest Log Files...")
 
-  var zipUpdater = new AdmZip()
-  var zipIndex = new AdmZip()
+  let zipUpdater = new AdmZip()
+  let zipIndex = new AdmZip()
 
   zipUpdater.addLocalFile("./logs/updater/latest.log")
   zipIndex.addLocalFile("./logs/index/latest.log")
@@ -1157,11 +1157,11 @@ function logIt() {
     firstStart = 0
   }
 
-  var curTime = new Date().toISOString().
+  let curTime = new Date().toISOString().
   replace(/T/, ' ').
   replace(/\..+/, '')
-  var message = [...arguments];
-  var type = message.shift();
+  let message = [...arguments];
+  let type = message.shift();
   console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
   fs.appendFileSync('./logs/index/latest.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }

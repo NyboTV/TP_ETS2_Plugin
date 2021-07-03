@@ -7,16 +7,16 @@ const replace = require('replace-in-file');
 const http = require('http')
 const https = require('https');
 
-var retry = 1
-var userid = ""
-var connected = false
-var started = false
+let retry = 1
+let userid = ""
+let connected = false
+let started = false
 
-var config = JSON.parse(fs.readFileSync('./config.json'))
+let config = JSON.parse(fs.readFileSync('./config.json'))
 github = config
 
-var user = `${github.github_Username}`
-var repo = `${github.github_Repo}`
+let user = `${github.github_Username}`
+let repo = `${github.github_Repo}`
 
 
 if(!fs.existsSync('./logs')) {
@@ -30,8 +30,8 @@ if(!fs.existsSync('./tmp')) {
 }
 
 const APIHost = {
-    //ip: '147.189.171.174',
-    ip: 'localhost',
+    ip: '147.189.171.174',
+    //ip: 'localhost',
     port: 3000,
     method: 'POST'
 }
@@ -42,15 +42,16 @@ const autoupdater = async () => {
         const reinstall = async () => {
             await download()
 
-            var config = fs.readFileSync('./config.json')
+            let config = fs.readFileSync('./config.json')
             config = JSON.parse(config)
             
-            var config3 = config.github_Username
-            var config4 = config.github_Repo
-            var config5 = config.github_FileName
-            var Version = "reinstall"
+            let config3 = config.github_Username
+            let config4 = config.github_Repo
+            let config5 = config.github_FileName
+            let config6 = config.discordMessage
+            let Version = "reinstall"
             
-            fs.writeFileSync('./config.json', `{\n "version": "${Version}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}"\n}`)
+            fs.writeFileSync('./config.json', `{\n "version": "${Version}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
             
             await downloaded()
             api()
@@ -66,9 +67,9 @@ const autoupdater = async () => {
                     start()
                 }
                 
-                var config = fs.readFileSync('./config.json')
+                let config = fs.readFileSync('./config.json')
                 config = JSON.parse(config)
-                var localVersion = config.version
+                let localVersion = config.version
                 
                 github_Username = config.github_Username
                 github_Repo = config.github_Repo
@@ -91,7 +92,7 @@ const autoupdater = async () => {
                 const req = http.request(apioptions, res => {
 
                     res.on('data', d => {
-                        var data = JSON.parse(d)
+                        let data = JSON.parse(d)
                         if (data.download === "yes") {
                             download()
                         } else if (data.reinstall === "yes") {
@@ -119,7 +120,7 @@ const autoupdater = async () => {
 
         const setup = async () => {
     
-            var version = JSON.parse(fs.readFileSync('./config.json')).version
+            let version = JSON.parse(fs.readFileSync('./config.json')).version
             if(version === "0.0.0") {
                 const apioptions = {
                     hostname: APIHost.ip,
@@ -135,9 +136,9 @@ const autoupdater = async () => {
                 const req = http.request(apioptions, res => {
         
                     res.on('data', d => {
-                        var data = JSON.parse(d)
+                        let data = JSON.parse(d)
                         if (data.setup === "yes") {
-                            api(true)
+                            start_plugin()
                         } else if (data.setup === "no") {
                             api()
                         } else if (data.error === true) {
@@ -165,7 +166,7 @@ const autoupdater = async () => {
 
             const publicIP = require('public-ip')
 
-            var LocalIP = await publicIP.v4()
+            let LocalIP = await publicIP.v4()
 
             const apioptions = {
                 hostname: APIHost.ip,
@@ -181,7 +182,7 @@ const autoupdater = async () => {
     
             const req = http.request(apioptions, res => {
                 res.on('data', d => {
-                    var data = JSON.parse(d)
+                    let data = JSON.parse(d)
 
                     const connected_api = async () => {
                         connected = true
@@ -191,10 +192,9 @@ const autoupdater = async () => {
                         
                         if(userid === "" || userid === undefined){
                             userID()
-                            start_plugin()
+                            setup()
                         } else {
-                            start_plugin()
-
+                            setup()
                         }
                         
                     
@@ -232,8 +232,8 @@ const autoupdater = async () => {
 
         const start_plugin = async () => {
             
-            var version = JSON.parse(fs.readFileSync('./config.json')).version
-            var Version = ""
+            let version = JSON.parse(fs.readFileSync('./config.json')).version
+            let Version = ""
             
             const extracting = async () => {
                 if(fs.existsSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp')) {
@@ -303,17 +303,17 @@ const autoupdater = async () => {
                     logIt("INFO", `Update is installing Version ${Version}...`)
                     if(fs.existsSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp')) { fse.renameSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp', './tmp/ETS2_Dashboard.zip', { overwrite: true }) }
                     
-                    var tmp_path = "./tmp/ETS2_Dashboard"
-                    var server_folder = `server`
-                    var images_folder = `images`
-                    var entry_file = `entry.tp`
-                    var main_exe = `index.exe`
-                    var config_file = `config.json`
-                    var prestart_file = `prestart.exe`
+                    let tmp_path = "./tmp/ETS2_Dashboard"
+                    let server_folder = `server`
+                    let images_folder = `images`
+                    let entry_file = `entry.tp`
+                    let main_exe = `index.exe`
+                    let config_file = `config.json`
+                    let prestart_file = `prestart.exe`
                     
                     await timeout(5)
                     
-                    var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
+                    let zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
                     zip.extractAllTo('./tmp/', true)
                     fs.unlinkSync('./tmp/ETS2_Dashboard.zip') 
                     
@@ -327,14 +327,16 @@ const autoupdater = async () => {
                     
                     if(fs.existsSync(`${tmp_path}/${config_file}`))    { fse.moveSync(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true }) }
                     
-                    var config = fs.readFileSync('./config.json')
-                    config = JSON.parse(config)
+                    let config = JSON.parse(fs.readFileSync('./config.json'))
+
+                    console.log(config)
                     
-                    var config3 = config.github_Username
-                    var config4 = config.github_Repo
-                    var config5 = config.github_FileName
+                    let config3 = config.github_Username
+                    let config4 = config.github_Repo
+                    let config5 = config.github_FileName
+                    let config6 = config.discordMessage
                     
-                    fs.writeFileSync('./config.json', `{\n "version": "${Version}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}"\n}`)
+                    fs.writeFileSync('./config.json', `{\n "version": "${Version}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
                     
                     logIt("INFO", "Starting Main Script...")
                     
@@ -364,7 +366,6 @@ const autoupdater = async () => {
                 extracting()
             }
         }
-        
 
         if(config.discordMessage === true) {
             connectionTest()
@@ -387,46 +388,54 @@ autoupdater()
 function userID(error) {
     return new Promise((resolve,reject)=>{  
         
-        if(error === true) {
-            var vbs_file = 'Dim sInput\nsInput = InputBox("Your entered UserID is not Valid! Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
-        } else {
-            var vbs_file = 'Dim sInput\nsInput = InputBox("First Installation: Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
-        }
-    
-        fs.writeFileSync('./tmp/tmp.vbs', `${vbs_file}`)
-        
-        const
-        spawn = require( 'child_process' ).spawnSync,
-        vbs = spawn( 'cscript.exe', [ './tmp/tmp.vbs', 'one' ] );
-        
-        userid = vbs.stdout.toString()
-        userid = userid.split('\n')
-        userid.splice(0,3)
-        userid.splice(1)
-        userid = userid.toString()
-        userid = userid.split('\r')
-        userid.splice(1)
-    
-        userid_config = userid.toString()
-        
-        var userid_valid = isNaN(userid)
-    
-        var config1 = config.version
-        var config3 = config.github_Username
-        var config4 = config.github_Repo
-        var config5 = config.github_FileName
-    
-        fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}"\n}`)
-        logIt("INFO", "UserID has been Updated!")
-        setTimeout(() => {
+        const test_userid = async () => {
+            if(error === true) {
+                var vbs_file = 'Dim sInput\nsInput = InputBox("Your entered UserID is not Valid! Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
+            } else {
+                var vbs_file = 'Dim sInput\nsInput = InputBox("First Installation: Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
+            }
+            
+            fs.writeFileSync('./tmp/tmp.vbs', `${vbs_file}`)
+            
+            const
+            spawn = require( 'child_process' ).spawnSync,
+            vbs = spawn( 'cscript.exe', [ './tmp/tmp.vbs', 'one' ] );
+            
+            userid = vbs.stdout.toString()
+            userid = userid.split('\n')
+            userid.splice(0,3)
+            userid.splice(1)
+            userid = userid.toString()
+            userid = userid.split('\r')
+            userid.splice(1)
+            
+            userid_config = userid.toString()
+            
+            let userid_valid = isNaN(userid)
+            
+            let config1 = config.version
+            let config3 = config.github_Username
+            let config4 = config.github_Repo
+            let config5 = config.github_FileName
+            let config6 = config.discordMessage
+            
+            fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
+            logIt("INFO", "UserID has been Updated!")
+            
+            await timeout(3)
+            
             if(userid_valid){
+                logIt("WARN", "Entered UserID is not Valid! Retry...")
                 userID(true)
             } else {
-                return;
+                logIt("INfO", "Entered UserID is Valid!")
+                resolve();
             }
-        }, 2000);
-    
-        fs.unlinkSync('./tmp/tmp.vbs')
+            
+            fs.unlinkSync('./tmp/tmp.vbs')
+        }
+
+        test_userid()
     });
 }
 
@@ -434,7 +443,7 @@ function start() {
 
     setInterval(() => {
         if(started === false) {
-            var exec = require('child_process').execFile;
+            let exec = require('child_process').execFile;
             exec('index.exe', function(err, data) { 
                 logIt("ERROR", err)
                 logIt("ERROR", data.toString())                       
@@ -462,7 +471,7 @@ function downloaded() {
         const req = http.request(apioptions, res => {
 
             res.on('data', d => {
-                var data = JSON.parse(d)
+                let data = JSON.parse(d)
                 if (data.menu === "yes") {
                     resolve()
                 }
@@ -480,34 +489,9 @@ function downloaded() {
 
 function download() {
     return new Promise((resolve,reject)=>{  
-        var version = JSON.parse(fs.readFileSync('./config.json')).version
-
-        if(version === "0.0.0") {
-            const apioptions = {
-                hostname: APIHost.ip,
-                port: APIHost.port,
-                path: '/setup',
-                method: APIHost.method,
-                headers: {
-                    'UserID': userid
-                }
-            }
-            
-            const req = http.request(apioptions, res => {
-                res.on('data', d => {
-                    
-                })
-            })
-            
-            req.on('error', error => {
-                //console.error(error)
-            })
-            
-            req.end()
-        }
-
-        var outputdir = './tmp'
-        var leaveZipped = false
+        
+        let outputdir = './tmp'
+        let leaveZipped = false
         
         logIt("INFO", "Installing latest Version")
         
@@ -548,9 +532,9 @@ function logIt() {
         firstStart = 0
     }
     
-    var curTime = new Date().toISOString();
-    var message = [...arguments];
-    var type = message.shift();
+    let curTime = new Date().toISOString();
+    let message = [...arguments];
+    let type = message.shift();
     console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
     fs.appendFileSync('./logs/updater/latest.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }
