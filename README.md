@@ -27,6 +27,7 @@
   - [Features Comming Soon](#features-comming-soon)
   - [Todo](#todo)
   - [Issues](#issue-list)
+  - [Your Feature](#Feature)
   - [Changelog](#changelog)
   - [Authors](#authors)
   - [License](#license)
@@ -241,6 +242,9 @@ To find your user ID in Discord, you first need to enable developer mode, and th
 
 - Hazard Lights are not Working
 - some small Refresh issues (its taking sometimes longer)
+- Wipers not working
+
+## Feature
 
 If you wanna your Design or your Feature inside this Plugin create an "Pull requests" with your Wish for an Design or Feature.
 

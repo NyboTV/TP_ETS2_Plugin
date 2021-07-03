@@ -11,6 +11,7 @@ let retry = 1
 let userid = ""
 let connected = false
 let started = false
+let firstStart = ""
 
 let config = JSON.parse(fs.readFileSync('./config.json'))
 github = config
@@ -54,14 +55,15 @@ const autoupdater = async () => {
             fs.writeFileSync('./config.json', `{\n "version": "${Version}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
             
             await downloaded()
-            api()
+            start_plugin()
         }
         
-        const api = async (firstsetup, error) => {
+        const api = async (error) => {
             try {
 
-                if(firstsetup === true) {
+                if(firstStart === true) {
                     firstsetup = "yes"
+                    start()
                 } else {
                     logIt("INFO", "No Upgrade available. Starting Main Script...")
                     start()
@@ -120,46 +122,36 @@ const autoupdater = async () => {
 
         const setup = async () => {
     
-            let version = JSON.parse(fs.readFileSync('./config.json')).version
-            if(version === "0.0.0") {
-                const apioptions = {
-                    hostname: APIHost.ip,
-                    port: APIHost.port,
-                    path: '/setup',
-                    method: APIHost.method,
-                    headers: {
-                        'UserID': userid
-                    }
+            const apioptions = {
+                hostname: APIHost.ip,
+                port: APIHost.port,
+                path: '/setup',
+                method: APIHost.method,
+                headers: {
+                    'UserID': userid
                 }
-    
-        
-                const req = http.request(apioptions, res => {
-        
-                    res.on('data', d => {
-                        let data = JSON.parse(d)
-                        if (data.setup === "yes") {
-                            start_plugin()
-                        } else if (data.setup === "no") {
-                            api()
-                        } else if (data.error === true) {
-                            userID(true)
-                            setup()
-                        }
-                    })
-                })
-        
-                req.on('error', error => {
-                    //console.error(error)
-                    autoupdater()
-                })
-        
-                req.end()
-            } else if(firstStart === true) {
-                api(true)
-            } else {
-                api()
             }
-    
+            
+            
+            const req = http.request(apioptions, res => {
+                
+                res.on('data', d => {
+                    let data = JSON.parse(d)
+                    if (data.error === true) {
+                        userID(true)
+                        setup()
+                    } else {
+                        start_plugin()
+                    }
+                })
+            })
+            
+            req.on('error', error => {
+                //console.error(error)
+                autoupdater()
+            })
+            
+            req.end()
         }
 
         const connectionTest = async () => {
@@ -237,10 +229,8 @@ const autoupdater = async () => {
             
             const extracting = async () => {
                 if(fs.existsSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp')) {
-    
                     if(connected === true) {
                         if(version === "0.0.0") {
-                            firstStart = true
                         } else {
                             
                             const apioptions = {
@@ -328,8 +318,6 @@ const autoupdater = async () => {
                     if(fs.existsSync(`${tmp_path}/${config_file}`))    { fse.moveSync(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true }) }
                     
                     let config = JSON.parse(fs.readFileSync('./config.json'))
-
-                    console.log(config)
                     
                     let config3 = config.github_Username
                     let config4 = config.github_Repo
@@ -343,22 +331,19 @@ const autoupdater = async () => {
                     await timeout(3)
                     
                     if(connected === true) {
-                        if (version === "reinstall"){
-                            api()
-                        } else {
-                            setup()
-                        }
+                        api()
                     } else {
                         start()
                     }
                                         
                 } else {
-                    setup()
+                    api()
                 }
             }
 
             if(version === "0.0.0") {
                 await download()
+                firstStart = true
                 extracting()
             } else if(version === "reinstall") {
                 extracting()
@@ -452,7 +437,6 @@ function start() {
         }
         TP()
     }, 3000);
-
 }
 
 function downloaded() {
@@ -524,10 +508,10 @@ function timeout(seconds) {
     });
 }
 
-var firstStart = 1
+var firststart = 1
 function logIt() {
                 
-    if(firstStart === 1) {
+    if(firststart === 1) {
         fs.writeFileSync('./logs/updater/latest.log', `\n --------SCRIPT STARTED--------`)
         firstStart = 0
     }
