@@ -263,3 +263,9 @@ netsh advfirewall firewall show rule dir=in name=all
 2021-07-03 05:11:57,716 [1   ] [INFO ] Checking ACL rule status...
 2021-07-03 05:11:57,716 [1   ] [INFO ] Running command line: 
 netsh http show urlacl url=http://+:25555/
+2021-07-03 05:18:40,425 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-07-03 05:18:40,533 [1   ] [INFO ] Checking plugin DLL files...
+2021-07-03 05:18:40,533 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-07-03 05:18:40,536 [1   ] [INFO ] Checking Firewall rule...
+2021-07-03 05:18:40,538 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all

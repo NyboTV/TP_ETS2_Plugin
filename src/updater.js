@@ -30,8 +30,8 @@ if(!fs.existsSync('./tmp')) {
 }
 
 const APIHost = {
-    ip: '147.189.171.174',
-    //ip: 'localhost',
+    //ip: '147.189.171.174',
+    ip: 'localhost',
     port: 3000,
     method: 'POST'
 }
