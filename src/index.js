@@ -25,8 +25,7 @@ if(fs.existsSync('./tmp/ETS2_Dashboard')) {
 
 let RefreshInterval = ""
 let TruckersMPServer = ""
-let AutoUpdater = ""
-let Path = ""
+let discordMessage = ""
 
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
@@ -934,7 +933,7 @@ TPClient.on("Info", (data) => {
       var config4 = config.github_FileName   
       var config5 = config.userid 
       
-      fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}"\n "discordMessage": "${discordMessage}"\n}`)
+      fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": "${discordMessage}"\n}`)
 
     }
       
@@ -1120,7 +1119,7 @@ TPClient.on("Settings",(data) => {
   RefreshInterval = data[0]["Refresh Interval"]
   TruckersMPServer = data[1]["Truckers MP Server"]
 
-  DiscordMessage = data[2]["Discord Bot"]
+  discordMessage = data[2]["Discord Bot"]
 
 });
 

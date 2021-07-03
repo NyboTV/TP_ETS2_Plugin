@@ -30,8 +30,8 @@ if(!fs.existsSync('./tmp')) {
 }
 
 const APIHost = {
-    //ip: '147.189.171.174',
-    ip: 'localhost',
+    ip: '147.189.171.174',
+    //ip: 'localhost',
     port: 3000,
     method: 'POST'
 }
@@ -180,8 +180,6 @@ const autoupdater = async () => {
             logIt("INFO", "Connecting to API...")
     
             const req = http.request(apioptions, res => {
-                
-    
                 res.on('data', d => {
                     var data = JSON.parse(d)
 
@@ -367,7 +365,12 @@ const autoupdater = async () => {
             }
         }
         
-        connectionTest()
+
+        if(config.discordMessage === true) {
+            connectionTest()
+        } else {
+            start_plugin()
+        }
     
     } catch (error) {
 
@@ -387,7 +390,7 @@ function userID(error) {
         if(error === true) {
             var vbs_file = 'Dim sInput\nsInput = InputBox("Your entered UserID is not Valid! Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
         } else {
-            var vbs_file = 'Dim sInput\nsInput = InputBox("First Installation: Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
+            var vbs_file = 'Dim sInput\nsInput = InputBox("First Installation: Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
         }
     
         fs.writeFileSync('./tmp/tmp.vbs', `${vbs_file}`)
@@ -498,7 +501,6 @@ function download() {
             
             req.on('error', error => {
                 //console.error(error)
-                autoupdater()
             })
             
             req.end()
