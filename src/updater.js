@@ -1,23 +1,24 @@
 const fs = require('fs')
 const fse = require('fs-extra')
-const pluginId = 'TP_ETS2_Plugin';
+const pluginId = 'TP_ETS2_Plugin_Updater';
 const downloadRelease = require('download-github-release');
 const AdmZip = require("adm-zip");
 const replace = require('replace-in-file');
 const http = require('http')
 const https = require('https');
 
-let retry = 1
-let userid = ""
-let connected = false
-let started = false
-let firstStart = ""
+var retry = 1
+var userid = ""
+var connected = false
+var started = false
+var firstStart = ""
+var firstsetup = ""
 
-let config = JSON.parse(fs.readFileSync('./config.json'))
+var config = JSON.parse(fs.readFileSync('./config.json'))
 github = config
 
-let user = `${github.github_Username}`
-let repo = `${github.github_Repo}`
+var user = `${github.github_Username}`
+var repo = `${github.github_Repo}`
 
 
 if(!fs.existsSync('./logs')) {
@@ -43,19 +44,18 @@ const autoupdater = async () => {
         const reinstall = async () => {
             await download()
 
-            let config = fs.readFileSync('./config.json')
+            var config = fs.readFileSync('./config.json')
             config = JSON.parse(config)
             
-            let config3 = config.github_Username
-            let config4 = config.github_Repo
-            let config5 = config.github_FileName
-            let config6 = config.discordMessage
-            let Version = "reinstall"
+            var config3 = config.github_Username
+            var config4 = config.github_Repo
+            var config5 = config.github_FileName
+            var config6 = config.discordMessage
+            var Version = "reinstall"
             
             fs.writeFileSync('./config.json', `{\n "version": "${Version}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
             
             await downloaded()
-            start_plugin()
         }
         
         const api = async (error) => {
@@ -69,9 +69,9 @@ const autoupdater = async () => {
                     start()
                 }
                 
-                let config = fs.readFileSync('./config.json')
+                var config = fs.readFileSync('./config.json')
                 config = JSON.parse(config)
-                let localVersion = config.version
+                var localVersion = config.version
                 
                 github_Username = config.github_Username
                 github_Repo = config.github_Repo
@@ -94,7 +94,7 @@ const autoupdater = async () => {
                 const req = http.request(apioptions, res => {
 
                     res.on('data', d => {
-                        let data = JSON.parse(d)
+                        var data = JSON.parse(d)
                         if (data.download === "yes") {
                             download()
                         } else if (data.reinstall === "yes") {
@@ -136,7 +136,7 @@ const autoupdater = async () => {
             const req = http.request(apioptions, res => {
                 
                 res.on('data', d => {
-                    let data = JSON.parse(d)
+                    var data = JSON.parse(d)
                     if (data.error === true) {
                         userID(true)
                         setup()
@@ -158,7 +158,7 @@ const autoupdater = async () => {
 
             const publicIP = require('public-ip')
 
-            let LocalIP = await publicIP.v4()
+            var LocalIP = await publicIP.v4()
 
             const apioptions = {
                 hostname: APIHost.ip,
@@ -174,7 +174,7 @@ const autoupdater = async () => {
     
             const req = http.request(apioptions, res => {
                 res.on('data', d => {
-                    let data = JSON.parse(d)
+                    var data = JSON.parse(d)
 
                     const connected_api = async () => {
                         connected = true
@@ -224,8 +224,8 @@ const autoupdater = async () => {
 
         const start_plugin = async () => {
             
-            let version = JSON.parse(fs.readFileSync('./config.json')).version
-            let Version = ""
+            var version = JSON.parse(fs.readFileSync('./config.json')).version
+            var Version = ""
             
             const extracting = async () => {
                 if(fs.existsSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp')) {
@@ -287,23 +287,23 @@ const autoupdater = async () => {
                     } catch (error) {
                         Version = "0.0.0"
                         logIt("ERROR", "Update Error: Couldnt get Version")
-                        api(false, true)
+                        api(true)
                     }
                     
                     logIt("INFO", `Update is installing Version ${Version}...`)
                     if(fs.existsSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp')) { fse.renameSync('./tmp/ETS2_Dashboard_AutoUpdater.tpp', './tmp/ETS2_Dashboard.zip', { overwrite: true }) }
                     
-                    let tmp_path = "./tmp/ETS2_Dashboard"
-                    let server_folder = `server`
-                    let images_folder = `images`
-                    let entry_file = `entry.tp`
-                    let main_exe = `index.exe`
-                    let config_file = `config.json`
-                    let prestart_file = `prestart.exe`
+                    var tmp_path = "./tmp/ETS2_Dashboard"
+                    var server_folder = `server`
+                    var images_folder = `images`
+                    var entry_file = `entry.tp`
+                    var main_exe = `index.exe`
+                    var config_file = `config.json`
+                    var prestart_file = `prestart.exe`
                     
                     await timeout(5)
                     
-                    let zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
+                    var zip = new AdmZip("./tmp/ETS2_Dashboard.zip");
                     zip.extractAllTo('./tmp/', true)
                     fs.unlinkSync('./tmp/ETS2_Dashboard.zip') 
                     
@@ -317,12 +317,12 @@ const autoupdater = async () => {
                     
                     if(fs.existsSync(`${tmp_path}/${config_file}`))    { fse.moveSync(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true }) }
                     
-                    let config = JSON.parse(fs.readFileSync('./config.json'))
+                    var config = JSON.parse(fs.readFileSync('./config.json'))
                     
-                    let config3 = config.github_Username
-                    let config4 = config.github_Repo
-                    let config5 = config.github_FileName
-                    let config6 = config.discordMessage
+                    var config3 = config.github_Username
+                    var config4 = config.github_Repo
+                    var config5 = config.github_FileName
+                    var config6 = config.discordMessage
                     
                     fs.writeFileSync('./config.json', `{\n "version": "${Version}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
                     
@@ -396,13 +396,13 @@ function userID(error) {
             
             userid_config = userid.toString()
             
-            let userid_valid = isNaN(userid)
+            var userid_valid = isNaN(userid)
             
-            let config1 = config.version
-            let config3 = config.github_Username
-            let config4 = config.github_Repo
-            let config5 = config.github_FileName
-            let config6 = config.discordMessage
+            var config1 = config.version
+            var config3 = config.github_Username
+            var config4 = config.github_Repo
+            var config5 = config.github_FileName
+            var config6 = config.discordMessage
             
             fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
             logIt("INFO", "UserID has been Updated!")
@@ -413,7 +413,7 @@ function userID(error) {
                 logIt("WARN", "Entered UserID is not Valid! Retry...")
                 userID(true)
             } else {
-                logIt("INfO", "Entered UserID is Valid!")
+                logIt("INFO", "Entered UserID is Valid!")
                 resolve();
             }
             
@@ -428,7 +428,7 @@ function start() {
 
     setInterval(() => {
         if(started === false) {
-            let exec = require('child_process').execFile;
+            var exec = require('child_process').execFile;
             exec('index.exe', function(err, data) { 
                 logIt("ERROR", err)
                 logIt("ERROR", data.toString())                       
@@ -455,10 +455,6 @@ function downloaded() {
         const req = http.request(apioptions, res => {
 
             res.on('data', d => {
-                let data = JSON.parse(d)
-                if (data.menu === "yes") {
-                    resolve()
-                }
             })
         })
 
@@ -474,8 +470,8 @@ function downloaded() {
 function download() {
     return new Promise((resolve,reject)=>{  
         
-        let outputdir = './tmp'
-        let leaveZipped = false
+        var outputdir = './tmp'
+        var leaveZipped = false
         
         logIt("INFO", "Installing latest Version")
         
@@ -508,17 +504,17 @@ function timeout(seconds) {
     });
 }
 
-var firststart = 1
+var log_firststart = 1
 function logIt() {
                 
-    if(firststart === 1) {
+    if(log_firststart === 1) {
         fs.writeFileSync('./logs/updater/latest.log', `\n --------SCRIPT STARTED--------`)
-        firstStart = 0
+        log_firststart = 0
     }
     
-    let curTime = new Date().toISOString();
-    let message = [...arguments];
-    let type = message.shift();
+    var curTime = new Date().toISOString();
+    var message = [...arguments];
+    var type = message.shift();
     console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
     fs.appendFileSync('./logs/updater/latest.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }
@@ -527,8 +523,8 @@ function TP() {
     const exec = require('child_process').exec;
     
     const isRunning = (query, cb) => {
-        let platform = process.platform;
-        let cmd = '';
+        var platform = process.platform;
+        var cmd = '';
         switch (platform) {
             case 'win32' : cmd = `tasklist`; break;
             case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
