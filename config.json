@@ -6,5 +6,7 @@
  "github_FileName": "ETS2_Dashboard_AutoUpdater",
 
  "userid": "",
- "discordMessage": "true"
+ "discordMessage": true,
+
+ "debugMode": false
 }

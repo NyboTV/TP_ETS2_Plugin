@@ -919,8 +919,9 @@ TPClient.on("Info", (data) => {
       var config3 = config.github_Repo   
       var config4 = config.github_FileName   
       var config5 = config.userid 
+      var config6 = config.debugMode
       
-      fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": ${discordMessage}\n}`)
+      fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": ${discordMessage}, \n\n "debugMode": ${config6}\n}`)
 
     }
       

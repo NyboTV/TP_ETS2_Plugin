@@ -8,14 +8,19 @@ const https = require('https');
 const sJSON = require('self-reload-json')
 const publicIP = require('public-ip')
 
-const debugMode = process.argv.includes("--debug");
 
 let logs = false
 let config = new sJSON('./config.json')
 let firstsetup = false
 let started = false
-
 let error = false
+
+let debugMode = false
+if(config.debugMode) {
+    debugMode = true
+}
+
+debugMode = process.argv.includes("--debug");
 
 if(debugMode){
     started = true
@@ -97,6 +102,8 @@ const index = async (error) => {
                                 
                                 userid = config.userid 
                                 
+                                api_retry = 1
+
                                 if(userid === "" || userid === undefined){
                                     await userID()
                                     setup()
@@ -108,6 +115,7 @@ const index = async (error) => {
                             connected_api()
                         })
                     })
+
                     req.on('error', async (error) => {
                         
                         if(retry === 3) {
@@ -125,7 +133,7 @@ const index = async (error) => {
     
                             if(retry < 5) {
                                 retry = retry+1
-                                connectionTest()
+                                AutoUpdater(false, true)
                             }
                         }
                         
@@ -135,20 +143,17 @@ const index = async (error) => {
         
                 const setup = async () => {
                     logIt("INFO", "Checking User DB on API")
-            
                     const apioptions = {
                         hostname: APIHost.ip,
                         port: APIHost.port,
                         path: '/setup',
                         method: APIHost.method,
                         headers: {
-                            'UserID': userid
+                            'UserID': userid,
+                            'api_error': api
                         }
                     }
-                    
-                    
                     const req = http.request(apioptions, res => {
-                        
                         res.on('data', async (d) => {
                             var data = JSON.parse(d)
                             if (data.error === true) {
@@ -238,8 +243,8 @@ const index = async (error) => {
                         res.on('data', async (d) => {
                             var data = JSON.parse(d)
                             if (data.update === "yes") {
-                                let LatestVersion = await Check_Version()
-                                update(LatestVersion, true)
+                                await reinstall()
+                                restart()
                             } else if (data.reinstall === "yes") {
                                 await reinstall()
                                 restart()
@@ -258,22 +263,21 @@ const index = async (error) => {
                 if(api) {
                     logIt("ERROR", "API Connection Crashed!")
                     if(api_retry === 3) {
-                        process.exit()
+                        return;
                     } else {
-                        index()
+                        connectionTest()
                     }
-                }
-    
-                if(inside_script) {
+                } else if(inside_script) {
                     main(true)
+                } else {
+                    connectionTest()
                 }
-                connectionTest()
             }
         }
         if(error){
             AutoUpdater(false, false, true)
         } else {
-            AutoUpdater()
+            AutoUpdater(false, false, false)
         }
         
         
@@ -289,7 +293,7 @@ const index = async (error) => {
                     });
                     started = true
                 }
-                Running()
+                TP()
             }, 3000);
         }
         
@@ -331,13 +335,14 @@ const index = async (error) => {
                     } else {
                         logIt("INFO", "Entered UserID is Valid!")
     
-                        var config1 = config.version
-                        var config3 = config.github_Username
-                        var config4 = config.github_Repo
-                        var config5 = config.github_FileName
-                        var config6 = config.discordMessage
+                        let config1 = config.version
+                        let config3 = config.github_Username
+                        let config4 = config.github_Repo
+                        let config5 = config.github_FileName
+                        let config6 = config.discordMessage
+                        let config7 = config.debugMode
                         
-                        fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
+                        fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6},\n\n "debugMode": ${config7}\n}`)
                         logIt("INFO", "UserID has been Updated!")
                         
                         resolve();
@@ -463,12 +468,13 @@ const index = async (error) => {
                     userid = JSON.parse(fs.readFileSync('./config.json')).userid 
                     if(fs.existsSync(`${tmp_path}/${config_file}`))    { fse.moveSync(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true }) }
                     
-                    var config3 = config.github_Username
-                    var config4 = config.github_Repo
-                    var config5 = config.github_FileName
-                    var config6 = config.discordMessage
+                    let config3 = config.github_Username
+                    let config4 = config.github_Repo
+                    let config5 = config.github_FileName
+                    let config6 = config.discordMessage
+                    let config7 = config.debugMode
                     
-                    fs.writeFileSync('./config.json', `{\n "version": "${LatestVersion}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6}\n}`)
+                    fs.writeFileSync('./config.json', `{\n "version": "${LatestVersion}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6},\n\n "debugMode": ${config7}\n}`)
                     
                     await timeout(3)
         
@@ -525,8 +531,9 @@ const index = async (error) => {
                 let config4 = config.github_FileName
                 let config5 = config.userid
                 let config6 = config.discordMessage
+                let config7 = config.debugMode
                 
-                fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": ${config6}\n}`)               
+                fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": ${config6},\n\n "debugMode": ${config7}\n}`)               
                 resolve()
             })
         }
@@ -596,6 +603,30 @@ function Running() {
         });
     }
     isRunning('start.exe', (status) => {
+        if(status === false) {
+            process.exit()
+        }
+    })
+    
+}
+
+function TP() {
+    const exec = require('child_process').exec;
+    
+    const isRunning = (query, cb) => {
+        var platform = process.platform;
+        var cmd = '';
+        switch (platform) {
+            case 'win32' : cmd = `tasklist`; break;
+            case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
+            case 'linux' : cmd = `ps -A`; break;
+            default: break;
+        }
+        exec(cmd, (err, stdout, stderr) => {
+            cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
+        });
+    }
+    isRunning('ets2_plugin.exe', (status) => {
         if(status === false) {
             process.exit()
         }
