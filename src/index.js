@@ -50,6 +50,12 @@ const index = async (error) => {
         
         const AutoUpdater = async (crash, api, inside_script) => {
             logIt("INFO", "Plugin is starting...")
+
+            if(!config.discordMessage) {
+
+            } else {
+                
+            }
         
             if(crash){
                 logIt("ERROR", "Plugin Crashed!")
@@ -157,7 +163,7 @@ const index = async (error) => {
                         res.on('data', async (d) => {
                             var data = JSON.parse(d)
                             if (data.error === true) {
-                                userID(true)
+                                await userID(true)
                                 setup()
                             } else {
                                 var version = await Check_Version()
