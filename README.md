@@ -163,12 +163,6 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
     FuelGauge =             Shows your speed as an Image
 
 
-### Autoupdater Features
-
-    - Auto Updater => Automaticly downloads the latest version of the Plugin and installs it.
-    - TP path => If you installed TP on the default Path then dont touch this Setting! If you have it installed on another drive then copy the .exe Files Path and paste it in there like the Path inside the Setting.
-
-
 ## Settings
 
 ### Server list
@@ -210,6 +204,14 @@ You can setup the Server you want to Display.
 
 Fully new System! Just Install the Plugin and Insert your Discord ID into the Window :)
 To get your User ID read this: [How to get UserID](#how-to-get-userid)
+
+IMPORTANT:
+If the UserID Window says "UserID is not Valid" (but you know it is valid) then just go to my Config.json file inside the plugin folder
+(%appdata%/TouchPortal/plugins/ETS2_Dashboard)
+and copy your UserID into the '""' behind the "userid"
+it should looks like this: - "userid": "123456789" -
+
+After that please send the Log to me (The Dev) so i can fix the issue.
 
 
 ### How to get UserID
