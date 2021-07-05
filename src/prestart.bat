@@ -1,11 +1,11 @@
 ::[Bat To Exe Converter]
 ::
-::YAwzoRdxOk+EWAjk
-::fBw5plQjdD+DJH2N8VE1OltkbzimM2CvC7AS/O3HyOOTilgfaNYPR6rv6eaxEOwG7UzqSYQswVN3v/cAAxxXMBuoYW8=
+::YAwzoRdxOk+EWAnk
+::fBw5plQjdG8=
 ::YAwzuBVtJxjWCl3EqQJgSA==
 ::ZR4luwNxJguZRRnk
 ::Yhs/ulQjdF+5
-::cxAkpRVqdFKZSzk=
+::cxAkpRVqdFKZSDk=
 ::cBs/ulQjdF+5
 ::ZR41oxFsdFKZSDk=
 ::eBoioBt6dFKZSDk=
@@ -26,14 +26,16 @@
 ::ZQ0/vhVqMQ3MEVWAtB9wSA==
 ::Zg8zqx1/OA3MEVWAtB9wSA==
 ::dhA7pRFwIByZRRnk
-::Zh4grVQjdD+DJH2N8VE1OltkbzimM2CvC7AS/O3HyOOTilgfaNYPR6rv6eaxEOwG7UzqSbQ433ZepO44P0lnWhO4Zg07qHxGinSXMtSIsh31BE2R4ys=
+::Zh4grVQjdD+DJH2N8VE1OltkbzimM2CvC7AS/O3HyOOTilgfaNYPR6rv6eaxEOwG7UzqSbQ433ZepP8hPCRafwaoZjMku2tRomWXI4mZqwqB
 ::YB416Ek+ZG8=
 ::
 ::
 ::978f952a14a936cc963da21a135fa983
-@echo off
+@Echo Off
 
-if exist tmp\ETS2_Dashboard\ (
+Timeout /T 3 >nul
+
+if exist "%appdata%\TouchPortal\plugins\ETS2_Dashboard\tmp\ETS2_Dashboard\" (
   goto update
 ) else (
   goto start_plugin
@@ -41,13 +43,12 @@ if exist tmp\ETS2_Dashboard\ (
 
 
 :update
-move  "%appdata%\TouchPortal\plugins\tmp\ETS2_Dashboard\updater.exe" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\updater.exe"
-move  "%appdata%\TouchPortal\plugins\tmp\ETS2_Dashboard\ets2_plugin.exe" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\ets2_plugin.exe"
+move  "%appdata%\TouchPortal\plugins\ETS2_Dashboard\tmp\ETS2_Dashboard\index.exe" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\index.exe"
+move  "%appdata%\TouchPortal\plugins\ETS2_Dashboard\tmp\ETS2_Dashboard\start.exe" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\start.exe"
 
-@RD /S /Q "%appdata%\TouchPortal\plugins\tmp\ETS2_Dashboard\
 
-goto start_plugin
+@RD /S /Q "%appdata%\TouchPortal\plugins\ETS2_Dashboard\tmp\ETS2_Dashboard\
 
 :start_plugin
-Start /B "Updater" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\ets2_plugin.exe"
+Start /B "Updater" "%appdata%\TouchPortal\plugins\ETS2_Dashboard\start.exe"
 exit
