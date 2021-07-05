@@ -32,6 +32,23 @@
   - [Authors](#authors)
   - [License](#license)
 
+## Important!!!
+
+Please disable the Discord Bot Function!!!
+How you can do that:
+1. Install the Plugin (DONT START THE PLUGIN)
+2. Go to your Plugins Folder of TP (If you installed TP after start of 2021 go to Step 6.)
+3. Go to "ETS_Dashboard"
+4. Edit "config.json"
+5. replace in line "discordMessage" the "true" to "false"
+5andAhalf (lol) Restart TP and start the Plugin  
+
+6. Press "win + r" 
+7. Copy this inside the little window: "%appdata%/TouchPortal/plugins/ETS2_Dashboard"
+8. Go to Step 4. :3
+
+Why? Im Waiting for an Permission. Until this Permission you need to set it to false! Im not giving any Information about this! So please do it :3 Thanks.
+
 ## Features
 
 - Autoupdater
