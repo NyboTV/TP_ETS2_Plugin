@@ -302,9 +302,11 @@ const index = async (error) => {
         function userID(error) {
             return new Promise(async(resolve,reject)=>{ 
                 
-                const test_userid = async () => {
+                const test_userid = async (input_empty) => {
                     if(error === true) {
                         var vbs_file = 'Dim sInput\nsInput = InputBox("Your entered UserID is not Valid! Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
+                    } else if(input_empty) {
+                        var vbs_file = 'Dim sInput\nsInput = InputBox("Input is Empty! Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
                     } else {
                         var vbs_file = 'Dim sInput\nsInput = InputBox("First Installation: Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
                     }
@@ -324,8 +326,12 @@ const index = async (error) => {
                     userid.splice(1)
                     
                     userid_config = userid.toString()
-                    
+
                     var userid_valid = isNaN(userid)
+                    
+                    if(!userid_config){
+                        test_userid(true)
+                    }
                     
                     await timeout(3)
                     
