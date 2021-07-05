@@ -213,6 +213,11 @@ it should looks like this: - "userid": "123456789" -
 
 After that please send the Log to me (The Dev) so i can fix the issue.
 
+Or you dont want to use the beautifull AutoUpdater Design?
+Then just go to the Plugins folder of TP go to "ETS_Dashboard" open the config.json with any editing Software and set the "discordMessage" from "false" to "true"
+
+Important!! Do NOT! include these: ""     ONLY the word itself!
+
 
 ### How to get UserID
 How to Find your Discord User ID
