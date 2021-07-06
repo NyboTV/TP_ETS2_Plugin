@@ -94,7 +94,7 @@ TPClient.on("Info", (data) => {
  
   //CARGO
   var cargoLoaded = "false"
-  var cargo = ""
+  var cargoType = ""
   var cargoDamage = ""
   var cargoMass = ""
  
@@ -132,6 +132,8 @@ TPClient.on("Info", (data) => {
   var blinkerRightOn = false 
    
   var attached = false
+
+  var cargo = ""
    
   var lightsParkingOn = false
   var lightsBeamLowOn = false
@@ -216,9 +218,9 @@ TPClient.on("Info", (data) => {
 
             //CARGO
             cargoLoaded = cargo.cargoLoaded
-            cargo = cargo.cargo
+            cargoType = cargo.cargo
             cargoDamage = Math.round(jobEvent.cargoDamage)
-            cargoMass = cargo.mass
+            cargoMass = Math.floor(cargo.mass / 1000)
             
             //JOB
             Jobincome = job.income
@@ -1027,7 +1029,7 @@ TPClient.on("Info", (data) => {
 
       TPClient.stateUpdateMany(states);
 
-      console.log(`${cargo}|${cargoMass} / ${Wipers} || ${Gear} || ${Electric} `)
+      console.log(`${cargoType}|${cargoMass} / ${Wipers} || ${Gear} || ${Electric} || ${HazardLightsOn} `)
       
     }
 
@@ -1103,7 +1105,7 @@ TPClient.on("Info", (data) => {
   
 TPClient.on("Settings",(data) => {
 
-  RefreshInterval = data[0]["Refresh Interval"]
+  RefreshInterval = 200//data[0]["Refresh Interval"]
   TruckersMPServer = data[1]["Truckers MP Server"]
 
 });

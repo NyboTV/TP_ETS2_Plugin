@@ -11,7 +11,7 @@
    "settings":[
       {
          "name":"Refresh Interval",
-         "default":"800",
+         "default":"200",
          "type":"number",
          "maxlength":4,
          "minValue":100,
