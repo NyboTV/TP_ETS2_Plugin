@@ -947,9 +947,9 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.Speedlimit", value: `${Speedlimit}`},
         { id: "Nybo.ETS2.Dashboard.SpeedlimitSign", value: `${SpeedLimitSign}`},
 
-        { id: "Nybo.ETS2.Dashboard.Electric", value: `${Wipers}`},
+        { id: "Nybo.ETS2.Dashboard.Electric", value: `${Electric}`},
         { id: "Nybo.ETS2.Dashboard.Engine", value: `${Engine}`},
-        { id: "Nybo.ETS2.Dashboard.Wipers", value: `${Electric}`},
+        { id: "Nybo.ETS2.Dashboard.Wipers", value: `${Wipers}`},
 
         { id: "Nybo.ETS2.Dashboard.BlinkerRightOn", value: `${BlinkerRightOn}`},
         { id: "Nybo.ETS2.Dashboard.BlinkerLeftOn", value: `${BlinkerLeftOn}`},
@@ -1006,7 +1006,7 @@ TPClient.on("Info", (data) => {
 
       TPClient.stateUpdateMany(states);
 
-      //console.log(`${LightsParkingOn} / ${truck.lightsParkingOn} || ${Gear} || ${Electric} `)
+      console.log(`${trailer.trailerMass} / ${wipers} || ${Gear} || ${Electric} `)
       
     }
 
