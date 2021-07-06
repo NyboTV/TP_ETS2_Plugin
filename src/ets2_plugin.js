@@ -8,18 +8,24 @@ const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile
 
-var firstStart = 1
+const debugMode = process.argv.includes("--debug");
 
 var RefreshInterval = ""
 var TruckersMPServer = ""
-var discordMessage = ""
+
+var userConfig = JSON.parse(fs.readFileSync('./userSetting.json'))
 
 TPClient.on("Info", (data) => {
   logIt("DEBUG","Info : We received info from Touch-Portal");
   logIt('INFO',`Starting process watcher for Windows`);
 
   var Retry = 0
-  var error = 0
+  
+  //User Settings
+  var Currency = userConfig.Basics.Money 
+  var Weight = userConfig.Basics.Weight
+
+
   
   // MAIN STATES
   var Status_Connected = "Disconnected"
@@ -72,9 +78,8 @@ TPClient.on("Info", (data) => {
   var adblueWarningOn = "false"
   var fuelWarningOn = "false"
  
-  //T RAILER
+  //TRAILER
   var TrailerAttached = "Not Attached"
-  var trailerMass = ""
   var trailerBodyType = ""
   
   //JOB
@@ -84,21 +89,22 @@ TPClient.on("Info", (data) => {
   var JobDestinationCity = ""
   var JobDestinationCompany = ""
  
-  //J OBEVENT
+  //JOBEVENT
   var jobEvent = ""
  
-  //C ARGO
+  //CARGO
   var cargoLoaded = "false"
   var cargo = ""
   var cargoDamage = ""
+  var cargoMass = ""
  
-  //I CON
+  //ICON
   var RPMGauge = ""
   var SpeedGauge = ""
   var FuelGauge = ""
    
  
-  //T ruckersMP STATES
+  //TruckersMP STATES
   var TruckersMP_Status = ""
   var ServerName = ""
   var ServerPlayers = ""
@@ -107,7 +113,7 @@ TPClient.on("Info", (data) => {
 
 
 
-  // SCRIPT STATES ONLY
+  //SCRIPT STATES ONLY
   //MAIN
   var connection = false
   var gameName = "" 
@@ -178,7 +184,7 @@ TPClient.on("Info", (data) => {
             cruiseControlOn = truck.cruiseControlOn
             
             engineOn = truck.engineOn
-            electric = truck.electric
+            electric = truck.electricOn
             wipersOn = truck.wipersOn
             
             blinkerLeftActive = truck.blinkerLeftActive
@@ -206,13 +212,13 @@ TPClient.on("Info", (data) => {
             
             //TRAILER
             attached = trailer1.attached
-            trailerMass = trailer1.mass
             trailerBodyType = trailer1.bodyType
 
             //CARGO
             cargoLoaded = cargo.cargoLoaded
             cargo = cargo.cargo
             cargoDamage = Math.round(jobEvent.cargoDamage)
+            cargoMass = cargo.mass
             
             //JOB
             Jobincome = job.income
@@ -436,19 +442,27 @@ TPClient.on("Info", (data) => {
           Gear = "12"
 
         } else if (Gears === -1) {
-          Gear = "1"
+          Gear = "-1"
         } else if (Gears === -2) {
-          Gear = "2"
+          Gear = "-2"
         } else if (Gears === -2) {
-          Gear = "3"
+          Gear = "-3"
         }
       }
 
+      var images_path
+      
+      if(debugMode) {
+        images_path = `./src/images`
+      } else {
+        images_path = `images`
+      }
+      
       if (Speedlimit === 0) {
-        SpeedLimitSign = fs.readFileSync(`./images/noSpeedlimit.png`, `base64`)
+        SpeedLimitSign = fs.readFileSync(`${images_path}/noSpeedlimit.png`, `base64`)
       } else {
         const image = await Jimp.read
-        ('images/speedlimit.png');
+        (`${images_path}/speedlimit.png`);
         image.resize(300, 300)
         Jimp.loadFont(Jimp.FONT_SANS_128_BLACK).then(font => {
           image.print(
@@ -473,7 +487,6 @@ TPClient.on("Info", (data) => {
       SleepTime = new Date(SleepTime)
       SleepTimer = SleepTime.getHours()
 
-      trailerMass = Math.floor(trailerMass / 1000)
     }
 
     const DashboardBlinkers = async () => {
@@ -497,6 +510,13 @@ TPClient.on("Info", (data) => {
     }
 
     const DashboardGauge = async () => {
+      var images_path
+
+      if(debugMode) {
+        images_path = `./src/images`
+      } else {
+        images_path = `images`
+      }
      
       function isBetween(n, a, b) {
         return (n - a) * (n - b) <= 0
@@ -504,13 +524,14 @@ TPClient.on("Info", (data) => {
       
       async function getSpeedGauge(rotate) {
         var getSpeedGaugeRotate = -2
+        
         const image = await Jimp.read
-        ('images/Gauge.png');
+        (`${images_path}/Gauge.png`);
         
         image.rotate(Math.floor(getSpeedGaugeRotate - rotate))
         image.resize(400, 400)
         const image2 = await Jimp.read
-        ('images/SpeedGauge.png');
+        (`${images_path}/SpeedGauge.png`);
         image2.composite(image, 0, 0)
         image2.getBase64Async(Jimp.AUTO)
         .then(base64 => {
@@ -521,12 +542,12 @@ TPClient.on("Info", (data) => {
       async function getRPMGauge(rotate) {
         var getRPMGaugeRotate = -2
         const image = await Jimp.read
-        ('images/Gauge.png');
+        (`${images_path}/Gauge.png`);
         
         image.rotate(Math.floor(getRPMGaugeRotate - rotate))
         image.resize(400, 400)
         const image2 = await Jimp.read
-        ('images/RPMGauge.png');
+        (`${images_path}/RPMGauge.png`);
         image2.composite(image, 0, 0)
         image2.getBase64Async(Jimp.AUTO)
         .then(base64 => {
@@ -537,12 +558,12 @@ TPClient.on("Info", (data) => {
       async function getFuelGauge(rotate) {
         var getRPMGaugeRotate = -2
         const image = await Jimp.read
-        ('images/Gauge.png');
+        (`${images_path}/Gauge.png`);
         
         image.rotate(Math.floor(getRPMGaugeRotate - rotate))
         image.resize(400, 400)
         const image2 = await Jimp.read
-        ('images/FuelGauge.png');
+        (`${images_path}/FuelGauge.png`);
         if(rotate > 170) {
           image2.resize(350, 350)
           image2.composite(image, -30, 0)
@@ -974,8 +995,7 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.ServerPlayerQueue", value: `${ServerPlayerQueue}`},
 
         { id: "Nybo.ETS2.Dashboard.SleepTime", value: `${SleepTimer}`},
-        { id: "Nybo.ETS2.Dashboard.TrailerMass", value: `${trailerMass} Ton`},
-        { id: "Nybo.ETS2.Dashboard.JobIncome", value: `${Jobincome} €`},
+        { id: "Nybo.ETS2.Dashboard.JobIncome", value: `${Jobincome} ${Currency}`},
 
         { id: "Nybo.ETS2.Dashboard.JobSourceCity", value: `${JobSourceCity}`},
         { id: "Nybo.ETS2.Dashboard.JobSourceCompany", value: `${JobSourceCompany}`},
@@ -999,6 +1019,7 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.cargoLoaded", value: `${cargoLoaded}`},
         { id: "Nybo.ETS2.Dashboard.cargo", value: `${cargo}`},
         { id: "Nybo.ETS2.Dashboard.cargoDamage", value: `${cargoDamage}`},
+        { id: "Nybo.ETS2.Dashboard.CargoMass", value: `${cargoMass} ${Weight}`},
 
 
         //{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
@@ -1006,7 +1027,7 @@ TPClient.on("Info", (data) => {
 
       TPClient.stateUpdateMany(states);
 
-      console.log(`${trailer.trailerMass} / ${wipers} || ${Gear} || ${Electric} `)
+      console.log(`${cargo}|${cargoMass} / ${Wipers} || ${Gear} || ${Electric} `)
       
     }
 
@@ -1016,7 +1037,13 @@ TPClient.on("Info", (data) => {
   var running = false
   const refreshing = async () => {
 
-    if(fs.existsSync(`./server`)) {
+    var server_path = "./server"
+
+    if(debugMode) {
+      server_path = "./src/server"
+    }
+
+    if(fs.existsSync(`${server_path}`)) {
       if(Retry === 5) {
         logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
         process.exit()
@@ -1038,7 +1065,7 @@ TPClient.on("Info", (data) => {
       
       isRunning('Ets2Telemetry.exe', (status) => {
         if(status === false) {
-          execute('./server/Ets2Telemetry.exe', function(err, data) {
+          execute(`${server_path}/Ets2Telemetry.exe`, function(err, data) {
             if(err) {
               logIt("WARN","Telemetry Server could not be Started!");
             }
@@ -1057,14 +1084,8 @@ TPClient.on("Info", (data) => {
 
           running = true
           setTimeout(() => {
-            if(running === true && error === 0) {
+            if(running === true) {
               main(0)
-            } else if(error === 1) {
-              setTimeout(() => {
-                logIt("WARN", "ERROR ON LOCAL SERVER! RETRY IN 2 SECONDS!")
-                error = 0
-                refreshing()
-              }, 2000)
             }
             refreshing()
           }, RefreshInterval)
@@ -1074,20 +1095,9 @@ TPClient.on("Info", (data) => {
       })
       return;
     } else {
-
-      setTimeout(() => {
-        main()
-        refreshing()
-      }, RefreshInterval);
+      logIt("ERROR", "Server folder not Found!")
     }
   }
-
-  setInterval(() => {
-    if(running === true) {
-      main(1)
-    }
-  }, 5000)
-
   refreshing()
 });
   

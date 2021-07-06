@@ -21,6 +21,8 @@ const pack = async () => {
     fse.copySync(`${InputPath}/images`, `${OutputPath}/images`) 
     //Copy Config File
     fse.copySync(`./config.json`, `${OutputPath}/config.json`) 
+    //Copy UserSetting File
+    fse.copySync(`./userSetting.json`, `${OutputPath}/userSetting.json`)  
     //Copy Entry File
     fse.copySync(`./entry.tp`, `${OutputPath}/entry.tp`) 
     //Copy Prestart File

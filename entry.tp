@@ -326,15 +326,15 @@
                "default":"-"
             },
             {
-               "id":"Nybo.ETS2.Dashboard.TrailerMass",
-               "type":"text",
-               "desc":"ETS2:Trailer Mass",
-               "default":"-"
-            },
-            {
                "id":"Nybo.ETS2.Dashboard.trailerBodyType",
                "type":"text",
                "desc":"ETS2:Trailer Model",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.CargoMass",
+               "type":"text",
+               "desc":"ETS2:Trailer Mass",
                "default":"-"
             },
             {
