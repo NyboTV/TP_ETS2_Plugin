@@ -308,7 +308,7 @@ const index = async (error) => {
         function Setup() {
             return new Promise(async(resolve,reject)=>{
                 const firstSetup = async () => {
-                    var vbs_file = 'dim result\nresult = msgbox("Do you want to use the Discord Bot Function? (You have to be on our Plugin Discord for this to Work!", 4 , "Discord Bot")\nWScript.Stdout.WriteLine result'
+                    var vbs_file = 'dim result\nresult = msgbox("Do you want to use the Discord Bot Function? (You have to be on my Plugin Discord for this to Work! Link on my Github)", 4 , "Discord Bot")\nWScript.Stdout.WriteLine result'
                     
                     fs.writeFileSync('./tmp/tmp.vbs', `${vbs_file}`)
                     

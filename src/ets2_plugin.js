@@ -56,6 +56,8 @@ TPClient.on("Info", (data) => {
   var Engine = "Off"
   var Wipers = "Off"
   
+  var BlinkerRightActive = "false"
+  var BlinkerLeftActive = "false"
   var BlinkerRightOn = "false"
   var BlinkerLeftOn = "false"
   var HazardLightsOn = "false"
@@ -493,12 +495,24 @@ TPClient.on("Info", (data) => {
 
     const DashboardBlinkers = async () => {
       if(blinkerRightActive === true) {
+        BlinkerRightActive = "true"
+      } else {
+        BlinkerRightActive = "false"
+      }
+      
+      if(blinkerLeftActive === true) {
+        BlinkerLeftActive = "true"
+      } else {
+        BlinkerLeftActive = "false"
+      }
+
+      if(blinkerRightOn === true) {
         BlinkerRightOn = "true"
       } else {
         BlinkerRightOn = "false"
       }
       
-      if(blinkerLeftActive === true) {
+      if(blinkerLeftOn === true) {
         BlinkerLeftOn = "true"
       } else {
         BlinkerLeftOn = "false"
@@ -960,7 +974,7 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.Speed", value: `${Speed}`},
         { id: "Nybo.ETS2.Dashboard.RPM", value: `${RPM}`},
 
-        { id: "Nybo.ETS2.Dashboard.Gear", value: `${Gears}`},
+        { id: "Nybo.ETS2.Dashboard.Gear", value: `${Gear}`},
 
         { id: "Nybo.ETS2.Dashboard.Fuel", value: `${Fuel}`},
         { id: "Nybo.ETS2.Dashboard.FuelCap", value: `${FuelCap}`},
@@ -974,6 +988,8 @@ TPClient.on("Info", (data) => {
         { id: "Nybo.ETS2.Dashboard.Engine", value: `${Engine}`},
         { id: "Nybo.ETS2.Dashboard.Wipers", value: `${Wipers}`},
 
+        { id: "Nybo.ETS2.Dashboard.BlinkerRightActive", value: `${BlinkerRightActive}`},
+        { id: "Nybo.ETS2.Dashboard.BlinkerLeftActive", value: `${BlinkerLeftActive}`},
         { id: "Nybo.ETS2.Dashboard.BlinkerRightOn", value: `${BlinkerRightOn}`},
         { id: "Nybo.ETS2.Dashboard.BlinkerLeftOn", value: `${BlinkerLeftOn}`},
         { id: "Nybo.ETS2.Dashboard.HazardLightsOn", value: `${HazardLightsOn}`},
@@ -1029,7 +1045,9 @@ TPClient.on("Info", (data) => {
 
       TPClient.stateUpdateMany(states);
 
-      console.log(`${cargoType}|${cargoMass} / ${Wipers} || ${Gear} || ${Electric} || ${HazardLightsOn} `)
+      if(debugMode) {
+        console.log(`On: ${blinkerLeftOn} || ${blinkerRightOn}   Active: ${blinkerLeftActive} || ${blinkerRightActive}`)
+      }
       
     }
 
@@ -1105,7 +1123,7 @@ TPClient.on("Info", (data) => {
   
 TPClient.on("Settings",(data) => {
 
-  RefreshInterval = 200//data[0]["Refresh Interval"]
+  RefreshInterval = data[0]["Refresh Interval"]
   TruckersMPServer = data[1]["Truckers MP Server"]
 
 });

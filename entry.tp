@@ -14,7 +14,7 @@
          "default":"200",
          "type":"number",
          "maxlength":4,
-         "minValue":100,
+         "minValue":1,
          "maxValue":5000
       },
       {
@@ -208,19 +208,31 @@
             {
                "id":"Nybo.ETS2.Dashboard.BlinkerRightOn",
                "type":"text",
-               "desc":"ETS2:Blinker Right",
+               "desc":"ETS2:Blinker Right On",
                "default":"-"
             },
             {
                "id":"Nybo.ETS2.Dashboard.BlinkerLeftOn",
                "type":"text",
-               "desc":"ETS2:Blinker Left",
+               "desc":"ETS2:Blinker Left On",
                "default":"-"
             },
             {
-               "id":"Nybo.ETS2.Dashboard.HazardLights",
+               "id":"Nybo.ETS2.Dashboard.BlinkerRightActive",
                "type":"text",
-               "desc":"ETS2:Hazard Lights",
+               "desc":"ETS2:Blinker Right Active",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.BlinkerLeftActive",
+               "type":"text",
+               "desc":"ETS2:Blinker Left Active",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.HazardLightsOn",
+               "type":"text",
+               "desc":"ETS2:Hazard Lights On",
                "default":"-"
             }
          ]
