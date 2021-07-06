@@ -27,27 +27,10 @@
   - [Features Comming Soon](#features-comming-soon)
   - [Todo](#todo)
   - [Issues](#issue-list)
-  - [Your Feature](#Feature)
+  - [Your Feature](#your-feature)
   - [Changelog](#changelog)
   - [Authors](#authors)
   - [License](#license)
-
-## Important!!!
-
-Please disable the Discord Bot Function!!!
-How you can do that:
-1. Install the Plugin (DONT START THE PLUGIN)
-2. Go to your Plugins Folder of TP (If you installed TP after start of 2021 go to Step 6.)
-3. Go to "ETS_Dashboard"
-4. Edit "config.json"
-5. replace in line "discordMessage" the "true" to "false"
-5andAhalf (lol) Restart TP and start the Plugin  
-
-6. Press "win + r" 
-7. Copy this inside the little window: "%appdata%/TouchPortal/plugins/ETS2_Dashboard"
-8. Go to Step 4. :3
-
-Why? Im Waiting for an Permission. Until this Permission you need to set it to false! Im not giving any Information about this! So please do it :3 Thanks.
 
 ## Features
 
@@ -222,7 +205,11 @@ You can setup the Server you want to Display.
 Fully new System! Just Install the Plugin and Insert your Discord ID into the Window :)
 To get your User ID read this: [How to get UserID](#how-to-get-userid)
 
-IMPORTANT:
+Because of the API from Discord you have to be on my Plugin Discord.
+https://discord.gg/PvXJsxpGFe
+
+You dont want that? No problem! The Plugin will ask you on first Startup if you want to use it! Just click no!
+
 If the UserID Window says "UserID is not Valid" (but you know it is valid) then just go to my Config.json file inside the plugin folder
 (%appdata%/TouchPortal/plugins/ETS2_Dashboard)
 and copy your UserID into the '""' behind the "userid"
@@ -230,10 +217,6 @@ it should looks like this: - "userid": "123456789" -
 
 After that please send the Log to me (The Dev) so i can fix the issue.
 
-Or you dont want to use the beautifull AutoUpdater Design?
-Then just go to the Plugins folder of TP go to "ETS_Dashboard" open the config.json with any editing Software and set the "discordMessage" from "false" to "true"
-
-Important!! Do NOT! include these: ""     ONLY the word itself!
 
 
 ### How to get UserID
@@ -268,9 +251,11 @@ To find your user ID in Discord, you first need to enable developer mode, and th
 - some small Refresh issues (its taking sometimes longer)
 - Wipers not working
 
-## Feature
+## Your Feature
 
 If you wanna your Design or your Feature inside this Plugin create an "Pull requests" with your Wish for an Design or Feature.
+If you want an new Option like: Fuel Gauge please look into this file: [ETS2 Telemetry Server](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/src/server/Ets2TestTelemetry.json)
+All of these Values can be imported into the Script!
 
 If you want to see how this Plugin is made check out my Twitch Channel: https://www.twitch.tv/lizard_und_nybo
 

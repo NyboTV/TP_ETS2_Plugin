@@ -51,12 +51,6 @@ const index = async (error) => {
         const AutoUpdater = async (crash, api, inside_script) => {
             logIt("INFO", "Plugin is starting...")
 
-            if(!config.discordMessage) {
-
-            } else {
-                
-            }
-        
             if(crash){
                 logIt("ERROR", "Plugin Crashed!")
         
@@ -124,23 +118,22 @@ const index = async (error) => {
 
                     req.on('error', async (error) => {
                         
-                        if(retry === 3) {
-                            logIt("WARN", `Could not Connect to Server! ${retry}/3`)
+                        if(api_retry === 3) {
+                            logIt("WARN", `Could not Connect to Server! ${api_retry}/3`)
     
                             await timeout(3)
     
                             let version = await Check_Version()
                             update(version);
                         } else {
-                            logIt("ERROR", `Could not Connect to Server! ${retry}/3`)
+                            logIt("ERROR", `Could not Connect to Server! ${api_retry}/3`)
                             logIt("INFO", `Retry in 3 Seconds...`)
     
                             await timeout(3)
     
-                            if(retry < 5) {
-                                retry = retry+1
-                                AutoUpdater(false, true)
-                            }
+                            api_retry = api_retry+1
+                            connectionTest()
+                            
                         }
                         
                     })
@@ -266,23 +259,31 @@ const index = async (error) => {
                     req.end()
                 }
         
-                if(api) {
-                    logIt("ERROR", "API Connection Crashed!")
-                    if(api_retry === 3) {
-                        return;
+                if(!config.discordMessage) {
+                    connected = false
+                    update()
+                } else {
+                    if(api) {
+                        logIt("ERROR", "API Connection Crashed!")
+                        if(api_retry === 3) {
+                            return;
+                        } else {
+                            connectionTest()
+                        }
+                    } else if(inside_script) {
+                        main(true)
                     } else {
                         connectionTest()
                     }
-                } else if(inside_script) {
-                    main(true)
-                } else {
-                    connectionTest()
                 }
             }
         }
         if(error){
             AutoUpdater(false, false, true)
         } else {
+            if(config.version === "0.0.0") {
+                await Setup()
+            }
             AutoUpdater(false, false, false)
         }
         
@@ -304,6 +305,58 @@ const index = async (error) => {
         }
         
         
+        function Setup() {
+            return new Promise(async(resolve,reject)=>{
+                const firstSetup = async () => {
+                    var vbs_file = 'dim result\nresult = msgbox("Do you want to use the Discord Bot Function? (You have to be on our Plugin Discord for this to Work!", 4 , "Discord Bot")\nWScript.Stdout.WriteLine result'
+                    
+                    fs.writeFileSync('./tmp/tmp.vbs', `${vbs_file}`)
+                    
+                    const
+                    spawn = require( 'child_process' ).spawnSync,
+                    vbs = spawn( 'cscript.exe', [ './tmp/tmp.vbs', 'one' ] );
+                    
+                    result = vbs.stdout.toString()
+                    result = result.split('\n')
+                    result.splice(0,3)
+                    result.splice(1)
+                    result = result.toString()
+                    result = result.split('\r')
+                    result.splice(1)
+                    result = result.toString()
+
+                    if(result === "6") {
+                        result = true
+                    }
+                    if(result === "7") {
+                        result = false
+                    }
+                                        
+                    await timeout(3)
+
+                    logIt("INFO", `Discord Bot -> User decided: ${result}!`)
+                    
+                    let config1 = config.version
+                    let config3 = config.github_Username
+                    let config4 = config.github_Repo
+                    let config5 = config.github_FileName
+                    let config7 = config.debugMode
+                    
+                    fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${result},\n\n "debugMode": ${config7}\n}`)
+                    logIt("INFO", "Discord Bot Option has been Updated!")
+                    
+                    fs.unlinkSync('./tmp/tmp.vbs')
+
+                    await timeout(3)
+
+                    setTimeout(() => {
+                        
+                        resolve();
+                    }, 3000);
+                }
+                firstSetup()
+            })
+        }
         
         function userID(error) {
             return new Promise(async(resolve,reject)=>{ 
@@ -556,14 +609,11 @@ const index = async (error) => {
             return new Promise(async(resolve,reject)=>{    
                 seconds = `${seconds}000`
                 seconds = Number(seconds)
-                setTimeout(()=>{
+                setTimeout(() => {
                     resolve();
-                ;} , seconds
-                );
-            });
+                }, 3000);
+            })
         }
-        
-    
         
         function restart() {
             fs.writeFileSync('./restart.txt', 'restart')

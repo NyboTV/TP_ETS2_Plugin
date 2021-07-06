@@ -912,17 +912,6 @@ TPClient.on("Info", (data) => {
 
     const TPSettings = async () => {
 
-      var config = JSON.parse(fs.readFileSync('./config.json'))
-
-      var config1 = config.version
-      var config2 = config.github_Username   
-      var config3 = config.github_Repo   
-      var config4 = config.github_FileName   
-      var config5 = config.userid 
-      var config6 = config.debugMode
-      
-      fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": ${discordMessage}, \n\n "debugMode": ${config6}\n}`)
-
     }
       
     
@@ -1106,8 +1095,6 @@ TPClient.on("Settings",(data) => {
 
   RefreshInterval = data[0]["Refresh Interval"]
   TruckersMPServer = data[1]["Truckers MP Server"]
-
-  discordMessage = data[2]["Discord Bot"]
 
 });
 

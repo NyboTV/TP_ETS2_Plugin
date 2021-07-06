@@ -24,12 +24,6 @@
          "maxlength":2,
          "minValue":0,
          "maxValue":15
-      },
-      {
-       "name":"Discord Bot",
-       "default":"true",
-       "type":"text",
-       "maxlength":5
       }
    ],
    "categories":[
