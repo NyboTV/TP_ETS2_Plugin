@@ -1142,7 +1142,6 @@ TPClient.on("Info", (data) => {
 
           let image_SpeedLimit_clone = image_SpeedLimit.clone()
 
-          console.log(Speedlimit)
           if (Speedlimit === 0) {
             resolve(fs.readFileSync(`${images_path}/noSpeedlimit.png`, `base64`))
           } else {
