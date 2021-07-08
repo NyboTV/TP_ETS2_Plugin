@@ -340,6 +340,9 @@ Changelog has been Added in Update 0.4.6
 # Authors
 - **Nico** - Plugin Creator - [NyboTV](https://github.com/NyboTV)
 
+# Thanks to
+- **Gitago** - He is an BIG help for fixing my Plugin! - He is Testing my Plugin and is reporting me what is not working
+
 ## License
 
 This project is licensed under the MIT - see the [LICENSE](LICENSE) file for details
