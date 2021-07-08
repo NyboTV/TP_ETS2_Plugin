@@ -18,10 +18,16 @@
   - [Features](#features)
   - [Installation](#how-to-install)
   - [Support](#support)
-  - [States](#game-states)
+  - [States](#plugin-states)
     - [Game States](#game-states)
+    - [World States](#world-states)
+    - [Driver States](#driver-states)
+    - [Gauge States](#gauge-states)
+    - [Truck States](#truck-states)
+    - [Trailer States](#trailer-states)
+    - [Job States](#job-states)
+    - [Navigation States](#navigation-states)
     - [TruckersMP States](#truckersmp-states)
-    - [Game Icons](#game-icons)
   - [AutoUpdater](#autoupdater)
   - [Settings](#settings)
   - [Features Comming Soon](#features-comming-soon)
@@ -90,77 +96,98 @@ If you want to Setup an "Image/Icon" then you have to do something like this:
 ![Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)
 
 
+## Plugin States
+
 ### Game States
 
-    Status_Connected =      "Disconnected | Connected"
-    Game =                  "Nothing Found! | ETS2 | ATS"
-    serverVersion =     "Shows the Server Version"
+| State                     | Description                                       | Available Values      |
+|---------------------------|:-------------------------------------------------:|----------------------:|
+| ConnectedStatus           | Shows if you are Connected to an Game or not      | true/false            |
+| GameType                  | Shows the Game that is Captured by the Server     | ETS2/ATS              |
+| IsPaused                  | Shows you if the Game is Paused                   | true/false            |
 
-    SleepTime =             "Shows how long do you have until you have to sleep" (Idk yet in which format this is)
-    pause =             "false | true"
+### World States
 
-    Speed =                 "0 (up to ∞)"   [Value is an Number!]
-    RPM =                   "0 (up to ∞)"   [Value is an Number!]
-    Gear =                  "N (up to ∞) | D1 (up to ∞)"
+| State                     | Description                                       | Available Values      |
+|---------------------------|:-------------------------------------------------:|----------------------:|
+| Time                      | Shows you the current ingame Time                 | Dynamic Text          |
 
-    Fuel =                  "0 (up to ∞)"   [Value is an Number!]
-    FuelCap =               "0 (up to ∞)"   [Value is an Number!]
+### Driver States
+
+| State                     | Description                                       | Available Values      |
+|---------------------------|:-------------------------------------------------:|----------------------:|
+| NextRestTime              | Shows you when the Driver has to Sleep            | Dynamic (Countdown)   |
+
+### Gauge States
+
+| State                     | Description                                       | Available Values      |
+|---------------------------|:-------------------------------------------------:|----------------------:|
+| SpeedGauge                | Shows your Speed as an Image                      | Dynamic Image         |
+| RPMGauge                  | Shows your RPM as an Image                        | Dynamic Image         |
+| FuelGauge                 | Shows your speed as an Image                      | Dynamic Image         |
+
+### Truck States
+
+| State                     | Description                                       | Available Values      |
+|---------------------------|:-------------------------------------------------:|----------------------:|
+| Truck_Make                | Shows you the Model Creator                       | Dynamic Text          |
+| Model                     | Shows you the Model of the Truck                  | Dynamic Text          |
+| CruiseControlSpeed        | Shows you the Cruise Control Speed                | Dynamic Text          |
+| CruiseControlOn           | Shows you if the Cruise Control is turned on      | true/false            |
+|                           |                                                   |                       |
+| Speed                     | Shows your current Speed                          | Dynamic Text          |
+| EngineRPM                 | Shows your current RPM                            | Dynamic Text          |
+| Gear                      | Shows your current Gear                           | Dynmaic Text          |
+|                           |                                                   |                       |
+| EngineOn                  | Shows if your Engine is on                        | true/false            |
+| ElectricOn                | Shows if your Electric is on                      | true/false            |
+| WipersOn                  | Shows if your Wipers are on                       | true/false            |
+| ParkBrakeOn               | Shows if your ParkBrake is on                     | true/false            |
+| MotorBrakeOn              | Shows if your MotorBrake is on                    | true/false            |
+|                           |                                                   |                       |
+| Fuel                      | Shows your current Fuel                           | Dynamic Text          |
+| AdBlue                    | Shows your current AdBlue                         | Dynamic Text          |
+| AirPressure               | Shows your current Air Pressure                   | Dynamic Text          |
+| OilTemp                   | Shows your current Oil Temperature                | Dynamic Text          |
+| WaterTemp                 | Shows your current Water Temperature              | Dynamic Text          |
+| BatteryVoltage            | Shows your current Battery Voltage                | Dynamic Text          |
+|                           |                                                   |                       |
+| FuelCapacity              | Shows your Truck Fuel Capacity                    | Dynamic Text          |
+|                           |                                                   |                       |
+| FuelWarningOn             | Shows if your Fuel is Low                         | true/false            |
+| AdBlueWarningOn           | Shows if your AdBlue is Low                       | true/false            |
+| AirPressureWarning        | Shows if your Air Pressure is Low                 | true/false            |
+| AirPressureEmergencyOn    | Shows if your Air Pressure is critical Low        | true/false            |     
+| OilPressureWarning        | Shows if your Oil Pressure is critical Low/High   | true/false            |
+| WaterTempWarningOn        | Shows if your Water Temperature is High           | true/false            |
+| BatteryVoltageWarningOn   | Shows if your BatteryVoltage is low               | true/false            |
+|                           |                                                   |                       |
+| BlinkerLeftActive         | Shows if your Blinker Left is Active              | true/false            |
+| BlinkerRightActive        | Shows if your Blinker Right is Active             | true/false            |
+| BlinkerLeftOn             | Shows if your Blinker Left is On                  | true/false            |
+| BlinkerRightOn            | Shows if your Blinker Right is On                 | true/false            |
+| HazardLightsOn            | Shows if your Hazard Lights are On                | true/false            |
+|                           |                                                   |                       |
+| LightsDashboardValue      | Shows the Value of the Dashboard                  | Dynamic Text          |
+| LightsDashboardOn         | Shows if the Dashboard Light is on                | true/false            |
+| LightsParkingOn           | Shows if the Parking Lights are on                | true/false            |
+| LightsBeamLowOn           | Shows if the Beam Low Lights are on               | true/false
+
+### Trailer States
+
+
+### Job States
+
+
+### Navigation States
     
-    CruiseControlOn =       "false | true"
-    CruiseControlSpeed =    "0 (up to ∞)"
-    Speedlimit =            "0 | 10 | 20 | 30 | ..."   [Value is an Number!]
 
-    Engine =                "Off | On" (On 0.2.5 and lower its: "Off | Started")
-    Electric =              "Off | On"
-    Wipers =                "Off | On"
-    
-    parkBrakeOn =       "false | true"
-    motorBrakeOn =      "false | true"
-    batteryLow =        "false | true"
-    oilLow =            "false | true"
-    adblueLow =         "false | true"
-    fuelLow =           "false | true"
-    waterTempHigh =     "false | true"
-    
-    BlinkerRightOn =        "false | true"
-    BlinkerLeftOn =         "false | true"
-    HazardLightsOn =        "false | true"
-    
-    LightsParkingOn =       "Off | On"
-    LightsBeamLowOn =       "Off | On"
-    LightsBeamHighOn =      "Off | On"
-    LightsBeaconOn =        "Off | On"
-    LightsBrakeOn =         "Off | On"
-    LightsDashboardOn =     "Off | On"
-    
-    truckType =         "Shows the Truck Model Name"
-    
-    TrailerAttached =       "Not Attached | Attached"
-    TrailerMass =           "Shows the Mass from a Trailer in Ton
-    trailerBodyType =   "Shows the Trailer Model name"
-
-    cargoLoaded =       "false | true"
-    cargo =             "Shows the loaded Cargo"
-    cargoDamage =       "Shows the Cargo Damage"
-
-    JobSourceCity =         "Shows the Job Source City
-    JobSourceCompany =      "Shows the Job Source Company"
-    JobDestinationCity =    "Shows the Job Destination City
-    JobDestinationCompany = "Shows the Job Destination Company"
-
-
-## TruckersMP States
+### TruckersMP States
 
     Servers =               "(Depends How many Servers are Online)"     [Value is an Number!]
     ServerName =            "(Selected Server Name)"                    [You can Select the Server in Settings! Server List is down below!]
     ServerPLayers =         "(How Many Players are Online)"              [Value is an Number!]
     ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
-
-## Game Icons
-
-    SpeedGauge =            Shows your Speed as an Image
-    RPMGauge =              Shows your RPM as an Image    
-    FuelGauge =             Shows your speed as an Image
 
 
 ## Settings

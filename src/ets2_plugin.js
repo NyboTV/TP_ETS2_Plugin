@@ -6,250 +6,481 @@ const https = require('https')
 const fs = require('fs')
 const Jimp = require('jimp')
 const exec = require('child_process').exec
-const execute = require('child_process').execFile
+const execute = require('child_process').execFile;
 
 const debugMode = process.argv.includes("--debug");
 
-var RefreshInterval = ""
-var TruckersMPServer = ""
+let userConfig = JSON.parse(fs.readFileSync('./userSettings.json'))
 
-var userConfig = JSON.parse(fs.readFileSync('./userSetting.json'))
+let RefreshInterval = 100
+let TruckersMPServer = ""
+
+let server_path = ""
+if(debugMode) {
+    server_path = "./src/server"
+} else {
+    server_path = "./server" 
+}
+
 
 TPClient.on("Info", (data) => {
-  logIt("DEBUG","Info : We received info from Touch-Portal");
-  logIt('INFO',`Starting process watcher for Windows`);
+    if(debugMode) logIt("DEBUG","We received info from Touch-Portal");
+    logIt('INFO',`Starting process watcher for Windows`);
 
-  var Retry = 0
+    // Game States
+    let Connected = false
+    let GameType = ""
+    let Paused = false
+    let TelemetryPluginVersion = 0
+    
+    // World States
+    let Time = ""
+    
+    // Driver States
+    let NextRestStopTime = ""
+
+    // Gauge States
+    let SpeedGauge = ""
+    let RPMGauge = ""
+    let FuelGauge = ""
+    
+    // Truck States
+    let Constructor = ""
+    let Model = ""
+    
+    let CruiseControlSpeed = ""
+    let CruiseControlOn = false
+    
+    let Speed = ""
+    let EngineRPM = ""
+    let Gear = ""
+    
+    let EngineOn = false
+    let ElectricOn = false
+    let WipersON = false
+    let ParkBrakeOn = false
+    let MotorBrakeOn = false
+    
+    let Fuel
+    let AdBlue = ""
+    let AirPressure = ""
+    let OilTemp = ""
+    let WaterTemp = ""
+    let BatteryVoltage = ""
+    
+    let FuelWarningOn = false
+    let AdBlueWarningOn = false
+    let AirPressureWarningOn = false
+    let AirPressureEmergencyOn = false
+    let OilPressureWarningOn = false
+    let WaterTempWarningOn = false
+    let BatteryVoltageWarningOn = false
+    
+    let BlinkerLeftActive = false
+    let BlinkerRightActive = false
+    let BlinkerLeftOn = false
+    let BlinkerRightOn = false
+    let HazardLightsOn = false
+    
+    let LightsDashboardValue = ""
+    let LightsDashboardOn = false
+    let LightsParkingOn = false
+    let LightsBeamLowOn = false
+    let LightsBeamHighOn = false
+    let LightsAuxFrontOn = false
+    let LightsAuxRoofOn = false
+    let LightsBeaconOn = false
+    let LightsBrakeOn = false
+    let LightsReverseOn = false
+    
+    // Trailer States
+    let TrailerAttached = false
+    let TrailerName = ""
+    let TrailerChainType = ""
+    //CARGO
+    var CargoLoaded = false
+    var CargoType = ""
+    var CargoDamage = ""
+    var CargoMass = ""
+    
+    
+    // Job States
+    let JobIncome = ""
+    let JobRemainingTime = ""
+    let JobSourceCity = ""
+    let JobSourceCompany = ""
+    let JobDestinationCity = ""
+    let JobDestinationCompany = ""
+    let JobEstimatedDistance = 0
+    
+    // Navigation States
+    let Speedlimit = 0
+    let SpeedLimitSign
+
+    //TruckersMP States
+    let Servers = ""
+    let Server = ""
+    let ServerName = ""
+    let ServerPlayers = ""
+    let ServerPlayerQueue = ""
+    let APIOnline = ""
   
-  //User Settings
-  var Currency = userConfig.Basics.Money 
-  var Weight = userConfig.Basics.Weight
-
-
-  
-  // MAIN STATES
-  var Status_Connected = "Disconnected"
-  var Game = "Nothing Found!"
- 
-  var serverVersion = "0.5.0"
-  var pause = "false"
- 
-  var SleepTime = ""
-   
-  //T ruck
-  var truckType = ""
- 
-  var Speed = "0"
-  var RPM = "0"
-   
-  var Gear = "N"
-   
-  var Fuel = "0"
-  var FuelCap = "0"
-   
-  var CruiseControlSpeed = "0"
-  var CruiseControlOn = "false"
-  var Speedlimit = "0"
-  var SpeedLimitSign = ""
-   
-  var Electric = "Off"
-  var Engine = "Off"
-  var Wipers = "Off"
-  
-  var BlinkerRightActive = "false"
-  var BlinkerLeftActive = "false"
-  var BlinkerRightOn = "false"
-  var BlinkerLeftOn = "false"
-  var HazardLightsOn = "false"
-   
-  var LightsParkingOn = "Off"
-  var LightsBeamLowOn = "Off"
-  var LightsBeamHighOn = "Off"
-  var LightsBeaconOn = "Off"
-  var LightsBrakeOn = "Off"
-  var LightsDashboardOn = "Off"
-   
-  var parkBrakeOn = "false"
-  var motorBrakeOn = "false"
- 
-  var licensePlate = ""
- 
-  var batteryVoltageWarningOn = "false"
-  var oilPressureWarningOn = "false"
-  var waterTemperatureWarningOn = "false"
-  var adblueWarningOn = "false"
-  var fuelWarningOn = "false"
- 
-  //TRAILER
-  var TrailerAttached = "Not Attached"
-  var trailerBodyType = ""
-  
-  //JOB
-  var Jobincome = ""
-  var JobSourceCity = ""
-  var JobSourceCompany = ""
-  var JobDestinationCity = ""
-  var JobDestinationCompany = ""
- 
-  //JOBEVENT
-  var jobEvent = ""
- 
-  //CARGO
-  var cargoLoaded = "false"
-  var cargoType = ""
-  var cargoDamage = ""
-  var cargoMass = ""
- 
-  //ICON
-  var RPMGauge = ""
-  var SpeedGauge = ""
-  var FuelGauge = ""
-   
- 
-  //TruckersMP STATES
-  var TruckersMP_Status = ""
-  var ServerName = ""
-  var ServerPlayers = ""
-  var ServerPlayerQueue = ""
-  
+    
 
 
 
-  //SCRIPT STATES ONLY
-  //MAIN
-  var connection = false
-  var gameName = "" 
-   
-  var SleepTimer = ""
- 
-  var cruiseControlOn = false
-   
-  var engineOn = false
-  var electric = false
-  var wipersOn = false
-   
-  var blinkerLeftActive = false
-  var blinkerRightActive = false
-  var blinkerLeftOn = false
-  var blinkerRightOn = false 
-   
-  var attached = false
+    
+    // Script States
+    let ShifterType = ""
+    let EngineRPMmax = ""
 
-  var cargo = ""
-   
-  var lightsParkingOn = false
-  var lightsBeamLowOn = false
-  var lightsBeamHighOn = false
-  var lightsBeaconOn = false
-  var lightsBrakeOn = false
-  var lightsDashboardOn = false
-   
-  var Shifter = ""
-  var Gears = 0
-  
-  //TruckersMP
-  var Servers = ""
+    let FuelCapacity = ""
+    
+    let game = ""
+    let truck = ""
+    let trailer1 = ""
+    let job = ""
+    let cargo = ""
+    let navigation = ""
+    let finedEvent = ""
+    let jobEvent = ""
+    let tollgateEvent = ""
+    let ferryEvent = ""
+    let trainEvent = ""
 
-  
-  const main = async (TruckersMPinterval) => {
-  
-    const DashboardAPI = async () => {
-      try {
-        http.get('http://localhost:25555/api/ets2/telemetry', function(err, resp, body) {
-          var data = '';  
+    let HazardLightsCounter = ""
 
-          if(err) {
-            logIt("WARN", `Error: ${err}`)
-          }
-          data = body
-          try {
-            data = JSON.parse(data)
-            
-            game = data.game
-            truck = data.truck
-            trailer1 = data.trailer1
-            cargo = data.cargo
-            job = data.job
-            navigation = data.navigation
-            jobEvent = data.jobEvent
+    let image_Speed = ""
+    let image2_Speed = ""
+    let image_RPM = ""
+    let image2_RPM = ""
+    let image_Fuel = ""
+    let image2_Fuel = ""
+    let image_SpeedLimit = ""
 
-            //Main
-            SleepTime = game.nextRestStopTime
-            
-            //Game
-            connection = game.connected
-            gameName = game.gameName
-            serverVersion = serverVersion
-            pause = game.paused
-            
-            //Truck
-            truckType = truck.make
+    let Currency
 
-            cruiseControlOn = truck.cruiseControlOn
-            
-            engineOn = truck.engineOn
-            electric = truck.electricOn
-            wipersOn = truck.wipersOn
-            
-            blinkerLeftActive = truck.blinkerLeftActive
-            blinkerRightActive = truck.blinkerRightActive
-            blinkerLeftOn = truck.blinkerLeftOn
-            blinkerRightOn = truck.blinkerRightOn
+    let Retry = 1
+    let running = false
 
-            parkBrakeOn = truck.parkBrakeOn
-            motorBrakeOn = truck.motorBrakeOn
-            
-            lightsParkingOn = truck.lightsParkingOn
-            lightsBeamLowOn = truck.lightsBeamLowOn
-            lightsBeamHighOn = truck.lightsBeamHighOn
-            lightsBeaconOn = truck.lightsBeaconOn
-            lightsBrakeOn = truck.lightsBrakeOn
-            lightsDashboardOn = truck.lightsDashboardOn
 
-            licensePlate = truck.licensePlate
+    // Script Settings:
 
-            batteryVoltageWarningOn = truck.batteryVoltageWarningOn
-            oilPressureWarningOn = truck.oilPressureWarningOn
-            waterTemperatureWarningOn = truck.waterTemperatureWarningOn
-            adblueWarningOn = truck.adblueWarningOn
-            fuelWarningOn = truck.fuelWarningOn
-            
-            //TRAILER
-            attached = trailer1.attached
-            trailerBodyType = trailer1.bodyType
-
-            //CARGO
-            cargoLoaded = cargo.cargoLoaded
-            cargoType = cargo.cargo
-            cargoDamage = Math.round(jobEvent.cargoDamage)
-            cargoMass = Math.floor(cargo.mass / 1000)
-            
-            //JOB
-            Jobincome = job.income
-            JobSourceCity = job.sourceCity
-            JobSourceCompany = job.sourceCompany
-            JobDestinationCity = job.destinationCity
-            JobDestinationCompany = job.destinationCompany
-            
-            //SCRIPT
-            Shifter = truck.shifterType
-            
-            Gears = truck.displayedGear
-            Speed = Math.round(truck.speed)
-            RPM = Math.round(truck.engineRpm)
-            RPMMax = Math.round(truck.engineRpmMax)
-            CruiseControlSpeed = Math.round(truck.cruiseControlSpeed)
-            Fuel = Math.round(truck.fuel)
-            FuelCap = Math.round(truck.fuelCapacity)
-            Speedlimit = navigation.speedLimit
-          } catch (error) {
-            logIt("WARN", `ERROR: ${error}`)
-            error = 1
-          }
-        })
-      } catch (error) {
-        logIt("WARN", `${error}`)
+    if(debugMode) {
+        images_path = `./src/images`
+      } else {
+        images_path = `images`
       }
+
+
+
+    const API_Server = async () => {
+        const http = require('http')
+        
+        const server = http.createServer(function(request, response) {
+            //console.dir(request)
+            
+        })
+        
+        const port = 3123
+        const host = '127.0.0.1'
+        server.listen(port, host)
+        console.log(`Listening at http://${host}:${port}`)
+    }
+
+    const Telemetry_Request = async () => {
+
+        try {
+          http.get('http://localhost:25555/api/ets2/telemetry', function(err, resp, body) {
+            
+            var data = '';  
+            data = body
+  
+            if(err) {
+                logIt("WARN", `Telemetry Request Error! -> ${err}`)
+                process.exit()
+            }
+
+            try {
+              data = JSON.parse(data)
+              
+              game = data.game
+              truck = data.truck
+              trailer1 = data.trailer1
+              job = data.job
+              cargo = data.cargo
+              navigation = data.navigation
+              finedEvent = data.finedEvent
+              jobEvent = data.jobEvent
+              tollgateEvent = data.tollgateEvent
+              ferryEvent = data.ferryEvent
+              trainEvent = data.trainEvent
+
+            } catch (error) {
+                logIt("WARN", `Telemetry Request Error! -> ${error}`)
+            }
+          })
+        } catch (error) {
+          logIt("WARN", `Telemetry Request Error! -> ${error}`)
+        }
+
+    }
+
+    const Game_States = async () => {
+
+        Connected = game.connected
+        GameType = game.gameName
+        Paused = game.paused
+        TelemetryPluginVersion = game.telemetryPluginVersion
+
+
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.ConnectedStatus", value: `${Connected}`},
+            { id: "Nybo.ETS2.Dashboard.GameType", value: `${GameType}`},
+            { id: "Nybo.ETS2.Dashboard.IsPaused", value: `${Paused}`},
+            //{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
+    }
+
+    const World_States = async () => {
+
+        Time = new Date(game.time)
+        Time = `${Time.getUTCHours()}:${Time.getUTCMinutes()}`
+
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.Time", value: `${Time}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
+    
+    }
+
+    const Driver_States = async () => {
+
+        NextRestStopTime = new Date(game.nextRestStopTime)
+        NextRestStopTime = `${NextRestStopTime.getUTCHours()}:${NextRestStopTime.getUTCMinutes()}`
+
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.NextRestTime", value: `${NextRestStopTime}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
+    }
+
+    const Gauge_States = async () => {
+
+        Speed = Math.round(truck.speed)
+        EngineRPM = Math.round(truck.engineRpm)
+        Fuel = Math.round(truck.fuel)
+        FuelCapacity = Math.round(truck.fuelCapacity)
+
+        
+        SpeedGauge = await getSpeedGauge(Speed)
+        RPMGauge = await getRPMGauge(EngineRPM)
+        FuelGauge = await getFuelGauge(Fuel, FuelCapacity)
+
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.SpeedGauge", value: `${SpeedGauge}`},
+            { id: "Nybo.ETS2.Dashboard.RPMGauge", value: `${RPMGauge}`},
+            { id: "Nybo.ETS2.Dashboard.FuelGauge", value: `${FuelGauge}`}
+            //{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
+    
+    }
+
+    const Truck_States = async () => {
+
+        Constructor = truck.make
+        Model = truck.model
+         
+        CruiseControlSpeed = truck.cruiseControlSpeed
+        CruiseControlOn = truck.cruiseControlOn
+        
+        ShifterType = truck.shifterType
+        Gear = truck.displayedGear
+
+        Speed = Math.round(truck.speed)
+        EngineRPM = Math.round(truck.engineRpm)
+        Gear = await getGear(Gear, ShifterType) 
+         
+        EngineOn = truck.engineOn
+        ElectricOn = truck. electricOn
+        WipersOn = truck.wipersOn
+        ParkBrakeOn = truck.parkBrakeOn
+        MotorBrakeOn = truck.motorBrakeOn
+        
+        Fuel = Math.round(truck.fuel)
+        AdBlue = Math.round(truck.adblue)
+        AirPressure = Math.round(truck.airPressure)
+        OilTemp = Math.round(truck.oilTemperature)
+        WaterTemp = Math.round(truck.waterTemperature)
+        BatteryVoltage = Math.round(truck.batteryVoltage)
+
+        FuelCapacity = Math.round(truck.fuelCapacity)
+        
+        FuelWarningOn = truck.fuelWarningOn
+        AdBlueWarningOn = truck.adblueWarningOn
+        AirPressureWarningOn = truck.airPressureWarningOn
+        AirPressureEmergencyOn = truck.airPressureEmergencyOn
+        OilPressureWarningOn = truck.oilPressureWarningOn
+        WaterTempWarningOn = truck.waterTemperatureWarningOn
+        BatteryVoltageWarningOn = truck.batteryVoltageWarningOn
+        
+        BlinkerLeftActive = truck.blinkerLeftActive
+        BlinkerRightActive = truck.blinkerRightActive
+        BlinkerLeftOn = truck.blinkerLeftOn
+        BlinkerRightOn = truck.blinkerRightOn
+        
+        LightsDashboardValue = truck.lightsDashboardValue
+        LightsDashboardOn = truck.lightsDashboardOn
+        LightsParkingOn = truck.lightsParkingOn
+        LightsBeamLowOn = truck.lightsBeamLowOn
+        LightsBeamHighOn = truck.lightsBeamHighOn
+        LightsAuxFrontOn = truck.lightsAuxFrontOn
+        LightsAuxRoofOn = truck.lightsAuxRoofOn
+        LightsBeaconOn = truck.lightsBeaconOn
+        LightsBrakeOn = truck.lightsBrakeOn
+        LightsReverseOn = truck.lightsReverseOn
+
+        if(BlinkerLeftOn && BlinkerRightOn) {
+          HazardLightsOn = true
+          HazardLightsCounter = 1
+        }
+
+        if(HazardLightsCounter < 5) {
+          HazardLightsCounter = Math.floor(HazardLightsCounter+1)
+        } else {
+          HazardLightsOn = false
+        }
+
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.Truck_Make", value: `${Constructor}`},
+            { id: "Nybo.ETS2.Dashboard.Model", value: `${Model}`},
+
+            { id: "Nybo.ETS2.Dashboard.CruiseControlSpeed", value: `${CruiseControlSpeed}`},
+            { id: "Nybo.ETS2.Dashboard.CruiseControlOn", value: `${CruiseControlOn}`},
+
+            { id: "Nybo.ETS2.Dashboard.Speed", value: `${Speed}`},
+            { id: "Nybo.ETS2.Dashboard.EngineRPM", value: `${EngineRPM}`},
+            { id: "Nybo.ETS2.Dashboard.Gear", value: `${Gear}`},
+
+            { id: "Nybo.ETS2.Dashboard.EngineOn", value: `${EngineOn}`},
+            { id: "Nybo.ETS2.Dashboard.ElectricOn", value: `${ElectricOn}`},
+            { id: "Nybo.ETS2.Dashboard.WipersON", value: `${WipersON}`},
+            { id: "Nybo.ETS2.Dashboard.ParkBrakeOn", value: `${ParkBrakeOn}`},
+            { id: "Nybo.ETS2.Dashboard.MotorBrakeOn", value: `${MotorBrakeOn}`},
+
+            { id: "Nybo.ETS2.Dashboard.Fuel", value: `${Fuel}`},
+            { id: "Nybo.ETS2.Dashboard.AdBlue", value: `${AdBlue}`},
+            { id: "Nybo.ETS2.Dashboard.AirPressure", value: `${AirPressure}`},
+            { id: "Nybo.ETS2.Dashboard.OilTemp", value: `${OilTemp}`},
+            { id: "Nybo.ETS2.Dashboard.WaterTemp", value: `${WaterTemp}`},
+            { id: "Nybo.ETS2.Dashboard.BatteryVoltage", value: `${BatteryVoltage}`},
+            
+            { id: "Nybo.ETS2.Dashboard.FuelCapacity", value: `${FuelCapacity}`},
+
+            { id: "Nybo.ETS2.Dashboard.FuelWarningOn", value: `${FuelWarningOn}`},
+            { id: "Nybo.ETS2.Dashboard.AdBlueWarningOn", value: `${AdBlueWarningOn}`},
+            { id: "Nybo.ETS2.Dashboard.AirPressureWarningOn", value: `${AirPressureWarningOn}`},
+            { id: "Nybo.ETS2.Dashboard.AirPressureEmergencyOn", value: `${AirPressureEmergencyOn}`},
+            { id: "Nybo.ETS2.Dashboard.OilPressureWarningOn", value: `${OilPressureWarningOn}`},
+            { id: "Nybo.ETS2.Dashboard.WaterTempWarningOn", value: `${WaterTempWarningOn}`},
+            { id: "Nybo.ETS2.Dashboard.BatteryVoltageWarningOn", value: `${BatteryVoltageWarningOn}`},
+
+            { id: "Nybo.ETS2.Dashboard.BlinkerLeftActive", value: `${BlinkerLeftActive}`},
+            { id: "Nybo.ETS2.Dashboard.BlinkerRightActive", value: `${BlinkerRightActive}`},
+            { id: "Nybo.ETS2.Dashboard.BlinkerLeftOn", value: `${BlinkerLeftOn}`},
+            { id: "Nybo.ETS2.Dashboard.BlinkerRightOn", value: `${BlinkerRightOn}`},
+            { id: "Nybo.ETS2.Dashboard.HazardLightsOn", value: `${HazardLightsOn}`},
+
+            { id: "Nybo.ETS2.Dashboard.LightsDashboardValue", value: `${LightsDashboardValue}`},
+            { id: "Nybo.ETS2.Dashboard.LightsDashboardOn", value: `${LightsDashboardOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsParkingOn", value: `${LightsParkingOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBeamLowOn", value: `${LightsBeamLowOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBeamHighOn", value: `${LightsBeamHighOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsAuxFrontOn", value: `${LightsAuxFrontOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsAuxRoofOn", value: `${LightsAuxRoofOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBeaconOn", value: `${LightsBeaconOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsBrakeOn", value: `${LightsBrakeOn}`},
+            { id: "Nybo.ETS2.Dashboard.LightsReverseOn", value: `${LightsReverseOn}`},
+            
+            //{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
+    }
+    
+    const Trailer_States = async () => {
+        
+        TrailerAttached = trailer1.attached
+        TrailerName = trailer1.name
+        TrailerChainType = trailer1.chainType
+
+        CargoLoaded = cargo.cargoLoaded
+        CargoType = cargo.cargo
+        CargoDamage = Math.round(cargo.damage*100)
+        CargoMass = Math.round(Math.floor(cargo.mass / 1000))
+
+        Weight = userConfig.Basics.Weight
+        
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.TrailerAttached", value: `${TrailerAttached}`},
+            { id: "Nybo.ETS2.Dashboard.TrailerName", value: `${TrailerName}`},
+            { id: "Nybo.ETS2.Dashboard.TrailerChainType", value: `${TrailerChainType}`},
+
+            { id: "Nybo.ETS2.Dashboard.CargoLoaded", value: `${CargoLoaded}`},
+            { id: "Nybo.ETS2.Dashboard.CargoType", value: `${CargoType}`},
+            { id: "Nybo.ETS2.Dashboard.CargoDamage", value: `${CargoDamage}`},
+            { id: "Nybo.ETS2.Dashboard.CargoMass", value: `${CargoMass} ${Weight}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
+    
+    }
+
+    const Job_States = async () => {
+
+        JobIncome = job.income
+        JobRemainingTime = new Date(job.remainingTime)
+        JobRemainingTime = `${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
+        JobSourceCity = job.sourceCity
+        JobSourceCompany = job.sourceCompany
+        JobDestinationCity = job.destinationCity
+        JobDestinationCompany = job.destinationCompany
+        JobEstimatedDistance = navigation.estimatedDistance
+
+        Currency = userConfig.Basics.Money
+
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.JobIncome", value: `${JobIncome}${Currency}`},
+            { id: "Nybo.ETS2.Dashboard.JobRemainingTime", value: `${JobRemainingTime}`},
+            { id: "Nybo.ETS2.Dashboard.JobSourceCity", value: `${JobSourceCity}`},
+            { id: "Nybo.ETS2.Dashboard.JobSourceCompany", value: `${JobSourceCompany}`},
+            { id: "Nybo.ETS2.Dashboard.JobDestinationCity", value: `${JobDestinationCity}`},
+            { id: "Nybo.ETS2.Dashboard.JobDestinationCompany", value: `${JobDestinationCompany}`},
+            { id: "Nybo.ETS2.Dashboard.JobEstimatedDistance", value: `${JobEstimatedDistance}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
+    
+    }
+
+    const Navigation_States = async () => {
+
+        Speedlimit = navigation.speedLimit
+
+        SpeedLimitSign = await getSpeedLimitSign(Speedlimit)
+
+        var states = [
+            { id: "Nybo.ETS2.Dashboard.SpeedLimit", value: `${Speedlimit}`},
+            { id: "Nybo.ETS2.Dashboard.SpeedLimitSign", value: `${SpeedLimitSign}`},
+        ]
+        
+        TPClient.stateUpdateMany(states);
     }
 
     const TruckersMPAPI = async () => {
@@ -271,7 +502,6 @@ TPClient.on("Info", (data) => {
           })
           
           resp.on('end', () => {
-            var APIOnline = false
 
             if(IsJsonString(data) === true) {
               data = JSON.parse(data)
@@ -291,626 +521,590 @@ TPClient.on("Info", (data) => {
               ServerName = "TruckersMP API Error!"
               ServerPlayers = "TruckersMP API Error!"
               ServerPlayerQueue = "TruckersMP API Error!"
+              APIOnline = false
 
             }
 
+            var states = [
+              { id: "Nybo.ETS2.Dashboard.Servers", value: `${Servers}`},
+              { id: "Nybo.ETS2.Dashboard.ServerName", value: `${ServerName}`},
+              { id: "Nybo.ETS2.Dashboard.ServerPlayers", value: `${ServerPlayers}`},
+              { id: "Nybo.ETS2.Dashboard.ServerPlayerQueue", value: `${ServerPlayerQueue}`},
+              { id: "Nybo.ETS2.Dashboard.APIOnline", value: `${APIOnline}`},
+            ]
+            
+            TPClient.stateUpdateMany(states);
           })
         })
       } catch (error) {
         logIt("WARN", `${error}`)
       }
     }
-    
-    const TruckersMP = async () => {
-      
+
+
+
+
+    const Load_Modules = async () => {
+      //API_Server()
+      Telemetry_Request()
+      Game_States()
+      World_States()
+      Driver_States()
+      Gauge_States()
+      Truck_States()
+      Trailer_States()
+      Job_States()
+      Navigation_States()
+
+      TruckersMPAPI()
     }
-    
-    const Dashboard = async () => {
-      
-      if(connection === false) {
-        Status_Connected = "Disconnected"
-      } else if (connection === true) {
-        Status_Connected = "Connected"
-      } else {
-        Status_Connected = "Nothing??"
-      }
-      
-      if(gameName === "ETS2") {
-        Game = "ETS2"
-      } else if(gameName === "ATS") {
-        Game = "ATS"
-      }
-      
-      if(cruiseControlOn === true) {
-        CruiseControlOn = "true"
-      } else if (cruiseControlOn === false) {
-        CruiseControlOn = "false"
-      }
-      
-      if(engineOn === true) {
-        Engine = "On"
-      } else if (engineOn === false) {
-        Engine = "Off"
-      }
-      
-      if(electric === true) {
-        Electric = "On"
-      } else if (electric === false) {
-        Electric = "Off"
-      }
-      
-      if(wipersOn === true) {
-        Wipers = "On"
-      } else if (wipersOn === false) {
-        Wipers = "Off"
-      }
-      
-      if(attached === true) {
-        TrailerAttached = "Attached"
-      } else if (attached === false) {
-        TrailerAttached = "Not Attached"
-      }
-      
-      if(lightsParkingOn === true) {
-        LightsParkingOn = "On"
-      } else if (lightsParkingOn === false) {
-        LightsParkingOn = "Off"
-      }
-      
-      if(lightsBeamLowOn === true) {
-        LightsBeamLowOn = "On"
-      } else if (lightsBeamLowOn === false) {
-        LightsBeamLowOn = "Off"
-      }
-      
-      if(lightsBeamHighOn === true) {
-        LightsBeamHighOn = "On"
-      } else if (lightsBeamHighOn === false) {
-        LightsBeamHighOn = "Off"
-      }
-      
-      if(lightsBeaconOn === true) {
-        LightsBeaconOn = "On"
-      } else if (lightsBeaconOn === false) {
-        LightsBeaconOn = "Off"
-      }
-      
-      if(lightsBrakeOn === true) {
-        LightsBrakeOn = "On"
-      } else if (lightsBrakeOn === false) {
-        LightsBrakeOn = "Off"
-      }
-      
-      if(lightsDashboardOn === true) {
-        LightsDashboardOn = "On"
-      } else if (lightsDashboardOn === false) {
-        LightsDashboardOn = "Off"
-      }
-      
-      if (Shifter === "automatic") {
-        if (Gears === 0) {
-          Gear = "N"
-        } else if (Gears === 1) {
-          Gear = "D1"
-        } else if (Gears === 2) {
-          Gear = "D2"
-        } else if (Gears === 3) {
-          Gear = "D3"
-        } else if (Gears === 4) {
-          Gear = "D4"
-        } else if (Gears === 5) {
-          Gear = "D5"
-        } else if (Gears === 6) {
-          Gear = "D6"
-        } else if (Gears === 7) {
-          Gear = "D7"
-        } else if (Gears === 8) {
-          Gear = "D8"
-        } else if (Gears === 9) {
-          Gear = "D9"
-        } else if (Gears === 10) {
-          Gear = "D10"
-        } else if (Gears === 11) {
-          Gear = "D11"
-        } else if (Gears === 12) {
-          Gear = "D12"
-        } else if (Gears === -1) {
-          Gear = "R"
-        }
-      } else if (Shifter === "manual") {
-        if (Gears === 0) {
-          Gear = "N"
-        } else if (Gears === 1) {
-          Gear = "1"
-        } else if (Gears === 2) {
-          Gear = "2"
-        } else if (Gears === 3) {
-          Gear = "3"
-        } else if (Gears === 4) {
-          Gear = "4"
-        } else if (Gears === 5) {
-          Gear = "5"
-        } else if (Gears === 6) {
-          Gear = "6"
-        } else if (Gears === 7) {
-          Gear = "7"
-        } else if (Gears === 8) {
-          Gear = "8"
-        } else if (Gears === 9) {
-          Gear = "9"
-        } else if (Gears === 10) {
-          Gear = "10"
-        } else if (Gears === 11) {
-          Gear = "11"
-        } else if (Gears === 12) {
-          Gear = "12"
 
-        } else if (Gears === -1) {
-          Gear = "-1"
-        } else if (Gears === -2) {
-          Gear = "-2"
-        } else if (Gears === -2) {
-          Gear = "-3"
-        }
-      }
-
-      var images_path
+    const Module_Setup = async () => {
+      image_Speed = await Jimp.read
+      (`${images_path}/Gauge.png`);
+      image2_Speed = await Jimp.read
+      (`${images_path}/SpeedGauge.png`);
+  
+      image_RPM = await Jimp.read
+      (`${images_path}/Gauge.png`);
+      image2_RPM = await Jimp.read
+      (`${images_path}/RPMGauge.png`);
       
+      image_Fuel = await Jimp.read
+      (`${images_path}/Gauge.png`);
+      image2_Fuel = await Jimp.read
+      (`${images_path}/FuelGauge.png`);
+      
+      image_SpeedLimit = await Jimp.read
+      (`${images_path}/speedlimit.png`);
+    }
+
+    Module_Setup()
+
+
+    const Telemetry_Server = async () => {
+      var server_path = "./server"
       if(debugMode) {
-        images_path = `./src/images`
-      } else {
-        images_path = `images`
+        server_path = "./src/server"
       }
-      
-      if (Speedlimit === 0) {
-        SpeedLimitSign = fs.readFileSync(`${images_path}/noSpeedlimit.png`, `base64`)
-      } else {
-        const image = await Jimp.read
-        (`${images_path}/speedlimit.png`);
-        image.resize(300, 300)
-        Jimp.loadFont(Jimp.FONT_SANS_128_BLACK).then(font => {
-          image.print(
-            font, 
-            0, 
-            0,
-            {
-              text: `${Speedlimit}`,
-              alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
-              alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
-            },
-            300,
-            300,
-          )
-          image.getBase64Async(Jimp.AUTO)
-          .then(base64 => {
-              SpeedLimitSign = base64.slice(22)
-          })
+
+      if(fs.existsSync(`${server_path}`)) {
+        if(Retry === 5) {
+          logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
+          process.exit()
+        }
+
+        const isRunning = (query, cb) => {
+          var platform = process.platform;
+          var cmd = '';
+          switch (platform) {
+            case 'win32' : cmd = `tasklist`; break;
+            case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
+            case 'linux' : cmd = `ps -A`; break;
+            default: break;
+          }
+          exec(cmd, (err, stdout, stderr) => {
+            cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
+          });
+        }
+
+        isRunning('Ets2Telemetry.exe', (status) => {
+          if(status === false) {
+            execute(`${server_path}/Ets2Telemetry.exe`, function(err, data) {
+              if(err) {
+                logIt("WARN","Telemetry Server could not be Started!");
+              }
+            })
+            if(Retry === 1) {
+            } else {
+              logIt("WARN","Telemetry Server not Found! Retry in 5 Seconds!");
+            }
+            Retry = Retry+1
+            running = false
+            setTimeout(() => {
+              Telemetry_Server()
+            }, 5000);
+    
+          } else {
+            if(running === false) {
+              logIt("INFO", "Server loaded up! Script is starting!")
+            }
+
+            running = true
+            Retry = 1
+
+            setTimeout(() => {
+              if(running === true) {
+                Load_Modules()
+              }
+              Telemetry_Server()
+            }, RefreshInterval)
+    
+            
+          }
         })
-      }
-
-      SleepTime = new Date(SleepTime)
-      SleepTimer = SleepTime.getHours()
-
-    }
-
-    const DashboardBlinkers = async () => {
-      if(blinkerRightActive === true) {
-        BlinkerRightActive = "true"
+    
       } else {
-        BlinkerRightActive = "false"
-      }
-      
-      if(blinkerLeftActive === true) {
-        BlinkerLeftActive = "true"
-      } else {
-        BlinkerLeftActive = "false"
-      }
-
-      if(blinkerRightOn === true) {
-        BlinkerRightOn = "true"
-      } else {
-        BlinkerRightOn = "false"
-      }
-      
-      if(blinkerLeftOn === true) {
-        BlinkerLeftOn = "true"
-      } else {
-        BlinkerLeftOn = "false"
-      }
-      
-      if(blinkerLeftOn === true && blinkerRightOn === true) {
-        HazardLightsOn = "true"
-      } else {
-        HazardLightsOn = "false"
+        logIt("ERROR", "Server folder not Found!")
+        process.exit()
       }
     }
 
-    const DashboardGauge = async () => {
-      var images_path
+    Telemetry_Server()
 
-      if(debugMode) {
-        images_path = `./src/images`
-      } else {
-        images_path = `images`
-      }
-     
-      function isBetween(n, a, b) {
+    //Modules Functions
+    async function getGear(Gears, Shifter) {
+        return new Promise(async(resolve,reject)=>{
+            if (Shifter === "automatic") {
+                if (Gears === 0) {
+                    resolve("N")
+                } else if (Gears === 1) {
+                    resolve("D1")
+                } else if (Gears === 2) {
+                    resolve("D2")
+                } else if (Gears === 3) {
+                    resolve("D3")
+                } else if (Gears === 4) {
+                    resolve("D4")
+                } else if (Gears === 5) {
+                    resolve("D5")
+                } else if (Gears === 6) {
+                    resolve("D6")
+                } else if (Gears === 7) {
+                    resolve("D7")
+                } else if (Gears === 8) {
+                    resolve("D8")
+                } else if (Gears === 9) {
+                    resolve("D9")
+                } else if (Gears === 10) {
+                    resolve("D10")
+                } else if (Gears === 11) {
+                    resolve("D11")
+                } else if (Gears === 12) {
+                    resolve("D12")
+                } else if (Gears === -1) {
+                    resolve("R1")
+                } else if (Gears === -2) {
+                    resolve("R2")
+                } else if (Gears === -3) {
+                    resolve("R3")
+                }
+            } else if (Shifter === "manual") {
+                if (Gears === 0) {
+                    resolve("N")
+                } else if (Gears === 1) {
+                    resolve("1")
+                } else if (Gears === 2) {
+                    resolve("2")
+                } else if (Gears === 3) {
+                    resolve("3")
+                } else if (Gears === 4) {
+                    resolve("4")
+                } else if (Gears === 5) {
+                    resolve("5")
+                } else if (Gears === 6) {
+                    resolve("6")
+                } else if (Gears === 7) {
+                    resolve("7")
+                } else if (Gears === 8) {
+                    resolve("8")
+                } else if (Gears === 9) {
+                    resolve("9")
+                } else if (Gears === 10) {
+                    resolve("10")
+                } else if (Gears === 11) {
+                    resolve("11")
+                } else if (Gears === 12) {
+                    resolve("12")
+                } else if (Gears === -1) {
+                    resolve("-1")
+                } else if (Gears === -2) {
+                    resolve("-2")
+                } else if (Gears === -3) {
+                    resolve("-3")
+                }
+            }
+        })
+    }
+
+
+
+    function isBetween(n, a, b) {
         return (n - a) * (n - b) <= 0
-      }
-      
-      async function getSpeedGauge(rotate) {
-        var getSpeedGaugeRotate = -2
-        
-        const image = await Jimp.read
-        (`${images_path}/Gauge.png`);
-        
-        image.rotate(Math.floor(getSpeedGaugeRotate - rotate))
-        image.resize(400, 400)
-        const image2 = await Jimp.read
-        (`${images_path}/SpeedGauge.png`);
-        image2.composite(image, 0, 0)
-        image2.getBase64Async(Jimp.AUTO)
-        .then(base64 => {
-          SpeedGauge = base64.slice(22)
+    }
+
+    async function getSpeedGauge(Speed) {
+        return new Promise(async(resolve,reject)=>{
+
+            async function getSpeedGauge(rotate) {
+                var getSpeedGaugeRotate = -2
+                
+                let image_Speed_clone = image_Speed.clone()
+                let image2_Speed_clone = image2_Speed.clone()
+                
+                image_Speed_clone.rotate(Math.floor(getSpeedGaugeRotate - rotate))
+                image_Speed_clone.resize(400, 400)
+                image2_Speed_clone.composite(image_Speed_clone, 0, 0)
+                image2_Speed_clone.getBase64Async(Jimp.AUTO)
+                .then(base64 => {
+                    resolve(base64.slice(22))
+                })
+            }
+
+            switch(true) {
+                case isBetween(Speed, -35, -38):
+                  await getSpeedGauge(25)
+                break;
+                case isBetween(Speed, -33, -35):
+                  await getSpeedGauge(22)
+                break;
+                case isBetween(Speed, -30, -33):
+                  await getSpeedGauge(19)
+                break;
+                case isBetween(Speed, -28, -30):
+                  await getSpeedGauge(16)
+                break;
+                case isBetween(Speed, -25, -28):
+                  await getSpeedGauge(13)
+                break;
+                case isBetween(Speed, -23, -25):
+                  await getSpeedGauge(10)
+                break;
+                case isBetween(Speed, -20, -23):
+                  await getSpeedGauge(7)
+                break;
+                case isBetween(Speed, -18, -20):
+                  await getSpeedGauge(4)
+                break;
+                case isBetween(Speed, -15, -18):
+                  await getSpeedGauge(1)
+                break;
+                case isBetween(Speed, -13, -15):
+                  await getSpeedGauge(-2)
+                break;
+                case isBetween(Speed, -10, -13):
+                  await getSpeedGauge(-5)
+                break;
+                case isBetween(Speed, -8, -10):
+                  await getSpeedGauge(-8)
+                break;
+                case isBetween(Speed, -5, -8):
+                  await getSpeedGauge(-12)
+                break;
+                case isBetween(Speed, -3, -5):
+                  await getSpeedGauge(-17)
+                break;
+                case isBetween(Speed, 0, -3):
+                  await getSpeedGauge(-20)
+                break;
+                case isBetween(Speed, 0, 3):
+                  await getSpeedGauge(-20)
+                break;
+                case isBetween(Speed, 3, 5):
+                  await getSpeedGauge(-17)
+                break;
+                case isBetween(Speed, 5, 8):
+                  await getSpeedGauge(-12)
+                break;
+                case isBetween(Speed, 8, 10):
+                  await getSpeedGauge(-8)
+                break;
+                case isBetween(Speed, 10, 13):
+                  await getSpeedGauge(-5)
+                break;
+                case isBetween(Speed, 13, 15):
+                  await getSpeedGauge(-2)
+                break;
+                case isBetween(Speed, 15, 18):
+                  await getSpeedGauge(1)
+                break;
+                case isBetween(Speed, 18, 20):
+                  await getSpeedGauge(4)
+                break;
+                case isBetween(Speed, 20, 23):
+                  await getSpeedGauge(7)
+                break;
+                case isBetween(Speed, 23, 25):
+                  await getSpeedGauge(10)
+                break;
+                case isBetween(Speed, 25, 28):
+                  await getSpeedGauge(13)
+                break;
+                case isBetween(Speed, 28, 30):
+                  await getSpeedGauge(16)
+                break;
+                case isBetween(Speed, 30, 33):
+                  await getSpeedGauge(19)
+                break;
+                case isBetween(Speed, 33, 35):
+                  await getSpeedGauge(22)
+                break;
+                case isBetween(Speed, 35, 38):
+                  await getSpeedGauge(25)
+                break;
+                case isBetween(Speed, 38, 40):
+                  await getSpeedGauge(28)
+                break;
+                case isBetween(Speed, 40, 43):
+                  await getSpeedGauge(32)
+                break;
+                case isBetween(Speed, 43, 45):
+                  await getSpeedGauge(35)
+                break;
+                case isBetween(Speed, 45, 48):
+                  await getSpeedGauge(39)
+                break;
+                case isBetween(Speed, 48, 50):
+                  await getSpeedGauge(43)
+                break;
+                case isBetween(Speed, 50, 53):
+                  await getSpeedGauge(46)
+                break;
+                case isBetween(Speed, 53, 55):
+                  await getSpeedGauge(50)
+                break;
+                case isBetween(Speed, 55, 58):
+                  await getSpeedGauge(57)
+                break;
+                case isBetween(Speed, 58, 60):
+                  await getSpeedGauge(60)
+                break;
+                case isBetween(Speed, 60, 63):
+                  await getSpeedGauge(63)
+                break;
+                case isBetween(Speed, 63, 65):
+                  await getSpeedGauge(66)
+                break;
+                case isBetween(Speed, 65, 68):
+                  await getSpeedGauge(69)
+                break;
+                case isBetween(Speed, 68, 70):
+                  await getSpeedGauge(72)
+                break;
+                case isBetween(Speed, 70, 73):
+                  await getSpeedGauge(75)
+                break;
+                case isBetween(Speed, 73, 75):
+                  await getSpeedGauge(78)
+                break;
+                case isBetween(Speed, 75, 78):
+                  await getSpeedGauge(81)
+                break;
+                case isBetween(Speed, 78, 80):
+                  await getSpeedGauge(84)
+                break;
+                case isBetween(Speed, 80, 83):
+                  await getSpeedGauge(87)
+                break;
+                case isBetween(Speed, 83, 85):
+                  await getSpeedGauge(90)
+                break;
+                case isBetween(Speed, 85, 88):
+                  await getSpeedGauge(93)
+                break;
+                case isBetween(Speed, 88, 90):
+                  await getSpeedGauge(95)
+                break;
+                case isBetween(Speed, 90, 93):
+                  await getSpeedGauge(100)
+                break;
+                case isBetween(Speed, 93, 95):
+                  await getSpeedGauge(103)
+                break;
+                case isBetween(Speed, 98, 100):
+                  await getSpeedGauge(105)
+                break;
+                case isBetween(Speed, 100, 103):
+                  await getSpeedGauge(110)
+                break;
+                case isBetween(Speed, 103, 105):
+                  await getSpeedGauge(113)
+                break;
+                case isBetween(Speed, 105, 108):
+                  await getSpeedGauge(117)
+                break;
+                case isBetween(Speed, 108, 110):
+                  await getSpeedGauge(120)
+                break;
+                case isBetween(Speed, 110, 113):
+                  await getSpeedGauge(123)
+                break;
+                case isBetween(Speed, 113, 115):
+                  await getSpeedGauge(125)
+                break;
+                case isBetween(Speed, 116, 118):
+                  await getSpeedGauge(130)
+                break;
+                case isBetween(Speed, 118, 120):
+                  await getSpeedGauge(135) 
+                break;
+                                                                                                                                            
+            }
+
+
+
         })
-      }
-      
-      async function getRPMGauge(rotate) {
-        var getRPMGaugeRotate = -2
-        const image = await Jimp.read
-        (`${images_path}/Gauge.png`);
-        
-        image.rotate(Math.floor(getRPMGaugeRotate - rotate))
-        image.resize(400, 400)
-        const image2 = await Jimp.read
-        (`${images_path}/RPMGauge.png`);
-        image2.composite(image, 0, 0)
-        image2.getBase64Async(Jimp.AUTO)
-        .then(base64 => {
-          RPMGauge = base64.slice(22)
-        })
-      }
-      
-      async function getFuelGauge(rotate) {
-        var getRPMGaugeRotate = -2
-        const image = await Jimp.read
-        (`${images_path}/Gauge.png`);
-        
-        image.rotate(Math.floor(getRPMGaugeRotate - rotate))
-        image.resize(400, 400)
-        const image2 = await Jimp.read
-        (`${images_path}/FuelGauge.png`);
-        if(rotate > 170) {
-          image2.resize(350, 350)
-          image2.composite(image, -30, 0)
-        } else if(isBetween(rotate, 84, 96) === true) { 
-          image2.resize(400, 400)
-          image2.composite(image, 0, 40)
-        } else {
-          image2.resize(300, 300)
-          image2.composite(image, -55, -20)
+    }
+    
+    async function getRPMGauge(RPM) {
+      return new Promise(async(resolve,reject)=>{
+        async function getRPMGauge(rotate) {
+          var getRPMGaugeRotate = -2
+          
+          let image_RPM_clone = image_RPM.clone()
+          let image2_RPM_clone = image2_RPM.clone()
+          
+          image_RPM_clone.rotate(Math.floor(getRPMGaugeRotate - rotate))
+          image_RPM_clone.resize(400, 400)
+          image2_RPM_clone.composite(image_RPM_clone, 0, 0)
+          image2_RPM_clone.getBase64Async(Jimp.AUTO)
+          .then(base64 => {
+            resolve(base64.slice(22))
+          })
         }
-        image2.getBase64Async(Jimp.AUTO)
-        .then(base64 => {
-          FuelGauge = base64.slice(22)
-        })
-      }
-      
-      
-      async function getSpeed() { // 8 5 3
-        switch(true) {
-          case isBetween(Speed, -35, -38):
-            await getSpeedGauge(25)
-          break;
-          case isBetween(Speed, -33, -35):
-            await getSpeedGauge(22)
-          break;
-          case isBetween(Speed, -30, -33):
-            await getSpeedGauge(19)
-          break;
-          case isBetween(Speed, -28, -30):
-            await getSpeedGauge(16)
-          break;
-          case isBetween(Speed, -25, -28):
-            await getSpeedGauge(13)
-          break;
-          case isBetween(Speed, -23, -25):
-            await getSpeedGauge(10)
-          break;
-          case isBetween(Speed, -20, -23):
-            await getSpeedGauge(7)
-          break;
-          case isBetween(Speed, -18, -20):
-            await getSpeedGauge(4)
-          break;
-          case isBetween(Speed, -15, -18):
-            await getSpeedGauge(1)
-          break;
-          case isBetween(Speed, -13, -15):
-            await getSpeedGauge(-2)
-          break;
-          case isBetween(Speed, -10, -13):
-            await getSpeedGauge(-5)
-          break;
-          case isBetween(Speed, -8, -10):
-            await getSpeedGauge(-8)
-          break;
-          case isBetween(Speed, -5, -8):
-            await getSpeedGauge(-12)
-          break;
-          case isBetween(Speed, -3, -5):
-            await getSpeedGauge(-17)
-          break;
-          case isBetween(Speed, 0, -3):
-            await getSpeedGauge(-20)
-          break;
-          case isBetween(Speed, 0, 3):
-            await getSpeedGauge(-20)
-          break;
-          case isBetween(Speed, 3, 5):
-            await getSpeedGauge(-17)
-          break;
-          case isBetween(Speed, 5, 8):
-            await getSpeedGauge(-12)
-          break;
-          case isBetween(Speed, 8, 10):
-            await getSpeedGauge(-8)
-          break;
-          case isBetween(Speed, 10, 13):
-            await getSpeedGauge(-5)
-          break;
-          case isBetween(Speed, 13, 15):
-            await getSpeedGauge(-2)
-          break;
-          case isBetween(Speed, 15, 18):
-            await getSpeedGauge(1)
-          break;
-          case isBetween(Speed, 18, 20):
-            await getSpeedGauge(4)
-          break;
-          case isBetween(Speed, 20, 23):
-            await getSpeedGauge(7)
-          break;
-          case isBetween(Speed, 23, 25):
-            await getSpeedGauge(10)
-          break;
-          case isBetween(Speed, 25, 28):
-            await getSpeedGauge(13)
-          break;
-          case isBetween(Speed, 28, 30):
-            await getSpeedGauge(16)
-          break;
-          case isBetween(Speed, 30, 33):
-            await getSpeedGauge(19)
-          break;
-          case isBetween(Speed, 33, 35):
-            await getSpeedGauge(22)
-          break;
-          case isBetween(Speed, 35, 38):
-            await getSpeedGauge(25)
-          break;
-          case isBetween(Speed, 38, 40):
-            await getSpeedGauge(28)
-          break;
-          case isBetween(Speed, 40, 43):
-            await getSpeedGauge(32)
-          break;
-          case isBetween(Speed, 43, 45):
-            await getSpeedGauge(35)
-          break;
-          case isBetween(Speed, 45, 48):
-            await getSpeedGauge(39)
-          break;
-          case isBetween(Speed, 48, 50):
-            await getSpeedGauge(43)
-          break;
-          case isBetween(Speed, 50, 53):
-            await getSpeedGauge(46)
-          break;
-          case isBetween(Speed, 53, 55):
-            await getSpeedGauge(50)
-          break;
-          case isBetween(Speed, 55, 58):
-            await getSpeedGauge(57)
-          break;
-          case isBetween(Speed, 58, 60):
-            await getSpeedGauge(60)
-          break;
-          case isBetween(Speed, 60, 63):
-            await getSpeedGauge(63)
-          break;
-          case isBetween(Speed, 63, 65):
-            await getSpeedGauge(66)
-          break;
-          case isBetween(Speed, 65, 68):
-            await getSpeedGauge(69)
-          break;
-          case isBetween(Speed, 68, 70):
-            await getSpeedGauge(72)
-          break;
-          case isBetween(Speed, 70, 73):
-            await getSpeedGauge(75)
-          break;
-          case isBetween(Speed, 73, 75):
-            await getSpeedGauge(78)
-          break;
-          case isBetween(Speed, 75, 78):
-            await getSpeedGauge(81)
-          break;
-          case isBetween(Speed, 78, 80):
-            await getSpeedGauge(84)
-          break;
-          case isBetween(Speed, 80, 83):
-            await getSpeedGauge(87)
-          break;
-          case isBetween(Speed, 83, 85):
-            await getSpeedGauge(90)
-          break;
-          case isBetween(Speed, 85, 88):
-            await getSpeedGauge(93)
-          break;
-          case isBetween(Speed, 88, 90):
-            await getSpeedGauge(95)
-          break;
-          case isBetween(Speed, 90, 93):
-            await getSpeedGauge(100)
-          break;
-          case isBetween(Speed, 93, 95):
-            await getSpeedGauge(103)
-          break;
-          case isBetween(Speed, 98, 100):
-            await getSpeedGauge(105)
-          break;
-          case isBetween(Speed, 100, 103):
-            await getSpeedGauge(110)
-          break;
-          case isBetween(Speed, 103, 105):
-            await getSpeedGauge(113)
-          break;
-          case isBetween(Speed, 105, 108):
-            await getSpeedGauge(117)
-          break;
-          case isBetween(Speed, 108, 110):
-            await getSpeedGauge(120)
-          break;
-          case isBetween(Speed, 110, 113):
-            await getSpeedGauge(123)
-          break;
-          case isBetween(Speed, 113, 115):
-            await getSpeedGauge(125)
-          break;
-          case isBetween(Speed, 116, 118):
-            await getSpeedGauge(130)
-          break;
-          case isBetween(Speed, 118, 120):
-            await getSpeedGauge(135) 
-          break;
-                                                                                                                                      
-        }
-      }
-      
-      async function getRPM() {
+        
         var RPM2 = 0
-
+        
         switch(true) {
-          case isBetween(RPM, 0, 100): 
-          RPM2 = 0
-          break;
-          case isBetween(RPM, 100, 300): 
-          RPM2 = 1
-          break;
-          case isBetween(RPM, 300, 400): 
-          RPM2 = 2
-          break;
-          case isBetween(RPM, 400, 700): 
-          RPM2 = 3
-          break;
-          case isBetween(RPM, 700, 850): 
-          RPM2 = 4
-          break;
-          case isBetween(RPM, 850, 1000): 
-          RPM2 = 5
-          break;
-          case isBetween(RPM, 1000, 1200): 
-          RPM2 = 6
-          break;
-          case isBetween(RPM, 1300, 1500): 
-          RPM2 = 7
-          break;
-          case isBetween(RPM, 1500, 1700): 
-          RPM2 = 8
-          break;
-          case isBetween(RPM, 1700, 1850): 
-          RPM2 = 9
-          break;
-          case isBetween(RPM, 1850, 2000): 
-          RPM2 = 10
-          break;
-          case isBetween(RPM, 2000, 2300): 
-          RPM2 = 11
-          break;
-          case isBetween(RPM, 2300, 2400): 
-          RPM2 = 12
-          break;
-          case isBetween(RPM, 2400, 2600): 
-          RPM2 = 13
-          break;
-          case isBetween(RPM, 2600, 2800): 
-          RPM2 = 14
-          break;
-          case isBetween(RPM, 2800, 3000): 
-          RPM2 = 15
-          break;
-          case isBetween(RPM, 3000, 3200): 
-          RPM2 = 16
-          break;
-          case isBetween(RPM, 3200, 3400): 
-          RPM2 = 17
-          break;
-          case isBetween(RPM, 3400, 3600): 
-          RPM2 = 18
-          break;
-          case isBetween(RPM, 3600, 3800): 
-          RPM2 = 19
-          break;
-          case isBetween(RPM, 4000, 4200): 
-          RPM2 = 20
-          break;
-          case isBetween(RPM, 4200, 4400): 
-          RPM2 = 21
-          break;
-          case isBetween(RPM, 4600, 4800): 
-          RPM2 = 22
-          break;
-          case isBetween(RPM, 5000, 5200): 
-          RPM2 = 23
-          break;
+            case isBetween(RPM, 0, 100): 
+            RPM2 = 0
+            break;
+            case isBetween(RPM, 100, 300): 
+            RPM2 = 1
+            break;
+            case isBetween(RPM, 300, 400): 
+            RPM2 = 2
+            break;
+            case isBetween(RPM, 400, 700): 
+            RPM2 = 3
+            break;
+            case isBetween(RPM, 700, 850): 
+            RPM2 = 4
+            break;
+            case isBetween(RPM, 850, 1000): 
+            RPM2 = 5
+            break;
+            case isBetween(RPM, 1000, 1200): 
+            RPM2 = 6
+            break;
+            case isBetween(RPM, 1200, 1300): 
+            RPM2 = 7
+            break;
+            case isBetween(RPM, 1300, 1500): 
+            RPM2 = 8
+            break;
+            case isBetween(RPM, 1500, 1800): 
+            RPM2 = 9
+            break;
+            case isBetween(RPM, 1800, 2000): 
+            RPM2 = 10
+            break;
+            case isBetween(RPM, 2000, 2300): 
+            RPM2 = 11
+            break;
+            case isBetween(RPM, 2300, 2400): 
+            RPM2 = 12
+            break;
+            case isBetween(RPM, 2400, 2600): 
+            RPM2 = 13
+            break;
+            case isBetween(RPM, 2600, 2800): 
+            RPM2 = 14
+            break;
+            case isBetween(RPM, 2800, 3000): 
+            RPM2 = 15
+            break;
+            case isBetween(RPM, 3000, 3200): 
+            RPM2 = 16
+            break;
+            case isBetween(RPM, 3200, 3400): 
+            RPM2 = 17
+            break;
+            case isBetween(RPM, 3400, 3600): 
+            RPM2 = 18
+            break;
+            case isBetween(RPM, 3600, 3800): 
+            RPM2 = 19
+            break;
+            case isBetween(RPM, 4000, 4200): 
+            RPM2 = 20
+            break;
+            case isBetween(RPM, 4200, 4400): 
+            RPM2 = 21
+            break;
+            case isBetween(RPM, 4600, 4800): 
+            RPM2 = 22
+            break;
+            case isBetween(RPM, 5000, 5200): 
+            RPM2 = 23
+            break;
         }
-
+        
         if(RPM > 5000) {
           RPM2 = 24
         }
-
+        
         var Rotate = [
-          0,
-          10,
-          20,
-          30,
-          40,
-          50,
-          60,
-          70,
-          80,
-          90,
-          100,
-          110,
-          120,
-          130,
-          140,
-          150,
-          160,
-          170,
-          180,
-          190,
-          200,
-          210,
-          220,
-          230,
-          240
+            0,
+            10,
+            20,
+            30,
+            40,
+            50,
+            60,
+            70,
+            80,
+            90,
+            100,
+            110,
+            120,
+            130,
+            140,
+            150,
+            160,
+            170,
+            180,
+            190,
+            200,
+            210,
+            220,
+            230,
+            240
         ]
         
         getRPMGauge(Rotate[RPM2])
-        
-      }
+      })
+    }
       
-      async function getFuel() {
+    async function getFuelGauge(Fuel, FuelCapacity) {
+      return new Promise(async(resolve,reject)=>{
+        async function getFuelGauge(rotate) {
+          var getRPMGaugeRotate = -2
+
+          let image_Fuel_clone = image_Fuel.clone()
+          let image2_Fuel_clone = image2_Fuel.clone()
+          
+          image_Fuel_clone.rotate(Math.floor(getRPMGaugeRotate - rotate))
+          image_Fuel_clone.resize(400, 400)
+          if(rotate > 170) {
+            image2_Fuel_clone.resize(350, 350)
+            image2_Fuel_clone.composite(image_Fuel_clone, -30, 0)
+          } else if(isBetween(rotate, 84, 96) === true) { 
+            image2_Fuel_clone.resize(400, 400)
+            image2_Fuel_clone.composite(image_Fuel_clone, 0, 40)
+          } else {
+            image2_Fuel_clone.resize(300, 300)
+            image2_Fuel_clone.composite(image_Fuel_clone, -55, -20)
+          }
+          image2_Fuel_clone.getBase64Async(Jimp.AUTO)
+          .then(base64 => {
+            resolve(base64.slice(22))
+          })
+        }
         
-        var FuelCap2 = FuelCap
-        var Fuel2 = Fuel
-        
-        for(var i = 0;FuelCap2 > 20;i++) {
-          FuelCap2 = Math.round(Math.floor(FuelCap2 / 1.1))
-          Fuel2 = Math.round(Math.floor(Fuel2 / 1.1))
+        for(var i = 0;FuelCapacity > 20;i++) {
+          FuelCapacity = Math.round(Math.floor(FuelCapacity / 1.1))
+          Fuel = Math.round(Math.floor(Fuel / 1.1))
         }
         
         var Rotate = [
@@ -937,188 +1131,45 @@ TPClient.on("Info", (data) => {
           180
         ]
         
-        getFuelGauge(Rotate[Fuel2])
-        
-      }
-
-      await getRPM()
-      await getSpeed()
-      await getFuel()
-      
-    }
-
-    const TPSettings = async () => {
-
-    }
-      
-    
-    const asyncFunc = async () => {
-      
-      await TPSettings()
-      
-      if(TruckersMPinterval === 1) {
-        await TruckersMPAPI()
-        await TruckersMP()
-      }
-
-      await DashboardAPI()
-
-      await Dashboard()
-      await DashboardGauge()
-      await DashboardBlinkers()
-      
-      var states = [
-        { id: "Nybo.ETS2.Dashboard.Connected", value: `${Status_Connected}`},
-        { id: "Nybo.ETS2.Dashboard.Game", value: `${Game}`},
-
-        { id: "Nybo.ETS2.Dashboard.Speed", value: `${Speed}`},
-        { id: "Nybo.ETS2.Dashboard.RPM", value: `${RPM}`},
-
-        { id: "Nybo.ETS2.Dashboard.Gear", value: `${Gear}`},
-
-        { id: "Nybo.ETS2.Dashboard.Fuel", value: `${Fuel}`},
-        { id: "Nybo.ETS2.Dashboard.FuelCap", value: `${FuelCap}`},
-        
-        { id: "Nybo.ETS2.Dashboard.CruiseControlOn", value: `${CruiseControlOn}`},
-        { id: "Nybo.ETS2.Dashboard.CruiseControlSpeed", value: `${CruiseControlSpeed}`},
-        { id: "Nybo.ETS2.Dashboard.Speedlimit", value: `${Speedlimit}`},
-        { id: "Nybo.ETS2.Dashboard.SpeedlimitSign", value: `${SpeedLimitSign}`},
-
-        { id: "Nybo.ETS2.Dashboard.Electric", value: `${Electric}`},
-        { id: "Nybo.ETS2.Dashboard.Engine", value: `${Engine}`},
-        { id: "Nybo.ETS2.Dashboard.Wipers", value: `${Wipers}`},
-
-        { id: "Nybo.ETS2.Dashboard.BlinkerRightActive", value: `${BlinkerRightActive}`},
-        { id: "Nybo.ETS2.Dashboard.BlinkerLeftActive", value: `${BlinkerLeftActive}`},
-        { id: "Nybo.ETS2.Dashboard.BlinkerRightOn", value: `${BlinkerRightOn}`},
-        { id: "Nybo.ETS2.Dashboard.BlinkerLeftOn", value: `${BlinkerLeftOn}`},
-        { id: "Nybo.ETS2.Dashboard.HazardLightsOn", value: `${HazardLightsOn}`},
-
-        { id: "Nybo.ETS2.Dashboard.LightsParkingOn", value: `${LightsParkingOn}`},
-        { id: "Nybo.ETS2.Dashboard.LightsBeamLowOn", value: `${LightsBeamLowOn}`},
-        { id: "Nybo.ETS2.Dashboard.LightsBeamHighOn", value: `${LightsBeamHighOn}`},
-        { id: "Nybo.ETS2.Dashboard.LightsBeaconOn", value: `${LightsBeaconOn}`},
-        { id: "Nybo.ETS2.Dashboard.LightsBrakeOn", value: `${LightsBrakeOn}`},
-        { id: "Nybo.ETS2.Dashboard.LightsDashboardOn", value: `${LightsDashboardOn}`},
-        
-        { id: "Nybo.ETS2.Dashboard.TrailerAttached", value: `${TrailerAttached}`},
-
-        { id: "Nybo.ETS2.Dashboard.SpeedGauge", value: `${SpeedGauge}`},
-        { id: "Nybo.ETS2.Dashboard.RPMGauge", value: `${RPMGauge}`},
-        { id: "Nybo.ETS2.Dashboard.FuelGauge", value: `${FuelGauge}`},
-
-        { id: "Nybo.ETS2.Dashboard.Servers", value: `${Servers}`},
-        { id: "Nybo.ETS2.Dashboard.ServerName", value: `${ServerName}`},
-        { id: "Nybo.ETS2.Dashboard.ServerPlayers", value: `${ServerPlayers}`},
-        { id: "Nybo.ETS2.Dashboard.ServerPlayerQueue", value: `${ServerPlayerQueue}`},
-
-        { id: "Nybo.ETS2.Dashboard.SleepTime", value: `${SleepTimer}`},
-        { id: "Nybo.ETS2.Dashboard.JobIncome", value: `${Jobincome} ${Currency}`},
-
-        { id: "Nybo.ETS2.Dashboard.JobSourceCity", value: `${JobSourceCity}`},
-        { id: "Nybo.ETS2.Dashboard.JobSourceCompany", value: `${JobSourceCompany}`},
-
-        { id: "Nybo.ETS2.Dashboard.JobDestinationCity", value: `${JobDestinationCity}`},
-        { id: "Nybo.ETS2.Dashboard.JobDestinationCompany", value: `${JobDestinationCompany}`},
-
-        // NEW IN 0.5.0
-
-        { id: "Nybo.ETS2.Dashboard.serverVersion", value: `${serverVersion}`},
-        { id: "Nybo.ETS2.Dashboard.pause", value: `${pause}`},
-        { id: "Nybo.ETS2.Dashboard.truckType", value: `${truckType}`},
-        { id: "Nybo.ETS2.Dashboard.parkBrakeOn", value: `${parkBrakeOn}`},
-        { id: "Nybo.ETS2.Dashboard.motorBrakeOn", value: `${motorBrakeOn}`},
-        { id: "Nybo.ETS2.Dashboard.batteryLow", value: `${batteryVoltageWarningOn}`},
-        { id: "Nybo.ETS2.Dashboard.oilLow", value: `${oilPressureWarningOn}`},
-        { id: "Nybo.ETS2.Dashboard.waterTempHigh", value: `${waterTemperatureWarningOn}`},
-        { id: "Nybo.ETS2.Dashboard.adblueLow", value: `${adblueWarningOn}`},
-        { id: "Nybo.ETS2.Dashboard.fuelLow", value: `${fuelWarningOn}`},
-        { id: "Nybo.ETS2.Dashboard.trailerBodyType", value: `${trailerBodyType}`},
-        { id: "Nybo.ETS2.Dashboard.cargoLoaded", value: `${cargoLoaded}`},
-        { id: "Nybo.ETS2.Dashboard.cargo", value: `${cargo}`},
-        { id: "Nybo.ETS2.Dashboard.cargoDamage", value: `${cargoDamage}`},
-        { id: "Nybo.ETS2.Dashboard.CargoMass", value: `${cargoMass} ${Weight}`},
-
-
-        //{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
-      ];
-
-      TPClient.stateUpdateMany(states);
-
-      if(debugMode) {
-        console.log(`On: ${blinkerLeftOn} || ${blinkerRightOn}   Active: ${blinkerLeftActive} || ${blinkerRightActive}`)
-      }
-      
-    }
-
-    asyncFunc()
-  }
-
-  var running = false
-  const refreshing = async () => {
-
-    var server_path = "./server"
-
-    if(debugMode) {
-      server_path = "./src/server"
-    }
-
-    if(fs.existsSync(`${server_path}`)) {
-      if(Retry === 5) {
-        logIt("WARN","Telemetry Server not Found! Plugin closed after 5 Retrys!");
-        process.exit()
-      }
-  
-      const isRunning = (query, cb) => {
-        var platform = process.platform;
-        var cmd = '';
-        switch (platform) {
-          case 'win32' : cmd = `tasklist`; break;
-          case 'darwin' : cmd = `ps -ax | grep ${query}`; break;
-          case 'linux' : cmd = `ps -A`; break;
-          default: break;
-        }
-        exec(cmd, (err, stdout, stderr) => {
-          cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-        });
-      }
-      
-      isRunning('Ets2Telemetry.exe', (status) => {
-        if(status === false) {
-          execute(`${server_path}/Ets2Telemetry.exe`, function(err, data) {
-            if(err) {
-              logIt("WARN","Telemetry Server could not be Started!");
-            }
-          })
-          logIt("WARN","Telemetry Server not Found! Retry in 5 Seconds!");
-          Retry = Math.floor(Retry + 1)
-          running = false
-          setTimeout(() => {
-            refreshing()
-          }, 5000);
-  
-        } else {
-          if(running === false) {
-            logIt("INFO", "Server loaded up! Script is starting!")
-          }
-
-          running = true
-          setTimeout(() => {
-            if(running === true) {
-              main(0)
-            }
-            refreshing()
-          }, RefreshInterval)
-  
-          
-        }
+        getFuelGauge(Rotate[Fuel])
       })
-      return;
-    } else {
-      logIt("ERROR", "Server folder not Found!")
     }
-  }
-  refreshing()
+
+
+
+    async function getSpeedLimitSign(Speedlimit) {
+        return new Promise(async(resolve,reject)=>{
+
+          let image_SpeedLimit_clone = image_SpeedLimit.clone()
+
+          console.log(Speedlimit)
+          if (Speedlimit === 0) {
+            resolve(fs.readFileSync(`${images_path}/noSpeedlimit.png`, `base64`))
+          } else {
+            image_SpeedLimit_clone.resize(300, 300)
+            Jimp.loadFont(Jimp.FONT_SANS_128_BLACK).then(font => {
+              image_SpeedLimit_clone.print(
+                font, 
+                0, 
+                0,
+                {
+                  text: `${Speedlimit}`,
+                  alignmentX: Jimp.HORIZONTAL_ALIGN_CENTER,
+                  alignmentY: Jimp.VERTICAL_ALIGN_MIDDLE
+                },
+                300,
+                300,
+              )
+              image_SpeedLimit_clone.getBase64Async(Jimp.AUTO)
+              .then(base64 => {
+                  resolve(base64.slice(22))
+              })
+            })
+          }
+        })
+    }
+
+
 });
   
 TPClient.on("Settings",(data) => {
@@ -1139,8 +1190,8 @@ TPClient.on("Close", (data) => {
   /*
   logIt("INFO", "Packing latest Log Files...")
 
-  var zipUpdater = new AdmZip()
-  var zipIndex = new AdmZip()
+  let zipUpdater = new AdmZip()
+  let zipIndex = new AdmZip()
 
   zipUpdater.addLocalFile("./logs/updater/latest.log")
   zipIndex.addLocalFile("./logs/index/latest.log")
@@ -1152,13 +1203,22 @@ TPClient.on("Close", (data) => {
 
 TPClient.connect({ pluginId });
 
+function timeout(ms) {
+    return new Promise(async(resolve,reject)=>{    
+        ms = Number(ms)
+        setTimeout(() => {
+            resolve();
+        }, ms);
+    })
+}
+
 function logIt() {
 
-  var curTime = new Date().toISOString().
+  let curTime = new Date().toISOString().
   replace(/T/, ' ').
   replace(/\..+/, '')
-  var message = [...arguments];
-  var type = message.shift();
+  let message = [...arguments];
+  let type = message.shift();
   console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
   fs.appendFileSync('./logs/latest.log', `\n${curTime}:${pluginId}:${type}:${message.join(" ")}`)
 }

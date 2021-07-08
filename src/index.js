@@ -166,13 +166,14 @@ const index = async (error) => {
                     })
                     
                     req.on('error', async (error) => {
+                        logIt("ERROR", `ERROR ON API -> ` + error)
                         AutoUpdater(false, true)
                     })
                     
                     req.end()
                 }
         
-                const update = async (LatestVersion, update) => {
+                const update = async (LatestVersion) => {
         
                     let version = config.version
         
@@ -185,18 +186,18 @@ const index = async (error) => {
                                 main()
                             }
                         } else {
-                            await download(update)
+                            await download(true)
                             extract()
                         }
                     } else {
                         if(version === "0.0.0") {
-                            await download(update)
+                            await download(true)
                             extract()
-                        } else if(update) {
+                        } else if(version === "update") {
                             if(version === LatestVersion) {
                                 menu()
                             } else {
-                                await download(update)
+                                await download(true)
                                 extract()
                             }
                         } else {
@@ -253,6 +254,7 @@ const index = async (error) => {
                     })
         
                     req.on('error', async (error) => {
+                        logIt("ERROR", `ERROR ON API -> ` + error)
                         AutoUpdater(false, true)
                     })
         
@@ -440,6 +442,7 @@ const index = async (error) => {
                     })
         
                     req.on('error', async (error) => {
+                        logIt("ERROR", `ERROR ON API -> ` + error)
                         AutoUpdater(false, true)
                     })
         
@@ -494,6 +497,7 @@ const index = async (error) => {
                         })
                         
                         req.on('error', async (error) => {
+                            logIt("ERROR", `ERROR ON API -> ` + error)
                             AutoUpdater(false, true)
                         })
                         
@@ -513,6 +517,7 @@ const index = async (error) => {
                     var config_file = `config.json`
                     var prestart_file = `prestart.exe`
                     var plugin_file = `ets2_plugin.exe`
+                    var userconfig_file = `userSettings.json`
                     
                     await timeout(5)
         
@@ -525,13 +530,14 @@ const index = async (error) => {
                         AutoUpdater(false, false, true)
                     }
                     
-                    if(fs.existsSync(`${tmp_path}/${server_folder}`))  { fse.moveSync(`${tmp_path}/${server_folder}`,   `./${server_folder}`,   { overwrite: true }) }
-                    if(fs.existsSync(`${tmp_path}/${images_folder}`))  { fse.moveSync(`${tmp_path}/${images_folder}`,   `./${images_folder}`,   { overwrite: true }) }
-                    if(fs.existsSync(`${tmp_path}/${entry_file}`))     { fse.moveSync(`${tmp_path}/${entry_file}`,      `./${entry_file}`,      { overwrite: true }) }
-                    if(fs.existsSync(`${tmp_path}/${prestart_file}`))  { fse.moveSync(`${tmp_path}/${prestart_file}`,   `./${prestart_file}`,   { overwrite: true }) }
-                    if(fs.existsSync(`${tmp_path}/${plugin_file}`))    { fse.moveSync(`${tmp_path}/${plugin_file}`,     `./${plugin_file}`,     { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${server_folder}`))   { fse.moveSync(`${tmp_path}/${server_folder}`,      `./${server_folder}`,   { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${images_folder}`))   { fse.moveSync(`${tmp_path}/${images_folder}`,      `./${images_folder}`,   { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${entry_file}`))      { fse.moveSync(`${tmp_path}/${entry_file}`,         `./${entry_file}`,      { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${prestart_file}`))   { fse.moveSync(`${tmp_path}/${prestart_file}`,      `./${prestart_file}`,   { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${plugin_file}`))     { fse.moveSync(`${tmp_path}/${plugin_file}`,        `./${plugin_file}`,     { overwrite: true }) }
                     userid = JSON.parse(fs.readFileSync('./config.json')).userid 
-                    if(fs.existsSync(`${tmp_path}/${config_file}`))    { fse.moveSync(`${tmp_path}/${config_file}`,   `./${config_file}`,     { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${config_file}`))     { fse.moveSync(`${tmp_path}/${config_file}`,        `./${config_file}`,     { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${userconfig_file}`)) { fse.moveSync(`${tmp_path}/${userconfig_file}`,    `./${userconfig_file}`, { overwrite: true }) }
                     
                     let config3 = config.github_Username
                     let config4 = config.github_Repo
@@ -590,7 +596,7 @@ const index = async (error) => {
         function reinstall() {
             logIt("INFO", "Reinstalling the Plugin...")
             return new Promise(async(resolve,reject)=>{ 
-                let config1 = "0.0.0"
+                let config1 = "update"
                 let config2 = config.github_Username
                 let config3 = config.github_Repo
                 let config4 = config.github_FileName
