@@ -55,6 +55,8 @@
 
 ## How to Install
 
+You need the [Touch Portal](https://www.touch-portal.com) Application
+
 Installing
 NOTE: The Default Plugin installation path is dictated by Touch Portal here: %APPDATA%\TouchPortal\plugins
 
@@ -74,7 +76,7 @@ NOTE: The Default Plugin installation path is dictated by Touch Portal here: %AP
 
 AutoUpdater => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
-Manual Install => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
+Manual Install => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard_AutoUpdater.tpp)
 
 ## Support
 You can get directly Support on the official TP Discord!
@@ -87,107 +89,133 @@ I would appreachate if you create an "Issue" on my Github. But i can give Suppor
 
 ## How to use
 
-Create a new Page in your Touch Portal and create a new Button and go to "Events" Tab. Then add an "Dynamic Text Updater" and click on the "+". Search for the Value you want to Display and have Fun!:
-
-If you want to setup an "State" then you have to do something like this: 
-![Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618332385969.png)
-
-If you want to Setup an "Image/Icon" then you have to do something like this:
-![Example](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/.github/img/1618192488295.png)
-
+Im Creating an Wiki for you ;) But its not Online yet! Please wait!
 
 ## Plugin States
 
 ### Game States
 
-| State                     | Description                                       | Available Values      |
-|---------------------------|:-------------------------------------------------:|----------------------:|
-| ConnectedStatus           | Shows if you are Connected to an Game or not      | true/false            |
-| GameType                  | Shows the Game that is Captured by the Server     | ETS2/ATS              |
-| IsPaused                  | Shows you if the Game is Paused                   | true/false            |
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| ConnectedStatus           | Shows if you are Connected to an Game or not          | true/false            |
+| GameType                  | Shows the Game that is Captured by the Server         | ETS2/ATS              |
+| IsPaused                  | Shows you if the Game is Paused                       | true/false            |
 
 ### World States
 
-| State                     | Description                                       | Available Values      |
-|---------------------------|:-------------------------------------------------:|----------------------:|
-| Time                      | Shows you the current ingame Time                 | Dynamic Text          |
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| Time                      | Shows you the current ingame Time                     | Dynamic Text          |
 
 ### Driver States
 
-| State                     | Description                                       | Available Values      |
-|---------------------------|:-------------------------------------------------:|----------------------:|
-| NextRestTime              | Shows you when the Driver has to Sleep            | Dynamic (Countdown)   |
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| NextRestTime              | Shows you when the Driver has to Sleep                | Dynamic (Countdown)   |
 
 ### Gauge States
 
-| State                     | Description                                       | Available Values      |
-|---------------------------|:-------------------------------------------------:|----------------------:|
-| SpeedGauge                | Shows your Speed as an Image                      | Dynamic Image         |
-| RPMGauge                  | Shows your RPM as an Image                        | Dynamic Image         |
-| FuelGauge                 | Shows your speed as an Image                      | Dynamic Image         |
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| SpeedGauge                | Shows your Speed as an Image                          | Dynamic Image         |
+| RPMGauge                  | Shows your RPM as an Image                            | Dynamic Image         |
+| FuelGauge                 | Shows your speed as an Image                          | Dynamic Image         |
 
 ### Truck States
 
-| State                     | Description                                       | Available Values      |
-|---------------------------|:-------------------------------------------------:|----------------------:|
-| Truck_Make                | Shows you the Model Creator                       | Dynamic Text          |
-| Model                     | Shows you the Model of the Truck                  | Dynamic Text          |
-| CruiseControlSpeed        | Shows you the Cruise Control Speed                | Dynamic Text          |
-| CruiseControlOn           | Shows you if the Cruise Control is turned on      | true/false            |
-|                           |                                                   |                       |
-| Speed                     | Shows your current Speed                          | Dynamic Text          |
-| EngineRPM                 | Shows your current RPM                            | Dynamic Text          |
-| Gear                      | Shows your current Gear                           | Dynmaic Text          |
-|                           |                                                   |                       |
-| EngineOn                  | Shows if your Engine is on                        | true/false            |
-| ElectricOn                | Shows if your Electric is on                      | true/false            |
-| WipersOn                  | Shows if your Wipers are on                       | true/false            |
-| ParkBrakeOn               | Shows if your ParkBrake is on                     | true/false            |
-| MotorBrakeOn              | Shows if your MotorBrake is on                    | true/false            |
-|                           |                                                   |                       |
-| Fuel                      | Shows your current Fuel                           | Dynamic Text          |
-| AdBlue                    | Shows your current AdBlue                         | Dynamic Text          |
-| AirPressure               | Shows your current Air Pressure                   | Dynamic Text          |
-| OilTemp                   | Shows your current Oil Temperature                | Dynamic Text          |
-| WaterTemp                 | Shows your current Water Temperature              | Dynamic Text          |
-| BatteryVoltage            | Shows your current Battery Voltage                | Dynamic Text          |
-|                           |                                                   |                       |
-| FuelCapacity              | Shows your Truck Fuel Capacity                    | Dynamic Text          |
-|                           |                                                   |                       |
-| FuelWarningOn             | Shows if your Fuel is Low                         | true/false            |
-| AdBlueWarningOn           | Shows if your AdBlue is Low                       | true/false            |
-| AirPressureWarning        | Shows if your Air Pressure is Low                 | true/false            |
-| AirPressureEmergencyOn    | Shows if your Air Pressure is critical Low        | true/false            |     
-| OilPressureWarning        | Shows if your Oil Pressure is critical Low/High   | true/false            |
-| WaterTempWarningOn        | Shows if your Water Temperature is High           | true/false            |
-| BatteryVoltageWarningOn   | Shows if your BatteryVoltage is low               | true/false            |
-|                           |                                                   |                       |
-| BlinkerLeftActive         | Shows if your Blinker Left is Active              | true/false            |
-| BlinkerRightActive        | Shows if your Blinker Right is Active             | true/false            |
-| BlinkerLeftOn             | Shows if your Blinker Left is On                  | true/false            |
-| BlinkerRightOn            | Shows if your Blinker Right is On                 | true/false            |
-| HazardLightsOn            | Shows if your Hazard Lights are On                | true/false            |
-|                           |                                                   |                       |
-| LightsDashboardValue      | Shows the Value of the Dashboard                  | Dynamic Text          |
-| LightsDashboardOn         | Shows if the Dashboard Light is on                | true/false            |
-| LightsParkingOn           | Shows if the Parking Lights are on                | true/false            |
-| LightsBeamLowOn           | Shows if the Beam Low Lights are on               | true/false
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| Truck_Make                | Shows you the Model Creator                           | Dynamic Text          |
+| Model                     | Shows you the Model of the Truck                      | Dynamic Text          |
+| CruiseControlSpeed        | Shows you the Cruise Control Speed                    | Dynamic Text          |
+| CruiseControlOn           | Shows you if the Cruise Control is turned on          | true/false            |
+|                           |                                                       |                       |
+| Speed                     | Shows your current Speed                              | Dynamic Text          |
+| EngineRPM                 | Shows your current RPM                                | Dynamic Text          |
+| Gear                      | Shows your current Gear                               | Dynmaic Text          |
+|                           |                                                       |                       |
+| EngineOn                  | Shows if your Engine is on                            | true/false            |
+| ElectricOn                | Shows if your Electric is on                          | true/false            |
+| WipersOn                  | Shows if your Wipers are on                           | true/false            |
+| ParkBrakeOn               | Shows if your ParkBrake is on                         | true/false            |
+| MotorBrakeOn              | Shows if your MotorBrake is on                        | true/false            |
+|                           |                                                       |                       |
+| Fuel                      | Shows your current Fuel                               | Dynamic Text          |
+| AdBlue                    | Shows your current AdBlue                             | Dynamic Text          |
+| AirPressure               | Shows your current Air Pressure                       | Dynamic Text          |
+| OilTemp                   | Shows your current Oil Temperature                    | Dynamic Text          |
+| WaterTemp                 | Shows your current Water Temperature                  | Dynamic Text          |
+| BatteryVoltage            | Shows your current Battery Voltage                    | Dynamic Text          |
+|                           |                                                       |                       |
+| FuelCapacity              | Shows your Truck Fuel Capacity                        | Dynamic Text          |
+|                           |                                                       |                       |
+| FuelWarningOn             | Shows if your Fuel is Low                             | true/false            |
+| AdBlueWarningOn           | Shows if your AdBlue is Low                           | true/false            |
+| AirPressureWarning        | Shows if your Air Pressure is Low                     | true/false            |
+| AirPressureEmergencyOn    | Shows if your Air Pressure is critical Low            | true/false            |     
+| OilPressureWarning        | Shows if your Oil Pressure is critical Low/High       | true/false            |
+| WaterTempWarningOn        | Shows if your Water Temperature is High               | true/false            |
+| BatteryVoltageWarningOn   | Shows if your BatteryVoltage is low                   | true/false            |
+|                           |                                                       |                       |
+| BlinkerLeftActive         | Shows if your Blinker Left is Active                  | true/false            |
+| BlinkerRightActive        | Shows if your Blinker Right is Active                 | true/false            |
+| BlinkerLeftOn             | Shows if your Blinker Left is On                      | true/false            |
+| BlinkerRightOn            | Shows if your Blinker Right is On                     | true/false            |
+| HazardLightsOn            | Shows if your Hazard Lights are On                    | true/false            |
+|                           |                                                       |                       |
+| LightsDashboardValue      | Shows the Value of the Dashboard                      | Dynamic Text          |
+| LightsDashboardOn         | Shows if the Dashboard Light is On                    | true/false            |
+| LightsParkingOn           | Shows if the Parking Lights are On                    | true/false            |
+| LightsBeamLowOn           | Shows if the Beam Low Lights are On                   | true/false            |
+| LightsBeamHighOn          | Shows if the Beam High Lights are On                  | true/false            |
+| LightsAuxFrontOn          | Shows if the Fronts Extra Lights are On               | true/false            |
+| LightsAuxRoofOn           | Shows if the Roof Extra Lights are On                 | true/false            |
+| LightsBeaconOn            | Shows if the Beacons are On                           | true/false            |
+| LightsBrakeOn             | Shows if the Brake Lights are On                      | true/false            |
+| LightsReverseOn           | Shows if the Reverse Lights are On                    | true/false            |
 
 ### Trailer States
+
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| TrailerAttached           | Shows if an Trailer is Attached                       | true/false            |
+| TrailerName               | Shows the Trailer Name (If one has an Name)           | Dynamic Text          |
+| TrailerChainType          | Shows what kind of Trailer is it (Single, Double)     | Dynamic Text          |
+|                           |                                                       |                       |
+| CargoLoaded               | Shows if Cargo is Loaded                              | true/false            |
+| CargoType                 | Shows what kind of Cargo is Loaded                    | Dynamic Text          |
+| CargoDamage               | Shows the Cargo Damage                                | Dynamic Text          |
+| CargoMass                 | Shows the Cargo Weight                                | Dynamic Text          |
 
 
 ### Job States
 
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| JobIncome                 | Shows the Income of the Current Job                   | Dynamic Text          |
+| JobRemainingTime          | Shows the Remaining Time of the Current Job           | Dynamic Text          |
+| JobSourceCity             | Shows the Source City of the Current Job              | Dynamic Text          |
+| JobSourceCompany          | Shows the Source Company of the Current Job           | Dynamic Text          |
+| JobDestinationCity        | Shows the Destination City of the Current Job         | Dynamic Text          |
+| JobDestinationCompany     | Shows the Destination Company of the Current Job      | Dynamic Text          |
+| JobEstimatedDistance      | Shows the Estimated Distance of the Current Job       | Dynamic Text          |
 
 ### Navigation States
     
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| SpeedLimit                | Shows the Speedlimit of the Road                      | Dynamic Text          |
+| SpeedLimitSign            | Shows the Speedlimit of the Road as an Image          | Dynamic Image         |
 
 ### TruckersMP States
 
-    Servers =               "(Depends How many Servers are Online)"     [Value is an Number!]
-    ServerName =            "(Selected Server Name)"                    [You can Select the Server in Settings! Server List is down below!]
-    ServerPLayers =         "(How Many Players are Online)"              [Value is an Number!]
-    ServerPlayerQueue =     "(Shows how many Players are in queue)"     [Value is an Number!]
+| State                     | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| Servers                   | Shows you how many Servers are Online                 | Dynamic Text          |
+| ServerName                | Shows you the Server Name of the selected Server      | Dynamic Text          |
+| ServerPlayers             | Shows you all Online Players of the selected Server   | Dynamic Text          |
+| ServerPlayerQueue         | Shows you all Players in queue of the selected Server | Dynamic text          |
+| APIOnline                 | Shows you if the TruckersMP API is Online             | true/false            |
 
 
 ## Settings
@@ -219,13 +247,6 @@ You can set your Own Refresh interval:
 	Faster => needs more performance
     slower => Less performance
 
-If you changed the Refresh interval you have to restart Touch Portal
-
-You can setup the Server you want to Display.
-
-    See Server List which Number is which Server
-    If you changed it you have to restart Touch Portal
-
 
 ### AutoUpdater 
 
@@ -244,8 +265,6 @@ it should looks like this: - "userid": "123456789" -
 
 After that please send the Log to me (The Dev) so i can fix the issue.
 
-
-
 ### How to get UserID
 How to Find your Discord User ID
 To find your user ID in Discord, you first need to enable developer mode, and then simply right click / tap your name and select Copy ID. Here’s how to do that in more detail:
@@ -259,7 +278,7 @@ To find your user ID in Discord, you first need to enable developer mode, and th
 
 ## Features comming soon
 
-- ATS Support
+- Full ATS Support
 - Support Bot (For Faster Support)
 - Some small Details
 - Some small Features
