@@ -308,6 +308,16 @@ If you want to see how this Plugin is made check out my Twitch Channel: https://
 
 # Changelog
 ```
+
+### Changelog 1.1.0
+- Edited the ReadMe
+- Added new States
+- Fixed some States
+
+### Changelog 1.0.0
+- Added Fully new AutoUpdater
+- Fully Reworked the Plugin
+
 ### Changelog 0.6.0
 - Added an Autoupdater
 - Fixed some small Script Bugs
