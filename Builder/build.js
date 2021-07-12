@@ -21,9 +21,9 @@ const pack = async () => {
     fse.copySync(`${InputPath}/images`, `${OutputPath}/images`) 
     //Copy Config File
     fse.copySync(`./config.json`, `${OutputPath}/config.json`) 
-    replaceJSON(`${OutputPath}/config.json`, `version`, '0.0.0')
-    replaceJSON(`${OutputPath}/config.json`, `userid`, '')
-    replaceJSON(`${OutputPath}/config.json`, `discordMessage`, false)
+    replaceJSON.replace(`${OutputPath}/config.json`, `version`, '0.0.0')
+    replaceJSON.replace(`${OutputPath}/config.json`, `userid`, '')
+    replaceJSON.replace(`${OutputPath}/config.json`, `discordMessage`, false)
     //Copy UserSetting File
     fse.copySync(`./userSettings.json`, `${OutputPath}/userSettings.json`)  
     //Copy Entry File
@@ -55,9 +55,9 @@ const pack = async () => {
     fse.copySync(`./Build/TMP_batch/start.exe`, `${OutputPath}/start.exe`) 
     //Copy Config File
     fse.copySync(`./config.json`, `${OutputPath}/config.json`) 
-    replaceJSON(`${OutputPath}/config.json`, `version`, '0.0.0')
-    replaceJSON(`${OutputPath}/config.json`, `userid`, '')
-    replaceJSON(`${OutputPath}/config.json`, `discordMessage`, false)
+    replaceJSON.replace(`${OutputPath}/config.json`, `version`, '0.0.0')
+    replaceJSON.replace(`${OutputPath}/config.json`, `userid`, '')
+    replaceJSON.replace(`${OutputPath}/config.json`, `discordMessage`, false)
     //Copy Entry File
     fse.copySync(`./entry.tp`, `${OutputPath}/entry.tp`) 
     //Copy Folder

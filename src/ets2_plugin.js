@@ -7,6 +7,7 @@ const fs = require('fs')
 const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile;
+const replaceJSON = require('replace-json-property')
 
 const debugMode = process.argv.includes("--debug");
 
@@ -15,12 +16,30 @@ let userConfig = JSON.parse(fs.readFileSync('./userSettings.json'))
 let RefreshInterval = 100
 let TruckersMPServer = ""
 
-let server_path = ""
+// Global Vars
+let changeLocation = ""
+changeLocation = JSON.parse(fs.readFileSync('./config.json')).location
+
 if(debugMode) {
     server_path = "./src/server"
 } else {
     server_path = "./server" 
 }
+
+TPClient.on("Action", (data,hold) => {
+
+  if(data.actionId === "changeLocation") {
+    changeLocation = JSON.parse(fs.readFileSync('./config.json')).location
+    if(changeLocation === "kmh") {
+      replaceJSON.replace('./config.json', "location", "mph")
+      changeLocation = "mph"
+    } else if(changeLocation === "mph") {
+      replaceJSON.replace('./config.json', "location", "kmh")
+      changeLocation = "kmh"
+    }
+  }
+
+});
 
 
 TPClient.on("Info", (data) => {
@@ -148,11 +167,9 @@ TPClient.on("Info", (data) => {
 
     let HazardLightsCounter = ""
 
-    let image_Speed = ""
+    let image_arrow = ""
     let image2_Speed = ""
-    let image_RPM = ""
     let image2_RPM = ""
-    let image_Fuel = ""
     let image2_Fuel = ""
     let image_SpeedLimit = ""
 
@@ -169,22 +186,6 @@ TPClient.on("Info", (data) => {
       } else {
         images_path = `images`
       }
-
-
-
-    const API_Server = async () => {
-        const http = require('http')
-        
-        const server = http.createServer(function(request, response) {
-            //console.dir(request)
-            
-        })
-        
-        const port = 3123
-        const host = '127.0.0.1'
-        server.listen(port, host)
-        console.log(`Listening at http://${host}:${port}`)
-    }
 
     const Telemetry_Request = async () => {
 
@@ -269,11 +270,17 @@ TPClient.on("Info", (data) => {
 
     const Gauge_States = async () => {
 
+      if(changeLocation === "mph") {
+        Speed = Math.round(truck.speed/2 + (truck.speed/100*10))
+        EngineRPM = Math.round(truck.engineRpm)
+        Fuel = Math.round(truck.fuel)
+        FuelCapacity = Math.round(truck.fuelCapacity)
+      } else {
         Speed = Math.round(truck.speed)
         EngineRPM = Math.round(truck.engineRpm)
         Fuel = Math.round(truck.fuel)
         FuelCapacity = Math.round(truck.fuelCapacity)
-
+      }
         
         SpeedGauge = await getSpeedGauge(Speed)
         RPMGauge = await getRPMGauge(EngineRPM)
@@ -414,6 +421,16 @@ TPClient.on("Info", (data) => {
     
     const Trailer_States = async () => {
         
+      if(changeLocation === "mph") {
+        TrailerAttached = trailer1.attached
+        TrailerName = trailer1.name
+        TrailerChainType = trailer1.chainType
+
+        CargoLoaded = cargo.cargoLoaded
+        CargoType = cargo.cargo
+        CargoDamage = Math.round(cargo.damage*100)
+        CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
+      } else {
         TrailerAttached = trailer1.attached
         TrailerName = trailer1.name
         TrailerChainType = trailer1.chainType
@@ -422,6 +439,10 @@ TPClient.on("Info", (data) => {
         CargoType = cargo.cargo
         CargoDamage = Math.round(cargo.damage*100)
         CargoMass = Math.round(Math.floor(cargo.mass / 1000))
+      }
+
+        
+      console.log(cargo.mass + " -> " + CargoMass +  " || " + changeLocation)
 
         Weight = userConfig.Basics.Weight
         
@@ -558,18 +579,15 @@ TPClient.on("Info", (data) => {
     }
 
     const Module_Setup = async () => {
-      image_Speed = await Jimp.read
+      image_arrow = await Jimp.read
       (`${images_path}/Gauge.png`);
+
       image2_Speed = await Jimp.read
       (`${images_path}/SpeedGauge.png`);
   
-      image_RPM = await Jimp.read
-      (`${images_path}/Gauge.png`);
       image2_RPM = await Jimp.read
       (`${images_path}/RPMGauge.png`);
       
-      image_Fuel = await Jimp.read
-      (`${images_path}/Gauge.png`);
       image2_Fuel = await Jimp.read
       (`${images_path}/FuelGauge.png`);
       
@@ -578,7 +596,6 @@ TPClient.on("Info", (data) => {
     }
 
     Module_Setup()
-
 
     const Telemetry_Server = async () => {
       var server_path = "./server"
@@ -737,7 +754,7 @@ TPClient.on("Info", (data) => {
             async function getSpeedGauge(rotate) {
                 var getSpeedGaugeRotate = -2
                 
-                let image_Speed_clone = image_Speed.clone()
+                let image_Speed_clone = image_arrow.clone()
                 let image2_Speed_clone = image2_Speed.clone()
                 
                 image_Speed_clone.rotate(Math.floor(getSpeedGaugeRotate - rotate))
@@ -745,9 +762,9 @@ TPClient.on("Info", (data) => {
                 image2_Speed_clone.composite(image_Speed_clone, 0, 0)
                 image2_Speed_clone.getBase64Async(Jimp.AUTO)
                 .then(base64 => {
-                    resolve(base64.slice(22))
+                  resolve(base64.slice(22))
                 })
-            }
+              }
 
             switch(true) {
                 case isBetween(Speed, -35, -38):
@@ -949,7 +966,7 @@ TPClient.on("Info", (data) => {
         async function getRPMGauge(rotate) {
           var getRPMGaugeRotate = -2
           
-          let image_RPM_clone = image_RPM.clone()
+          let image_RPM_clone = image_arrow.clone()
           let image2_RPM_clone = image2_RPM.clone()
           
           image_RPM_clone.rotate(Math.floor(getRPMGaugeRotate - rotate))
@@ -1079,7 +1096,7 @@ TPClient.on("Info", (data) => {
         async function getFuelGauge(rotate) {
           var getRPMGaugeRotate = -2
 
-          let image_Fuel_clone = image_Fuel.clone()
+          let image_Fuel_clone = image_arrow.clone()
           let image2_Fuel_clone = image2_Fuel.clone()
           
           image_Fuel_clone.rotate(Math.floor(getRPMGaugeRotate - rotate))
