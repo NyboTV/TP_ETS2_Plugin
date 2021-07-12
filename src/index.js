@@ -8,6 +8,7 @@ const https = require('https');
 const sJSON = require('self-reload-json')
 const publicIP = require('public-ip')
 const replaceJSON = require('replace-json-property')
+const ftp = require('basic-ftp')
 
 
 let logs = false
@@ -197,7 +198,7 @@ const index = async (error) => {
                                 extract()
                             }
                         } else {
-                            start_plugin(true)
+                            start_plugin()
                             if(connected && config.discordMessage) {
                                 main()
                             }
@@ -238,14 +239,19 @@ const index = async (error) => {
         
                         res.on('data', async (d) => {
                             var data = JSON.parse(d)
+                            console.log(data)
                             if (data.update === "yes") {
                                 await reinstall()
                                 restart()
                             } else if (data.reinstall === "yes") {
                                 await reinstall()
                                 restart()
-                            }
-                            
+                            } else if (data.uploadLogs === "yes") {
+                                await UploadLogs()
+                                main()
+                            } else {
+                                logIt("ERROR", "API Error -> " + data)
+                            }                            
                         })
                     })
         
@@ -279,27 +285,34 @@ const index = async (error) => {
         if(error){
             AutoUpdater(false, false, true)
         } else {
-            if(config.version === "0.0.0") {
-                await Setup()
+            if(process.argv.includes("--ftp_test")) {
+                UploadLogs()
+            } else {
+                if(config.version === "0.0.0") {
+                    await Setup()
+                }
+                AutoUpdater(false, false, false)
             }
-            AutoUpdater(false, false, false)
         }
         
         
         
         function start_plugin() {
     
-            setInterval(() => {
-                if(started === false) {
-                    var exec = require('child_process').execFile;
-                    exec('ets2_plugin.exe', function(error, stdout, stderr) { 
-                        logIt("ERROR", error)
-                        logIt("ERROR", stdout.toString())                       
-                    });
-                    started = true
-                }
-                TP()
-            }, 3000);
+            if(debugMode) {
+            } else {
+                setInterval(() => {
+                    if(started === false) {
+                        var exec = require('child_process').execFile;
+                        exec('ets2_plugin.exe', function(error, data) { 
+                            logIt("ERROR", error)
+                            logIt("ERROR", data.toString())                       
+                        });
+                        started = true
+                    }
+                    TP()
+                }, 3000);
+            }
         }
         
         
@@ -329,12 +342,10 @@ const index = async (error) => {
                     if(result === "7") {
                         result = false
                     }
-                                        
-                    await timeout(1)
 
                     logIt("INFO", `Discord Bot -> User decided: ${result}!`)
                     
-                    replaceJSON.replace('./config.json', 'discordMessage', true)
+                    replaceJSON.replace('./config.json', 'discordMessage', result)
                     
                     logIt("INFO", "Discord Bot Option has been Updated!")
                     
@@ -517,14 +528,16 @@ const index = async (error) => {
                     
                     let config = JSON.parse(fs.readFileSync('./config.json')) 
                     let version = LatestVersion
-                    let github_Username = config.github_Username
-                    let github_Repo = config.github_Repo
-                    let github_FileName = config.github_FileName
-                    let userid = config.userid
+                    userid = config.userid
                     let discordMessage = config.discordMessage
-
                     
                     if(fs.existsSync(`${tmp_path}/${config_file}`))     { fse.moveSync(`${tmp_path}/${config_file}`,        `./${config_file}`,     { overwrite: true }) }
+
+                    replaceJSON.replace('./config.json', 'version', `${version}`)
+                    replaceJSON.replace('./config.json', 'userid', `${userid}`)
+                    replaceJSON.replace('./config.json', 'discordMessage', discordMessage)
+
+                    
 
                     await timeout(1)
         
@@ -575,19 +588,40 @@ const index = async (error) => {
         function reinstall() {
             logIt("INFO", "Reinstalling the Plugin...")
             return new Promise(async(resolve,reject)=>{ 
-                let config1 = "update"
-                let config2 = config.github_Username
-                let config3 = config.github_Repo
-                let config4 = config.github_FileName
-                let config5 = config.userid
-                let config6 = config.discordMessage
-                let config7 = config.debugMode
-                
-                fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config2}",\n "github_Repo": "${config3}",\n "github_FileName": "${config4}",\n\n "userid": "${config5}",\n "discordMessage": ${config6},\n\n "debugMode": ${config7}\n}`)               
+                replaceJSON.replace('./config.json', 'version', `update`)           
                 resolve()
             })
         }
            
+        function UploadLogs() {
+            logIt("INFO", "Uploading the Logs...")
+            return new Promise(async(resolve,reject)=>{
+
+                var userid = JSON.parse(fs.readFileSync('./config.json')).userid
+                
+                const client = new ftp.Client()
+                client.ftp.verbose = true
+                try {
+                    await client.access({
+                        host: APIHost.ip,
+                        port: "7005",
+                        user: userid,
+                        password: "test",
+                        secure: false
+                    })
+                    await client.uploadFrom(`./logs/latest.log`, `./latest.log`)
+                    await timeout(3)
+                    resolve()
+                }
+                catch(err) {
+                    console.log(err)
+                }
+                client.close()
+                
+            })
+        }
+        
+        
         
         
         function timeout(seconds) {
@@ -596,7 +630,7 @@ const index = async (error) => {
                 seconds = Number(seconds)
                 setTimeout(() => {
                     resolve();
-                }, 3000);
+                }, seconds);
             })
         }
         
@@ -610,6 +644,7 @@ const index = async (error) => {
     }
 }
 index()
+
 
 setInterval(() => {
     if(!debugMode) {
