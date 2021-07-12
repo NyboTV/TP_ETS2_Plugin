@@ -127,8 +127,6 @@ TPClient.on("Info", (data) => {
   
     
 
-
-
     
     // Script States
     let ShifterType = ""

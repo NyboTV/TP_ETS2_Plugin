@@ -7,6 +7,7 @@ const http = require('http')
 const https = require('https');
 const sJSON = require('self-reload-json')
 const publicIP = require('public-ip')
+const replaceJSON = require('replace-json-property')
 
 
 let logs = false
@@ -15,12 +16,7 @@ let firstsetup = false
 let started = false
 let error = false
 
-let debugMode = false
-if(config.debugMode) {
-    debugMode = true
-}
-
-debugMode = process.argv.includes("--debug");
+const debugMode = process.argv.includes("--debug");
 
 if(debugMode){
     started = true
@@ -296,9 +292,9 @@ const index = async (error) => {
             setInterval(() => {
                 if(started === false) {
                     var exec = require('child_process').execFile;
-                    exec('ets2_plugin.exe', function(err, data) { 
-                        logIt("ERROR", err)
-                        logIt("ERROR", data.toString())                       
+                    exec('ets2_plugin.exe', function(error, stdout, stderr) { 
+                        logIt("ERROR", error)
+                        logIt("ERROR", stdout.toString())                       
                     });
                     started = true
                 }
@@ -334,27 +330,19 @@ const index = async (error) => {
                         result = false
                     }
                                         
-                    await timeout(3)
+                    await timeout(1)
 
                     logIt("INFO", `Discord Bot -> User decided: ${result}!`)
                     
-                    let config1 = config.version
-                    let config3 = config.github_Username
-                    let config4 = config.github_Repo
-                    let config5 = config.github_FileName
-                    let config7 = config.debugMode
+                    replaceJSON.replace('./config.json', 'discordMessage', true)
                     
-                    fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${result},\n\n "debugMode": ${config7}\n}`)
                     logIt("INFO", "Discord Bot Option has been Updated!")
                     
                     fs.unlinkSync('./tmp/tmp.vbs')
 
-                    await timeout(3)
-
-                    setTimeout(() => {
-                        
-                        resolve();
-                    }, 3000);
+                    await timeout(1)
+        
+                    resolve();
                 }
                 firstSetup()
             })
@@ -401,18 +389,12 @@ const index = async (error) => {
                         userID(true)
                     } else {
                         logIt("INFO", "Entered UserID is Valid!")
-    
-                        let config1 = config.version
-                        let config3 = config.github_Username
-                        let config4 = config.github_Repo
-                        let config5 = config.github_FileName
-                        let config6 = config.discordMessage
-                        let config7 = config.debugMode
                         
-                        fs.writeFileSync('./config.json', `{\n "version": "${config1}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6},\n\n "debugMode": ${config7}\n}`)
+                        replaceJSON.replace('./config.json', 'userid', `${userid}`)
+                        
                         logIt("INFO", "UserID has been Updated!")
                         
-                        resolve();
+                        resolve();                    
                     }
                     
                     fs.unlinkSync('./tmp/tmp.vbs')
@@ -459,15 +441,11 @@ const index = async (error) => {
                     resolve();
                 }).catch(function(err) {
                     logIt("ERROR", `Update Failed! Reason: ${err.message}`)
-                    downloaded(true)
                 });
                 
                 function filterRelease(release) {
-                    if(debugMode) {
-                        return release.prerelease === true;
-                    } else {
-                        return release.prerelease === false;
-                    }
+                    return release.prerelease === false;
+                    
                 }
                 
                 function filterAsset(asset) {
@@ -534,20 +512,21 @@ const index = async (error) => {
                     if(fs.existsSync(`${tmp_path}/${images_folder}`))   { fse.moveSync(`${tmp_path}/${images_folder}`,      `./${images_folder}`,   { overwrite: true }) }
                     if(fs.existsSync(`${tmp_path}/${entry_file}`))      { fse.moveSync(`${tmp_path}/${entry_file}`,         `./${entry_file}`,      { overwrite: true }) }
                     if(fs.existsSync(`${tmp_path}/${prestart_file}`))   { fse.moveSync(`${tmp_path}/${prestart_file}`,      `./${prestart_file}`,   { overwrite: true }) }
-                    if(fs.existsSync(`${tmp_path}/${plugin_file}`))     { fse.moveSync(`${tmp_path}/${plugin_file}`,        `./${plugin_file}`,     { overwrite: true }) }
-                    userid = JSON.parse(fs.readFileSync('./config.json')).userid 
-                    if(fs.existsSync(`${tmp_path}/${config_file}`))     { fse.moveSync(`${tmp_path}/${config_file}`,        `./${config_file}`,     { overwrite: true }) }
                     if(fs.existsSync(`${tmp_path}/${userconfig_file}`)) { fse.moveSync(`${tmp_path}/${userconfig_file}`,    `./${userconfig_file}`, { overwrite: true }) }
+                    if(fs.existsSync(`${tmp_path}/${plugin_file}`))     { fse.moveSync(`${tmp_path}/${plugin_file}`,        `./${plugin_file}`,     { overwrite: true }) }
                     
-                    let config3 = config.github_Username
-                    let config4 = config.github_Repo
-                    let config5 = config.github_FileName
-                    let config6 = config.discordMessage
-                    let config7 = config.debugMode
+                    let config = JSON.parse(fs.readFileSync('./config.json')) 
+                    let version = LatestVersion
+                    let github_Username = config.github_Username
+                    let github_Repo = config.github_Repo
+                    let github_FileName = config.github_FileName
+                    let userid = config.userid
+                    let discordMessage = config.discordMessage
+
                     
-                    fs.writeFileSync('./config.json', `{\n "version": "${LatestVersion}",\n\n "github_Username": "${config3}",\n "github_Repo": "${config4}",\n "github_FileName": "${config5}",\n\n "userid": "${userid}",\n "discordMessage": ${config6},\n\n "debugMode": ${config7}\n}`)
-                    
-                    await timeout(3)
+                    if(fs.existsSync(`${tmp_path}/${config_file}`))     { fse.moveSync(`${tmp_path}/${config_file}`,        `./${config_file}`,     { overwrite: true }) }
+
+                    await timeout(1)
         
                     restart()
         
@@ -633,7 +612,9 @@ const index = async (error) => {
 index()
 
 setInterval(() => {
-    Running()
+    if(!debugMode) {
+        Running()
+    }
 }, 3000);
 
 
@@ -647,7 +628,9 @@ function logIt() {
         logs = true
     }
     
-    var curTime = new Date().toISOString();
+    let curTime = new Date().toISOString().
+    replace(/T/, ' ').
+    replace(/\..+/, '')
     var message = [...arguments];
     var type = message.shift();
     console.log(curTime,":",pluginId,":"+type+":",message.join(" "));
