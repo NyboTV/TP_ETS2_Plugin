@@ -3,11 +3,13 @@ const fse = require('fs-extra')
 const replaceJSON = require('replace-json-property')
 const AdmZip = require('adm-zip')
 
+const Release = process.argv.includes("--release");
+const testMode = process.argv.includes("--test");
+
 let InputPath = "./src"
 let OutputPath = "./Build/TMP"
 
 fs.rmdirSync('./Build/TMP', { recursive: true })
-
 fs.mkdirSync('./Build/TMP')
 
 const pack = async () => {
@@ -74,8 +76,6 @@ const pack = async () => {
     fs.rmdirSync('./Build/TMP', { recursive: true })
     fs.mkdirSync('./Build/TMP')
     
-    const testMode = process.argv.includes("--test");
-
     if(testMode) {
         setTimeout(() => {
             
@@ -87,6 +87,8 @@ const pack = async () => {
             zip.extractAllTo('C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/', true)
             fs.rmdirSync('C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard/ETS2_Dashboard.zip') 
         }, 2000);
+    } else if(Release) {
+        
     }
         
 }
