@@ -18,6 +18,8 @@
   - [Features](#features)
   - [Installation](#how-to-install)
   - [Support](#support)
+  - [Buttons](#plugin-buttons)
+    - [Game Buttons](#game-buttons)
   - [States](#plugin-states)
     - [Game States](#game-states)
     - [World States](#world-states)
@@ -90,6 +92,14 @@ I would appreachate if you create an "Issue" on my Github. But i can give Suppor
 ## How to use
 
 Im Creating an Wiki for you ;) But its not Online yet! Please wait!
+
+## Plugin Buttons
+
+### Game Buttons
+
+| Action                    | Description                                           | Available Actions     |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| Switch Location           | Changes the KMH to MPH and back, Same with Weigth     | Just Click it         |
 
 ## Plugin States
 
@@ -308,6 +318,9 @@ If you want to see how this Plugin is made check out my Twitch Channel: https://
 
 # Changelog
 ```
+
+### Changelog 1.2.0
+- Added Action Button to Change from US to EU / EU to US Location (Ex: MPH, Tons)
 
 ### Changelog 1.1.0
 - Edited the ReadMe

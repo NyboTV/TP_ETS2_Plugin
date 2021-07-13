@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src/index.js",
   "scripts": {
-    "test_plugin": "node ./src/ets2_plugin.js",
+    "test_plugin": "node ./src/ets2_plugin.js --debug",
     "build": "pkg . --target=node14-win-x64 && pkg ./src/index.js --target=node14-win-x64 && node ./builder/build.js",
     "test": "pkg . --target=node14-win-x64 && pkg ./src/index.js --target=node14-win-x64 && node ./builder/build.js --test",
     "release": "pkg . --target=node14-win-x64 && pkg ./src/index.js --target=node14-win-x64 && node ./builder/build.js --release"

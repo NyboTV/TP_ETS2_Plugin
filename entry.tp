@@ -10,14 +10,6 @@
    },
    "settings":[
       {
-         "name":"Refresh Interval",
-         "default":"200",
-         "type":"number",
-         "maxlength":4,
-         "minValue":200,
-         "maxValue":10000
-      },
-      {
          "name":"Truckers MP Server",
          "default":"0",
          "type":"number",
