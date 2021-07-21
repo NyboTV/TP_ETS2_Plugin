@@ -1383,7 +1383,7 @@ TPClient.on("Info", (data) => {
 
 TPClient.on("Settings", (data) => {
 
-	TruckersMPServer = data[1]["Truckers MP Server"]
+	TruckersMPServer = data[0]["Truckers MP Server"]
 
 });
 

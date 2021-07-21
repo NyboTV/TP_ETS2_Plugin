@@ -266,7 +266,7 @@ To get your User ID read this: [How to get UserID](#how-to-get-userid)
 Because of the API from Discord you have to be on my Plugin Discord.
 https://discord.gg/PvXJsxpGFe
 
-You dont want that? No problem! The Plugin will ask you on first Startup if you want to use it! Just click no!
+You dont want that? No problem! The Plugin will ask you on first Startup if you want to use it! Just click no! But if you want to use the AutoUpdater function then you have to go to the config and set it to "True"! Go to the Plugins folder (Located in %appdata%/TouchPortal/plugins) then go into the "config.json" and set "autoupdates" to "true" 
 
 If the UserID Window says "UserID is not Valid" (but you know it is valid) then just go to my Config.json file inside the plugin folder
 (%appdata%/TouchPortal/plugins/ETS2_Dashboard)

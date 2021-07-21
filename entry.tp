@@ -20,6 +20,26 @@
    ],
    "categories":[
       {
+         "id":"Game_Actions",
+         "name":"ETS2 Dashboard",
+         "actions": [
+            {
+               "id": "changeLocation",
+               "prefix": "Change Location",
+               "name":"Change Location",
+               "type":"communicate",
+               "data" :[
+                  {
+                     "id":"Change_Location",
+                     "type": "switch",
+                     "label":  "Change_Location",
+                     "default": "false"
+                  }
+               ]
+            }
+         ],
+      },
+      {
          "id":"Game_States",
          "name":"Game States",
          "events":[
