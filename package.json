@@ -32,6 +32,8 @@
   "homepage": "https://github.com/NyboTV/TP_ETS2_Plugin#readme",
   "dependencies": {
     "adm-zip": "^0.5.5",
+    "appjs": "0.0.20",
+    "appjs-win32": "0.0.19",
     "basic-ftp": "^4.6.6",
     "dialog-node": "^0.2.1",
     "download-github-release": "^0.3.2",
