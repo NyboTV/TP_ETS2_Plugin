@@ -9,7 +9,6 @@ const sJSON = require('self-reload-json')
 const publicIP = require('public-ip')
 const replaceJSON = require('replace-json-property')
 const ftp = require('basic-ftp');
-const { settings } = require('cluster');
 
 
 let logs = false
