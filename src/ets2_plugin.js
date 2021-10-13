@@ -41,7 +41,6 @@ TPClient.on("Action", (data, hold) => {
 
 });
 
-
 TPClient.on("Info", (data) => {
 	if (debugMode) logIt("DEBUG", "We received info from Touch-Portal");
 	logIt('INFO', `Starting process watcher for Windows`);
@@ -196,8 +195,12 @@ TPClient.on("Info", (data) => {
       data = body
       
       if (err) {
-        logIt("WARN", `Telemetry Request Error! -> ${err}`)
-        running = false
+		const telemetry_error = async() => {
+			logIt("WARN", `Telemetry Request Error! -> ${err}`)
+			running = false
+			await timeout(2000)
+		} 
+		telemetry_error()
       }
       
       try {
@@ -1378,7 +1381,6 @@ TPClient.on("Info", (data) => {
 		})
 	}
 
-
 });
 
 TPClient.on("Settings", (data) => {
@@ -1387,8 +1389,8 @@ TPClient.on("Settings", (data) => {
 
 });
 
-TPClient.on("Update", (curVersion, newVersion) => {
-	logIt("DEBUG", curVersion, newVersion);
+TPClient.on("Update", (curVersion, remoteVersion) => {
+	logIt("DEBUG", curVersion, remoteVersion);
 });
 
 TPClient.on("Close", (data) => {

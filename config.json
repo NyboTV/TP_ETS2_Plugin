@@ -10,5 +10,9 @@
   "autoupdates": false,
   "discordMessage": true,
   "----------------": "-----------",
-  "location": "kmh"
+  "location": "kmh",
+  "---------------": "-----------",
+  "--------------": "-----------",
+  "DEV STUFF ONLY": "DEV STUFF ONLY",
+  "debug": false
 }

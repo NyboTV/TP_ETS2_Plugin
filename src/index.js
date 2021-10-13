@@ -18,8 +18,15 @@ let started = false
 let error = false
 
 const debugMode = process.argv.includes("--debug");
+var debug = debugMode
 
-if (debugMode) {
+if(debug === false) {
+	debug = JSON.parse(fs.readFileSync('./config.json')).debug
+}
+
+logIt("INFO", `Debug Mode: ${debug}`)
+
+if (debug) {
 	started = true
 } else {
 	started = false
@@ -29,25 +36,27 @@ if (debugMode) {
 let user = config.github_Username
 let repo = config.github_Repo
 let repo_file = config.github_FileName
+let api_retry = 1
+let userid = ""
 
 const index = async (error) => {
 	try {
-
-		let api_retry = 1
-		let userid = ""
 		let connected = false
 
 		var LocalIP = await publicIP.v4()
+		var host_ip = 'nybotv.ddns.net'
+
+		if (debug) {
+			//host_ip = 'localhost'
+		}
 
 		const APIHost = {
-			ip: '45.146.254.39',
+			ip: `${host_ip}`,
 			port: 3000,
 			method: 'POST'
 		}
 
 		const AutoUpdater = async (crash, api, inside_script) => {
-			logIt("INFO", "Plugin is starting...")
-
 			if (crash) {
 				logIt("ERROR", "Plugin Crashed!")
 
@@ -63,7 +72,8 @@ const index = async (error) => {
 
 				const req = http.request(apioptions, res => {
 
-					res.on('data', async (d) => {})
+					res.on('data', async (d) => {
+					})
 				})
 
 				req.on('error', error => {
@@ -71,6 +81,7 @@ const index = async (error) => {
 				})
 
 				req.end()
+				process.exit()
 			}
 
 			if (!crash) {
@@ -172,6 +183,10 @@ const index = async (error) => {
 				const update = async (LatestVersion) => {
 
 					let version = config.version
+
+					if(LatestVersion === undefined) {} else {
+						logIt("INFO", `Latest Version: ${LatestVersion}, Installed Version: ${version}`)
+					}
 
 					if (config.autoupdates) {
 						if (version === LatestVersion) {
@@ -322,7 +337,7 @@ const index = async (error) => {
 			}
 		}
 		if (error) {
-			AutoUpdater(false, false, true)
+			AutoUpdater(true, false, false)
 		} else {
 			if (process.argv.includes("--ftp_test")) {
 				UploadLogs()
@@ -338,13 +353,17 @@ const index = async (error) => {
 
 		function start_plugin() {
 
-			if (debugMode) {} else {
+			if (debug) {
+				logIt("INFO", "Plugin started")
+			} else {
 				setInterval(() => {
 					if (started === false) {
 						var exec = require('child_process').execFile;
 						exec('ets2_plugin.exe', function(error, data) {
 							logIt("ERROR", error)
-							logIt("ERROR", data.toString())
+							if(data) {
+								logIt("ERROR", data.toString())
+							}
 						});
 						started = true
 					}
@@ -482,7 +501,12 @@ const index = async (error) => {
 				var outputdir = './tmp'
 				var leaveZipped = false
 
-				logIt("INFO", "Downloading latest Version")
+				if (debug === true) {
+					logIt("INFO", "PreRelease Available!")
+					logIt("INFO", "Downloading latest PreRelease")
+				} else {
+					logIt("INFO", "Downloading latest Release")
+				}
 
 				downloadRelease(user, repo, outputdir, filterRelease, filterAsset, leaveZipped)
 					.then(function() {
@@ -492,8 +516,11 @@ const index = async (error) => {
 					});
 
 				function filterRelease(release) {
-					return release.prerelease === false;
-
+					if (debug === true){
+						return release.prerelease === true;
+					} else {
+						return release.prerelease === false;
+					} 
 				}
 
 				function filterAsset(asset) {
@@ -650,7 +677,6 @@ const index = async (error) => {
 					AutoUpdater(false, false, true)
 				}
 
-				logIt("INFO", `Latest Version: ${Check_Version_version}`)
 				resolve(Check_Version_version)
 			})
 		}
@@ -716,7 +742,7 @@ index()
 
 
 setInterval(() => {
-	if (!debugMode) {
+	if (!debug) {
 		Running()
 	}
 }, 3000);
@@ -770,7 +796,7 @@ function Running() {
 	}
 	isRunning('start.exe', (status) => {
 		if (status === false) {
-			process.exit()
+			//process.exit()
 		}
 	})
 
@@ -801,7 +827,7 @@ function TP() {
 	}
 	isRunning('ets2_plugin.exe', (status) => {
 		if (status === false) {
-			process.exit()
+			index(true)
 		}
 	})
 
