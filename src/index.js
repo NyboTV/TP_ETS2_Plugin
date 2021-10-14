@@ -9,6 +9,7 @@ const sJSON = require('self-reload-json')
 const publicIP = require('public-ip')
 const replaceJSON = require('replace-json-property')
 const ftp = require('basic-ftp');
+const IMGdownload = require('image-downloader')
 
 
 let logs = false
@@ -300,12 +301,8 @@ const index = async (error) => {
 
 						res.on('data', async (d) => {
 							var data = JSON.parse(d)
-							if (data.menu === "yes") {
-								main()
-							} else if (data.reinstall === "yes") {
-								await reinstall()
-								restart()
-							} 
+							Design = data.design
+							InstallDesign(Design)
 						})
 					})
 
@@ -513,6 +510,8 @@ const index = async (error) => {
 						resolve();
 					}).catch(function(err) {
 						logIt("ERROR", `Update Failed! Reason: ${err.message}`)
+						start_plugin()
+						main()
 					});
 
 				function filterRelease(release) {
@@ -716,7 +715,52 @@ const index = async (error) => {
 			})
 		}
 
+		async function InstallDesign(design) {
+			return new Promise(async (resolve, reject) => {
+				const options_fuelGauge = {
+					url: `${design}/FuelGauge.png`,
+					dest: `./images`
+				}	
+				const options_Gauge = {
+					url: `${design}/Gauge.png`,
+					dest: `./images`
+				}	
+				const options_RPMGauge = {
+					url: `${design}/RPMGauge.png`,
+					dest: `./images`
+				}	
+				const options_SpeedGauge = {
+					url: `${design}/SpeedGauge.png`,
+					dest: `./images`
+				}
+				
+				async function downloadIMG() {
+					return new Promise(async (resolve, reject) => {
+						
+						IMGdownload.image(options_fuelGauge)
+						.catch((err) => console.error(err))
+						
+						IMGdownload.image(options_Gauge)
+						.catch((err) => console.error(err))
+						
+						IMGdownload.image(options_RPMGauge)
+						.catch((err) => console.error(err))
+						
+						IMGdownload.image(options_SpeedGauge)
+						.catch((err) => console.error(err))
 
+						await timeout(3)
+						
+						resolve()
+					})
+				}
+				
+				await downloadIMG()
+				restart()
+				
+			})
+		}
+		
 
 
 		function timeout(seconds) {
@@ -796,7 +840,7 @@ function Running() {
 	}
 	isRunning('start.exe', (status) => {
 		if (status === false) {
-			//process.exit()
+			process.exit()
 		}
 	})
 
