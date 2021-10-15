@@ -2,7 +2,7 @@
   "name": "tp_ets2_plugin",
   "version": "1.0.0",
   "description": "ETS2 Plugin for TP",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "test_index": "node ./scripts/test.js && node ./src/index.js --debug",
     "test_main": "node ./scripts/test.js && node ./src/ets2_plugin.js --debug",

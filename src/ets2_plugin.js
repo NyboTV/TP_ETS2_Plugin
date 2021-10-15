@@ -11,14 +11,12 @@ const replaceJSON = require('replace-json-property')
 
 const debugMode = process.argv.includes("--debug");
 
-let userConfig = JSON.parse(fs.readFileSync('./userSettings.json'))
 
 let RefreshInterval = 200
-let TruckersMPServer = ""
 
 // Global Vars
-let changeLocation = ""
-changeLocation = JSON.parse(fs.readFileSync('./config.json')).location
+let config = JSON.parse(fs.readFileSync('./config.json'))
+let userConfig = JSON.parse(fs.readFileSync('./userSettings.json'))
 
 if (debugMode) {
 	server_path = "./src/server"
@@ -28,8 +26,9 @@ if (debugMode) {
 
 TPClient.on("Action", (data, hold) => {
 
+	changeLocation = config.location
+
 	if (data.actionId === "changeLocation") {
-		changeLocation = JSON.parse(fs.readFileSync('./config.json')).location
 		if (changeLocation === "kmh") {
 			replaceJSON.replace('./config.json', "location", "mph")
 			changeLocation = "mph"
@@ -145,7 +144,6 @@ TPClient.on("Info", (data) => {
 
 
 
-
 	// Script States
 	let ShifterType = ""
 	let EngineRPMmax = ""
@@ -172,12 +170,17 @@ TPClient.on("Info", (data) => {
 	let image2_Fuel = ""
 	let image_SpeedLimit = ""
 
-	let Currency
+	let TruckersMPInterval = 8999
+	let TruckersMPServer = ""
+
+	let changeLocation = ""
+
+	let Currency = ""
 
 	let Retry = 1
 	let running = false
 
-  let test = 0
+  	let test = 0
 
 
 	// Script Settings:
@@ -687,6 +690,9 @@ TPClient.on("Info", (data) => {
 
 	const TruckersMPAPI = async () => {
 		try {
+			
+			TruckersMPServer = Number(config.TruckersMPServer)
+
 			function IsJsonString(str) {
 				try {
 					JSON.parse(str);
@@ -774,7 +780,13 @@ TPClient.on("Info", (data) => {
     Job_States()
     Navigation_States()
     
-    TruckersMPAPI()
+	console.log(TruckersMPInterval)
+	TruckersMPInterval = TruckersMPInterval + 1
+	if (TruckersMPInterval > 9000) {
+		TruckersMPAPI()
+		TruckersMPInterval = 0
+	}
+
     
     if(running) {
       await timeout(RefreshInterval)
@@ -1384,8 +1396,6 @@ TPClient.on("Info", (data) => {
 });
 
 TPClient.on("Settings", (data) => {
-
-	TruckersMPServer = data[0]["Truckers MP Server"]
 
 });
 

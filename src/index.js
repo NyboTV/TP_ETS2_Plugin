@@ -17,6 +17,8 @@ let config = new sJSON('./config.json')
 let firstsetup = false
 let started = false
 let error = false
+let TruckersMPServer = ""
+let TruckersMPSetting
 
 const debugMode = process.argv.includes("--debug");
 var debug = debugMode
@@ -273,16 +275,15 @@ const index = async (error) => {
 					req.end()
 				}
 
-				const settings = async (isError) => {
+				const settings = async () => {
 					let localVersion = config.version
+					let TruckersMPServer = config.TruckersMPServer
+					let TruckersMPServerMax = await TruckersMPAPI()
+					let Location = config.location
 
 					if (fs.existsSync('./restart.txt')) {
 						fs.unlinkSync('./restart.txt')
 						firstsetup = true
-					}
-
-					if (isError) {
-						error = true
 					}
 
 					const apioptions = {
@@ -293,7 +294,9 @@ const index = async (error) => {
 						headers: {
 							'UserID': `${userid}`,
 							'localVersion': `${localVersion}`,
-							'error': `${error}`
+							'TruckersMPServer': `${TruckersMPServer}`,
+							'TruckersMPServerMax': `${TruckersMPServerMax}`,
+							'location': `${Location}`
 						}
 					}
 
@@ -301,8 +304,28 @@ const index = async (error) => {
 
 						res.on('data', async (d) => {
 							var data = JSON.parse(d)
+							Menu = data.menu
 							Design = data.design
-							InstallDesign(Design)
+							TruckersMPSetting = data.truckersmpsetting
+							location = data.location 
+							
+							if(Design !== undefined) {
+								InstallDesign(Design)
+							}
+
+							if(TruckersMPSetting !== undefined) {
+								await TruckersMPSettings(TruckersMPSetting)
+								main()
+							}
+
+							if(location !== undefined) {
+								await changeLocation(location)
+								main()
+							}
+
+							if(Menu === "yes") {
+								main()
+							}
 						})
 					})
 
@@ -758,6 +781,54 @@ const index = async (error) => {
 				await downloadIMG()
 				restart()
 				
+			})
+		}
+
+		function TruckersMPSettings(TruckersMPSetting) {
+			return new Promise(async (resolve, reject) => {
+				logIt("INFO", "TruckersMP Server changed!")
+				replaceJSON.replace('./config.json', 'TruckersMPServer', `${TruckersMPSetting}`)
+				resolve()
+			})
+		}
+
+		function TruckersMPAPI() {
+			return new Promise(async (resolve, reject) => {
+				function IsJsonString(str) {
+					try {
+						JSON.parse(str);
+					} catch (e) {
+						return false;
+					}
+					return true;
+				}
+				https.get('https://api.truckersmp.com/v2/servers', (resp) => {
+					var data = '';
+					
+					resp.on('data', (chunk) => {
+						data += chunk;
+					})
+					
+					resp.on('end', () => {
+						
+						if (IsJsonString(data) === true) {
+							data = JSON.parse(data)
+							TruckersMPServer = data.response.length
+						} else {
+							TruckersMPServer = "TruckersMP API Error!"
+						}
+
+						resolve(TruckersMPServer)
+					})
+				})
+			})
+		}
+
+		function changeLocation(location) {
+			return new Promise(async (resolve, reject) => {
+				logIt("INFO", "TruckersMP Server changed!")
+				replaceJSON.replace('./config.json', 'location', `${location}`)
+				resolve()
 			})
 		}
 		
