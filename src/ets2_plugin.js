@@ -780,7 +780,6 @@ TPClient.on("Info", (data) => {
     Job_States()
     Navigation_States()
     
-	console.log(TruckersMPInterval)
 	TruckersMPInterval = TruckersMPInterval + 1
 	if (TruckersMPInterval > 9000) {
 		TruckersMPAPI()

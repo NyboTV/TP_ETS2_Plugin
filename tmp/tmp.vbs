@@ -1,3 +1,3 @@
-dim result
-result = msgbox("Do you want to use the Discord Bot Function? (You have to be on my Plugin Discord for this to Work! Link on my Github)", 4 , "Discord Bot")
-WScript.Stdout.WriteLine result
+Dim sInput
+sInput = InputBox("Your entered UserID is not Valid! Are you on my Discord Server? Enter your Discord User ID (Not the #8888)")
+WScript.Stdout.WriteLine sInput

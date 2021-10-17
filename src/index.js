@@ -16,9 +16,11 @@ let logs = false
 let config = new sJSON('./config.json')
 let firstsetup = false
 let started = false
-let error = false
-let TruckersMPServer = ""
+
 let TruckersMPSetting
+let Menu
+let Design
+let Owner
 
 const debugMode = process.argv.includes("--debug");
 var debug = debugMode
@@ -50,7 +52,7 @@ const index = async (error) => {
 		var host_ip = 'nybotv.ddns.net'
 
 		if (debug) {
-			//host_ip = 'localhost'
+			host_ip = 'localhost'
 		}
 
 		const APIHost = {
@@ -223,6 +225,8 @@ const index = async (error) => {
 
 				const main = async (isError) => {
 					let localVersion = config.version
+					let server = config.TruckersMPServer
+					let design = config.design
 
 					if (fs.existsSync('./restart.txt')) {
 						fs.unlinkSync('./restart.txt')
@@ -242,7 +246,9 @@ const index = async (error) => {
 							'UserID': `${userid}`,
 							'localVersion': `${localVersion}`,
 							'firstsetup': `${firstsetup}`,
-							'error': `${error}`
+							'error': `${error}`,
+							'server': `${server}`,
+							'design': `${design}`
 						}
 					}
 
@@ -257,7 +263,10 @@ const index = async (error) => {
 								await reinstall()
 								restart()
 							} else if (data.uploadLogs === "yes") {
-								await UploadLogs()
+								var upload = await UploadLogs()
+								if(upload === true) {
+									main(true)
+								} else
 								main()
 							} else if (data.settings === "yes") {
 								settings()
@@ -278,7 +287,6 @@ const index = async (error) => {
 				const settings = async () => {
 					let localVersion = config.version
 					let TruckersMPServer = config.TruckersMPServer
-					let TruckersMPServerMax = await TruckersMPAPI()
 					let Location = config.location
 
 					if (fs.existsSync('./restart.txt')) {
@@ -295,7 +303,6 @@ const index = async (error) => {
 							'UserID': `${userid}`,
 							'localVersion': `${localVersion}`,
 							'TruckersMPServer': `${TruckersMPServer}`,
-							'TruckersMPServerMax': `${TruckersMPServerMax}`,
 							'location': `${Location}`
 						}
 					}
@@ -306,11 +313,13 @@ const index = async (error) => {
 							var data = JSON.parse(d)
 							Menu = data.menu
 							Design = data.design
+							Owner = data.owner
 							TruckersMPSetting = data.truckersmpsetting
 							location = data.location 
 							
 							if(Design !== undefined) {
-								InstallDesign(Design)
+								InstallDesign(Design, Owner)
+								main()
 							}
 
 							if(TruckersMPSetting !== undefined) {
@@ -732,13 +741,14 @@ const index = async (error) => {
 					resolve()
 				} catch (err) {
 					logIt("ERROR", err)
+					resolve(true)
 				}
 				client.close()
 
 			})
 		}
 
-		async function InstallDesign(design) {
+		async function InstallDesign(design, owner) {
 			return new Promise(async (resolve, reject) => {
 				const options_fuelGauge = {
 					url: `${design}/FuelGauge.png`,
@@ -773,12 +783,13 @@ const index = async (error) => {
 						.catch((err) => console.error(err))
 
 						await timeout(3)
-						
+						replaceJSON.replace('./config.json', 'design', `${owner}`)
 						resolve()
 					})
 				}
 				
 				await downloadIMG()
+				
 				restart()
 				
 			})
@@ -789,38 +800,6 @@ const index = async (error) => {
 				logIt("INFO", "TruckersMP Server changed!")
 				replaceJSON.replace('./config.json', 'TruckersMPServer', `${TruckersMPSetting}`)
 				resolve()
-			})
-		}
-
-		function TruckersMPAPI() {
-			return new Promise(async (resolve, reject) => {
-				function IsJsonString(str) {
-					try {
-						JSON.parse(str);
-					} catch (e) {
-						return false;
-					}
-					return true;
-				}
-				https.get('https://api.truckersmp.com/v2/servers', (resp) => {
-					var data = '';
-					
-					resp.on('data', (chunk) => {
-						data += chunk;
-					})
-					
-					resp.on('end', () => {
-						
-						if (IsJsonString(data) === true) {
-							data = JSON.parse(data)
-							TruckersMPServer = data.response.length
-						} else {
-							TruckersMPServer = "TruckersMP API Error!"
-						}
-
-						resolve(TruckersMPServer)
-					})
-				})
 			})
 		}
 
