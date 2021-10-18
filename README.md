@@ -18,8 +18,6 @@
   - [Features](#features)
   - [Installation](#how-to-install)
   - [Support](#support)
-  - [Buttons](#plugin-buttons)
-    - [Game Buttons](#game-buttons)
   - [States](#plugin-states)
     - [Game States](#game-states)
     - [World States](#world-states)
@@ -81,25 +79,31 @@ AutoUpdater => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/late
 Manual Install => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard_AutoUpdater.tpp)
 
 ## Support
-You can get directly Support on the official TP Discord!
 
-If you want to request a Function:
-Feel free to create a "Pull Request"
+You can get support directly on the official TP Discord!
 
-If you have an Problem with my Script:
-I would appreachate if you create an "Issue" on my Github. But i can give Support on the TP Discord too ;) 
+If you would like to request a feature:
+Feel free to make a "pull request"
+
+If you have an issue with my script:
+I'd be happy if you create an "issue" on my Github. But I can also give support in the TP Discord ;) 
 
 ## How to use
 
-Im Creating an Wiki for you ;) But its not Online yet! Please wait!
+I'll create a wiki for you ;) But it's not online yet! Please wait!
 
-## Plugin Buttons
+For the available value "Dynamic Text" just create a "Dynamic Text Updater". (The "NextRestTime" is also a "Dynamic Text").
 
-### Game Buttons
+For "true/false" you need a "When the plug-in state (state) 'changes to' '(true/false)'".
 
-| Action                    | Description                                           | Available Actions     |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| Switch Location           | Changes the KMH to MPH and back, Same with Weigth     | Just Click it         |
+For "Dynamic image" you need to use a "If the plug-in state (any state) 'does not change to' (just leave it blank)". 
+and then "Change the 'Icon' with the value from the plug-in status 'SpeedGauge/RPMGauge/etc'"
+
+Don't understand a single word? Just download the sample page and have a look at it
+
+Download it here: [Download](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Build/Releases/Dashboards/Example.tpz)
+Just click on "Manage Page..." in the Touch Portal and then on "Import Page".
+
 
 ## Plugin States
 
@@ -230,37 +234,12 @@ Im Creating an Wiki for you ;) But its not Online yet! Please wait!
 
 ## Settings
 
-### Server list
-Enter the Number for following Server:
-
-### ETS Server list
-    0 => EU Sim 1
-    1 => EU SIM 2
-    2 => EU SIM 3
-    3 => US SIM
-    4 => SGP SIM
-    5 => EU ARC
-    6 => EU PM 
-    7 => EU PM ARC
-
-### ATS Server list
-    8 => EU SIM 
-    9 => US SIM
-    10 => US ARC
-
-These Server list is getting Updated by myself. So it might be Possible that this list is NOT Up2Date. 
-
-
-### Interval
-You can set your Own Refresh interval:
-
-	Faster => needs more performance
-    slower => Less performance
+All settings are now available in the API! When you get a window asking "Do you want to use the Discord Bot feature", just click "Yes".
 
 
 ### AutoUpdater 
 
-Fully new System! Just Install the Plugin and Insert your Discord ID into the Window :)
+Fully new System! Just Click "Yes" on the Question: "Do you want to use the Discord Bot Function"
 To get your User ID read this: [How to get UserID](#how-to-get-userid)
 
 Because of the API from Discord you have to be on my Plugin Discord.
@@ -276,8 +255,12 @@ it should looks like this: - "userid": "123456789" -
 After that please send the Log to me (The Dev) so i can fix the issue.
 
 ### How to get UserID
-How to Find your Discord User ID
-To find your user ID in Discord, you first need to enable developer mode, and then simply right click / tap your name and select Copy ID. Here’s how to do that in more detail:
+
+Wait. Why do I even need your UserID and why do you need to be in my Discord?
+Well. Discord does not support sending messages to an unknown user. If you are not in my Discord or friends with my bot (and it is not possible to add a bot as a friend).
+Then the bot can't send you a message. So. you can't change the settings or install new themes! That's why I need your UserID. To send YOU the messages and not a random user of the guild.
+
+To find your user ID in Discord, you first need to enable developer mode and then simply right click / tap on your name and select Copy ID. Here you can learn how to do that in detail:
 
 1. Open Discord.
 2. Enable Developer Mode by navigating to Advanced > Developer Mode in Discord’s settings.
@@ -296,28 +279,48 @@ To find your user ID in Discord, you first need to enable developer mode, and th
 
 ## Todo
 
-1. Adding Support for your Designs
-2. ATS Support
-3. Add some more Informations
-4. (Request more Features and it will be added here ;)
+1. ATS Support
+2. Add some more Informations
+3. (Request more Features and it will be added here ;)
 
 ## Issue List
 
-- Hazard Lights are not Working
-- some small Refresh issues (its taking sometimes longer)
-- Wipers not working
+- Hazard Lights are not Working correctly
 
 ## Your Feature
 
-If you wanna your Design or your Feature inside this Plugin create an "Pull requests" with your Wish for an Design or Feature.
-If you want an new Option like: Fuel Gauge please look into this file: [ETS2 Telemetry Server](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/src/server/Ets2TestTelemetry.json)
-All of these Values can be imported into the Script!
+If you want your design or feature in this plugin, create a "pull request" with your wishes for a design or feature.
+If you want a new option, please look in this file: [ETS2 Telemetry Server](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/src/server/Ets2TestTelemetry.json)
+All these values can be imported into the script!
 
-If you want to see how this Plugin is made check out my Twitch Channel: https://www.twitch.tv/lizard_und_nybo
+If you want to see how this plugin is created, check out my Twitch Channel: https://www.twitch.tv/xnybo
 
 
 # Changelog
 ```
+
+### Changelog 1.3.6
+- New API IP Refresh System + Bug Fixes
+
+### Changelog 1.3.5
+- New API System Update
+
+### Changelog 1.3.4
+- Community Design Support Release
+
+### Changelog 1.3.3
+- new API System + Bug Fixes
+
+Please report any Bugs or Issues! Have fun using it!
+
+### Changelog 1.3.2
+- The TMP Settings was not working correctly. The Plugin Crashed if TMP was used.
+
+### Changelog 1.3.1
+- Bug Fixes
+
+### Changelog 1.2.1
+- Working on 1.3.0 
 
 ### Changelog 1.2.0
 - Added Action Button to Change from US to EU / EU to US Location (Ex: MPH, Tons)
