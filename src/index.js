@@ -51,7 +51,7 @@ const index = async (error) => {
 		let connected = false
 
 		var LocalIP = await publicIP.v4()
-		host_ip = await check_api_ip()
+		var host_ip = await check_api_ip()
 
 		if (debug) {
 			host_ip = 'localhost'
@@ -439,7 +439,6 @@ const index = async (error) => {
 					logIt("INFO", "Discord Bot Option has been Updated!")
 
 					fs.unlinkSync('./tmp/tmp.vbs')
-
 					await timeout(1)
 
 					resolve();
@@ -482,22 +481,24 @@ const index = async (error) => {
 						test_userid(true)
 					}
 
-					await timeout(3)
+					await timeout(2)
 
 					if (userid_valid) {
-						logIt("WARN", "Entered UserID is not Valid! Retry...")
+						logIt("WARN", "Input is not Valid! Retry...")
 						userID(true)
 					} else {
-						logIt("INFO", "Entered UserID is Valid!")
+						logIt("INFO", "Input is Valid!")
 
 						replaceJSON.replace('./config.json', 'userid', `${userid}`)
 
 						logIt("INFO", "UserID has been Updated!")
 
+						if(fs.existsSync('./tmp/tmp.vbs')) {
+							fs.unlinkSync('./tmp/tmp.vbs')
+						}
 						resolve();
 					}
 
-					fs.unlinkSync('./tmp/tmp.vbs')
 				}
 
 				test_userid()
@@ -666,8 +667,6 @@ const index = async (error) => {
 					replaceJSON.replace('./config.json', 'userid', `${userid}`)
 					replaceJSON.replace('./config.json', 'discordMessage', discordMessage)
 
-
-
 					await timeout(1)
 
 					restart()
@@ -818,7 +817,7 @@ const index = async (error) => {
 			return new Promise(async (resolve, reject) => {
 
 				const URL = 'https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin_API/master/config.json';
-				const TOKEN = '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';
+				const TOKEN = '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';
 				
 				var options = {
 					url: URL,
@@ -829,6 +828,7 @@ const index = async (error) => {
 				
 				function callback(error, response, body) {
 					var IP = JSON.parse(body).ip
+					logIt("INFO", `Getting API IP: ${IP}`)
 					resolve(IP)
 				}
 				
