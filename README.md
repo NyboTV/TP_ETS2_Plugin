@@ -239,26 +239,26 @@ All settings are now available in the API! When you get a window asking "Do you 
 
 ### AutoUpdater 
 
-Fully new System! Just Click "Yes" on the Question: "Do you want to use the Discord Bot Function"
-To get your User ID read this: [How to get UserID](#how-to-get-userid)
+Completely new system! Just click "Yes" on the question: "Do you want to use the Discord Bot feature".
+To get your user ID, read this: [How to get UserID](#how-to-get-userid).
 
-Because of the API from Discord you have to be on my Plugin Discord.
+Because of Discord's API, you need to be on my plugin Discord.
 https://discord.gg/PvXJsxpGFe
 
-You dont want that? No problem! The Plugin will ask you on first Startup if you want to use it! Just click no! But if you want to use the AutoUpdater function then you have to go to the config and set it to "True"! Go to the Plugins folder (Located in %appdata%/TouchPortal/plugins) then go into the "config.json" and set "autoupdates" to "true" 
+Don't want to do that? No problem! The plugin will ask you if you want to use it the first time you start it! Just click no! But if you want to use the AutoUpdater function, then you have to set it to "True" in the Config! Go into the plugins folder (found in %appdata%/TouchPortal/plugins), then go into the "config.json" and set "autoupdates" to "true" 
 
-If the UserID Window says "UserID is not Valid" (but you know it is valid) then just go to my Config.json file inside the plugin folder
+If the UserID window shows "UserID is not Valid" (but you know it is valid), then just go to my config.json file in the plugin folder
 (%appdata%/TouchPortal/plugins/ETS2_Dashboard)
-and copy your UserID into the '""' behind the "userid"
-it should looks like this: - "userid": "123456789" -
+and copy your UserID into the '""' behind "userid".
+It should look like this: - "userid": "123456789" -
 
-After that please send the Log to me (The Dev) so i can fix the issue.
+After that, please send the log to me (The Dev) so I can fix the problem.
 
 ### How to get UserID
 
-Wait. Why do I even need your UserID and why do you need to be in my Discord?
-Well. Discord does not support sending messages to an unknown user. If you are not in my Discord or friends with my bot (and it is not possible to add a bot as a friend).
-Then the bot can't send you a message. So. you can't change the settings or install new themes! That's why I need your UserID. To send YOU the messages and not a random user of the guild.
+Wait a minute. Why do I even need your UserID and why do you need to be in my Discord?
+Well. Discord does not support sending messages to an unknown user. If you are not in my Discord or are friends with my bot (and it is not possible to add a bot as a friend).
+Then the bot can't send you a message. So you can't change the settings or install new themes! That's why I need your UserID. To send YOU the messages and not a random user of the guild.
 
 To find your user ID in Discord, you first need to enable developer mode and then simply right click / tap on your name and select Copy ID. Here you can learn how to do that in detail:
 
