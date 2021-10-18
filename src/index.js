@@ -5,11 +5,13 @@ const downloadRelease = require('download-github-release');
 const AdmZip = require("adm-zip");
 const http = require('http')
 const https = require('https');
+const request = require('request')
 const sJSON = require('self-reload-json')
 const publicIP = require('public-ip')
 const replaceJSON = require('replace-json-property')
 const ftp = require('basic-ftp');
-const IMGdownload = require('image-downloader')
+const IMGdownload = require('image-downloader');
+const { exit } = require('process');
 
 
 let logs = false
@@ -49,11 +51,12 @@ const index = async (error) => {
 		let connected = false
 
 		var LocalIP = await publicIP.v4()
-		var host_ip = 'nybotv.ddns.net'
+		host_ip = await check_api_ip()
 
 		if (debug) {
 			host_ip = 'localhost'
 		}
+
 
 		const APIHost = {
 			ip: `${host_ip}`,
@@ -810,8 +813,30 @@ const index = async (error) => {
 				resolve()
 			})
 		}
-		
 
+		function check_api_ip() {
+			return new Promise(async (resolve, reject) => {
+
+				const URL = 'https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin_API/master/config.json';
+				const TOKEN = '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';
+				
+				var options = {
+					url: URL,
+					headers: {
+						'Authorization': 'token ' + TOKEN
+					}
+				};
+				
+				function callback(error, response, body) {
+					var IP = JSON.parse(body).ip
+					resolve(IP)
+				}
+				
+				request(options, callback);
+			})
+		}
+		
+		//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
 
 		function timeout(seconds) {
 			return new Promise(async (resolve, reject) => {

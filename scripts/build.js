@@ -38,7 +38,6 @@ const pack = async () => {
     //Copy Folder
     fse.copySync('./Build/TMP', './Build/ETS2_Dashboard')
     fse.moveSync('./Build/ETS2_Dashboard', './Build/TMP/ETS2_Dashboard')
-    fs.rmdirSync('./Build/ETS2_Dashboard', { recursive: true })
 
 	var zip = new AdmZip();
 
@@ -67,7 +66,6 @@ const pack = async () => {
     //Copy Folder
     fse.copySync('./Build/TMP', './Build/ETS2_Dashboard')
     fse.moveSync('./Build/ETS2_Dashboard', './Build/TMP/ETS2_Dashboard')
-    fs.rmdirSync('./Build/ETS2_Dashboard', { recursive: true })
 
     var zip = new AdmZip();
 	zip.addLocalFolder(`${OutputPath}/ETS2_Dashboard`, 'ETS2_Dashboard');
