@@ -408,7 +408,7 @@ const index = async (error) => {
 		function Setup() {
 			return new Promise(async (resolve, reject) => {
 				const firstSetup = async () => {
-					var vbs_file = 'dim result\nresult = msgbox("Do you want to use the Discord Bot Function? (You have to be on my Plugin Discord for this to Work! Link on my Github)", 4 , "Discord Bot")\nWScript.Stdout.WriteLine result'
+					var vbs_file = `dim result\nresult = msgbox("Would you like to use the Discord Bot feature? You'll be able to install themes, change settings, and more! (You must be on my Discord server for this to work! Link on my Github)", 4 , "Discord Bot")\nWScript.Stdout.WriteLine result`
 
 					fs.writeFileSync('./tmp/tmp.vbs', `${vbs_file}`)
 
@@ -452,11 +452,11 @@ const index = async (error) => {
 
 				const test_userid = async (input_empty) => {
 					if (error === true) {
-						var vbs_file = 'Dim sInput\nsInput = InputBox("Your entered UserID is not Valid! Are you on my Discord Server? Enter your Discord User ID (Not the #8888)")\nWScript.Stdout.WriteLine sInput'
+						var vbs_file = 'Dim sInput\nsInput = InputBox("The UserID you entered is not valid! Are you on my Discord server? Enter your Discord User ID (not the #8888)")\nWScript.Stdout.WriteLine sInput'
 					} else if (input_empty) {
-						var vbs_file = 'Dim sInput\nsInput = InputBox("Input is Empty! Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
+						var vbs_file = 'Dim sInput\nsInput = InputBox("Input is empty! Enter your Discord user ID (not the #8888). Read Github to see how to get the UserID")\nWScript.Stdout.WriteLine sInput'
 					} else {
-						var vbs_file = 'Dim sInput\nsInput = InputBox("First Installation: Enter your Discord User ID (Not the #8888). Read Github to see how to get UserID")\nWScript.Stdout.WriteLine sInput'
+						var vbs_file = 'Dim sInput\nsInput = InputBox("First installation: Enter your Discord user ID (not the #8888). Read Github to see how to get the UserID")\nWScript.Stdout.WriteLine sInput'
 					}
 
 					fs.writeFileSync('./tmp/tmp.vbs', `${vbs_file}`)
