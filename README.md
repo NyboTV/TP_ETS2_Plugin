@@ -358,6 +358,7 @@ Changelog has been Added in Update 0.4.6
 
 # Thanks to
 - **Gitago** - He is an BIG help for fixing my Plugin! - He is Testing my Plugin and is reporting me what is not working
+- **Pjiesco** - He is an BIG help for Updating my Plugin! - He fully Updated my API for the Plugin for me!
 
 ## License
 
