@@ -57,7 +57,6 @@ const index = async (error) => {
 			host_ip = 'localhost'
 		}
 
-
 		const APIHost = {
 			ip: `${host_ip}`,
 			port: 3000,
@@ -817,7 +816,7 @@ const index = async (error) => {
 			return new Promise(async (resolve, reject) => {
 
 				const URL = 'https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin_API/master/config.json';
-				const TOKEN = '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';
+				const TOKEN = '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';
 				
 				var options = {
 					url: URL,
@@ -827,7 +826,18 @@ const index = async (error) => {
 				};
 				
 				function callback(error, response, body) {
-					var IP = JSON.parse(body).ip
+					var IP = ""
+					try {
+						IP = JSON.parse(body).ip
+
+					} catch (error) {
+						logIt("ERROR", "Github Token is Invalid! Using backup IP...")
+						IP = undefined
+					}
+
+					if(IP === undefined) {
+						IP = "nybotv.ddns.net"
+					}
 					logIt("INFO", `Getting API IP: ${IP}`)
 					resolve(IP)
 				}
@@ -836,7 +846,6 @@ const index = async (error) => {
 			})
 		}
 		
-		//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
 
 		function timeout(seconds) {
 			return new Promise(async (resolve, reject) => {
