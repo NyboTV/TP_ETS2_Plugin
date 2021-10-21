@@ -8,7 +8,7 @@
       "colorDark":"#f54242",
       "colorLight":"#f5a442"
    },
-   "settings":[
+   "settings":[ 
       {
          "name":"Truckers MP Server",
          "default":"0",
