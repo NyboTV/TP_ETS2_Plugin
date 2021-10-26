@@ -816,7 +816,7 @@ const index = async (error) => {
 			return new Promise(async (resolve, reject) => {
 				
 				const URL = 'https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin_API/master/config.json';
-				const TOKEN = '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';
+				const TOKEN = 'NOT WORKING YET';
 				
 				var IP = ""
 				var options = {
