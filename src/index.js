@@ -837,7 +837,8 @@ const index = async (error) => {
 				}
 				//await request(options, callback);
 				if(IP === undefined || IP === "") {
-					IP = "nybotv.ddns.net"
+					//IP = "nybotv.ddns.net"
+					IP = "82.165.69.157"
 				}
 				logIt("INFO", `Getting API IP: ${IP}`)
 				resolve(IP)
