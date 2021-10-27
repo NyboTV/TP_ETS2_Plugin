@@ -13,7 +13,6 @@ const ftp = require('basic-ftp');
 const IMGdownload = require('image-downloader');
 const { exit } = require('process');
 
-logIt("INFO", `Self Test...`)
 
 let logs = false
 let config = new sJSON('./config.json')
@@ -24,6 +23,8 @@ let TruckersMPSetting
 let Menu
 let Design
 let Owner
+
+logIt("INFO", `Self Test...`)
 
 const debugMode = process.argv.includes("--debug");
 var debug = debugMode
