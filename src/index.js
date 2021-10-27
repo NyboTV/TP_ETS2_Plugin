@@ -13,6 +13,7 @@ const ftp = require('basic-ftp');
 const IMGdownload = require('image-downloader');
 const { exit } = require('process');
 
+logIt("INFO", `Self Test...`)
 
 let logs = false
 let config = new sJSON('./config.json')
@@ -866,8 +867,10 @@ const index = async (error) => {
 		index(true)
 	}
 }
-index()
 
+if (!fs.existsSync('./tmp')) {
+	fs.mkdirSync('./tmp')
+}
 
 setInterval(() => {
 	if (!debug) {
@@ -875,16 +878,12 @@ setInterval(() => {
 	}
 }, 3000);
 
-
-if (!fs.existsSync('./logs')) {
-	fs.mkdirSync('./logs')
-}
-if (!fs.existsSync('./tmp')) {
-	fs.mkdirSync('./tmp')
-}
-
-
 function logIt() {
+
+	if (!fs.existsSync('./logs')) {
+		fs.mkdirSync('./logs')
+	}
+	
 	if (!logs) {
 		fs.writeFileSync('./logs/latest.log', `\n --------SCRIPT STARTED--------`)
 		logs = true
@@ -960,3 +959,7 @@ function TP() {
 	})
 
 }
+
+
+
+index()
