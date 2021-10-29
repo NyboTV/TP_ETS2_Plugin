@@ -299,6 +299,25 @@ If you want to see how this plugin is created, check out my Twitch Channel: http
 # Changelog
 ```
 
+
+### Changelog 1.4.3
+- Bug Fix
+
+### Changelog 1.4.2
+- BETA: Refresh Rate Setting
+
+### Changelog 1.4.1
+- Bug Fix
+
+### Changelog 1.4.0
+- API finally on Public Server
+
+### Changelog 1.3.8
+- Skipping IP Grabbing Function for the API
+
+### Changelog 1.3.7
+- Bug Fix
+
 ### Changelog 1.3.6
 - New API IP Refresh System + Bug Fixes
 

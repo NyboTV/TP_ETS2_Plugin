@@ -7,16 +7,18 @@ const fs = require('fs')
 const Jimp = require('jimp')
 const exec = require('child_process').exec
 const execute = require('child_process').execFile;
-const replaceJSON = require('replace-json-property')
+const replaceJSON = require('replace-json-property');
+const { exit } = require('process');
 
 const debugMode = process.argv.includes("--debug");
-
-
-let RefreshInterval = 200
 
 // Global Vars
 let config = JSON.parse(fs.readFileSync('./config.json'))
 let userConfig = JSON.parse(fs.readFileSync('./userSettings.json'))
+
+let starting = true
+
+let RefreshInterval = Number(config.refreshInterval)
 
 if (debugMode) {
 	server_path = "./src/server"
@@ -180,7 +182,7 @@ TPClient.on("Info", (data) => {
 	let Retry = 1
 	let running = false
 
-  	let test = 0
+	let test = 0
 
 
 	// Script Settings:
@@ -192,40 +194,46 @@ TPClient.on("Info", (data) => {
 	}
 
 	const Telemetry_Request = async () => {
-    http.get('http://localhost:25555/api/ets2/telemetry', function(err, resp, body) {
-      
-      var data = '';
-      data = body
-      
-      if (err) {
-		const telemetry_error = async() => {
-			logIt("WARN", `Telemetry Request Error! -> ${err}`)
+		
+		if(starting) {
+			await timeout(3000)
+			starting = false
+		}
+
+		http.get('http://localhost:25555/api/ets2/telemetry', function(err, resp, body) {
+		  
+		  var data = '';
+		  data = body
+		  
+		  if (err) {
+			const telemetry_error = async() => {
+				logIt("WARN", `Telemetry Request Error! -> ${err}`)
+				running = false
+				await timeout(2000)
+			} 
+			telemetry_error()
+		  }
+		  
+		  try {
+			data = JSON.parse(data)
+			
+			game = data.game
+			truck = data.truck
+			trailer1 = data.trailer1
+			job = data.job
+			cargo = data.cargo
+			navigation = data.navigation
+			finedEvent = data.finedEvent
+			jobEvent = data.jobEvent
+			tollgateEvent = data.tollgateEvent
+			ferryEvent = data.ferryEvent
+			trainEvent = data.trainEvent
+			
+		  } catch (error) {
+			logIt("WARN", `Telemetry Data Request Error! -> ${error}`)
 			running = false
-			await timeout(2000)
-		} 
-		telemetry_error()
-      }
-      
-      try {
-        data = JSON.parse(data)
-        
-        game = data.game
-        truck = data.truck
-        trailer1 = data.trailer1
-        job = data.job
-        cargo = data.cargo
-        navigation = data.navigation
-        finedEvent = data.finedEvent
-        jobEvent = data.jobEvent
-        tollgateEvent = data.tollgateEvent
-        ferryEvent = data.ferryEvent
-        trainEvent = data.trainEvent
-        
-      } catch (error) {
-        logIt("WARN", `Telemetry Data Request Error! -> ${error}`)
-        running = false
-      }
-    })
+		  }
+		})
 	}
   
 
@@ -780,13 +788,6 @@ TPClient.on("Info", (data) => {
     Job_States()
     Navigation_States()
     
-	TruckersMPInterval = TruckersMPInterval + 1
-	if (TruckersMPInterval > 9000) {
-		TruckersMPAPI()
-		TruckersMPInterval = 0
-	}
-
-    
     if(running) {
       await timeout(RefreshInterval)
       Load_Modules()
@@ -804,6 +805,10 @@ TPClient.on("Info", (data) => {
 		image2_Fuel = await Jimp.read(`${images_path}/FuelGauge.png`);
 
 		image_SpeedLimit = await Jimp.read(`${images_path}/speedlimit.png`);
+
+		setInterval(() => {
+			TruckersMPAPI()
+		}, 900000);
 	}
 
 	Module_Setup()
@@ -1405,18 +1410,7 @@ TPClient.on("Update", (curVersion, remoteVersion) => {
 TPClient.on("Close", (data) => {
 	logIt("WARN", "Closing due to TouchPortal sending closePlugin message");
 
-	/*
-	logIt("INFO", "Packing latest Log Files...")
-
-	let zipUpdater = new AdmZip()
-	let zipIndex = new AdmZip()
-
-	zipUpdater.addLocalFile("./logs/updater/latest.log")
-	zipIndex.addLocalFile("./logs/index/latest.log")
-
-	zipUpdater.writeZip(`./logs/updater/${date_time}.zip`)
-	zipIndex.writeZip(`./logs/index/${date_time}.zip`)
-	*/
+	exit()
 });
 
 TPClient.connect({
