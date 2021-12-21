@@ -67,9 +67,9 @@ NOTE: The Default Plugin installation path is dictated by Touch Portal here: %AP
 6. Now you have to go into my Plugins Folder by pressing "Win+R" and type in: "%appdata%/Touchportal/plugins/ETS2_Dashboard"
 7. Now go into "Server" and execute "Ets2Telemetry.exe". 
 8. Now it should appear a Window. Press on Install.
+`NOTE: If you get an Window with an Warning Message: "ANother ETS2/ATS Telemtry Server instance is already running", Just Close it. It is just an Reminder. Ignore it.`
 9. Now restart the Touch Portal app
 `NOTE: Make sure you fully close Touch Portal using System Tray icon to exit`
-`NOTE: If you get an Window with an Warning Message: "ANother ETS2/ATS Telemtry Server instance is already running", Just Close it. It is just an Reminder. Ignore it. 
 
 6. After TP is open again, TP will ask you, if you want to trust the Plugin. Click on "Trust always".
 7. Now the Plugin is installed and you can create your first ETS2 Page!
