@@ -7,3 +7,4 @@ src/log.log
 src/log.log
 src/server/Ets2Telemetry.log
 *.vbs
+src/server/Ets2Telemetry.log
