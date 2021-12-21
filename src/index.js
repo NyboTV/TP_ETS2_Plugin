@@ -28,17 +28,8 @@ logIt("INFO", `Self Test...`)
 
 const debugMode = process.argv.includes("--debug");
 var debug = debugMode
-
 if(debug === false) {
 	debug = JSON.parse(fs.readFileSync('./config.json')).debug
-}
-
-logIt("INFO", `Debug Mode: ${debug}`)
-
-if (debug) {
-	started = true
-} else {
-	started = false
 }
 
 //Github Stuff
@@ -47,6 +38,14 @@ let repo = config.github_Repo
 let repo_file = config.github_FileName
 let api_retry = 1
 let userid = ""
+
+logIt("INFO", `Debug Mode: ${debug}`)
+if (debug) {
+	started = true
+	userid = "152134504994177024"
+} else {
+	started = false
+}
 
 const index = async (error) => {
 	try {
@@ -231,6 +230,10 @@ const index = async (error) => {
 					let localVersion = config.version
 					let server = config.TruckersMPServer
 					let design = config.design
+
+					if(debug) {
+						localVersion = "debug"
+					}
 
 					if (fs.existsSync('./restart.txt')) {
 						fs.unlinkSync('./restart.txt')
@@ -740,7 +743,12 @@ const index = async (error) => {
 						secure: false
 					})
 					await client.uploadFrom(`./logs/latest.log`, `./latest.log`)
-					await timeout(3)
+					client.trackProgress(info => console.log(info.bytesOverall))
+					await timeout(1)
+					client.trackProgress()
+
+					logIt("INFO", "Logs has been Uploaded!")
+					
 					resolve()
 				} catch (err) {
 					logIt("ERROR", err)
