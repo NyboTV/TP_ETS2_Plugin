@@ -12,6 +12,8 @@
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin)
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
 
+Plugin is still in Work!! Just dont have much time!
+
 # [TP_ETS2_Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
 - [TouchPortal ETS2 Dashboard Plugin](#tp_ets2_plugin)
