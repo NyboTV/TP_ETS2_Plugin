@@ -42,6 +42,7 @@
     "download-github-release": "^0.3.2",
     "fs": "0.0.1-security",
     "fs-extra": "^10.0.0",
+    "ftp-deploy": "^2.3.8",
     "http": "0.0.1-security",
     "https": "^1.0.0",
     "image-downloader": "^4.0.3",

@@ -27,24 +27,13 @@ if (debugMode) {
 }
 
 TPClient.on("Action", (data, hold) => {
-
-	changeLocation = config.location
-
-	if (data.actionId === "changeLocation") {
-		if (changeLocation === "kmh") {
-			replaceJSON.replace('./config.json', "location", "mph")
-			changeLocation = "mph"
-		} else if (changeLocation === "mph") {
-			replaceJSON.replace('./config.json', "location", "kmh")
-			changeLocation = "kmh"
-		}
-	}
-
+	
 });
 
-TPClient.on("Info", (data) => {
+TPClient.on("Info", async(data) => {
 	if (debugMode) logIt("DEBUG", "We received info from Touch-Portal");
 	logIt('INFO', `Starting process watcher for Windows`);
+
 
 	// Game States
 	let Connected = false
@@ -76,7 +65,7 @@ TPClient.on("Info", (data) => {
 
 	let EngineOn = false
 	let ElectricOn = false
-	let WipersON = false
+	let WipersOn = false
 	let ParkBrakeOn = false
 	let MotorBrakeOn = false
 
@@ -172,7 +161,6 @@ TPClient.on("Info", (data) => {
 	let image2_Fuel = ""
 	let image_SpeedLimit = ""
 
-	let TruckersMPInterval = 8999
 	let TruckersMPServer = ""
 
 	let changeLocation = ""
@@ -183,7 +171,6 @@ TPClient.on("Info", (data) => {
 	let running = false
 
 	let test = 0
-
 
 	// Script Settings:
 
@@ -210,6 +197,7 @@ TPClient.on("Info", (data) => {
 				logIt("WARN", `Telemetry Request Error! -> ${err}`)
 				running = false
 				await timeout(2000)
+				return;
 			} 
 			telemetry_error()
 		  }
@@ -228,10 +216,14 @@ TPClient.on("Info", (data) => {
 			tollgateEvent = data.tollgateEvent
 			ferryEvent = data.ferryEvent
 			trainEvent = data.trainEvent
+
+
+			return;
 			
 		  } catch (error) {
 			logIt("WARN", `Telemetry Data Request Error! -> ${error}`)
 			running = false
+			return;
 		  }
 		})
 	}
@@ -433,7 +425,7 @@ TPClient.on("Info", (data) => {
 			},
 			{
 				id: "Nybo.ETS2.Dashboard.WipersON",
-				value: `${WipersON}`
+				value: `${WipersOn}`
 			},
 			{
 				id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
@@ -567,8 +559,169 @@ TPClient.on("Info", (data) => {
 
 			//{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
 		]
-
 		TPClient.stateUpdateMany(states);
+
+
+
+		// Event Area
+
+		if(EngineOn === true) {
+			EngineOn = "on"
+		} else {
+			EngineOn = "off"
+		} 
+		if(ElectricOn === true) {
+			ElectricOn = "on"
+		} else {
+			ElectricOn = "off"
+		}
+		if(WipersOn === true) {
+			WipersOn = "on"
+		} else {
+			WipersOn = "off"
+		}
+
+		if(ParkBrakeOn === true) {
+			ParkBrakeOn = "on"
+		} else {
+			ParkBrakeOn = "off"
+		}
+
+		if(FuelWarningOn === true) {
+			FuelWarningOn = "on"
+		} else {
+			FuelWarningOn = "off"
+		}
+		if(AdBlueWarningOn === true) {
+			AdBlueWarningOn = "on"
+		} else {
+			AdBlueWarningOn = "off" 
+		}
+
+		if(AirPressureWarningOn === true) {
+			AirPressureWarningOn = "low"
+		} else if(AirPressureEmergencyOn === true) {
+			AirPressureWarningOn = "emergency"
+		} else {
+			AirPressureWarningOn = "high"
+		}
+		if(OilPressureWarningOn === true) {
+			OilPressureWarningOn = "low"
+		} else {
+			OilPressureWarningOn = "high"
+		}
+		if(WaterTempWarningOn === true) {
+			WaterTempWarningOn = "high"
+		} else {
+			WaterTempWarningOn = "low"
+		}
+		if(BatteryVoltageWarningOn === true) {
+			BatteryVoltageWarningOn = "low"
+		} else {
+			BatteryVoltageWarningOn = "high"
+		}
+
+		if(BlinkerLeftOn === true) {
+			BlinkerLeftOn = "on"
+		} else {
+			BlinkerLeftOn = "off"
+		}
+		if(BlinkerRightOn === true) {
+			BlinkerRightOn = "on"
+		} else {
+			BlinkerRightOn = "off"
+		}
+		if(HazardLightsOn === true) {
+			HazardLightsOn = "on"
+		} else {
+			HazardLightsOn = "off"
+		}
+
+		if(LightsDashboardOn === true) {
+			LightsDashboardOn = "on"
+		} else {
+			LightsDashboardOn = "off"
+		}
+
+		if(TrailerAttached === true) {
+			TrailerAttached = "attached"
+		} else {
+			TrailerAttached = "off"
+		}
+
+		if(CargoLoaded === true) {
+			CargoLoaded = "loaded" 
+		} else {
+			CargoLoaded = "off"
+		}
+
+
+		var event_states = [
+			{
+			id: "Nybo.ETS2.Dashboard.event_EngineOn",
+			value: `${EngineOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_ElectricOn",
+			value: `${ElectricOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_WipersOn",
+			value: `${WipersOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_ParkBrakeOn",
+			value: `${ParkBrakeOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_FuelWarningOn",
+			value: `${FuelWarningOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_AdBlueWarningOn",
+			value: `${AdBlueWarningOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_AirPressureWarningOn",
+			value: `${AirPressureWarningOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_OilPressureWarningOn",
+			value: `${OilPressureWarningOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_WaterTempWarningOn",
+			value: `${WaterTempWarningOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_BlinkerLeftOn",
+			value: `${BlinkerLeftOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_BlinkerRightOn",
+			value: `${BlinkerRightOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_HazardLightsOn",
+			value: `${HazardLightsOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_LightsDashboardOn",
+			value: `${LightsDashboardOn}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_TrailerAttached",
+			value: `${TrailerAttached}`
+			},
+			{
+			id: "Nybo.ETS2.Dashboard.event_CargoLoaded",
+			value: `${CargoLoaded}`
+			},
+			//{ id: "Nybo.ETS2.Dashboard.", value: `${}`},
+		]
+
+		TPClient.stateUpdateMany(event_states);
+
 	}
 
 	const Trailer_States = async () => {
@@ -772,26 +925,32 @@ TPClient.on("Info", (data) => {
 	}
 
 	const Load_Modules = async () => {
-    
-    connected = false
 		
-    if (running) {
-      Telemetry_Request()
-    }
-  
-    Game_States()
-    World_States()
-    Driver_States()
-    Gauge_States()
-    Truck_States()
-    Trailer_States()
-    Job_States()
-    Navigation_States()
-    
-    if(running) {
-      await timeout(RefreshInterval)
-      Load_Modules()
-    }
+		Connected = false
+		
+		if (running) {
+			Telemetry_Request()
+		}
+		
+		
+		Game_States()
+		World_States()
+		Driver_States()
+		Gauge_States()
+		Truck_States()
+		Trailer_States()
+		Job_States()
+		Navigation_States()
+		//*/
+		
+		if(running && debugMode === false) {
+			await timeout(400)
+			Load_Modules()
+		} else {
+			await timeout(400)
+			Load_Modules()
+		}
+		
 	}
   
 
@@ -1404,7 +1563,6 @@ TPClient.on("Settings", (data) => {
 });
 
 TPClient.on("Update", (curVersion, remoteVersion) => {
-	logIt("DEBUG", curVersion, remoteVersion);
 });
 
 TPClient.on("Close", (data) => {

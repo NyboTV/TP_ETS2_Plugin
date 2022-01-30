@@ -283,9 +283,11 @@ To find your user ID in Discord, you first need to enable developer mode and the
 
 ## Todo
 
-1. ATS Support
-2. Add some more Informations
-3. (Request more Features and it will be added here ;)
+1. Adding Modules for faster Refresh Rate
+2. Adding Refresh only if something Changed
+3. Add some more Informations
+4. (Request more Features and it will be added here ;)
+5. ATS Support
 
 ## Issue List
 
@@ -303,6 +305,8 @@ If you want to see how this plugin is created, check out my Twitch Channel: http
 # Changelog
 ```
 
+### Changelog 1.4.4 PRE-RELEASE
+- Added new Events to the Plugin - Attention: This Version is kinda slow!!!
 
 ### Changelog 1.4.3
 - Bug Fix

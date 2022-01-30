@@ -13,7 +13,7 @@
   "location": "kmh",
   "TruckersMPServer": "1",
   "design": "default",
-  "refreshInterval": "20",
+  "refreshInterval": "200",
   "---------------": "-----------",
   "--------------": "-----------",
   "DEV STUFF ONLY": "DEV STUFF ONLY",

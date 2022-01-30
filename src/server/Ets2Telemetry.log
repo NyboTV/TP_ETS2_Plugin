@@ -2597,3 +2597,3003 @@ netsh http show urlacl url=http://+:25555/
 '{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
 '{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
 '{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-11-27 06:21:03,447 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-11-27 06:21:03,732 [1   ] [INFO ] Checking plugin DLL files...
+2021-11-27 06:21:03,847 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-11-27 06:21:03,888 [1   ] [INFO ] Checking Firewall rule...
+2021-11-27 06:21:03,890 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-11-27 06:21:04,627 [1   ] [INFO ] Checking ACL rule status...
+2021-11-27 06:21:04,627 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-11-27 06:21:04,900 [1   ] [INFO ] Found following network interfaces: 
+'{1A49F721-90BD-41D0-A65A-27E7A52709E7}': 'Ethernet' (Up), 
+'{24E38E96-5C6F-4DE1-8BA9-34E800FAED6A}': 'LAN-Verbindung' (Down), 
+'{9198E79D-FDCB-45DF-9939-5610CEDDB081}': 'LAN-Verbindung 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Down), 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-21 10:35:02,857 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-21 10:35:03,122 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-21 10:35:03,123 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... Fail
+2021-12-21 10:35:03,123 [1   ] [INFO ] Checking Firewall rule...
+2021-12-21 10:35:03,124 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-21 10:35:03,870 [1   ] [INFO ] Checking ACL rule status...
+2021-12-21 10:35:03,870 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-21 10:35:04,664 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-21 10:35:04,773 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-21 10:35:04,773 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... Fail
+2021-12-21 10:35:04,774 [1   ] [INFO ] Checking Firewall rule...
+2021-12-21 10:35:04,775 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-21 10:35:05,121 [1   ] [INFO ] Checking ACL rule status...
+2021-12-21 10:35:05,121 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-21 10:35:06,994 [1   ] [INFO ] Validating ETS2 path: 'G:\Steam\steamapps\common\Euro Truck Simulator 2' ... Fail
+2021-12-21 10:35:06,995 [1   ] [INFO ] Validating ETS2 path: 'c:\program files (x86)\steam\SteamApps\common\Euro Truck Simulator 2' ... Fail
+2021-12-21 10:35:06,996 [1   ] [INFO ] Validating ETS2 path: 'c:\program files (x86)\steam\SteamApps\common\Euro Truck Simulator 2' ... Fail
+2021-12-21 10:35:21,293 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-21 10:35:21,310 [1   ] [INFO ] Copying ETS2 x64 plugin DLL file to: G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2\bin\win_x64\plugins\ets2-telemetry-server.dll
+2021-12-21 10:35:23,384 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:15:05,616 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:15:05,811 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:05,812 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:05,816 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:05,818 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:06,538 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:06,538 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:06,775 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:15:11,084 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) [UNINSTALL MODE]
+2021-12-25 16:15:11,243 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:11,244 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:11,249 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:11,250 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:12,104 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:12,104 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:19,055 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:15:19,315 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:19,315 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:19,319 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:19,324 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:20,176 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:20,176 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:20,406 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:15:25,191 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) [UNINSTALL MODE]
+2021-12-25 16:15:25,357 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:25,357 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:25,361 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:25,363 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:26,058 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:26,058 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:35,980 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:15:36,119 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:36,120 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:36,128 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:36,129 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:37,866 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:37,866 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:38,126 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:15:43,537 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) [UNINSTALL MODE]
+2021-12-25 16:15:43,676 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:43,676 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:43,680 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:43,681 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:44,267 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:44,267 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:45,430 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:15:45,564 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:45,564 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:45,568 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:45,570 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:46,199 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:46,199 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:46,377 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:15:50,909 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) [UNINSTALL MODE]
+2021-12-25 16:15:51,067 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:51,067 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:15:51,072 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:51,074 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:51,527 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:51,527 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:53,674 [1   ] [INFO ] Backing up plugin DLL files for ETS2...
+2021-12-25 16:15:53,677 [1   ] [INFO ] Deleting Firewall rule...
+2021-12-25 16:15:53,677 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall delete rule name="ETS2 TELEMETRY SERVER (PORT 25555)"
+2021-12-25 16:15:53,868 [1   ] [INFO ] Deleting ACL rule...
+2021-12-25 16:15:53,869 [1   ] [INFO ] Running command line: 
+netsh http delete urlacl url=http://+:25555/
+2021-12-25 16:15:56,742 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:15:56,759 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:56,760 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:56,763 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:57,626 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:57,626 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:15:58,779 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:15:58,794 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:15:58,795 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:15:58,797 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:15:59,274 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:15:59,274 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:16:00,815 [1   ] [INFO ] Validating ETS2 path: 'p:\program files\steam\SteamApps\common\Euro Truck Simulator 2' ... Fail
+2021-12-25 16:16:00,818 [1   ] [INFO ] Validating ETS2 path: 'p:\program files\steam\SteamApps\common\Euro Truck Simulator 2' ... Fail
+2021-12-25 16:16:11,068 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:16:11,069 [1   ] [INFO ] Copying ETS2 x64 plugin DLL file to: G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2\bin\win_x64\plugins\ets2-telemetry-server.dll
+2021-12-25 16:16:11,074 [1   ] [INFO ] Validating ATS path: 'p:\program files\steam\SteamApps\common\American Truck Simulator' ... Fail
+2021-12-25 16:16:11,074 [1   ] [INFO ] Validating ATS path: 'p:\program files\steam\SteamApps\common\American Truck Simulator' ... Fail
+2021-12-25 16:16:14,935 [1   ] [INFO ] Adding Firewall rule...
+2021-12-25 16:16:14,935 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall add rule name="ETS2 TELEMETRY SERVER (PORT 25555)" dir=in action=allow protocol=TCP localport=25555 remoteip=localsubnet
+2021-12-25 16:16:15,094 [1   ] [INFO ] Adding ACL rule...
+2021-12-25 16:16:15,094 [1   ] [INFO ] Running command line: 
+netsh http add urlacl url=http://+:25555/ user="\Jeder"
+2021-12-25 16:16:16,828 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:21:17,837 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:21:18,074 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:21:18,075 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:21:18,078 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:21:18,082 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:21:20,089 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:21:20,089 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:21:20,592 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:22:30,690 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:22:30,966 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:22:30,966 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:22:30,971 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:22:30,972 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:22:33,917 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:22:33,917 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:22:34,952 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:37:10,914 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:37:11,158 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:37:11,158 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:37:11,162 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:37:11,165 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:37:12,896 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:37:12,896 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:37:13,174 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:40:19,226 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:40:19,505 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:40:19,506 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:40:19,510 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:40:19,512 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:40:20,514 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:40:20,514 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:40:20,816 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:42:11,511 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:42:11,778 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:42:11,779 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:42:11,786 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:42:11,787 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:42:13,543 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:42:13,543 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:42:13,847 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 16:45:13,995 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 16:45:14,255 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 16:45:14,256 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 16:45:14,263 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 16:45:14,266 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 16:45:15,949 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 16:45:15,949 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 16:45:16,168 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:00:43,739 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:00:45,046 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:00:45,050 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:00:45,163 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:00:45,232 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:00:56,394 [1   ] [ERROR] System.Exception: Failed to check Firewall rule status: 
+Regelname:                               ETS2 TELEMETRY SERVER (PORT 25555)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            25555
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Euro Truck Simulator 2
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               utweb.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               utweb.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Solitaire Collection
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Microsoft Solitaire Collection
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Soundpad
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Soundpad
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wallpaper Engine UI
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wallpaper Engine UI
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wallpaper Engine
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wallpaper Engine
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wallpaper Engine
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wallpaper Engine
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Steam Web Helper
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Steam Web Helper
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Steam
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Steam
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Outlook
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            6004
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Zompiercer
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Zompiercer
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Gang Beasts
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Gang Beasts
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Unturned
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Unturned
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Unturned
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Unturned
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               NVIDIA SHIELD Streaming NvStreamer UDP Exception
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            47995,47998,47999,48000,48002
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               NVIDIA SHIELD Streaming NvStreamer TCP Exception
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            47995
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               NVIDIA SHIELD Streaming SSAU UDP Exception
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            47998
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               NVIDIA SHIELD Streaming NSS UDP Exception
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            48010
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               OverwolfBrowser
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Blockieren
+
+Regelname:                               OverwolfBrowser
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Blockieren
+
+Regelname:                               OverwolfBrowser
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               OverwolfBrowser
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Java(TM) Platform SE binary
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Java(TM) Platform SE binary
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               VB-AUDIO Virtual Audio Device Mixing Console Application
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               VB-AUDIO Virtual Audio Device Mixing Console Application
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Tabletop Simulator
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Tabletop Simulator
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Edge (mDNS-In)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Microsoft Edge WebView2-Laufzeit
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            5353
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Arma 3
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Arma 3
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Edge (mDNS-In)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Microsoft Edge
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            5353
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Cities: Skylines
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Cities: Skylines
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Garry's Mod
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Garry's Mod
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Store
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Microsoft Store
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Google Chrome (mDNS-In)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Google Chrome
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            5353
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.YourPhone_1.21113.36.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.YourPhone/Resources/AppName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Ihr Smartphone
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Skype
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Skype
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.DesktopAppInstaller_1.16.13405.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.DesktopAppInstaller/Resources/appDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             App-Installer
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               geforcenow.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               geforcenow.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Minecraft for Windows 10
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Minecraft for Windows 10
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            57621-57631
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            57621
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            8088
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            8088
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            4381-4389
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Spotify Music
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             {78E1CD88-49E3-476E-B926-580E596AD309}
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            4371-4379
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.MicrosoftStickyNotes_4.2.2.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.MicrosoftStickyNotes/Resources/StickyNotesStoreAppName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Microsoft-Kurznotizen
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.ZuneVideo_10.21111.10511.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.ZuneVideo/resources/IDS_MANIFEST_VIDEO_APP_NAME}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Filme & TV
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Xbox Game Bar
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Xbox Game Bar
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Amazon Alexa
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Amazon Alexa
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               javaw
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               javaw
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Java(TM) Platform SE binary
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Java(TM) Platform SE binary
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Java(TM) Platform SE binary
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Java(TM) Platform SE binary
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               opera.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               opera.exe
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               CPU temperature and system information utility
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               CPU temperature and system information utility
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               TeamSpeak 3 Client
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               TeamSpeak 3 Client
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Auf Benutzer zurckstellen
+Aktion:                                  Zulassen
+
+Regelname:                               Acer Product Registration
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Acer Product Registration
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Kernnetzwerk - Teredo (ICMPv6 eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Kernnetzwerk
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               ICMPv6
+                                         Typ     Code
+                                      128     Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.ZuneMusic_10.21102.11411.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.ZuneMusic/resources/IDS_MANIFEST_MUSIC_APP_NAME}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Groove-Musik
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Cortana
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Cortana
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               OneNote for Windows 10
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             OneNote for Windows 10
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.Photos_2021.21090.10008.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.Windows.Photos/Resources/AppStoreName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Microsoft Fotos
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{microsoft.windowscommunicationsapps_16005.14326.20544.0_x64__8wekyb3d8bbwe?ms-resource://microsoft.windowscommunicationsapps/hxoutlookintl/AppManifest_OutlookDesktop_DisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Mail und Kalender
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AnyDesk
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Netzwerkerkennung (SSDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            1900
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Netzwerkerkennung (WSD eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            3702
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Netzwerkerkennung (WSD eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            3702
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Netzwerkerkennung (LLMNR-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            5355
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Netzwerkerkennung (Pub-WSD eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            3702
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (LLMNR-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            5355
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Teamviewer Remote Control Service
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Teamviewer Remote Control Service
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Teamviewer Remote Control Application
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Teamviewer Remote Control Application
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Microsoft Edge
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Microsoft Edge
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.CloudExperienceHost_10.0.19041.1266_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.CloudExperienceHost/resources/appDescription}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Ihr Konto
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               PnkBstrB
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               PnkBstrB
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               PnkBstrA
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               PnkBstrA
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               AusweisApp2-SaC
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            24727
+Remoteport:                              Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               Parsec
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               SIM Dashboard
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               SIM Dashboard
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               SIM Dashboard
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.XboxApp_48.78.15001.0_x64__8wekyb3d8bbwe?ms-resource://Microsoft.XboxApp/XboxApp.Resource/Resources/App_Title}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Xbox Console Companion
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               uTorrent Web
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               uTorrent Web
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (NB-Sitzung eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            139
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (SMB eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            445
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (NB-Name eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            137
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (NB-Datagramm eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            138
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (Spoolerdienst - RPC)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            RPC
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (Spoolerdienst - RPC-EPMAP)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            RPC-EPMap
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (Echoanforderung - ICMPv4 eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               ICMPv4
+                                         Typ     Code
+                                      8       Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (Echoanforderung - ICMPv6 eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               ICMPv6
+                                         Typ     Code
+                                      128     Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Datei- und Druckerfreigabe (LLMNR-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             Datei- und Druckerfreigabe
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            5355
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Unified Remote
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               NVIDIA SHIELD Streaming SSAS UDP Exception
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            5353
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               NVIDIA SHIELD Streaming NSS TCP Exception
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            47984,47989,48010
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Acer Collection S
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Acer Collection S
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Win32WebViewHost_10.0.19041.1023_neutral_neutral_cw5n1h2txyewy?ms-resource://Windows.Win32WebViewHost/resources/DisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Desktop-App-Web-Viewer
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Ja
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.Search_1.14.2.19041_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.Search/resources/PackageDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Windows Search
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.Windows.StartMenuExperienceHost_10.0.19041.1023_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.Windows.StartMenuExperienceHost/StartMenuExperienceHost/PkgDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Starten
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               @{Microsoft.AAD.BrokerPlugin_1000.19041.1023.0_neutral_neutral_cw5n1h2txyewy?ms-resource://Microsoft.AAD.BrokerPlugin/resources/PackageDisplayName}
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat
+Gruppierung:                             Gesch„fts- oder Schulkonto
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (TCP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (Streaming-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (HTTP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            10243
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (UPnP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            2869
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (SSDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            1900
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (qWave-TCP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            2177
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (qWave-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            2177
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (TCP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (Streaming-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (HTTP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            10243
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (qWave-TCP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            2177
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player-Netzwerkfreigabedienst (qWave-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Windows Media Player-Netzwerkfreigabedienst
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            2177
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player (UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Windows Media Player
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows Media Player x86 (UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Windows Media Player
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Remote-Ereignisprotokollverwaltung (RPC-EPMAP)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Remote-Ereignisprotokollverwaltung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            RPC-EPMap
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Remote-Ereignisprotokollverwaltung (NP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Remote-Ereignisprotokollverwaltung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            445
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Remote-Ereignisprotokollverwaltung (RPC)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Remote-Ereignisprotokollverwaltung
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            RPC
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Remote-Ereignisprotokollverwaltung (RPC-EPMAP)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Remote-Ereignisprotokollverwaltung
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            RPC-EPMap
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Remote-Ereignisprotokollverwaltung (NP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Remote-Ereignisprotokollverwaltung
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            445
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Remote-Ereignisprotokollverwaltung (RPC)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             Remote-Ereignisprotokollverwaltung
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            RPC
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Funktionalit„t (qWave-TCP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            2177
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Funktionalit„t (qWave-UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            2177
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-UPnP-Ereignisse (TCP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            2869
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-SSDP-Suche (UDP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Ply2Disc
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (RTSP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            23554,23555,23556
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (RTSP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            23554,23555,23556
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (RTSP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            23554,23555,23556
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (RTCP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (RTCP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (RTCP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            Beliebig
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (HTTP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            10246
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (HTTP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            10246
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               "Wiedergabe auf Ger„t"-Streamingserver (HTTP-Streaming eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             "Wiedergabe auf Ger„t"-Funktionalit„t
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            10246
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wi-Fi Direct-Scandienstverwendung (eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Wi-Fi Direct-Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wi-Fi Direct-Spoolerverwendung (eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Wi-Fi Direct-Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Wi-Fi Direct-Netzwerkerkennung (eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 ™ffentlich
+Gruppierung:                             Wi-Fi Direct-Netzwerkerkennung
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               DIAL-Protokollserver (HTTP-In)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Privat
+Gruppierung:                             DIAL-Protokollserver
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            10247
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               DIAL-Protokollserver (HTTP-In)
+----------------------------------------------------------------------
+Aktiviert:                               Ja
+Richtung:                                Eingehend
+Profile:                                 Dom„ne
+Gruppierung:                             DIAL-Protokollserver
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            10247
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Routing und Remotezugriff (PPTP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Routing und RAS
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               TCP
+Lokaler Port:                            1723
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Routing und Remotezugriff (L2TP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Routing und RAS
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               UDP
+Lokaler Port:                            1701
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Routing und Remotezugriff (GRE eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Dom„ne,Privat,™ffentlich
+Gruppierung:                             Routing und RAS
+Lokales IP:                              Beliebig
+Remote-IP:                               Beliebig
+Protokoll:                               47
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows-Remoteverwaltung - Kompatibilit„tsmodus (HTTP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+Profile:                                 Privat,™ffentlich
+Gruppierung:                             Windows-Remoteverwaltung (Kompatibilit„t)
+Lokales IP:                              Beliebig
+Remote-IP:                               LocalSubnet
+Protokoll:                               TCP
+Lokaler Port:                            80
+Remoteport:                              Beliebig
+Edgeausnahme:                            Nein
+Aktion:                                  Zulassen
+
+Regelname:                               Windows-Remoteverwaltung - Kompatibilit„tsmodus (HTTP eingehend)
+----------------------------------------------------------------------
+Aktiviert:                               Nein
+Richtung:                                Eingehend
+
+   bei Funbit.Ets.Telemetry.Server.Helpers.ProcessHelper.RunNetShell(String arguments, String errorMessage)
+   bei Funbit.Ets.Telemetry.Server.Setup.FirewallSetup..ctor()
+2021-12-25 17:00:56,659 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:00:56,660 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:01:17,507 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:01:18,053 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:01:18,053 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:01:18,118 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:01:18,124 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:01:23,631 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:01:23,632 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:01:24,024 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:06:05,381 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:06:05,622 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:06:05,623 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:06:05,630 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:06:05,633 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:06:09,456 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:06:09,456 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:06:09,703 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:07:42,716 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:07:42,888 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:07:42,888 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:07:42,895 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:07:42,897 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:07:43,599 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:07:43,599 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:07:43,791 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:08:25,888 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:08:26,051 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:08:26,052 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:08:26,058 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:08:26,061 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:08:26,989 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:08:26,989 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:08:27,223 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:11:36,400 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:11:36,632 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:11:36,633 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:11:36,641 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:11:36,642 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:11:38,116 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:11:38,116 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:11:38,474 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:12:45,940 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:12:46,148 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:12:46,149 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:12:46,156 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:12:46,168 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:12:47,811 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:12:47,811 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:12:48,148 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:13:30,898 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:13:31,147 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:13:31,148 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:13:31,166 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:13:31,169 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:13:31,928 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:13:31,928 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:13:32,184 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:14:46,911 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:14:47,230 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:14:47,231 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:14:47,238 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:14:47,242 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:14:48,539 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:14:48,539 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:14:48,763 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:14:55,390 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:14:55,626 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:14:55,626 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:14:55,634 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:14:55,635 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:14:56,431 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:14:56,431 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:14:56,849 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:15:54,653 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:15:54,853 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:15:54,853 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:15:54,857 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:15:54,859 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:15:55,759 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:15:55,759 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:15:56,042 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)
+2021-12-25 17:16:22,509 [1   ] [INFO ] Running application on Microsoft Windows NT 6.2.9200.0 (64-bit) 
+2021-12-25 17:16:22,691 [1   ] [INFO ] Checking plugin DLL files...
+2021-12-25 17:16:22,692 [1   ] [INFO ] Validating ETS2 path: 'G:\Bibliothek\Steam\steamapps\common\Euro Truck Simulator 2' ... OK
+2021-12-25 17:16:22,698 [1   ] [INFO ] Checking Firewall rule...
+2021-12-25 17:16:22,702 [1   ] [INFO ] Running command line: 
+netsh advfirewall firewall show rule dir=in name=all
+2021-12-25 17:16:23,453 [1   ] [INFO ] Checking ACL rule status...
+2021-12-25 17:16:23,453 [1   ] [INFO ] Running command line: 
+netsh http show urlacl url=http://+:25555/
+2021-12-25 17:16:23,691 [1   ] [INFO ] Found following network interfaces: 
+'{BCBC1E44-AB63-4B98-BB00-E1CA92AFB6E2}': 'LAN-Verbindung* 1' (Down), 
+'{8ABE4720-8D00-4B7F-8304-4AD4FC1CDAEB}': 'LAN-Verbindung* 2' (Down), 
+'{9D8B3414-B279-42B1-BD18-13B7A4DE3ACB}': 'WLAN' (Up), 
+'{E54582B7-9FA5-4DBA-A9BD-BCDB0A28DE57}': 'Bluetooth-Netzwerkverbindung' (Down), 
+'{4552486D-E940-11EB-A449-806E6F6E6963}': 'Loopback Pseudo-Interface 1' (Up)

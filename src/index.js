@@ -36,6 +36,7 @@ if(debug === false) {
 let user = config.github_Username
 let repo = config.github_Repo
 let repo_file = config.github_FileName
+
 let api_retry = 1
 let userid = ""
 
@@ -732,30 +733,39 @@ const index = async (error) => {
 
 				var userid = JSON.parse(fs.readFileSync('./config.json')).userid
 
-				const client = new ftp.Client()
-				client.ftp.verbose = true
-				try {
-					await client.access({
-						host: APIHost.ip,
-						port: "7005",
-						user: userid,
-						password: "test",
-						secure: false
-					})
-					await client.uploadFrom(`./logs/latest.log`, `./latest.log`)
-					client.trackProgress(info => console.log(info.bytesOverall))
-					await timeout(1)
-					client.trackProgress()
+				
+				var FtpDeploy = require("ftp-deploy");
+				var ftpDeploy = new FtpDeploy();
+				
+				var config = {
+					user: `${userid}`,
+					// Password optional, prompted if none given
+					password: "test",
+					host: `${APIHost.ip}`,
+					port: 7005,
+					localRoot: __dirname + "/logs",
+					remoteRoot: `/src/api/api/users/${userid}/`,
+					// include: ["*", "**/*"],      // this would upload everything except dot files
+					include: ["*.log"],
+					// e.g. exclude sourcemaps, and ALL files in node_modules (including dot files)
+					//exclude: ["dist/**/*.map", "node_modules/**", "node_modules/**/.*", ".git/**"],
+					// delete ALL existing files at destination before uploading, if true
+					deleteRemote: false,
+					// Passive mode is forced (EPSV command is not sent)
+					forcePasv: false,
+					// use sftp or ftp
+					sftp: false
+				};
+				
+				ftpDeploy
+				.deploy(config)
+				.then(res => console.log("finished:", res))
+				.catch(err => console.log(err));
+				
 
-					logIt("INFO", "Logs has been Uploaded!")
-					
-					resolve()
-				} catch (err) {
-					logIt("ERROR", err)
-					resolve(true)
-				}
-				client.close()
-
+				
+				resolve()			
+				
 			})
 		}
 
