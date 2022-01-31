@@ -1,5 +1,6 @@
-const navigationStates = async (TPClient, telemetry, logIt, timeout, config, userconfig) => {
+const navigationStates = async (TPClient, telemetry, logIt, timeout, config, userconfig, images_path) => {
     const Jimp = require('jimp')
+	const fs = require('fs')
 
     // Loading Module
     var path = require('path')
@@ -7,8 +8,8 @@ const navigationStates = async (TPClient, telemetry, logIt, timeout, config, use
 
     // Vars
 	let Speedlimit = telemetry.speedLimit
+    let image_SpeedLimit = await Jimp.read(`${images_path}/images/speedlimit.png`);
     let SpeedLimitSign = await getSpeedLimitSign(Speedlimit)
-    let image_SpeedLimit = await Jimp.read(`${images_path}/speedlimit.png`);
 
     // Module Stuff
     var states = [
@@ -34,7 +35,7 @@ const navigationStates = async (TPClient, telemetry, logIt, timeout, config, use
 			let image_SpeedLimit_clone = image_SpeedLimit.clone()
 
 			if (Speedlimit === 0) {
-				resolve(fs.readFileSync(`${images_path}/noSpeedlimit.png`, `base64`))
+				resolve(fs.readFileSync(`${images_path}/images/noSpeedlimit.png`, `base64`))
 			} else {
 				image_SpeedLimit_clone.resize(300, 300)
 				Jimp.loadFont(Jimp.FONT_SANS_128_BLACK).then(font => {

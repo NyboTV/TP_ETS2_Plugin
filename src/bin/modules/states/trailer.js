@@ -5,6 +5,9 @@ const trailerStates = async (TPClient, telemetry, logIt, timeout, config, userco
     var moduleName = path.basename(__filename)
 
     // Vars
+    let trailer1 = telemetry.trailer1
+    let cargo = telemetry.cargo
+
     let Location = config.location
     let TrailerAttached = trailer1.attached
     let TrailerName = trailer1.name
@@ -21,7 +24,7 @@ const trailerStates = async (TPClient, telemetry, logIt, timeout, config, userco
         CargoMass = Math.round(Math.floor(cargo.mass / 1000))
     }
 
-    Weight = userConfig.Basics.Weight
+    Weight = userconfig.Basics.Weight
 
     // Module Stuff
     var states = [

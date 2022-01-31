@@ -1,5 +1,6 @@
 const gaugeStates = async (TPClient, telemetry, logIt, timeout, config, userconfig, images_path) => {
     const Jimp = require('jimp')
+	const fs = require('fs')
 
     // Loading Module
     var path = require('path')

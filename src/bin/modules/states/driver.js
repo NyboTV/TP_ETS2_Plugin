@@ -5,7 +5,7 @@ const driverStates = async (TPClient, telemetry, logIt, timeout, config, usercon
     var moduleName = path.basename(__filename)
 
     // Vars
-	let NextRestStopTime = new Date(game.nextRestStopTime)
+	let NextRestStopTime = new Date(telemetry.nextRestStopTime)
 	NextRestStopTime = `${NextRestStopTime.getUTCHours()}:${NextRestStopTime.getUTCMinutes()}`
 
     // Module Stuff
