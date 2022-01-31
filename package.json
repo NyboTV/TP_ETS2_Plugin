@@ -1,0 +1,56 @@
+{
+  "name": "tp_ets2_plugin",
+  "version": "1.0.0",
+  "description": "ETS2 Plugin for Touch Portal",
+  "main": "./src/bin/plugin.js",
+  "scripts": {
+    "test": "node . --debug",
+    "build": "test"
+  },
+  "bin": {
+    "main": "./src/bin/plugin.js"
+  },
+  "pkg": {
+    "targets": [
+      "node16-win-x64"
+    ],
+    "assets": [
+      "node_modules/@jimp/plugin-print/fonts/open-sans/open-sans-128-black/open-sans-128-black.fnt",
+      "node_modules/@jimp/plugin-print/fonts/open-sans/open-sans-128-black/open-sans-128-black.png"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NyboTV/TP_ETS2_Plugin.git"
+  },
+  "keywords": [
+    "plugin",
+    "tp",
+    "touch",
+    "portal",
+    "ets2",
+    "euro",
+    "truck",
+    "sim"
+  ],
+  "author": "Nybo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NyboTV/TP_ETS2_Plugin/issues"
+  },
+  "homepage": "https://github.com/NyboTV/TP_ETS2_Plugin#readme",
+  "dependencies": {
+    "adm-zip": "^0.5.9",
+    "download-github-release": "^0.3.2",
+    "fs": "^0.0.1-security",
+    "fs-extra": "^10.0.0",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "jimp": "^0.16.1",
+    "public-ip": "^5.0.0",
+    "replace-json-property": "^1.8.0",
+    "request": "^2.88.2",
+    "self-reload-json": "^0.4.0",
+    "touchportal-api": "^3.0.0"
+  }
+}
