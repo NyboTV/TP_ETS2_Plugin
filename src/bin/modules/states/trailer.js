@@ -8,7 +8,7 @@ const trailerStates = async (TPClient, telemetry, logIt, timeout, config, userco
     let trailer1 = telemetry.trailer1
     let cargo = telemetry.cargo
 
-    let Location = config.location
+    let Location = userconfig.Basics.location
     let TrailerAttached = trailer1.attached
     let TrailerName = trailer1.name
     let TrailerChainType = trailer1.chainType

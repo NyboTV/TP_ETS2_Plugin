@@ -1,4 +1,8 @@
+let Test = 0
 const truckStates = async (TPClient, telemetry, logIt, timeout, config, userconfig) => {
+
+    Test = Test+1
+    console.log("TEST " + Test)
 
     // Loading Module
     var path = require('path')
@@ -170,7 +174,7 @@ const truckStates = async (TPClient, telemetry, logIt, timeout, config, userconf
         CargoLoaded = "off"
     }
     
-    
+    console.log(Gear)
     
     // Module Stuff
     var states = [
@@ -417,73 +421,21 @@ const truckStates = async (TPClient, telemetry, logIt, timeout, config, userconf
     async function getGear(Gears, Shifter) {
 		return new Promise(async (resolve, reject) => {
 			if (Shifter === "automatic") {
-				if (Gears === 0) {
+				if (Gears === 0 ) {
 					resolve("N")
-				} else if (Gears === 1) {
-					resolve("D1")
-				} else if (Gears === 2) {
-					resolve("D2")
-				} else if (Gears === 3) {
-					resolve("D3")
-				} else if (Gears === 4) {
-					resolve("D4")
-				} else if (Gears === 5) {
-					resolve("D5")
-				} else if (Gears === 6) {
-					resolve("D6")
-				} else if (Gears === 7) {
-					resolve("D7")
-				} else if (Gears === 8) {
-					resolve("D8")
-				} else if (Gears === 9) {
-					resolve("D9")
-				} else if (Gears === 10) {
-					resolve("D10")
-				} else if (Gears === 11) {
-					resolve("D11")
-				} else if (Gears === 12) {
-					resolve("D12")
-				} else if (Gears === -1) {
-					resolve("R1")
-				} else if (Gears === -2) {
-					resolve("R2")
-				} else if (Gears === -3) {
-					resolve("R3")
+				} else if (Gears > 0) {
+					resolve(`D${Gears}`)
+                } else if (Gears < 0) {
+					resolve(`R${Gears}`)
 				}
 			} else if (Shifter === "manual") {
 				if (Gears === 0) {
 					resolve("N")
-				} else if (Gears === 1) {
-					resolve("1")
-				} else if (Gears === 2) {
-					resolve("2")
-				} else if (Gears === 3) {
-					resolve("3")
-				} else if (Gears === 4) {
-					resolve("4")
-				} else if (Gears === 5) {
-					resolve("5")
-				} else if (Gears === 6) {
-					resolve("6")
-				} else if (Gears === 7) {
-					resolve("7")
-				} else if (Gears === 8) {
-					resolve("8")
-				} else if (Gears === 9) {
-					resolve("9")
-				} else if (Gears === 10) {
-					resolve("10")
-				} else if (Gears === 11) {
-					resolve("11")
-				} else if (Gears === 12) {
-					resolve("12")
-				} else if (Gears === -1) {
-					resolve("-1")
-				} else if (Gears === -2) {
-					resolve("-2")
-				} else if (Gears === -3) {
-					resolve("-3")
-				}
+				} else if (Gears > 0) {
+                    resolve(`${Gears}`)
+				} else if (Gears < 0) {
+					resolve(`-${Gears}`)
+				} 
 			}
 		})
 	}

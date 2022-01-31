@@ -40,16 +40,7 @@ const navigationStates = require('./modules/states/navigation');
 const trailerStates = require('./modules/states/trailer');
 const truckStates = require('./modules/states/truck');
 const truckersmpStates = require('./modules/states/truckersmp');
-
-
-
-
-logIt("INFO", "Plugin is loading 'Script Vars'...")
-// Script Vars
-let telemetry = ""
-let telemetry_retry = 0
-
-let pluginId = pluginID
+const { setInterval } = require('timers');
 
 
 logIt("INFO", "Plugin is loading 'Script Files'...")
@@ -58,35 +49,57 @@ let config = new sJSON(`${path}/config/cfg.json`)
 let uConfig = new sJSON(`${path}/config/usercfg.json`)
 
 
+logIt("INFO", "Plugin is loading 'Script Vars'...")
+// Script Vars
+let telemetry = ""
+let telemetry_retry = 0
+let refreshInterval = 500
+
+let activeModules = uConfig.Modules
+
+let pluginId = pluginID
+
+
+
+
 logIt("INFO", "Plugin is loading 'Modules Loader'...")
 // Modules Loader
 function modules_loader() {
+    let telemetry_status = false
     setInterval(async() => {
-        let telemetry_status = await Telemetry_Status()
+        telemetry_status = await Telemetry_Status()
         await Telemetry_Request(telemetry_status)
+    }, 500);
+
+    if(uConfig.refreshInterval > 300) {
+        refreshInterval = uConfig.refreshInterval
+    } else {
+        //replaceJSON(`${path}/config/cfg.json`, "refreshInterval", 300)
+    }
+
+    setInterval(async() => {
         
         if(telemetry_status === false) {
             return;
         }
         
         modules()
-    }, 200);
+    }, 300);
 }
     
 
 logIt("INFO", "Plugin is loading 'Modules'...")
 // Modules
 function modules() {
-    driverStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
-    gameStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
-    gaugeStates(TPClient, telemetry.truck, logIt, timeout, config, uConfig, path)
-    jobStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
-    navigationStates(TPClient, telemetry.navigation, logIt, timeout, config, uConfig, path)
-    trailerStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
-    truckStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
-    truckersmpStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
-    worldStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
-
+    if(activeModules.driverStates) return driverStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
+    if(activeModules.gameStates) return gameStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
+    if(activeModules.gaugeStates) return gaugeStates(TPClient, telemetry.truck, logIt, timeout, config, uConfig, path)
+    if(activeModules.jobStates) return jobStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
+    if(activeModules.navigationStates) return navigationStates(TPClient, telemetry.navigation, logIt, timeout, config, uConfig, path)
+    if(activeModules.trailerStates) return trailerStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
+    if(activeModules.truckStates) return truckStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
+    if(activeModules.truckersmpStates) return truckersmpStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
+    if(activeModules.worldStates) return worldStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
 }
 
 
@@ -176,6 +189,10 @@ TPClient.connect({
   
 
 // Other Function
+function isBetween(n, a, b) {
+    return (n - a) * (n - b) <= 0
+}
+
 function timeout(ms) {
     return new Promise(async (resolve, reject) => {
         ms = Number(ms)

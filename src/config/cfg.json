@@ -1,5 +1,5 @@
 {
-    "version": "1.1.1",
+    "version": "2.0.0",
     "-----------------": "----------",
     "github_Username": "NyboTV",
     "github_Repo": "TP_ETS2_Plugin",
@@ -10,10 +10,8 @@
     "autoupdates": false,
     "discordMessage": true,
     "----------------": "-----------",
-    "location": "kmh",
-    "TruckersMPServer": "1",
     "design": "default",
-    "refreshInterval": "200",
+    "refreshInterval": "300",
     "---------------": "-----------",
     "--------------": "-----------",
     "DEV STUFF ONLY": "DEV STUFF ONLY",

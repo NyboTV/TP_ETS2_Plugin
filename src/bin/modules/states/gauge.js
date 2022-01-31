@@ -12,7 +12,7 @@ const gaugeStates = async (TPClient, telemetry, logIt, timeout, config, userconf
     let image2_Fuel = await Jimp.read(`${images_path}/images/FuelGauge.png`);
 
     // Vars
-    let Location = config.location
+    let Location = userconfig.Basics.location
 
     let Speed = ""
     let EngineRPM = Math.round(telemetry.engineRpm)
