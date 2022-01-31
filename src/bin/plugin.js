@@ -13,6 +13,19 @@ const replaceJSON = require('replace-json-property');
 const { exit } = require('process');
 const sJSON = require('self-reload-json')
 
+
+// Important Script Vars
+let path = ""
+
+// Debug Section
+const debugMode = process.argv.includes("--debug")
+if(debugMode) {
+    path = `./src`
+} else {
+    path = `.`
+}
+
+
 logIt("INFO", "Plugin is Starting...")
 logIt("INFO", "Plugin is 'importing Modules'...")
 
@@ -27,26 +40,16 @@ const navigationStates = require('./modules/states/navigation');
 const trailerStates = require('./modules/states/trailer');
 const truckStates = require('./modules/states/truck');
 const truckersmpStates = require('./modules/states/truckersmp');
-const test = require('./modules/test')
+
+
 
 
 logIt("INFO", "Plugin is loading 'Script Vars'...")
 // Script Vars
-let path = ""
 let telemetry = ""
 let telemetry_retry = 0
 
 let pluginId = pluginID
-
-
-logIt("INFO", "Plugin is loading 'Debug Section'...")
-// Debug Section
-const debugMode = process.argv.includes("--debug")
-if(debugMode) {
-    path = `./src`
-} else {
-    path = `.`
-}
 
 
 logIt("INFO", "Plugin is loading 'Script Files'...")
@@ -74,15 +77,15 @@ function modules_loader() {
 logIt("INFO", "Plugin is loading 'Modules'...")
 // Modules
 function modules() {
-    //driverStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
+    driverStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
     gameStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
     gaugeStates(TPClient, telemetry.truck, logIt, timeout, config, uConfig, path)
-    //jobStates(TPClient, telemetry.job, logIt, timeout, config, uConfig, path)
-    //navigationStates(TPClient, telemetry.navigation, logIt, timeout, config, uConfig, path)
-    //trailerStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
-    //truckStates(TPClient, telemetry.truck, logIt, timeout, config, uConfig, path)
-    //truckersmpStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
-    //worldStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
+    jobStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
+    navigationStates(TPClient, telemetry.navigation, logIt, timeout, config, uConfig, path)
+    trailerStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
+    truckStates(TPClient, telemetry, logIt, timeout, config, uConfig, path)
+    truckersmpStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
+    worldStates(TPClient, telemetry.game, logIt, timeout, config, uConfig, path)
 
 }
 
@@ -184,8 +187,8 @@ function timeout(ms) {
 
 function logIt() {
 
-    if(fs.existsSync('./latest.log') === false) {
-        fs.mkdirSync('./latest.log', "START")
+    if(fs.existsSync(`${path}/logs`) === false) {
+        fs.writeFileSync(`${path}/logs/latest.log`, "Plugin Started")
     }
     
     let curTime = new Date().toISOString().
@@ -194,5 +197,5 @@ function logIt() {
     let message = [...arguments];
     let type = message.shift();
     console.log(curTime, ":", pluginID, ":" + type + ":", message.join(" "));
-    fs.appendFileSync('./latest.log', `\n${curTime}:${pluginID}:${type}:${message.join(" ")}`)
+    fs.appendFileSync(`${path}/logs/latest.log`, `\n${curTime}:${pluginID}:${type}:${message.join(" ")}`)
 }

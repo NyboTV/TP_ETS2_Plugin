@@ -4,11 +4,407 @@ const truckStates = async (TPClient, telemetry, logIt, timeout, config, userconf
     var path = require('path')
     var moduleName = path.basename(__filename)
 
+    // Vars
+    let truck = telemetry.truck
+    let trailer1 = telemetry.trailer1
+    let cargo = telemetry.cargo
+
+    let HazardLightsCounter = ""
+    let CargoLoaded = ""
+    let TrailerAttached = ""
+
+    let Constructor = truck.make
+	let Model = truck.model
+
+    let	CruiseControlSpeed = truck.cruiseControlSpeed
+	let	CruiseControlOn = truck.cruiseControlOn
+
+	let	ShifterType = truck.shifterType
+	let	Gear = truck.displayedGear
+
+	let	Speed = Math.round(truck.speed)
+	let	EngineRPM = Math.round(truck.engineRpm)
+	Gear = await getGear(Gear, ShifterType)
+
+	let	EngineOn = truck.engineOn
+	let	ElectricOn = truck.electricOn
+	let	WipersOn = truck.wipersOn
+	let	ParkBrakeOn = truck.parkBrakeOn
+	let	MotorBrakeOn = truck.motorBrakeOn
+
+	let	Fuel = Math.round(truck.fuel)
+	let	AdBlue = Math.round(truck.adblue)
+	let	AirPressure = Math.round(truck.airPressure)
+	let	OilTemp = Math.round(truck.oilTemperature)
+	let	WaterTemp = Math.round(truck.waterTemperature)
+	let	BatteryVoltage = Math.round(truck.batteryVoltage)
+
+	let	FuelCapacity = Math.round(truck.fuelCapacity)
+
+	let	FuelWarningOn = truck.fuelWarningOn
+	let	AdBlueWarningOn = truck.adblueWarningOn
+	let	AirPressureWarningOn = truck.airPressureWarningOn
+	let	AirPressureEmergencyOn = truck.airPressureEmergencyOn
+	let	OilPressureWarningOn = truck.oilPressureWarningOn
+	let	WaterTempWarningOn = truck.waterTemperatureWarningOn
+	let	BatteryVoltageWarningOn = truck.batteryVoltageWarningOn
+
+	let	BlinkerLeftActive = truck.blinkerLeftActive
+	let	BlinkerRightActive = truck.blinkerRightActive
+	let	BlinkerLeftOn = truck.blinkerLeftOn
+	let	BlinkerRightOn = truck.blinkerRightOn
+    let HazardLightsOn = ""
+
+	let	LightsDashboardValue = truck.lightsDashboardValue
+	let	LightsDashboardOn = truck.lightsDashboardOn
+	let	LightsParkingOn = truck.lightsParkingOn
+	let	LightsBeamLowOn = truck.lightsBeamLowOn
+	let	LightsBeamHighOn = truck.lightsBeamHighOn
+	let	LightsAuxFrontOn = truck.lightsAuxFrontOn
+	let	LightsAuxRoofOn = truck.lightsAuxRoofOn
+	let	LightsBeaconOn = truck.lightsBeaconOn
+	let	LightsBrakeOn = truck.lightsBrakeOn
+	let	LightsReverseOn = truck.lightsReverseOn
+
+
+    if (BlinkerLeftOn && BlinkerRightOn) {
+        HazardLightsOn = true
+        HazardLightsCounter = 1
+    }
+    
+    if (HazardLightsCounter < 5) {
+        HazardLightsCounter = Math.floor(HazardLightsCounter + 1)
+    } else {
+        HazardLightsOn = false
+    }
+
+    // Event Area
+    
+    if(EngineOn === true) {
+        EngineOn = "on"
+    } else {
+        EngineOn = "off"
+    } 
+    if(ElectricOn === true) {
+        ElectricOn = "on"
+    } else {
+        ElectricOn = "off"
+    }
+    if(WipersOn === true) {
+        WipersOn = "on"
+    } else {
+        WipersOn = "off"
+    }
+    
+    if(ParkBrakeOn === true) {
+        ParkBrakeOn = "on"
+    } else {
+        ParkBrakeOn = "off"
+    }
+    
+    if(FuelWarningOn === true) {
+        FuelWarningOn = "on"
+    } else {
+        FuelWarningOn = "off"
+    }
+    if(AdBlueWarningOn === true) {
+        AdBlueWarningOn = "on"
+    } else {
+        AdBlueWarningOn = "off" 
+    }
+    
+    if(AirPressureWarningOn === true) {
+        AirPressureWarningOn = "low"
+    } else if(AirPressureEmergencyOn === true) {
+        AirPressureWarningOn = "emergency"
+    } else {
+        AirPressureWarningOn = "high"
+    }
+    if(OilPressureWarningOn === true) {
+        OilPressureWarningOn = "low"
+    } else {
+        OilPressureWarningOn = "high"
+    }
+    if(WaterTempWarningOn === true) {
+        WaterTempWarningOn = "high"
+    } else {
+        WaterTempWarningOn = "low"
+    }
+    if(BatteryVoltageWarningOn === true) {
+        BatteryVoltageWarningOn = "low"
+    } else {
+        BatteryVoltageWarningOn = "high"
+    }
+    
+    if(BlinkerLeftOn === true) {
+        BlinkerLeftOn = "on"
+    } else {
+        BlinkerLeftOn = "off"
+    }
+    if(BlinkerRightOn === true) {
+        BlinkerRightOn = "on"
+    } else {
+        BlinkerRightOn = "off"
+    }
+    if(HazardLightsOn === true) {
+        HazardLightsOn = "on"
+    } else {
+        HazardLightsOn = "off"
+    }
+    
+    if(LightsDashboardOn === true) {
+        LightsDashboardOn = "on"
+    } else {
+        LightsDashboardOn = "off"
+    }
+    
+    if(TrailerAttached === true) {
+        TrailerAttached = "attached"
+    } else {
+        TrailerAttached = "off"
+    }
+    
+    if(CargoLoaded === true) {
+        CargoLoaded = "loaded" 
+    } else {
+        CargoLoaded = "off"
+    }
+    
+    
+    
     // Module Stuff
     var states = [
         {
-            id: "Nybo.ETS2.Dashboard.ConnectedStatus",
-            value: `${telemetry.connected}`
+            id: "Nybo.ETS2.Dashboard.Truck_Make",
+            value: `${Constructor}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.Model",
+            value: `${Model}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.CruiseControlSpeed",
+            value: `${CruiseControlSpeed}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.CruiseControlOn",
+            value: `${CruiseControlOn}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.Speed",
+            value: `${Speed}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.EngineRPM",
+            value: `${EngineRPM}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.Gear",
+            value: `${Gear}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.EngineOn",
+            value: `${EngineOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.ElectricOn",
+            value: `${ElectricOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.WipersON",
+            value: `${WipersOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
+            value: `${ParkBrakeOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.MotorBrakeOn",
+            value: `${MotorBrakeOn}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.Fuel",
+            value: `${Fuel}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.AdBlue",
+            value: `${AdBlue}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.AirPressure",
+            value: `${AirPressure}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.OilTemp",
+            value: `${OilTemp}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.WaterTemp",
+            value: `${WaterTemp}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.BatteryVoltage",
+            value: `${BatteryVoltage}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.FuelCapacity",
+            value: `${FuelCapacity}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.FuelWarningOn",
+            value: `${FuelWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.AdBlueWarningOn",
+            value: `${AdBlueWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.AirPressureWarningOn",
+            value: `${AirPressureWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.AirPressureEmergencyOn",
+            value: `${AirPressureEmergencyOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.OilPressureWarningOn",
+            value: `${OilPressureWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.WaterTempWarningOn",
+            value: `${WaterTempWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.BatteryVoltageWarningOn",
+            value: `${BatteryVoltageWarningOn}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.BlinkerLeftActive",
+            value: `${BlinkerLeftActive}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.BlinkerRightActive",
+            value: `${BlinkerRightActive}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.BlinkerLeftOn",
+            value: `${BlinkerLeftOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.BlinkerRightOn",
+            value: `${BlinkerRightOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.HazardLightsOn",
+            value: `${HazardLightsOn}`
+        },
+
+        {
+            id: "Nybo.ETS2.Dashboard.LightsDashboardValue",
+            value: `${LightsDashboardValue}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsDashboardOn",
+            value: `${LightsDashboardOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsParkingOn",
+            value: `${LightsParkingOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsBeamLowOn",
+            value: `${LightsBeamLowOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsBeamHighOn",
+            value: `${LightsBeamHighOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsAuxFrontOn",
+            value: `${LightsAuxFrontOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsAuxRoofOn",
+            value: `${LightsAuxRoofOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsBeaconOn",
+            value: `${LightsBeaconOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsBrakeOn",
+            value: `${LightsBrakeOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.LightsReverseOn",
+            value: `${LightsReverseOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_EngineOn",
+			value: `${EngineOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_ElectricOn",
+			value: `${ElectricOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_WipersOn",
+			value: `${WipersOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_ParkBrakeOn",
+			value: `${ParkBrakeOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_FuelWarningOn",
+			value: `${FuelWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_AdBlueWarningOn",
+			value: `${AdBlueWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_AirPressureWarningOn",
+			value: `${AirPressureWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_OilPressureWarningOn",
+			value: `${OilPressureWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_WaterTempWarningOn",
+			value: `${WaterTempWarningOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_BlinkerLeftOn",
+			value: `${BlinkerLeftOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_BlinkerRightOn",
+			value: `${BlinkerRightOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_HazardLightsOn",
+			value: `${HazardLightsOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_LightsDashboardOn",
+			value: `${LightsDashboardOn}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_TrailerAttached",
+			value: `${TrailerAttached}`
+        },
+        {
+            id: "Nybo.ETS2.Dashboard.event_CargoLoaded",
+			value: `${CargoLoaded}`
         },
     ]
 
@@ -17,5 +413,79 @@ const truckStates = async (TPClient, telemetry, logIt, timeout, config, userconf
     } catch (error) {
         logIt("ERROR", `${moduleName}States Error: ${error}`)
     }
+
+    async function getGear(Gears, Shifter) {
+		return new Promise(async (resolve, reject) => {
+			if (Shifter === "automatic") {
+				if (Gears === 0) {
+					resolve("N")
+				} else if (Gears === 1) {
+					resolve("D1")
+				} else if (Gears === 2) {
+					resolve("D2")
+				} else if (Gears === 3) {
+					resolve("D3")
+				} else if (Gears === 4) {
+					resolve("D4")
+				} else if (Gears === 5) {
+					resolve("D5")
+				} else if (Gears === 6) {
+					resolve("D6")
+				} else if (Gears === 7) {
+					resolve("D7")
+				} else if (Gears === 8) {
+					resolve("D8")
+				} else if (Gears === 9) {
+					resolve("D9")
+				} else if (Gears === 10) {
+					resolve("D10")
+				} else if (Gears === 11) {
+					resolve("D11")
+				} else if (Gears === 12) {
+					resolve("D12")
+				} else if (Gears === -1) {
+					resolve("R1")
+				} else if (Gears === -2) {
+					resolve("R2")
+				} else if (Gears === -3) {
+					resolve("R3")
+				}
+			} else if (Shifter === "manual") {
+				if (Gears === 0) {
+					resolve("N")
+				} else if (Gears === 1) {
+					resolve("1")
+				} else if (Gears === 2) {
+					resolve("2")
+				} else if (Gears === 3) {
+					resolve("3")
+				} else if (Gears === 4) {
+					resolve("4")
+				} else if (Gears === 5) {
+					resolve("5")
+				} else if (Gears === 6) {
+					resolve("6")
+				} else if (Gears === 7) {
+					resolve("7")
+				} else if (Gears === 8) {
+					resolve("8")
+				} else if (Gears === 9) {
+					resolve("9")
+				} else if (Gears === 10) {
+					resolve("10")
+				} else if (Gears === 11) {
+					resolve("11")
+				} else if (Gears === 12) {
+					resolve("12")
+				} else if (Gears === -1) {
+					resolve("-1")
+				} else if (Gears === -2) {
+					resolve("-2")
+				} else if (Gears === -3) {
+					resolve("-3")
+				}
+			}
+		})
+	}
 }
 module.exports = truckStates

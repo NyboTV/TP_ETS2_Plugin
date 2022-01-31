@@ -7,8 +7,8 @@ const truckersmpStates = async (TPClient, telemetry, logIt, timeout, config, use
     // Module Stuff
     var states = [
         {
-            id: "Nybo.ETS2.Dashboard.ConnectedStatus",
-            value: `${telemetry.connected}`
+            id: "Nybo.ETS2.Dashboard.Server",
+            value: `CURRENTLY NOT WORKING`
         },
     ]
 
