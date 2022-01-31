@@ -1,0 +1,750 @@
+{
+   "sdk":1,
+   "version":1,
+   "name":"TP ETS2 Plugin",
+   "id":"TP_ETS2_Plugin",
+   "plugin_start_cmd":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\ets2_plugin.exe\"",
+   "configuration":{
+      "colorDark":"#f54242",
+      "colorLight":"#f5a442"
+   },
+   "settings":[ 
+   ],
+   "categories":[
+      {
+         "id":"Game_Events",
+         "name":"ETS2 Dashboard",
+         "actions": [
+         ],
+         "events": [
+            {
+               "id":"event_EngineOn",
+               "name":"Engine Status",
+               "format":"If Engine is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_EngineOn"
+            }, 
+            {
+               "id":"event_ElectricOn",
+               "name":"Electric Status",
+               "format":"If Electric is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_ElectricOn"
+            }, 
+            {
+               "id":"event_WipersOn",
+               "name":"Wipers Status",
+               "format":"If Wipers are $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_WipersOn"
+            }, 
+            {
+               "id":"event_ParkBrakeOn",
+               "name":"Park Brake Status",
+               "format":"If Park Brake is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_ParkBrakeOn"
+            }, 
+
+
+
+            {
+               "id":"event_FuelWarningOn",
+               "name":"Fuel Status",
+               "format":"If Fuel Warning Light is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_FuelWarningOn"
+            }, 
+            {
+               "id":"event_AdBlueWarningOn",
+               "name":"AdBlue Status",
+               "format":"If AdBlue Warning Light is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_AdBlueWarningOn"
+            }, 
+            {
+               "id":"event_AirPressureWarningOn",
+               "name":"Air Pressure Status",
+               "format":"If AirPressure is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "low",
+                  "high",
+                  "emergency"
+               ],
+            "valueStateId":"event_AirPressureWarningOn"
+            }, 
+            {
+               "id":"event_OilPressureWarningOn",
+               "name":"Oil Pressure Status",
+               "format":"If Oil Pressure is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "low",
+                  "high"
+               ],
+            "valueStateId":"event_OilPressureWarningOn"
+            }, 
+            {
+               "id":"event_WaterTempWarningOn",
+               "name":"Water Temp Status",
+               "format":"If Water Temp Warning Light is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_WaterTempWarningOn"
+            }, 
+            {
+               "id":"event_BatteryVoltageWarningOn",
+               "name":"Battery Status",
+               "format":"If Battery Voltage is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "low",
+                  "high"
+               ],
+            "valueStateId":"event_BatteryVoltageWarningOn"
+            }, 
+
+
+
+            {
+               "id":"event_BlinkerLeftOn",
+               "name":"Blinker Left Status",
+               "format":"If Blinker Left is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_BlinkerLeftOn"
+            }, 
+            {
+               "id":"event_BlinkerRightOn",
+               "name":"Blinker Right Status",
+               "format":"If Blinker Right is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_BlinkerRightOn"
+            }, 
+            {
+               "id":"event_HazardLightsOn",
+               "name":"Hazard Lights Status",
+               "format":"If Hazard Lights are $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_HazardLightsOn"
+            }, 
+
+
+
+            {
+               "id":"event_LightsDashboardOn",
+               "name":"Dashboard Lights Status",
+               "format":"If Dashboards Lights are $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "on",
+                  "off"
+               ],
+            "valueStateId":"event_LightsDashboardOn"
+            }, 
+
+
+
+            {
+               "id":"event_TrailerAttached",
+               "name":"Trailer Status",
+               "format":"If Trailer is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "attached",
+                  "off"
+               ],
+            "valueStateId":"event_TrailerAttached"
+            }, 
+
+
+
+            {
+               "id":"event_CargoLoaded",
+               "name":"Cargo Status",
+               "format":"If Cargo is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "loaded",
+                  "off"
+               ],
+            "valueStateId":"event_CargoLoaded"
+            }
+         ]
+      },
+      {
+         "id":"Game_States",
+         "name":"Game States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.ConnectedStatus",
+               "type":"text",
+               "desc":"ETS2:Connection Status",
+               "default":"false"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.GameType",
+               "type":"text",
+               "desc":"ETS2:Game Type",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.IsPaused",
+               "type":"text",
+               "desc":"ETS2:Is Paused",
+               "default":"false"
+            }
+         ]
+      },
+      {
+         "id":"World_States",
+         "name":"World States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.Time",
+               "type":"text",
+               "desc":"ETS2:Ingame Time",
+               "default":"-"
+            }
+         ]
+      },
+      {
+         "id":"Driver_States",
+         "name":"Driver States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.NextRestTime",
+               "type":"text",
+               "desc":"ETS2:Next Rest Time",
+               "default":"-"
+            }
+         ]
+      },
+      {
+         "id":"Gauge_States",
+         "name":"Gauge States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.SpeedGauge",
+               "type":"text",
+               "desc":"ETS2:Speed Gauge",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.RPMGauge",
+               "type":"text",
+               "desc":"ETS2:RPM Gauge",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.FuelGauge",
+               "type":"text",
+               "desc":"ETS2:Fuel Gauge",
+               "default":"-"
+            }
+         ]
+      },
+      {
+         "id":"Truck_States",
+         "name":"Truck States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.Truck_Make",
+               "type":"text",
+               "desc":"ETS2:Truck Make",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.Model",
+               "type":"text",
+               "desc":"ETS2:Truck Model",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.CruiseControlSpeed",
+               "type":"text",
+               "desc":"ETS2:Cruise Control Speed",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.CruiseControlOn",
+               "type":"text",
+               "desc":"ETS2:Cruise Control On",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.Speed",
+               "type":"text",
+               "desc":"ETS2:Speed",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.EngineRPM",
+               "type":"text",
+               "desc":"ETS2:RPM",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.Gear",
+               "type":"text",
+               "desc":"ETS2:Gear",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.EngineOn",
+               "type":"text",
+               "desc":"ETS2:Engine On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.ElectricOn",
+               "type":"text",
+               "desc":"ETS2:Electric On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.WipersOn",
+               "type":"text",
+               "desc":"ETS2:Wipers On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.ParkBrakeOn",
+               "type":"text",
+               "desc":"ETS2:Park Brake On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.MotorBrakeOn",
+               "type":"text",
+               "desc":"ETS2:Motor Brake On",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.Fuel",
+               "type":"text",
+               "desc":"ETS2:Fuel",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.AdBlue",
+               "type":"text",
+               "desc":"ETS2:AdBlue",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.AirPressure",
+               "type":"text",
+               "desc":"ETS2:Air Pressure",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.OilTemp",
+               "type":"text",
+               "desc":"ETS2:Oil Temp",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.WaterTemp",
+               "type":"text",
+               "desc":"ETS2:Water Temp",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.BatteryVoltage",
+               "type":"text",
+               "desc":"ETS2:Battery Voltage",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.FuelCapacity",
+               "type":"text",
+               "desc":"ETS2:Fuel Capacity",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.FuelWarningOn",
+               "type":"text",
+               "desc":"ETS2:Fuel Warning On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.AdBlueWarningOn",
+               "type":"text",
+               "desc":"ETS2:AdBlue Warning On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.AirPressureWarningOn",
+               "type":"text",
+               "desc":"ETS2:Air Pressure Warning on",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.AirPressureEmergencyOn",
+               "type":"text",
+               "desc":"ETS2:Air Pressure Emergency On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.OilPressureWarningOn",
+               "type":"text",
+               "desc":"ETS2:Oil Pressure Warning On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.WaterTempWarningOn",
+               "type":"text",
+               "desc":"ETS2:Water Temp Warning On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.BatteryVoltageWarningOn",
+               "type":"text",
+               "desc":"ETS2:Battery Voltage Warning On",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.BlinkerLeftActive",
+               "type":"text",
+               "desc":"ETS2:Blinker Left Active",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.BlinkerRightActive",
+               "type":"text",
+               "desc":"ETS2:Blinker Right Active",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.BlinkerLeftOn",
+               "type":"text",
+               "desc":"ETS2:Blinker Left On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.BlinkerRightOn",
+               "type":"text",
+               "desc":"ETS2:Blinker Right On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.HazardLightsOn",
+               "type":"text",
+               "desc":"ETS2:Hazard Lights On",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsDashboardValue",
+               "type":"text",
+               "desc":"ETS2:Lights Dashboard Value",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsDashboardOn",
+               "type":"text",
+               "desc":"ETS2:Lights Dashboard On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsParkingOn",
+               "type":"text",
+               "desc":"ETS2:Lights Parking On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsBeamLowOn",
+               "type":"text",
+               "desc":"ETS2:Lights Beam Low On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsBeamHighOn",
+               "type":"text",
+               "desc":"ETS2:Lights Beam High On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsAuxFrontOn",
+               "type":"text",
+               "desc":"ETS2:Lights Aux Front On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsAuxRoofOn",
+               "type":"text",
+               "desc":"ETS2:Lights Aux Roof On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsBeaconOn",
+               "type":"text",
+               "desc":"ETS2:Lights Beacon On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsBrakeOn",
+               "type":"text",
+               "desc":"ETS2:Lights Brake On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.LightsReverseOn",
+               "type":"text",
+               "desc":"ETS2:Lights Reverse On",
+               "default":"-"
+            }
+         ]
+      },
+      {
+         "id":"Trailer_States",
+         "name":"Trailer States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.TrailerAttached",
+               "type":"text",
+               "desc":"ETS2:Trailer Attached",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.TrailerName",
+               "type":"text",
+               "desc":"ETS2:Trailer Name",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.TrailerChainType",
+               "type":"text",
+               "desc":"ETS2:TrailerChainType",
+               "default":"-"
+            },
+
+
+            {
+               "id":"Nybo.ETS2.Dashboard.CargoLoaded",
+               "type":"text",
+               "desc":"ETS2:Cargo Loaded",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.CargoType",
+               "type":"text",
+               "desc":"ETS2:Cargo Type",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.CargoDamage",
+               "type":"text",
+               "desc":"ETS2:Cargo Damage",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.CargoMass",
+               "type":"text",
+               "desc":"ETS2:Cargo Mass",
+               "default":"-"
+            }
+         ]
+      },
+      {
+         "id":"Job_States",
+         "name":"Job States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.JobIncome",
+               "type":"text",
+               "desc":"ETS2:Job Income",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.JobRemainingTime",
+               "type":"text",
+               "desc":"ETS2:Job Remaining Time",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.JobSourceCity",
+               "type":"text",
+               "desc":"ETS2:Job Source City",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.JobSourceCompany",
+               "type":"text",
+               "desc":"ETS2:Job Source Company",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.JobDestinationCity",
+               "type":"text",
+               "desc":"ETS2:Job Destination City",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.JobDestinationCompany",
+               "type":"text",
+               "desc":"ETS2:Job Destination Company",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.JobEstimatedDistance",
+               "type":"text",
+               "desc":"ETS2:Job Estimated Distance",
+               "default":"-"
+            }
+         ]
+      },
+      {
+         "id":"Navigation_States",
+         "name":"Navigation States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.SpeedLimit",
+               "type":"text",
+               "desc":"ETS2:Speedlimit",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.SpeedLimitSign",
+               "type":"text",
+               "desc":"ETS2:Speedlimit Sign",
+               "default":"-"
+            }       
+         ]
+      },
+      {
+         "id":"TruckersMP_States",
+         "name":"TruckersMP States",
+         "events":[
+            
+         ],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.Servers",
+               "type":"text",
+               "desc":"ETS2:Servers",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.ServerName",
+               "type":"text",
+               "desc":"ETS2:Server Name",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.ServerPlayers",
+               "type":"text",
+               "desc":"ETS2:Server Players",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.ServerPlayerQueue",
+               "type":"text",
+               "desc":"ETS2:Server Player Queue",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.APIOnline",
+               "type":"text",
+               "desc":"ETS2:API Online",
+               "default":"-"
+            }
+         ]
+      }
+   ]
+ }

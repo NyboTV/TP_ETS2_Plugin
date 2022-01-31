@@ -1,0 +1,22 @@
+{
+    "Basics": {
+        "Money": "Euro",
+        "Weight": "Tons",
+        "Location": "kmh"
+    },
+    "TruckersMP": {
+        "TruckersMPServer": "1"
+    },
+    "Modules": {
+        "driverStates": true,
+        "gameStates": false,
+        "gaugeStates": false,
+        "jobStates": false,
+        "navigationStates": false,
+        "trailerStates": false,
+        "truckStates": false,
+        "truckersmpStates": false,
+        "worldStates": false
+    }
+}
+

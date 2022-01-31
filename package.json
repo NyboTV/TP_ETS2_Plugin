@@ -5,7 +5,8 @@
   "main": "./src/bin/plugin.js",
   "scripts": {
     "test": "node . --debug",
-    "build": "test"
+    "test_exe": "pkg ./src/bin/plugin.js && node ./src/build/build.js --test",
+    "release": "pkg ./src/bin/plugin.js && node ./src/build/build.js --release"
   },
   "bin": {
     "main": "./src/bin/plugin.js"
