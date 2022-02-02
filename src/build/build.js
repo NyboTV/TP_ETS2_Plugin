@@ -7,14 +7,39 @@ const Release = process.argv.includes("--release");
 const testMode = process.argv.includes("--test");
 
 let InputPath = "./src"
-let OutputPath = "./src/Build/tmp"
+let OutputPath = "./src/build/tmp"
+let InstallPath = "C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins"
 
-if(fs.existsSync(`${OutputPath}`)) {
-    fs.rmdirSync(`${OutputPath}`, { recursive: true })
+if(fs.existsSync(`./src/build/ETS2_Dashboard`)) {
+    fs.rmSync(`./src/build/ETS2_Dashboard`, { recursive: true })
 }
-fs.mkdirSync(`${OutputPath}`)
+
+
+const tmp = async () => {
+
+    if(fs.existsSync(`${OutputPath}`)) {
+        fs.rmSync(`${OutputPath}`, { recursive: true, force: true })
+        console.log("TMP Folder Removed")
+    }
+
+    if(fs.existsSync(`${OutputPath}`) === false) {
+        fs.mkdirSync(`${OutputPath}`)
+        console.log("TMP Folder Created")
+    }
+
+    if(fs.existsSync(`${InputPath}/build/ETS2_Dashboard`)) {
+        fs.rmSync(`${InputPath}/build/ETS2_Dashboard`, { recursive: true })
+        console.log("ETS Folder removed")
+    }
+}
 
 const pack = async () => {
+
+    //ReCreate TMP Folder
+    await tmp()
+
+    return
+
     //Copy Main File
     fse.moveSync(`./plugin-win.exe`, `${OutputPath}/ets2_plugin.exe`)
     
@@ -48,20 +73,19 @@ const pack = async () => {
 	zip.writeZip("./Installers/Win/ETS2_Dashboard.zip");
     fse.renameSync('./Installers/Win/ETS2_Dashboard.zip', './Installers/Win/ETS2_Dashboard.tpp', { overwrite: true })
 
-    fs.rmdirSync('./src/Build/tmp', { recursive: true })
-    fs.mkdirSync('./src/Build/tmp')
-    
-    
     if(testMode) {
         setTimeout(() => {
             
-            fs.rmdirSync(`C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard`, { recursive: true })
-            fse.copyFileSync(`./Installers/Win/ETS2_Dashboard.tpp`, `C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard/ETS2_Dashboard.tpp`)
-            fse.renameSync('C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard/ETS2_Dashboard.tpp', 'C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard/ETS2_Dashboard.zip', { overwrite: true })
+            if(fs.existsSync(`${InstallPath}`)) {
+                fs.rmdirSync(`${InstallPath}/ETS2_Dashboard`, { recursive: true })
+            }
+
+            fse.copyFileSync(`./Installers/Win/ETS2_Dashboard.tpp`, `${InstallPath}/ETS2_Dashboard.tpp`)
+            fse.renameSync(`${InstallPath}/ETS2_Dashboard.tpp`, `${InstallPath}/ETS2_Dashboard.zip`, { overwrite: true })
             
-            var zip = new AdmZip("C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard/ETS2_Dashboard.zip");
-            zip.extractAllTo('C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/', true)
-            fs.rmdirSync('C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins/ETS2_Dashboard/ETS2_Dashboard.zip') 
+            var zip = new AdmZip(`${InstallPath}/ETS2_Dashboard.zip`);
+            zip.extractAllTo(`${InstallPath}`, true)
+            fs.rmdirSync(`${InstallPath}/ETS2_Dashboard.zip`) 
         }, 2000);
     } else if(Release) {
         fs.copyFileSync('./Installers/Win/ETS2_Dashboard.tpp', 'P:/Dieser PC/Desktop/ETS2_Dashboard.tpp')
