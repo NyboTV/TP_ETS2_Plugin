@@ -6,7 +6,7 @@ const test = async (TPClient, telemetry, logIt, timeout, config, userconfig) => 
     if(ModulesLoaded === 1) return logIt("MODULE", `Module ${moduleName}States loaded`)
 
     // Vars
-    var telemetry = fs.readFileSync(`${telemetry_path}/tmp.json`, 'utf8')
+    var telemetry = JSON.parse(fs.readFileSync(`${telemetry_path}/tmp.json`))
         var refreshInterval = fs.readFileSync(`${path}/config/cfg.json`).refreshInterval
 
 

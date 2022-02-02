@@ -9,14 +9,14 @@
     },
     "Modules": {
         "driverStates": true,
-        "gameStates": false,
-        "gaugeStates": false,
-        "jobStates": false,
-        "navigationStates": false,
-        "trailerStates": false,
-        "truckStates": false,
+        "gameStates": true,
+        "gaugeStates": true,
+        "jobStates": true,
+        "navigationStates": true,
+        "trailerStates": true,
+        "truckStates": true,
         "truckersmpStates": false,
-        "worldStates": false
+        "worldStates": true
     }
 }
 

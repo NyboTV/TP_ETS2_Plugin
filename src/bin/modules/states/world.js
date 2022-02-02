@@ -1,48 +1,62 @@
-const fs = require('fs')
-
-const worldStates = async (TPClient, telemetry_path, logIt, timeout, path) => {
+const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
     // Loading Module
     const fs = require('fs')
-	const Jimp = require('jimp')
+    const sJSON = require('self-reload-json') 
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
     let ModuleLoaded = false
 
-    async function loop () {
+    let world = ""
 
-        if(fs.readFileSync(`${path}/config/usercfg.json`).driverStates === false) {
-            if(ModuleLoaded === true) { logIt("MODULE", `Module ${moduleName}States unloaded`) }
-            ModuleLoaded = false
-            return;
-        } else if(ModuleLoaded === false) { 
-            logIt("MODULE", `Module ${moduleName}States loaded`)
-            ModuleLoaded = true 
-        }
+    // Json Vars
+    let module = new sJSON(`${path}/config/usercfg.json`)
+    var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
 
-        // Vars
-        var telemetry = fs.readFileSync(`${telemetry_path}/tmp.json`, 'utf8')
-        var refreshInterval = fs.readFileSync(`${path}/config/cfg.json`).refreshInterval
-        
-        
-        // Module Stuff
-        var states = [
-            {
-                id: "Nybo.ETS2.Dashboard.Time",
-                value: `${telemetry.time}`
-            },
-        ]
-        
-        try {
-            TPClient.stateUpdateMany(states);
-            await timeout(refreshInterval)
-            loop()
-        } catch (error) {
-            logIt("ERROR", `${moduleName}States Error: ${error}`)
-            logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-            await timeout(3000)
-            loop()
+    // Check if User De/activates Module
+    async function configloop () {
+        for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
+            if(module.Modules.worldStates === false) {
+                if(ModuleLoaded === true) { logIt("MODULE", `Module ${moduleName}States unloaded`) }
+                ModuleLoaded = false
+            } else if(ModuleLoaded === false) { 
+                logIt("MODULE", `Module ${moduleName}States loaded`)
+                ModuleLoaded = true 
+            }
         }
     }
+
+    //Module Loop
+    async function moduleloop () {
+        for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {   
+    
+            if(ModuleLoaded === false) { 
+            } else 
+                     
+            //Vars
+            world = telemetry.game
+            let time = world.time
+
+            // Module Stuff
+            var states = [
+                {
+                    id: "Nybo.ETS2.Dashboard.Time",
+                    value: `${time}`
+                },
+            ]
+            
+            try {
+                TPClient.stateUpdateMany(states);
+                
+            } catch (error) {
+                logIt("ERROR", `${moduleName}States Error: ${error}`)
+                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
+                
+            }
+		}
+	}
+
+	configloop()
+	moduleloop()    
 }
 module.exports = worldStates

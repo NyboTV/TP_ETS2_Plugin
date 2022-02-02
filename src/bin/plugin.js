@@ -8,6 +8,8 @@ const exec = require(`child_process`).exec
 const execute = require(`child_process`).execFile;
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
+const app = require('express')()
+const path2 = require('path')
 
 // Important Script Vars
 let path = ""
@@ -15,15 +17,24 @@ let telemetry_path = ""
 let PluginStarted = false
 let testNumber = 0
 
+let dirpath = __dirname
+let dirname = dirpath.includes(`\\src\\bin`)
+
+
 // Debug Section
 const debugMode = process.argv.includes("--debug")
 if(debugMode) {
     path = `./src/bin`
     telemetry_path = "./src/bin/tmp"
+} else if(dirname) {
+    console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
 } else {
     path = `.`
     telemetry_path = "./tmp"
 }
+
+// Checks and creates if neccessary Logs Folder
+if(fs.existsSync(`./logs`)) {  } else { fs.mkdirSync(`./logs`) }
 
 const plugin = async () => {
 
@@ -88,15 +99,16 @@ const plugin = async () => {
     logIt("INFO", "Plugin is `importing Modules`...")
     // Script Modules
     const test = require(`./modules/test`);
-    const gameStates = require(`./modules/states/Game`);
-    const worldStates = require(`./modules/states/world`);
+
     const driverStates = require(`./modules/states/driver`);
+    const gameStates = require(`./modules/states/Game`);
     const gaugeStates = require(`./modules/states/gauge`);
     const jobStates = require(`./modules/states/job`);
     const navigationStates = require(`./modules/states/navigation`);
     const trailerStates = require(`./modules/states/trailer`);
     const truckStates = require(`./modules/states/truck`);
     const truckersmpStates = require(`./modules/states/truckersmp`);
+    const worldStates = require(`./modules/states/world`);
     
     
     logIt("INFO", "Plugin is loading `Script Vars`...")
@@ -146,19 +158,23 @@ const plugin = async () => {
     
     
     // Modules
-    function modules() {        
-        driverStates(TPClient, telemetry_path, logIt, timeout, path) 
-        //gameStates(TPClient, telemetry_path, logIt, timeout, path)
-        //gaugeStates(TPClient, telemetry_path, logIt, timeout, path)
-        //jobStates(TPClient, telemetry_path, logIt, timeout, path)
-        //navigationStates(TPClient, telemetry_path, logIt, timeout, path)
-        //trailerStates(TPClient, telemetry_path, logIt, timeout, path)
-        //truckStates(TPClient, telemetry_path, logIt, timeout, path)
-        //truckersmpStates(TPClient, telemetry_path, logIt, timeout, path)
-        //worldStates(TPClient, telemetry_path, logIt, timeout, path)
-        ModulesLoaded = true
+    async function modules() {        
+        driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig) 
+        gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        gaugeStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        jobStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        navigationStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        trailerStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        truckStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        truckersmpStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        worldStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
 
+        await timeout(200)
         logIt("INFO", "Modules loaded.")
+        logIt("INFO", "Plugin is starting Loop.")
+
+        logIt("INTERFACE", "Plugin is loading Webinterface...")
+        webinterface()
     }
     
     
@@ -187,7 +203,7 @@ const plugin = async () => {
                 } else {
                     if(telemetry_retry_start === 0) {
                         telemetry_status_online = false
-                        execute(`${__dirname}/server/Ets2Telemetry.exe`, function(err, data) {
+                        execute(`${path}/server/Ets2Telemetry.exe`, function(err, data) {
                             console.log(err)
                             console.log(data.toString());
                         });
@@ -269,6 +285,22 @@ const plugin = async () => {
     TPClient.connect({
         pluginId
     })
+}
+
+const webinterface = async () => {
+    //View Engine Setup
+    app.set("views", path2.join(dirpath, "interface"))
+    app.set("view engine", "hbs")
+
+    logIt("INTERFACE", "Plugin is loading Interface...")
+    app.get("/", (req, res) => {
+        res.render("index")
+    })
+
+    logIt("INTERFACE", "Plugin is starting Interface...")
+    app.listen(5000)
+    
+    logIt("INTERFACE", "Plugin Interface started.")
 }
 
 plugin()
