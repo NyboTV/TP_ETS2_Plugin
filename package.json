@@ -2,14 +2,14 @@
   "name": "tp_ets2_plugin",
   "version": "1.0.0",
   "description": "ETS2 Plugin for Touch Portal",
-  "main": "./src/bin/plugin.js",
+  "main": "src/bin/plugin.js",
   "scripts": {
     "test": "node . --debug",
     "test_exe": "pkg . --output=plugin-win.exe && node ./src/build/build.js --test",
     "release": "pkg . --output=plugin-win.exe && node ./src/build/build.js --release"
   },
   "bin": {
-    "main": "./src/bin/plugin.js"
+    "main": "src/bin/plugin.js"
   },
   "pkg": {
     "targets": [
@@ -42,15 +42,19 @@
   "homepage": "https://github.com/NyboTV/TP_ETS2_Plugin#readme",
   "dependencies": {
     "adm-zip": "^0.5.9",
+    "connect-livereload": "^0.6.1",
     "download-github-release": "^0.3.2",
     "express": "^4.17.2",
     "express-handlebars": "^6.0.2",
     "fs": "^0.0.1-security",
     "fs-extra": "^10.0.0",
+    "get-folder-size": "^3.1.0",
     "hbs": "^4.2.0",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
     "jimp": "^0.16.1",
+    "livereload": "^0.9.3",
+    "pidusage": "^3.0.0",
     "pkg": "^5.5.2",
     "public-ip": "^5.0.0",
     "replace-json-property": "^1.8.0",

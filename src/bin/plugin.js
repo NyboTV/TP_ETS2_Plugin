@@ -14,20 +14,22 @@ let path = ""
 let telemetry_path = ""
 let PluginStarted = false
 let testNumber = 0
+let interface_path = ""
 
-let dirpath = __dirname
+let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
-
 
 // Debug Section
 const debugMode = process.argv.includes("--debug")
 if(debugMode) {
     path = `./src/bin`
+    interface_path = `./src/bin`
     telemetry_path = "./src/bin/tmp"
 } else if(dirname) {
     console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
 } else {
     path = dirpath
+    interface_path = dirpath
     telemetry_path = "./tmp"
 }
 
@@ -292,7 +294,7 @@ const webinterface = async (config, uConfig) => {
     const { engine, create } = require('express-handlebars');
     const app = express();
     const path = require('path')
-    const os = require('os')
+    const pid = require('pidusage')
 
     var driverStates = uConfig.Modules.driverStates
     var gameStates = uConfig.Modules.gameStates
@@ -310,17 +312,30 @@ const webinterface = async (config, uConfig) => {
 
     async function usage () {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
-            cpu_usage = os.loadavg()
-            mem_usage = Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + "MB"
-            storage_usage = fs.statSync(dirpath)
+
+            pid(process.pid, function (err, stats) {
+                cpu_usage = Math.round(stats.cpu * 100) / 100
+                mem_usage = Math.round(stats.memory / 1024 / 1024) + "MB"
+                storage_usage = fs.statSync(dirpath).size
+                storage_usage = (storage_usage / 1000 / 1000).toFixed(2) + "MB"
+            })
         }
     }
     usage()
+
+    var livereload = require("livereload");
+    var connectLiveReload = require("connect-livereload");
+    const liveReloadServer = livereload.createServer();
+    liveReloadServer.server.once("connection", () => {
+        setTimeout(() => {
+            liveReloadServer.refresh("/");
+        }, 100);
+    });
     
     app.engine('hbs', engine({
         extname: 'hbs', 
         defaultLayout: 'interface', 
-        layoutsDir: __dirname + '/interface' 
+        layoutsDir: interface_path + '/interface' 
     }))
 
     create({
@@ -331,9 +346,10 @@ const webinterface = async (config, uConfig) => {
 
     
 
-    app.set('views', path.join(__dirname, '/interface'))
+    app.set('views', path.join(interface_path, '/interface'))
     app.set('view engine', 'hbs')
-    app.use(express.static(path.join(__dirname, '/interface')))
+    app.use(express.static(path.join(interface_path, '/interface')))
+    app.use(connectLiveReload());
     
     logIt("INTERFACE", "Plugin is loading Interface...")
 
@@ -352,8 +368,7 @@ const webinterface = async (config, uConfig) => {
             worldStates: worldStates,
             cpu_usage: cpu_usage,
             mem_usage: mem_usage,
-            storage_usage: storage_usage,
-            interface2: function () { console.log("Test2") }
+            storage_usage: storage_usage
         })
     })
 
@@ -363,8 +378,8 @@ const webinterface = async (config, uConfig) => {
     logIt("INTERFACE", "Plugin Interface started.")
 }
 
+//plugin()
 plugin()
-    
 
 // Interface Function
 async function interface (module) {
@@ -400,7 +415,6 @@ function logIt() {
         fs.writeFileSync(`${path}/logs/latest.log`, "Plugin Started")
         PluginStarted = true
     }
-    console.log(path + ".." + __dirname)
     let curTime = new Date().toISOString().
     replace(/T/, ` `).
     replace(/\..+/, ``)
