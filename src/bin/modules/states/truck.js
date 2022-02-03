@@ -32,8 +32,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     
             if(ModuleLoaded === false) { 
             } else 
-               
-        
+                    
             // Vars
             truck = telemetry.truck
         
