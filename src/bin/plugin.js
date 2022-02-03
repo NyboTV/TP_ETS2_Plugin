@@ -8,8 +8,6 @@ const exec = require(`child_process`).exec
 const execute = require(`child_process`).execFile;
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
-const app = require('express')()
-const path2 = require('path')
 
 // Important Script Vars
 let path = ""
@@ -29,7 +27,7 @@ if(debugMode) {
 } else if(dirname) {
     console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
 } else {
-    path = `.`
+    path = dirpath
     telemetry_path = "./tmp"
 }
 
@@ -38,6 +36,7 @@ if(fs.existsSync(`./logs`)) {  } else { fs.mkdirSync(`./logs`) }
 
 const plugin = async () => {
 
+    console.log(path)
     logIt("INFO", "Plugin is Starting...")
     logIt("INFO", "Plugin is loading `Config Files`...")
     // Script Files
@@ -158,23 +157,23 @@ const plugin = async () => {
     
     
     // Modules
-    async function modules() {        
-        driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig) 
-        gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        gaugeStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        jobStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        navigationStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        trailerStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        truckStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        truckersmpStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        worldStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+    async function modules() {
+        await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig) 
+        await gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await gaugeStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await jobStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await navigationStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await trailerStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await truckStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await truckersmpStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await worldStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
 
         await timeout(200)
         logIt("INFO", "Modules loaded.")
         logIt("INFO", "Plugin is starting Loop.")
 
         logIt("INTERFACE", "Plugin is loading Webinterface...")
-        webinterface()
+        webinterface(config, uConfig)
     }
     
     
@@ -287,14 +286,75 @@ const plugin = async () => {
     })
 }
 
-const webinterface = async () => {
-    //View Engine Setup
-    app.set("views", path2.join(dirpath, "interface"))
-    app.set("view engine", "hbs")
+const webinterface = async (config, uConfig) => {
+    // Loading Modules
+    const express = require('express');
+    const { engine, create } = require('express-handlebars');
+    const app = express();
+    const path = require('path')
+    const os = require('os')
 
+    var driverStates = uConfig.Modules.driverStates
+    var gameStates = uConfig.Modules.gameStates
+    var gaugeStates = uConfig.Modules.gaugeStates
+    var jobStates = uConfig.Modules.jobStates
+    var navigationStates = uConfig.Modules.navigationStates
+    var trailerStates = uConfig.Modules.trailerStates
+    var truckStates = uConfig.Modules.truckStates
+    var truckersmpStates = uConfig.Modules.truckersmpStates
+    var worldStates = uConfig.Modules.worldStates
+
+    var cpu_usage = ""
+    var mem_usage = ""
+    var storage_usage = ""
+
+    async function usage () {
+        for (var i = 0; i < Infinity; await timeout(500), i++) {
+            cpu_usage = os.loadavg()
+            mem_usage = Math.round(process.memoryUsage().heapUsed / 1024 / 1024) + "MB"
+            storage_usage = fs.statSync(dirpath)
+        }
+    }
+    usage()
+    
+    app.engine('hbs', engine({
+        extname: 'hbs', 
+        defaultLayout: 'interface', 
+        layoutsDir: __dirname + '/interface' 
+    }))
+
+    create({
+        helpers: {
+            hello: function () { console.log("Test") }
+        }
+    })
+
+    
+
+    app.set('views', path.join(__dirname, '/interface'))
+    app.set('view engine', 'hbs')
+    app.use(express.static(path.join(__dirname, '/interface')))
+    
     logIt("INTERFACE", "Plugin is loading Interface...")
+
+
     app.get("/", (req, res) => {
-        res.render("index")
+        res.render("interface", { 
+            title: "Test", 
+            driverStates: driverStates,  
+            gameStates: gameStates,
+            gaugeStates: gaugeStates,
+            jobStates: jobStates,
+            navigationStates: navigationStates,
+            trailerStates: trailerStates,
+            truckStates: truckStates,
+            truckersmpStates: truckersmpStates,
+            worldStates: worldStates,
+            cpu_usage: cpu_usage,
+            mem_usage: mem_usage,
+            storage_usage: storage_usage,
+            interface2: function () { console.log("Test2") }
+        })
     })
 
     logIt("INTERFACE", "Plugin is starting Interface...")
@@ -305,6 +365,18 @@ const webinterface = async () => {
 
 plugin()
     
+
+// Interface Function
+async function interface (module) {
+    if(module === "driverStates") {
+        console.log("DriverStates")
+    }
+
+    if(module === "gameStates") {
+        console.log("GameStates")
+    }
+    console.log("Works but not correct")
+}
     
 // Other Function
 function isBetween(n, a, b) {
@@ -321,13 +393,14 @@ function timeout(ms) {
 }
 
 function logIt() {
-
-    //if(fs.existsSync(`${path}/logs`) === false) {
+    if(fs.existsSync(`${path}/logs`) === false) {
+        fs.mkdirSync(`${path}/logs`)
+    }
     if(PluginStarted === false) {
         fs.writeFileSync(`${path}/logs/latest.log`, "Plugin Started")
         PluginStarted = true
     }
-    
+    console.log(path + ".." + __dirname)
     let curTime = new Date().toISOString().
     replace(/T/, ` `).
     replace(/\..+/, ``)

@@ -8,7 +8,7 @@
         "TruckersMPServer": "1"
     },
     "Modules": {
-        "driverStates": true,
+        "driverStates": false,
         "gameStates": true,
         "gaugeStates": true,
         "jobStates": true,

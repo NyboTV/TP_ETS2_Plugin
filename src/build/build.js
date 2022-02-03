@@ -17,8 +17,10 @@ if(fs.existsSync(`./src/build/ETS2_Dashboard`)) {
 const tmp = async () => {
 
     if(fs.existsSync(`${OutputPath}`)) {
-        fse.removeSync(`${OutputPath}`, { recursive: true, force: true })
-        console.log("TMP Folder Removed")
+        fse.remove(`${OutputPath}`, err => { 
+            if(err) return console.error(err)
+            console.log("TMP Folder Removed")
+        })
     }
 
     if(fs.existsSync(`${OutputPath}`) === false) {
@@ -46,6 +48,8 @@ const pack = async () => {
     fse.copySync(`${InputPath}/bin/server`, `${OutputPath}/server`)
     //Copy IMG Folder
     fse.copySync(`${InputPath}/bin/images`, `${OutputPath}/images`) 
+    //Copy Interface Folder
+    fse.copySync(`${InputPath}/bin/interface`, `${OutputPath}/interface`) 
     //Copy Config Folder
     fse.copySync(`${InputPath}/build/bin/config`, `${OutputPath}/config`) 
     //Copy Entry File
@@ -63,21 +67,20 @@ const pack = async () => {
 
     if(testMode) {
         setTimeout(() => {
-            
-            if(fs.existsSync(`${InstallPath}/ETS2_Dashboard`)) {
-                fs.rmSync(`${InstallPath}/ETS2_Dashboard`, { recursive: true })
-            }
 
             fse.copyFileSync(`./Installers/Win/ETS2_Dashboard.tpp`, `${InstallPath}/ETS2_Dashboard.tpp`)
             fse.renameSync(`${InstallPath}/ETS2_Dashboard.tpp`, `${InstallPath}/ETS2_Dashboard.zip`, { overwrite: true })
             
             var zip = new AdmZip(`${InstallPath}/ETS2_Dashboard.zip`);
             zip.extractAllTo(`${InstallPath}`, true)
-            fs.rmSync(`${InstallPath}/ETS2_Dashboard.zip`) 
+            fse.removeSync(`${InstallPath}/ETS2_Dashboard.zip`) 
         }, 2000);
     } else if(Release) {
         fs.copyFileSync('./Installers/Win/ETS2_Dashboard.tpp', 'P:/Dieser PC/Desktop/ETS2_Dashboard.tpp')
     }
+
+    
+    await tmp()
         
 }
 pack()

@@ -44,6 +44,7 @@
     "adm-zip": "^0.5.9",
     "download-github-release": "^0.3.2",
     "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
     "fs": "^0.0.1-security",
     "fs-extra": "^10.0.0",
     "hbs": "^4.2.0",
