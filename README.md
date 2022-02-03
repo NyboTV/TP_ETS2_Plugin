@@ -13,6 +13,11 @@
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
 
 # Plugin is still in Work!! Just dont have much time!
+# Attention!! This ReadMe is OUT-OF-DATE!
+Im currently working on Version 2.0.0 and this Version takes a LONG time. It will be a BIG Update with MANY new Function!
+Im going to make a Pre-Release in the Future so you can see it yourself!
+
+ps: The ReadMe is not fully outdated. just some options are missing or not correct. But the main stuff should be correct :3
 
 # [TP_ETS2_Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
