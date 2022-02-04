@@ -299,33 +299,57 @@ const webinterface = async (config, uConfig) => {
     const app = express();
     const path = require('path')
     const pid = require('pidusage')
+    const fastFolderSize = require('fast-folder-size')
 
-    var driverStates = uConfig.Modules.driverStates
-    var gameStates = uConfig.Modules.gameStates
-    var gaugeStates = uConfig.Modules.gaugeStates
-    var jobStates = uConfig.Modules.jobStates
-    var navigationStates = uConfig.Modules.navigationStates
-    var trailerStates = uConfig.Modules.trailerStates
-    var truckStates = uConfig.Modules.truckStates
-    var truckersmpStates = uConfig.Modules.truckersmpStates
-    var worldStates = uConfig.Modules.worldStates
-
+    var driverStates = false
+    var gameStates = false
+    var gaugeStates = false
+    var jobStates = false
+    var navigationStates = false
+    var trailerStates = false
+    var truckStates = false
+    var truckersmpStates = false
+    var worldStates = false
+    
     var cpu_usage = ""
     var mem_usage = ""
     var storage_usage = ""
 
+
+    async function StatesStatus () {
+        for (var i = 0; i < Infinity; await timeout(500), i++) {
+            driverStates = uConfig.Modules.driverStates
+            gameStates = uConfig.Modules.gameStates
+            gaugeStates = uConfig.Modules.gaugeStates
+            jobStates = uConfig.Modules.jobStates
+            navigationStates = uConfig.Modules.navigationStates
+            trailerStates = uConfig.Modules.trailerStates
+            truckStates = uConfig.Modules.truckStates
+            truckersmpStates = uConfig.Modules.truckersmpStates
+            worldStates = uConfig.Modules.worldStates
+        }
+    }
+
     async function usage () {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
-
             pid(process.pid, function (err, stats) {
-                cpu_usage = Math.round(stats.cpu * 100) / 100
-                mem_usage = Math.round(stats.memory / 1024 / 1024) + "MB"
-                storage_usage = fs.statSync(dirpath).size
-                storage_usage = (storage_usage / 1000 / 1000).toFixed(2) + "MB"
+                cpu_usage = Math.round(stats.cpu * 100) / 100 + "%"
+                mem_usage = Math.round(stats.memory / 1024 / 1024) + " MB"
+                fastFolderSize(dirpath, (err, size) => {
+                    storage_usage = size
+                    storage_usage = (storage_usage / 1000 / 1000).toFixed(2)
+                    if(storage_usage >= 1000) {
+                        storage_usage = (storage_usage / 1000).toFixed(2) + " GB"
+                    } else {
+                        storage_usage = storage_usage + " MB"
+                    }
+                })
             })
         }
     }
+
     usage()
+    StatesStatus()
 
     var livereload = require("livereload");
     var connectLiveReload = require("connect-livereload");

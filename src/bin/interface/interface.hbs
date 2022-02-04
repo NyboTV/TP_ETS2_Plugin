@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-
-<iframe style="display: none" name="dummyframe" id="dummyframe"></iframe>
-
 <html style="font-size: 16px;">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,9 +35,9 @@
                   <div class="u-container-style u-layout-cell u-size-60 u-layout-cell-1">
                     <div class="u-border-2 u-border-black u-container-layout u-valign-top u-container-layout-1">
                       {{# if gameStates}}
-                        <button class="u-border-none u-btn u-button-style u-custom-color-1 u-btn-1">Game States</button>
+                        <button  class="u-border-none u-btn u-button-style u-custom-color-1 u-btn-1">Game States</button>
                       {{ else }}
-                        <button class="u-border-none u-btn u-button-style u-custom-color-2 u-btn-1">Game States</button> 
+                        <button  class="u-border-none u-btn u-button-style u-custom-color-2 u-btn-1">Game States</button> 
                       {{/if}}
                       
                       {{# if driverStates}}
@@ -102,7 +99,7 @@
                         <div class="u-border-2 u-border-black u-border-no-bottom u-container-layout u-container-layout-2">
                           <h1 class="u-text u-text-default u-text-1">ETS2 Dashboard<span style="font-weight: 700;"></span>
                           </h1>
-                          <h3 class="u-align-center u-text u-text-default u-text-2">Hey User!<br>
+                          <h3 class="u-align-center u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-2">Hey User!<br>
                             <br>This is an Alpha Test for the new Update!<br>Heres nothing much to Display yet! But after<br>a certrain of Time im going to add everthing you can Edit.<br>
                             <br>For now you need to Edit the Settings inside the Plugin Folder<br>
                             <br>To do:<br>Press "win+r"<br>insert: "​%appdata%/TouchPortal/plugins/ETS2_Dashboard/config"<br>And Edit the Config file you want!
@@ -125,13 +122,22 @@
                       </div>
                       <div class="u-size-19">
                         <div class="u-layout-col">
-                          <div class="u-container-style u-custom-border u-layout-cell u-size-60 u-layout-cell-4">
+                          <div class="u-container-style u-custom-border u-layout-cell u-size-50 u-layout-cell-4">
                             <div class="u-border-2 u-border-black u-container-layout u-valign-top u-container-layout-4">
-                              <h5 class="u-text u-text-default u-text-3">CPU-Usage: {{ cpu_usage }}</h5>
-                              <h5 class="u-text u-text-default u-text-4">Memory-Usage: {{ mem_usage }}</h5>
-                              <h5 class="u-text u-text-default u-text-5">Storage-Usage: {{ storage_usage }}</h5>
-                              <h5 class="u-text u-text-default u-text-6">Auto-Refresh every 30 Seconds</h5>
-                              <meta http-equiv="refresh" content="30" >
+
+                              <script type="text/javascript">
+                                setInterval("reload_usage();", 2000)
+
+                                function reload_usage(){
+                                  $('#usage').load(location.href + ' #usage')
+                                }
+                              </script>
+
+                              <div id="usage">
+                                <h5 class="u-text u-text-default u-text-3">CPU-Usage: {{ cpu_usage }}</h5>
+                                <h5 class="u-text u-text-default u-text-4">Memory-Usage: {{ mem_usage }}</h5>
+                                <h5 class="u-text u-text-default u-text-5">Storage-Usage: {{ storage_usage }}</h5>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -144,7 +150,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> 
     
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6f8e"><div class="u-align-left u-clearfix u-sheet u-sheet-1">
