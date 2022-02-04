@@ -38,7 +38,6 @@ if(fs.existsSync(`./logs`)) {  } else { fs.mkdirSync(`./logs`) }
 
 const plugin = async () => {
 
-    console.log(path)
     logIt("INFO", "Plugin is Starting...")
     logIt("INFO", "Plugin is loading `Config Files`...")
     // Script Files
@@ -205,8 +204,8 @@ const plugin = async () => {
                     if(telemetry_retry_start === 0) {
                         telemetry_status_online = false
                         execute(`${path}/server/Ets2Telemetry.exe`, function(err, data) {
-                            console.log(err)
-                            console.log(data.toString());
+                            logIt("ERROR", err)
+                            logIt("ERROR",data.toString())
                         });
                         telemetry_retry_start = 1
                     }
@@ -384,13 +383,10 @@ plugin()
 // Interface Function
 async function interface (module) {
     if(module === "driverStates") {
-        console.log("DriverStates")
     }
 
     if(module === "gameStates") {
-        console.log("GameStates")
     }
-    console.log("Works but not correct")
 }
     
 // Other Function

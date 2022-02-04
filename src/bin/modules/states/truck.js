@@ -92,7 +92,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             let	LightsBeaconOn = truck.lightsBeaconOn
             let	LightsBrakeOn = truck.lightsBrakeOn
             let	LightsReverseOn = truck.lightsReverseOn
-
             
             async function getGear(Gears, Shifter) {
                 return new Promise(async (resolve, reject) => {

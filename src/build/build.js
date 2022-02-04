@@ -54,13 +54,10 @@ const pack = async () => {
     fse.copySync(`${InputPath}/build/bin/config`, `${OutputPath}/config`) 
     //Copy Entry File
     fse.copySync(`${InputPath}/build/bin/entry.tp`, `${OutputPath}/entry.tp`) 
-    //Copy Folder
-    fse.copySync(`${OutputPath}`, `./src/build/ETS2_Dashboard`)
-    fse.moveSync(`./src/build/ETS2_Dashboard`, `${OutputPath}/ETS2_Dashboard`)
 
 	var zip = new AdmZip();
 
-	zip.addLocalFolder(`${OutputPath}/ETS2_Dashboard`, 'ETS2_Dashboard');
+	zip.addLocalFolder(`${OutputPath}`, 'ETS2_Dashboard');
 
 	zip.writeZip("./Installers/Win/ETS2_Dashboard.zip");
     fse.renameSync('./Installers/Win/ETS2_Dashboard.zip', './Installers/Win/ETS2_Dashboard.tpp', { overwrite: true })
@@ -79,7 +76,7 @@ const pack = async () => {
         fs.copyFileSync('./Installers/Win/ETS2_Dashboard.tpp', 'P:/Dieser PC/Desktop/ETS2_Dashboard.tpp')
     }
 
-    
+    console.log("FINISHED")
     await tmp()
         
 }
