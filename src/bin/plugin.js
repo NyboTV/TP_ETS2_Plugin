@@ -21,12 +21,17 @@ let dirname = dirpath.includes(`\\src\\bin`)
 
 // Debug Section
 const debugMode = process.argv.includes("--debug")
+const sourceTest= process.argv.includes("--sourceTest")
 if(debugMode) {
     path = `./src/bin`
     interface_path = `./src/bin`
     telemetry_path = "./src/bin/tmp"
 } else if(dirname) {
     console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
+} else if(sourceTest) {
+    setInterval(() => {
+        console.log("Still On...")
+    }, 2000);
 } else {
     path = dirpath
     interface_path = dirpath
@@ -378,7 +383,10 @@ const webinterface = async (config, uConfig) => {
 }
 
 //plugin()
-plugin()
+if(sourceTest) {
+} else {
+    plugin()
+}
 
 // Interface Function
 async function interface (module) {
