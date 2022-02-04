@@ -19,6 +19,14 @@ Im going to make a Pre-Release in the Future so you can see it yourself!
 
 ps: The ReadMe is not fully outdated. just some options are missing or not correct. But the main stuff should be correct :3
 
+
+# Apply as BETA-Tester!
+You want Early Access to new Version and help me to fix Bugs faster?
+On my Discord you can check if you can get a Seat!
+https://discord.gg/PvXJsxpGFe
+
+
+
 # [TP_ETS2_Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
 - [TouchPortal ETS2 Dashboard Plugin](#tp_ets2_plugin)
