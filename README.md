@@ -29,6 +29,8 @@ https://discord.gg/PvXJsxpGFe
 
 # [TP_ETS2_Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
+## Important!!!! Touch Portal with Pro Version is needed!!
+
 - [TouchPortal ETS2 Dashboard Plugin](#tp_ets2_plugin)
   - [Features](#features)
   - [Installation](#how-to-install)
