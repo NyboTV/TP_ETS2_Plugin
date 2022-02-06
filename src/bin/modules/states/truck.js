@@ -59,7 +59,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             let	ParkBrakeOn = truck.parkBrakeOn
             let	MotorBrakeOn = truck.motorBrakeOn
         
-            let	Fuel = Math.round(truck.fuel)
+            let	Fuel = Math.round(truck.fuel * 100) / 100
             let	AdBlue = Math.round(truck.adblue)
             let	AirPressure = Math.round(truck.airPressure)
             let	OilTemp = Math.round(truck.oilTemperature)

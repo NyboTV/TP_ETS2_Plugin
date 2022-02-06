@@ -7,6 +7,8 @@ src/log.log
 src/log.log
 src/server/Ets2Telemetry.log
 *.vbs
+src/bin/tmp/*
 src/server/Ets2Telemetry.log
 src/build/ETS2_Dashboard
 src/build/tmp/*
+*.html

@@ -12,9 +12,13 @@ const sJSON = require(`self-reload-json`)
 // Important Script Vars
 let path = ""
 let telemetry_path = ""
-let PluginStarted = false
-let testNumber = 0
 let interface_path = ""
+let TruckersMP_tmp = ""
+
+let testNumber = 0
+
+let PluginStarted = false
+let PluginOnline = false
 
 let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
@@ -41,67 +45,89 @@ if(debugMode) {
 // Checks and creates if neccessary Logs Folder
 if(fs.existsSync(`./logs`)) {  } else { fs.mkdirSync(`./logs`) }
 
-const plugin = async () => {
+logIt("INFO", "Starting...")
 
-    logIt("INFO", "Plugin is Starting...")
-    logIt("INFO", "Plugin is loading `Config Files`...")
+const configs = async () => {
+    logIt("CONFIG", "Loading `Config Files`...")
     // Script Files
     let config = new sJSON(`${path}/config/cfg.json`)
     let uConfig = new sJSON(`${path}/config/usercfg.json`)
+
+    webinterface(config, uConfig)
+
+    for(var i = 0; i < Infinity; await timeout(2000), i++) {
+        if(fs.existsSync(telemetry_path + "/truckersMP_TMP.json")) {
+            try {
+                TruckersMP_tmp = new sJSON(`${telemetry_path}/truckersMP_TMP.json`)
+                logIt("TRUCKERSMP", "TMP File found and loaded!")
+                return
+            } catch (error) {
+                logIt("ERROR", "TruckersMP TMP File Error!")
+            }
+        }
+    }
+}
+
+
+const plugin = async (config, uConfig) => {
     
 
-    logIt("INFO", "Plugin is Checking for Missing Files...")
+    logIt("INFO", "Checking for Missing Files...")
     // Checking for missing Files
     let firstInstall = config.firstInstall
     const FilesCheck = async () => {
         let missing = []
-        if(fs.existsSync(`${path}/images`)) { missing.push("Images Folder") }
-        if(fs.existsSync(`${path}/images/Gauge.png`)) { missing.push("Gauge.png") }
-        if(fs.existsSync(`${path}/images/RPMGauge.png`)) { missing.push("RPMGauge.png") }
-        if(fs.existsSync(`${path}/images/FuelGauge.png`)) { missing.push("FuelGauge.png") }
-        if(fs.existsSync(`${path}/images/SpeedGauge.png`)) { missing.push("SpeedGauge.png") }
-        if(fs.existsSync(`${path}/images/speedlimit.png`)) { missing.push("speedlimit.png") }
-        if(fs.existsSync(`${path}/images/noSpeedlimit.png`)) { missing.push("noSpeedlimit.png") }
+        if(!fs.existsSync(`${path}/images`)) { missing.push("Images Folder") }
+        if(!fs.existsSync(`${path}/images/Gauge.png`)) { missing.push("Gauge.png") }
+        if(!fs.existsSync(`${path}/images/RPMGauge.png`)) { missing.push("RPMGauge.png") }
+        if(!fs.existsSync(`${path}/images/FuelGauge.png`)) { missing.push("FuelGauge.png") }
+        if(!fs.existsSync(`${path}/images/SpeedGauge.png`)) { missing.push("SpeedGauge.png") }
+        if(!fs.existsSync(`${path}/images/speedlimit.png`)) { missing.push("speedlimit.png") }
+        if(!fs.existsSync(`${path}/images/noSpeedlimit.png`)) { missing.push("noSpeedlimit.png") }
 
         
-        if(fs.existsSync(`${path}/server`)) { missing.push("Server Folder") }
-        if(fs.existsSync(`${path}/server/Ets2Plugins`)) { missing.push("Ets2Plugins") }
-        if(fs.existsSync(`${path}/server/Ets2Plugins/win_x64`)) { missing.push("Ets2Plugins/win_x64") }
-        if(fs.existsSync(`${path}/server/Ets2Plugins/win_x86`)) { missing.push("Ets2Plugins/win_x86") }
-        if(fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins`)) { missing.push("Ets2Plugins/../plugins") }
-        if(fs.existsSync(`${path}/server/Ets2Plugins/win_x86/plugins`)) { missing.push("Ets2Plugins/../plugins") }
-        if(fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins/ets2-telemetry-server.dll`)) { missing.push("../plugins/ets2-telemetry-server.dll") }
-        if(fs.existsSync(`${path}/server/Ets2Plugins/win_x86/plugins/ets2-telemetry-server.dll`)) { missing.push("../plugins/ets2-telemetry-server.dll") }
-        if(fs.existsSync(`${path}/server/Ets2Telemetry.exe.config`)) { missing.push("Ets2Telemetry.exe.config") }
-        if(fs.existsSync(`${path}/server/Ets2TestTelemetry.json`)) { missing.push("Ets2TestTelemetry.json") }
-        if(fs.existsSync(`${path}/server/Owin.dll`)) { missing.push("Owin.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.Practices.ServiceLocation.dll`)) { missing.push("Microsoft.Practices.ServiceLocation.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.Owin.Cors.dll`)) { missing.push("Microsoft.Owin.Cors.dll") }
-        if(fs.existsSync(`${path}/server/System.Web.Cors.dll`)) { missing.push("System.Web.Cors.dll") }
-        if(fs.existsSync(`${path}/server/Owin.WebSocket.dll`)) { missing.push("Owin.WebSocket.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.Owin.Security.dll`)) { missing.push("Microsoft.Owin.Security.dll") }
-        if(fs.existsSync(`${path}/server/System.Web.Http.Owin.dll`)) { missing.push("System.Web.Http.Owin.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.Owin.Hosting.dll`)) { missing.push("Microsoft.Owin.Hosting.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.Owin.dll`)) { missing.push("Microsoft.Owin.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.Owin.Host.HttpListener.dll`)) { missing.push("Microsoft.Owin.Host.HttpListener.dll") }
-        if(fs.existsSync(`${path}/server/System.Net.Http.Formatting.dll`)) { missing.push("System.Net.Http.Formatting.dll") }
-        if(fs.existsSync(`${path}/server/log4net.dll`)) { missing.push("log4net.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.AspNet.SignalR.Core.dll`)) { missing.push("Microsoft.AspNet.SignalR.Core.dll") }
-        if(fs.existsSync(`${path}/server/Ets2Telemetry.log`)) { missing.push("Ets2Telemetry.log") }
-        if(fs.existsSync(`${path}/server/System.Web.Http.dll`)) { missing.push("System.Web.Http.dll") }
-        if(fs.existsSync(`${path}/server/Ets2Telemetry.exe`)) { missing.push("Ets2Telemetry.exe") }
-        if(fs.existsSync(`${path}/server/Newtonsoft.Json.dll`)) { missing.push("Newtonsoft.Json.dll") }
-        if(fs.existsSync(`${path}/server/Microsoft.Owin.Diagnostics.dll`)) { missing.push("Microsoft.Owin.Diagnostics.dll") }
+        if(!fs.existsSync(`${path}/server`)) { missing.push("Server Folder") }
+        if(!fs.existsSync(`${path}/server/Ets2Plugins`)) { missing.push("Ets2Plugins") }
+        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64`)) { missing.push("Ets2Plugins/win_x64") }
+        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x86`)) { missing.push("Ets2Plugins/win_x86") }
+        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins`)) { missing.push("Ets2Plugins/../plugins") }
+        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x86/plugins`)) { missing.push("Ets2Plugins/../plugins") }
+        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins/ets2-telemetry-server.dll`)) { missing.push("../plugins/ets2-telemetry-server.dll") }
+        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x86/plugins/ets2-telemetry-server.dll`)) { missing.push("../plugins/ets2-telemetry-server.dll") }
+        if(!fs.existsSync(`${path}/server/Ets2Telemetry.exe.config`)) { missing.push("Ets2Telemetry.exe.config") }
+        if(!fs.existsSync(`${path}/server/Ets2TestTelemetry.json`)) { missing.push("Ets2TestTelemetry.json") }
+        if(!fs.existsSync(`${path}/server/Owin.dll`)) { missing.push("Owin.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.Practices.ServiceLocation.dll`)) { missing.push("Microsoft.Practices.ServiceLocation.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Cors.dll`)) { missing.push("Microsoft.Owin.Cors.dll") }
+        if(!fs.existsSync(`${path}/server/System.Web.Cors.dll`)) { missing.push("System.Web.Cors.dll") }
+        if(!fs.existsSync(`${path}/server/Owin.WebSocket.dll`)) { missing.push("Owin.WebSocket.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Security.dll`)) { missing.push("Microsoft.Owin.Security.dll") }
+        if(!fs.existsSync(`${path}/server/System.Web.Http.Owin.dll`)) { missing.push("System.Web.Http.Owin.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Hosting.dll`)) { missing.push("Microsoft.Owin.Hosting.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.Owin.dll`)) { missing.push("Microsoft.Owin.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Host.HttpListener.dll`)) { missing.push("Microsoft.Owin.Host.HttpListener.dll") }
+        if(!fs.existsSync(`${path}/server/System.Net.Http.Formatting.dll`)) { missing.push("System.Net.Http.Formatting.dll") }
+        if(!fs.existsSync(`${path}/server/log4net.dll`)) { missing.push("log4net.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.AspNet.SignalR.Core.dll`)) { missing.push("Microsoft.AspNet.SignalR.Core.dll") }
+        if(!fs.existsSync(`${path}/server/Ets2Telemetry.log`)) { missing.push("Ets2Telemetry.log") }
+        if(!fs.existsSync(`${path}/server/System.Web.Http.dll`)) { missing.push("System.Web.Http.dll") }
+        if(!fs.existsSync(`${path}/server/Ets2Telemetry.exe`)) { missing.push("Ets2Telemetry.exe") }
+        if(!fs.existsSync(`${path}/server/Newtonsoft.Json.dll`)) { missing.push("Newtonsoft.Json.dll") }
+        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Diagnostics.dll`)) { missing.push("Microsoft.Owin.Diagnostics.dll") }
 
 
-        if(fs.existsSync(`${telemetry_path}`)) {  } else { fs.mkdirSync(`${telemetry_path}`) }
+        if(!fs.existsSync(`${telemetry_path}`)) { fs.mkdirSync(`${telemetry_path}`) }
+
+        missing.forEach(file => {
+            logIt("MISSING", `File/Folder missing: ${file}`)
+        })
     }
     if(firstInstall) {
         await FilesCheck()
     }
 
 
-    logIt("INFO", "Plugin is `importing Modules`...")
+    logIt("INFO", "Importing Modules...")
     // Script Modules
     const test = require(`./modules/test`);
 
@@ -116,7 +142,7 @@ const plugin = async () => {
     const worldStates = require(`./modules/states/world`);
     
     
-    logIt("INFO", "Plugin is loading `Script Vars`...")
+    logIt("INFO", "Loading `Script Vars`...")
     // Script Vars
     let telemetry = ""
     let telemetry_retry = 0
@@ -155,9 +181,9 @@ const plugin = async () => {
             modules()
         }
         
-        logIt("INFO", "Plugin is loading `Telemetry Server`...")
+        logIt("INFO", "Loading `Telemetry Server`...")
         telemetry_loop()
-        logIt("INFO", "Plugin is loading `Modules`...")
+        logIt("INFO", "Loading `Modules`...")
         main_loop()
     }
     
@@ -176,10 +202,8 @@ const plugin = async () => {
 
         await timeout(200)
         logIt("INFO", "Modules loaded.")
-        logIt("INFO", "Plugin is starting Loop.")
-
-        logIt("INTERFACE", "Plugin is loading Webinterface...")
-        webinterface(config, uConfig)
+        logIt("INFO", "Starting Loop.")
+        PluginOnline = true
     }
     
     
@@ -280,13 +304,12 @@ const plugin = async () => {
     TPClient.on("Info", async(data) => {
         
         // Start
-        logIt("INFO", "Plugin is loading `Main Loader`...")
+        logIt("INFO", "Loading 'Main Loader'...")
         main_loader()
-        
     });
     
     
-    logIt("INFO", "Plugin is connecting to `Touch Portal`...")
+    logIt("INFO", "Connecting to `Touch Portal`...")
     TPClient.connect({
         pluginId
     })
@@ -295,7 +318,7 @@ const plugin = async () => {
 const webinterface = async (config, uConfig) => {
     // Loading Modules
     const express = require('express');
-    const { engine, create } = require('express-handlebars');
+    const { engine } = require('express-handlebars');
     const app = express();
     const path = require('path')
     const pid = require('pidusage')
@@ -310,6 +333,18 @@ const webinterface = async (config, uConfig) => {
     var truckStates = false
     var truckersmpStates = false
     var worldStates = false
+
+    var unit = ""
+    var currency = ""
+    var weight = ""
+
+    var TruckersMP = ""
+
+    var truckmpStatus = ""
+    var truckmpServer = ""
+    var truckmpPlayer = ""
+    var truckmpQueue = ""
+    var truckmpServerList = ""
     
     var cpu_usage = ""
     var mem_usage = ""
@@ -318,17 +353,92 @@ const webinterface = async (config, uConfig) => {
 
     async function StatesStatus () {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
-            driverStates = uConfig.Modules.driverStates
-            gameStates = uConfig.Modules.gameStates
-            gaugeStates = uConfig.Modules.gaugeStates
-            jobStates = uConfig.Modules.jobStates
-            navigationStates = uConfig.Modules.navigationStates
-            trailerStates = uConfig.Modules.trailerStates
-            truckStates = uConfig.Modules.truckStates
-            truckersmpStates = uConfig.Modules.truckersmpStates
-            worldStates = uConfig.Modules.worldStates
+            driverStates        = uConfig.Modules.driverStates
+            gameStates          = uConfig.Modules.gameStates
+            gaugeStates         = uConfig.Modules.gaugeStates
+            jobStates           = uConfig.Modules.jobStates
+            navigationStates    = uConfig.Modules.navigationStates
+            trailerStates       = uConfig.Modules.trailerStates
+            truckStates         = uConfig.Modules.truckStates
+            truckersmpStates    = uConfig.Modules.truckersmpStates
+            worldStates         = uConfig.Modules.worldStates
+
+            location            = uConfig.Basics.Location
+
+
+            if(PluginOnline)        { PluginOnline = true /*"1"*/ }      else { PluginOnline = false /*"2"*/ }
+            if(driverStates)        { driverStates = "1" }      else { driverStates = "2" }
+            if(gameStates)          { gameStates = "1" }        else { gameStates = "2" }
+            if(gaugeStates)         { gaugeStates = "1" }       else { gaugeStates = "2" }
+            if(jobStates)           { jobStates = "1" }         else { jobStates = "2" }
+            if(navigationStates)    { navigationStates = "1" }  else { navigationStates = "2" }
+            if(trailerStates)       { trailerStates = "1" }     else { trailerStates = "2" }
+            if(truckStates)         { truckStates = "1" }       else { truckStates = "2" }
+            if(truckersmpStates)    { truckersmpStates = "1" }  else { truckersmpStates = "2" }
+            if(worldStates)         { worldStates = "1" }       else { worldStates = "2" }
         }
     }
+    
+
+    async function userCFGInterface () {
+        for (var i = 0; i < Infinity; await timeout(500), i++) {
+            unit = uConfig.Basics.unit
+            currency = uConfig.Basics.currency
+            weight = uConfig.Basics.weight
+        }
+    }
+
+
+    async function TruckersMPInterface () {
+
+        var TruckersMP_Array = []
+        
+        async function truckmp_array () {
+            for (var i = 0; i < Infinity; await timeout(500), i++) {
+                TruckersMP_Array = []
+                try {
+                    TruckersMP_tmp.response.forEach(server => {
+                        TruckersMP_Array.push(server.name)
+                    })
+                } catch (e) {
+                }
+            }
+        }
+
+        async function truckmp () {
+            for (var i = 0; i < Infinity; await timeout(500), i++) {
+                try {
+                    if(TruckersMP_tmp.response.id === "false") {
+                        truckmpStatus = "OFFLINE"
+                        truckmpServer = "OFFLINE"
+                        truckmpPlayer = "OFFLINE"
+                        truckmpQueue = "OFFLINE"
+                        truckmpServerList = "OFFLINE"
+                    } else {                    
+                        TruckersMP = TruckersMP_tmp.response[uConfig.TruckersMP.TruckersMPServer - 1]
+                        
+                        truckmpStatus = "ONLINE"
+                        truckmpServer = TruckersMP.name
+                        truckmpPlayer = TruckersMP.players
+                        truckmpQueue = TruckersMP.queue
+                        truckmpServerList = TruckersMP_Array.join("\n")
+                    }
+                    
+                } catch (e) {
+                    logIt("ERROR", `${e}`)
+                    truckmpStatus = "OFFLINE"
+                    truckmpServer = "API ERROR"
+                    truckmpPlayer = "API ERROR"
+                    truckmpQueue = "API ERROR"
+                    truckmpServerList = "API ERROR"
+                }
+            }
+        }
+
+        truckmp_array()
+        truckmp()
+    }
+
 
     async function usage () {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
@@ -347,44 +457,28 @@ const webinterface = async (config, uConfig) => {
             })
         }
     }
-
-    usage()
-    StatesStatus()
-
-    var livereload = require("livereload");
-    var connectLiveReload = require("connect-livereload");
-    const liveReloadServer = livereload.createServer();
-    liveReloadServer.server.once("connection", () => {
-        setTimeout(() => {
-            liveReloadServer.refresh("/");
-        }, 100);
-    });
     
+
     app.engine('hbs', engine({
         extname: 'hbs', 
         defaultLayout: 'interface', 
         layoutsDir: interface_path + '/interface' 
     }))
 
-    create({
-        helpers: {
-            hello: function () { console.log("Test") }
-        }
-    })
-
-    
+    StatesStatus()
+    userCFGInterface()
+    TruckersMPInterface()
+    usage()
 
     app.set('views', path.join(interface_path, '/interface'))
     app.set('view engine', 'hbs')
     app.use(express.static(path.join(interface_path, '/interface')))
-    app.use(connectLiveReload());
     
-    logIt("INTERFACE", "Plugin is loading Interface...")
+    logIt("INTERFACE", "Loading Interface...")
 
 
     app.get("/", (req, res) => {
-        res.render("interface", { 
-            title: "Test", 
+        res.render("interface", {
             driverStates: driverStates,  
             gameStates: gameStates,
             gaugeStates: gaugeStates,
@@ -396,30 +490,35 @@ const webinterface = async (config, uConfig) => {
             worldStates: worldStates,
             cpu_usage: cpu_usage,
             mem_usage: mem_usage,
-            storage_usage: storage_usage
+            storage_usage: storage_usage,
+            PluginOnline: PluginOnline,
+
+            unit: unit,
+            currency: currency,
+            weight: weight,
+
+            truckmpStatus: truckmpStatus,
+            truckmpServer: truckmpServer,
+            truckmpPlayer: truckmpPlayer,
+            truckmpQueue: truckmpQueue,
+            truckmpServerList: truckmpServerList,
+
+            location: location
         })
     })
 
-    logIt("INTERFACE", "Plugin is starting Interface...")
+    logIt("INTERFACE", "Starting Interface...")
     app.listen(5000)
     
-    logIt("INTERFACE", "Plugin Interface started.")
+    logIt("INTERFACE", "Interface started.")
+    await timeout(500)
+    logIt("INFO", "Loading `Plugin`...")
+    plugin(config, uConfig)
 }
 
-//plugin()
-if(sourceTest) {
-} else {
-    plugin()
-}
+//Loading Configs
+configs()
 
-// Interface Function
-async function interface (module) {
-    if(module === "driverStates") {
-    }
-
-    if(module === "gameStates") {
-    }
-}
     
 // Other Function
 function isBetween(n, a, b) {

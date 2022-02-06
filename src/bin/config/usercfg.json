@@ -1,8 +1,8 @@
 {
     "Basics": {
-        "Money": "Euro",
-        "Weight": "Tons",
-        "Location": "kmh"
+        "currency": "Euro",
+        "weight": "Tons",
+        "unit": "kmh"
     },
     "TruckersMP": {
         "TruckersMPServer": "1"
@@ -15,7 +15,7 @@
         "navigationStates": true,
         "trailerStates": true,
         "truckStates": true,
-        "truckersmpStates": false,
+        "truckersmpStates": true,
         "worldStates": true
     }
 }

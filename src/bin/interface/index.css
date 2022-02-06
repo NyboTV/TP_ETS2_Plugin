@@ -36702,35 +36702,19 @@ a.u-link.u-text-hover-grey-90:hover {
 }
 
 .u-footer .u-sheet-1 {
-  min-height: 85px;
-}
-
-.u-footer .u-btn-1 {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.875rem;
-  letter-spacing: 1px;
-  border-style: none;
-  background-image: none;
-  margin: 22px 0 22px auto;
+  min-height: 10px;
 }
 @media (max-width: 1199px) {
   .u-footer .u-sheet-1 {
     min-height: 106px;
   }
-
-  .u-footer .u-btn-1 {
-    margin-top: 32px;
-    margin-right: 33px;
-    margin-bottom: 32px;
-  }
-}
-@media (max-width: 991px) {
-  .u-footer .u-btn-1 {
-    margin-right: 0;
-  }
 }
 
+@media (max-width: 767px) {
+  .u-footer .u-sheet-1 {
+    min-height: 10px;
+  }
+}
 
 
  /*begin-variables base-font-size*/ 
