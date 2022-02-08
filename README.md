@@ -28,6 +28,7 @@ ps: The ReadMe is not fully outdated. just some options are missing or not corre
   - [Features](#features)
   - [Installation](#how-to-install)
   - [Support](#support)
+  - [Events](#plugin-events)
   - [States](#plugin-states)
     - [Game States](#game-states)
     - [World States](#world-states)
@@ -50,7 +51,7 @@ ps: The ReadMe is not fully outdated. just some options are missing or not corre
 
 ## Features
 
-- Autoupdater
+- Autoupdater (Currently not implemented)
 
 - Shows your Speed, RPM and Gear
 - Shows the Currect Speedlimit
@@ -70,8 +71,8 @@ You need the [Touch Portal](https://www.touch-portal.com) Application
 Installing
 NOTE: The Default Plugin installation path is dictated by Touch Portal here: %APPDATA%\TouchPortal\plugins
 
-1. Download the [Plugin](#download) file.
-2. Open Touch Portal go to the Wrench and click on "Import plug-in"
+1. Download the [Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp) file.
+2. Open Touch Portal go to the Gear (Upper right corner) and click on "Import plug-in"
 3. Choose your downloaded .tpp File and click "Open"
 4. After the Import you will see "Plug-in imported successful". Click on "ok"
 6. Now you have to go into my Plugins Folder by pressing "Win+R" and type in: "%appdata%/Touchportal/plugins/ETS2_Dashboard"
@@ -79,18 +80,11 @@ NOTE: The Default Plugin installation path is dictated by Touch Portal here: %AP
 8. Now it should appear a Window. Press on Install.
 9. Now restart the Touch Portal app
 `NOTE: Make sure you fully close Touch Portal using System Tray icon to exit`
-`If you get an Window with an Warning Message: "Another ETS2/ATS Telemtry Server instance is already running", Just Close it. It is just an Reminder. Ignore it.`
-
 6. After TP is open again, TP will ask you, if you want to trust the Plugin. Click on "Trust always".
 7. Now the Plugin is installed and you can create your first ETS2 Page!
 
-`NOTE: The Plugin has an Auto Updater. As long as NyboTV dont say "Update on your own" in the Discord Channel, you dont need to Update this Plugin!`
+`If you get an Window with an Warning Message: "Another ETS2/ATS Telemtry Server instance is already running", Just Close it. It is just an Reminder. Ignore it.`
 
-## Download
-
-AutoUpdater => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
-
-Manual Install => [Download](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard_AutoUpdater.tpp)
 
 ## Support
 
@@ -104,7 +98,7 @@ I'd be happy if you create an "issue" on my Github. But I can also give support 
 
 ## How to use
 
-I'll create a wiki for you ;) But it's not online yet! Please wait!
+[Wiki](https://github.com/NyboTV/TP_ETS2_Plugin/wiki)
 
 For the available value "Dynamic Text" just create a "Dynamic Text Updater". (The "NextRestTime" is also a "Dynamic Text").
 
@@ -116,8 +110,13 @@ and then "Change the 'Icon' with the value from the plug-in status 'SpeedGauge/R
 Don't understand a single word? Just download the sample page and have a look at it
 
 Download it here: [Download](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Build/Releases/Dashboards/Example.tpz)
-Just click on "Manage Page..." in the Touch Portal and then on "Import Page".
+(Link not working? You can get it on my Discord in the "Resource" Channel! https://discord.gg/PvXJsxpGFetou)
+Just click on the Gear in the Middle, in the Touch Portal and then on "Import Page".
 
+## Plugin Events
+
+Nothing here yet :3 The Events are not fully ready to use. But you can try it!
+Just go on a button and Search in the List my Plugin. (No events are displayed? You had a version that I removed because it's not quite ready yet. Sorry!)
 
 ## Plugin States
 
@@ -248,40 +247,15 @@ Just click on "Manage Page..." in the Touch Portal and then on "Import Page".
 
 ## Settings
 
-All settings are now available in the API! When you get a window asking "Do you want to use the Discord Bot feature", just click "Yes".
+The Settings are moving! Currently you only can Edit the Settings by Following this:
+-> Press "Win+r" -> Type in: "%appdata%/TouchPortal/plugins" -> Goto my Plugins Folder -> Config -> Edit Config you want! 
+(IMPORTANT: DO NOT CHANGE ANYTHING IN "cfg.json"! Except "refreshInterval"!)
 
 
 ### AutoUpdater 
 
-Completely new system! Just click "Yes" on the question: "Do you want to use the Discord Bot feature".
-To get your user ID, read this: [How to get UserID](#how-to-get-userid).
+AutoUpdater is moving! Not currently Working!
 
-Because of Discord's API, you need to be on my plugin Discord.
-https://discord.gg/PvXJsxpGFe
-
-Don't want to do that? No problem! The plugin will ask you if you want to use it the first time you start it! Just click no! But if you want to use the AutoUpdater function, then you have to set it to "True" in the Config! Go into the plugins folder (found in %appdata%/TouchPortal/plugins), then go into the "config.json" and set "autoupdates" to "true" 
-
-If the UserID window shows "UserID is not Valid" (but you know it is valid), then just go to my config.json file in the plugin folder
-(%appdata%/TouchPortal/plugins/ETS2_Dashboard)
-and copy your UserID into the '""' behind "userid".
-It should look like this: - "userid": "123456789" -
-
-After that, please send the log to me (The Dev) so I can fix the problem.
-
-### How to get UserID
-
-Wait a minute. Why do I even need your UserID and why do you need to be in my Discord?
-Well. Discord does not support sending messages to an unknown user. If you are not in my Discord or are friends with my bot (and it is not possible to add a bot as a friend).
-Then the bot can't send you a message. So you can't change the settings or install new themes! That's why I need your UserID. To send YOU the messages and not a random user of the guild.
-
-To find your user ID in Discord, you first need to enable developer mode and then simply right click / tap on your name and select Copy ID. Here you can learn how to do that in detail:
-
-1. Open Discord.
-2. Enable Developer Mode by navigating to Advanced > Developer Mode in Discord’s settings.
-3. Discord Developer Mode Switch.
-5. On any Discord Server: Find your username in the list of users, right click it, and then select Copy ID. You can also do this from chat if you can locate yourself there.
-6. Discord Copy User ID.
-7. Paste (Ctrl+V) the ID into the Window of my Plugin.
 
 ## Features comming soon
 
@@ -293,11 +267,9 @@ To find your user ID in Discord, you first need to enable developer mode and the
 
 ## Todo
 
-1. Adding Modules for faster Refresh Rate
-2. Adding Refresh only if something Changed
-3. Add some more Informations
-4. (Request more Features and it will be added here ;)
-5. ATS Support
+1. Add some more Informations
+2. (Request more Features and it will be added here ;)
+3. ATS Support
 
 ## Issue List
 
@@ -314,6 +286,11 @@ If you want to see how this plugin is created, check out my Twitch Channel: http
 
 # Changelog
 ```
+
+### Changelog 2.0.0 PRE-RELEASE
+- Added fully new Interface
+- Fully new Structure for faster Refreshrate!
+- More Logs Details
 
 ### Changelog 1.4.4 PRE-RELEASE
 - Added new Events to the Plugin - Attention: This Version is kinda slow!!!
