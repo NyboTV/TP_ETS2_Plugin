@@ -30,12 +30,13 @@ if(debugMode) {
     path = `./src/bin`
     interface_path = `./src/bin`
     telemetry_path = "./src/bin/tmp"
-} else if(dirname) {
-    console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
 } else if(sourceTest) {
     setInterval(() => {
         console.log("Still On...")
     }, 2000);
+    return;
+} else if(dirname) {
+    console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
 } else {
     path = dirpath
     interface_path = dirpath
@@ -174,6 +175,7 @@ const plugin = async (config, uConfig) => {
         
         
         const main_loop = async () => {
+            //telemetry_status_online = true
             if(telemetry_status_online === false) {
                 await timeout(refreshInterval)
                 main_loop()

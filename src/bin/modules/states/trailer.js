@@ -8,6 +8,35 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
     let ModuleLoaded = false
 
     let trailer1 = ""
+    let cargo = ""
+
+    let TrailerAttached = ""
+    let TrailerAttachedOld = ""
+
+    let TrailerName = ""
+    let TrailerNameOld = ""
+
+    let TrailerChainType = ""
+    let TrailerChainTypeOld = ""
+    
+    let CargoLoaded = ""
+    let CargoLoadedOld = ""
+
+    let CargoType = ""
+    let CargoTypeOld = ""
+
+    let CargoDamage = ""
+    let CargoDamageOld = ""
+
+    let CargoMass = ""
+    let CargoMassOld = ""
+
+    let Weight = ""
+    let WeightOld = ""
+
+    let Location = ""
+
+    var states = []
 
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
@@ -32,69 +61,121 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
     
             if(ModuleLoaded === false) { 
             } else 
+
+            // States
+            states = []
             
             // Vars
             trailer1 = telemetry.trailer1
-            let cargo = telemetry.cargo
+            cargo = telemetry.cargo
+
+            Location = userconfig.Basics.location
+
+            TrailerAttached = trailer1.attached
+            TrailerName = trailer1.name
+            TrailerChainType = trailer1.chainType
         
-            let Location = userconfig.Basics.location
-            let TrailerAttached = trailer1.attached
-            let TrailerName = trailer1.name
-            let TrailerChainType = trailer1.chainType
-        
-            let CargoLoaded = cargo.cargoLoaded
-            let CargoType = cargo.cargo
-            let CargoDamage = Math.round(cargo.damage * 100)
-            let CargoMass = ""
-        
-            if (Location === "mph") {
-                CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
-            } else {
-                CargoMass = Math.round(Math.floor(cargo.mass / 1000))
-            }
-        
+            CargoLoaded = cargo.cargoLoaded
+            CargoType = cargo.cargo
+            CargoDamage = cargo.damage
+            CargoMass = cargo.mass
             Weight = userconfig.Basics.Weight
         
-            // Module Stuff
-            var states = [
-                {
+            if(TrailerAttached !== TrailerAttachedOld) {
+                TrailerAttachedOld = TrailerAttached
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.TrailerAttached",
                     value: `${TrailerAttached}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(TrailerName !== TrailerNameOld) {
+                TrailerNameOld = TrailerName
+
+                var data ={
                     id: "Nybo.ETS2.Dashboard.TrailerName",
                     value: `${TrailerName}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(TrailerChainType !== TrailerChainTypeOld) {
+                TrailerChainTypeOld = TrailerChainType
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.TrailerChainType",
                     value: `${TrailerChainType}`
-                },
-        
-                {
+                }
+                
+                states.push(data)
+            }
+
+            if(CargoLoaded !== CargoLoadedOld) {
+                CargoLoadedOld = CargoLoaded
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.CargoLoaded",
                     value: `${CargoLoaded}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(CargoType !== CargoTypeOld) {
+                CargoTypeOld = CargoType
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.CargoType",
                     value: `${CargoType}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(CargoDamage !== CargoDamageOld) {
+                CargoDamageOld = CargoDamage
+
+                CargoDamage = Math.round(CargoDamage * 100)
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.CargoDamage",
                     value: `${CargoDamage}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+        
+            if(CargoMass !== CargoMassOld || Weight !== WeightOld) {
+
+                CargoMassOld = CargoMass
+                WeightOld = Weight
+
+                if (Location === "mph") {
+                    CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
+                } else {
+                    CargoMass = Math.round(Math.floor(cargo.mass / 1000))
+                }
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.CargoMass",
                     value: `${CargoMass} ${Weight}`
-                },
-            ]
+                }
+
+                states.push(data)
+            }
+        
         
             try {
-                TPClient.stateUpdateMany(states);
-                
+                if(states.length > 0) {
+                    TPClient.stateUpdateMany(states);
+                }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-                
+                logIt("ERROR", `${moduleName}States Error. Retry...`)
             }
 		}
 	}

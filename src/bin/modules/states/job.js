@@ -10,6 +10,31 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     var job = ""
     var navigation = ""
 
+    let JobIncome = ""
+    let JobIncomeOld = ""
+    let JobRemainingTime = ""
+    let JobRemainingTimeOld = ""
+
+    let JobSourceCity = ""
+    let JobSourceCityOld = ""
+    
+    let JobSourceCompany = ""
+    let JobSourceCompanyOld = ""
+
+    let JobDestinationCity = ""
+    let JobDestinationCityOld = ""
+
+    let JobDestinationCompany = ""
+    let JobDestinationCompanyOld = ""
+
+    let JobEstimatedDistance = ""
+    let JobEstimatedDistanceOld = ""
+    
+    let Currency = ""
+    let CurrencyOld = ""
+
+    var states = []
+
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
@@ -34,58 +59,112 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             if(ModuleLoaded === false) { 
             } else 
             
+            // States
+            states = []
+
             // Vars
             job = telemetry.job
             navigation = telemetry.navigation
-            let JobIncome = job.income
-            let JobRemainingTime = new Date(job.remainingTime)
-            JobRemainingTime = `${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
-            let JobSourceCity = job.sourceCity
-            let JobSourceCompany = job.sourceCompany
-            let JobDestinationCity = job.destinationCity
-            let JobDestinationCompany = job.destinationCompany
-            let JobEstimatedDistance = navigation.estimatedDistance
-            let Currency = userconfig.Basics.Money
-        
-            // Module Stuff
-            var states = [
-                {
+
+            JobIncome = job.income
+            JobRemainingTime = job.remainingTime            
+            JobSourceCity = job.sourceCity
+            JobSourceCompany = job.sourceCompany
+            JobDestinationCity = job.destinationCity
+            JobDestinationCompany = job.destinationCompany
+            JobEstimatedDistance = navigation.estimatedDistance
+            Currency = userconfig.Basics.Money
+
+            if(JobIncome !== JobIncomeOld || Currency !== CurrencyOld) {
+                JobIncomeOld = JobIncome
+                JobRemainingTimeOld = JobRemainingTime
+                CurrencyOld = Currency
+
+                JobRemainingTime = new Date(JobRemainingTime)
+                JobRemainingTime = `${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.JobIncome",
                     value: `${JobIncome}${Currency}`
-                },
-                {
+                }
+
+                states.push(data)
+
+            }
+
+            if(JobRemainingTime !== JobRemainingTimeOld) {
+                JobRemainingTimeOld = JobRemainingTime
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.JobRemainingTime",
                     value: `${JobRemainingTime}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(JobSourceCity !== JobSourceCityOld) {
+                JobSourceCityOld = JobSourceCity
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.JobSourceCity",
                     value: `${JobSourceCity}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(JobSourceCompany !== JobSourceCompanyOld) {
+                JobSourceCompanyOld = JobSourceCompany
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.JobSourceCompany",
                     value: `${JobSourceCompany}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(JobDestinationCity !== JobDestinationCityOld) {
+                JobDestinationCityOld = JobDestinationCity
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.JobDestinationCity",
                     value: `${JobDestinationCity}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(JobDestinationCompany !== JobDestinationCompanyOld) {
+                JobDestinationCompanyOld = JobDestinationCompany
+
+                var data ={
                     id: "Nybo.ETS2.Dashboard.JobDestinationCompany",
                     value: `${JobDestinationCompany}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(JobEstimatedDistance !== JobEstimatedDistanceOld) {
+                JobEstimatedDistanceOld = JobEstimatedDistance
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.JobEstimatedDistance",
                     value: `${JobEstimatedDistance}`
-                },
-            ]
+                }
+
+                states.push(data)
+            }
         
             try {
-                TPClient.stateUpdateMany(states);
-                
+                if(states.length > 0) {
+                    TPClient.stateUpdateMany(states);
+                }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-                
+                logIt("ERROR", `${moduleName}States Error. Retry...`)
             }
 		}
 	}

@@ -9,6 +9,11 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
     let world = ""
 
+    let time = ""
+    let timeOld = ""
+
+    var states = []
+
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
@@ -33,25 +38,31 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(ModuleLoaded === false) { 
             } else 
                      
+            // States
+            states = []
+
             //Vars
             world = telemetry.game
-            let time = world.time
+            time = world.time
 
-            // Module Stuff
-            var states = [
-                {
+            if(time !== timeOld) {
+                timeOld = time
+                
+                var data = {
                     id: "Nybo.ETS2.Dashboard.Time",
                     value: `${time}`
-                },
-            ]
+                }
+
+                states.push(data)
+            }
             
             try {
-                TPClient.stateUpdateMany(states);
-                
+                if(states.length > 0) {
+                    TPClient.stateUpdateMany(states);
+                }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-                
+                logIt("ERROR", `${moduleName}States Error. Retry...`)
             }
 		}
 	}

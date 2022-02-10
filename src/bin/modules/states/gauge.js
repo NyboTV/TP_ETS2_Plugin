@@ -10,10 +10,30 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 	var gauge = ""
 
+	var location = ""
+
+	let Speed = ""
+	let SpeedOld = ""
+	let SpeedGauge = ""
+
+	let EngineRPM = ""
+	let EngineRPMOld = ""
+	let RPMGauge = ""
+
+	let Fuel = ""
+	let FuelOld = ""
+
+	let FuelCapacity = ""
+	let FuelCapacityOld = ""
+	let FuelGauge = ""
+
+	var states = []
+
 	// Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
 	let telemetry = new sJSON(`${telemetry_path}/tmp.json`)
 
+	// PNG Vars
 	let image_arrow = await Jimp.read(`${path}/images/Gauge.png`);
 	let image2_Speed = await Jimp.read(`${path}/images/SpeedGauge.png`);
 	let image2_RPM = await Jimp.read(`${path}/images/RPMGauge.png`);
@@ -39,50 +59,77 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(ModuleLoaded === false) { 
             } else 
 
+			// States
+			states = []
+
 			//Vars
 			gauge = telemetry.truck
-			let Location = userconfig.Basics.location
-			
-			let Speed = ""
-			let EngineRPM = Math.round(gauge.engineRpm)
-			let Fuel = Math.round(gauge.fuel)
-			let FuelCapacity = Math.round(gauge.fuelCapacity)
-			
-			// Module Stuff
-			if (Location === "mph") {
-				Speed = Math.round(gauge.speed / 2 + (gauge.speed / 100 * 10))
-			} else {
-				Speed = Math.round(gauge.speed)
-			}
-			
-			let SpeedGauge = await getSpeedGauge(Speed)
-			let RPMGauge = await getRPMGauge(EngineRPM)
-			let FuelGauge = await getFuelGauge(Fuel, FuelCapacity)
-			
-			var states = [
-				{
+			location = userconfig.Basics.location
+
+			Speed = gauge.speed			
+			EngineRPM = gauge.engineRpm
+			Fuel = gauge.fuel
+			FuelCapacity = gauge.fuelCapacity
+
+			if(Speed !== SpeedOld) {
+				SpeedOld = Speed
+
+				if (location === "mph") {
+					Speed = Math.round(gauge.speed / 2 + (gauge.speed / 100 * 10))
+				} else {
+					Speed = Math.round(gauge.speed)
+				}
+
+				SpeedGauge = await getSpeedGauge(Speed)
+
+				var data = {
 					id: "Nybo.ETS2.Dashboard.SpeedGauge",
 					value: `${SpeedGauge}`
-				},
-				{
+				}
+
+				states.push(data)
+			}
+
+			if(EngineRPM !== EngineRPMOld) {
+				EngineRPMOld = EngineRPM
+
+				EngineRPM = Math.round(gauge.engineRpm)
+				RPMGauge = await getRPMGauge(EngineRPM)
+
+				var data = {
 					id: "Nybo.ETS2.Dashboard.RPMGauge",
 					value: `${RPMGauge}`
-				},
-				{
+				}
+
+				states.push(data)
+			}
+
+			if(Fuel !== FuelOld || FuelCapacity !== FuelCapacityOld) {
+				FuelOld = Fuel
+				FuelCapacityOld = FuelCapacity
+				
+				Fuel = Math.round(gauge.fuel)
+				FuelCapacity = Math.round(gauge.fuelCapacity)
+				
+				FuelGauge = await getFuelGauge(Fuel, FuelCapacity)
+
+				var data = {
 					id: "Nybo.ETS2.Dashboard.FuelGauge",
 					value: `${FuelGauge}`
 				}
-			]
+
+				states.push(data)
+			}
+						
+			// Module Stuff
 	
 			try {
-				TPClient.stateUpdateMany(states);
-				await timeout(refreshInterval)
-				
+				if(states.length > 0) {
+					TPClient.stateUpdateMany(states);
+				}
 			} catch (error) {
 				logIt("ERROR", `${moduleName}States Error: ${error}`)
-				logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-				await timeout(3000)
-				
+				logIt("ERROR", `${moduleName}States Error. Retry...`)
 			}
 			
 			function isBetween(n, a, b) {

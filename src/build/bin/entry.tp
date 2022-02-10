@@ -14,8 +14,7 @@
       {
          "id":"Game_Events",
          "name":"ETS2 Dashboard",
-         "actions": [
-         ],
+         "actions": [],
          "events": [
             {
                "id":"event_EngineOn",
@@ -225,14 +224,14 @@
                ],
             "valueStateId":"event_CargoLoaded"
             }
-         ]
+         ],
+         "states": []
       },
       {
          "id":"Game_States",
          "name":"Game States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.ConnectedStatus",
@@ -257,9 +256,8 @@
       {
          "id":"World_States",
          "name":"World States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.Time",
@@ -272,9 +270,8 @@
       {
          "id":"Driver_States",
          "name":"Driver States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.NextRestTime",
@@ -287,9 +284,8 @@
       {
          "id":"Gauge_States",
          "name":"Gauge States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.SpeedGauge",
@@ -314,9 +310,8 @@
       {
          "id":"Truck_States",
          "name":"Truck States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.Truck_Make",
@@ -585,9 +580,8 @@
       {
          "id":"Trailer_States",
          "name":"Trailer States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.TrailerAttached",
@@ -638,9 +632,8 @@
       {
          "id":"Job_States",
          "name":"Job States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.JobIncome",
@@ -689,9 +682,8 @@
       {
          "id":"Navigation_States",
          "name":"Navigation States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.SpeedLimit",
@@ -710,9 +702,8 @@
       {
          "id":"TruckersMP_States",
          "name":"TruckersMP States",
-         "events":[
-            
-         ],
+         "events":[],
+         "actions": [],
          "states":[
             {
                "id":"Nybo.ETS2.Dashboard.Servers",

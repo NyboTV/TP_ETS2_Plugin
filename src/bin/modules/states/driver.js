@@ -10,7 +10,7 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     
     let driver = ""
     let nextRestStopTime = ""
-    let NextRestStopTime = ""
+    let nextRestStopTimeOld = ""
     
     var states = []
 
@@ -45,29 +45,28 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             driver = telemetry.game
             nextRestStopTime = driver.nextRestStopTime
 
-            nextRestStopTime = new Date(nextRestStopTime)
-            nextRestStopTime = `${nextRestStopTime.getUTCHours()}:${nextRestStopTime.getUTCMinutes()}`
-            
-            if(NextRestStopTime !== nextRestStopTime) {
-                NextRestStopTime = new Date(driver.nextRestStopTime)
-                NextRestStopTime = `${NextRestStopTime.getUTCHours()}:${NextRestStopTime.getUTCMinutes()}`
+            if(nextRestStopTimeOld !== nextRestStopTime) {
+                
+                nextRestStopTimeOld = nextRestStopTime
+                
+                nextRestStopTime = new Date(nextRestStopTime)
+                nextRestStopTime = `${nextRestStopTime.getUTCHours()}:${nextRestStopTime.getUTCMinutes()}`
 
                 var data = {
                             id: "Nybo.ETS2.Dashboard.NextRestTime",
-                            value: `${NextRestStopTime}` 
+                            value: `${nextRestStopTime}` 
                         }
                 
                 states.push(data)
             }
             
             try {
-                if(states.length >= 1) {
+                if(states.length > 0) {
                     TPClient.stateUpdateMany(states);
-                    console.log("UPDATED")
                 }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
+                logIt("ERROR", `${moduleName}States Error. Retry...`)
             }
         } 
     }

@@ -8,6 +8,14 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
     let ModuleLoaded = false
 
     var game = ""
+    var connected = game.connected
+    var connectedOld = ""
+    var gameName = game.gameName
+    var gameNameOld = ""
+    var paused = game.paused
+    var pausedOld = ""
+
+    var states = []
 
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
@@ -34,39 +42,59 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
             if(ModuleLoaded === false) { 
             } else 
 
+            // States 
+            states = []
+
             //Vars
             game = telemetry.game
-            var connected = game.connected
-            var gameName = game.gameName
-            var paused = game.paused
+            connected = game.connected
+            gameName = game.gameName
+            paused = game.paused
         
             if(gameName === null) {
                 gameName = "No Game found!"
             }
 
-            // Module Stuff
-            var states = [
-                {
+            if(connected !== connectedOld) {
+                connectedOld = connected
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.ConnectedStatus",
                     value: `${connected}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(gameName !== gameNameOld) {
+                gameNameOld = gameName
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.GameType",
                     value: `${gameName}`
-                },
-                {
+                }
+
+                states.push(data)
+            }
+
+            if(paused !== pausedOld) {
+                pausedOld = paused
+
+                var data = {
                     id: "Nybo.ETS2.Dashboard.IsPaused",
                     value: `${paused}`
                 }
-            ]
+
+                states.push(data)
+            }
         
             try {
-                TPClient.stateUpdateMany(states);
-                
+                if(states.length > 0) {
+                    TPClient.stateUpdateMany(states);
+                }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-                
+                logIt("ERROR", `${moduleName}States Error. Retry...`)
             }
 		}
 	}

@@ -10,11 +10,18 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 
 	let navigation = ""
 
-	let image_SpeedLimit = await Jimp.read(`${path}/images/speedlimit.png`);
-
+	let Speedlimit = ""
+	let SpeedlimitOld = ""
+	let SpeedlimitSign = ""
+	
+	var states = []
+	
 	// Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
+	
+	// PNG Vars
+	let image_SpeedLimit = await Jimp.read(`${path}/images/speedlimit.png`);
 
 	// Check if User De/activates Module
     async function configloop () {
@@ -35,32 +42,42 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
     
             if(ModuleLoaded === false) { 
             } else 
-			// Vars		
+
+			// States
+			states = []
+
+			// Vars
             navigation = telemetry.navigation
-			let Speedlimit = navigation.speedLimit
-			let SpeedLimitSign = await getSpeedLimitSign(Speedlimit)
-		
-			// Module Stuff
-			var states = [
-				{
+			Speedlimit = navigation.speedLimit
+			SpeedlimitSign = ""
+
+			if(Speedlimit !== SpeedlimitOld) {
+				SpeedlimitOld = Speedlimit
+
+				SpeedlimitSign = await getSpeedLimitSign(Speedlimit)
+
+				var data1 = {
 					id: "Nybo.ETS2.Dashboard.SpeedLimit",
 					value: `${Speedlimit}`
-				},
-				{
+				}
+
+				var data2 = {
 					id: "Nybo.ETS2.Dashboard.SpeedLimitSign",
-					value: `${SpeedLimitSign}`
-				},
-			]
+					value: `${SpeedlimitSign}`
+				}
+
+				states.push(data1)
+				states.push(data2)
+			}
+		
 		
 			try {
-				TPClient.stateUpdateMany(states);
-				await timeout(refreshInterval)
-				
+				if(states.length > 0) {
+					TPClient.stateUpdateMany(states);
+				}
 			} catch (error) {
 				logIt("ERROR", `${moduleName}States Error: ${error}`)
-				logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-				await timeout(3000)
-				
+				logIt("ERROR", `${moduleName}States Error. Retry...`)
 			}
 		
 			async function getSpeedLimitSign(Speedlimit) {
