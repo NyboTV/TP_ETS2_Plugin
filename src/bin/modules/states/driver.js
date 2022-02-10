@@ -9,6 +9,10 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     let ModuleLoaded = false
     
     let driver = ""
+    let nextRestStopTime = ""
+    let NextRestStopTime = ""
+    
+    var states = []
 
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
@@ -34,21 +38,33 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             if(ModuleLoaded === false) { 
             } else 
             
+            // States
+            states = []
+
             // Vars
             driver = telemetry.game
-            let NextRestStopTime = new Date(driver.nextRestStopTime)
-            NextRestStopTime = `${NextRestStopTime.getUTCHours()}:${NextRestStopTime.getUTCMinutes()}`
+            nextRestStopTime = driver.nextRestStopTime
+
+            nextRestStopTime = new Date(nextRestStopTime)
+            nextRestStopTime = `${nextRestStopTime.getUTCHours()}:${nextRestStopTime.getUTCMinutes()}`
             
-            // Module Stuff 
-            var states = [
-                {
-                    id: "Nybo.ETS2.Dashboard.NextRestTime",
-                    value: `${NextRestStopTime}`
-                },
-            ]
+            if(NextRestStopTime !== nextRestStopTime) {
+                NextRestStopTime = new Date(driver.nextRestStopTime)
+                NextRestStopTime = `${NextRestStopTime.getUTCHours()}:${NextRestStopTime.getUTCMinutes()}`
+
+                var data = {
+                            id: "Nybo.ETS2.Dashboard.NextRestTime",
+                            value: `${NextRestStopTime}` 
+                        }
+                
+                states.push(data)
+            }
             
             try {
-                TPClient.stateUpdateMany(states);
+                if(states.length >= 1) {
+                    TPClient.stateUpdateMany(states);
+                    console.log("UPDATED")
+                }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
                 logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
