@@ -67,6 +67,11 @@ ps: The ReadMe is not fully outdated. just some options are missing or not corre
 ## How to Install
 
 # IMPORTANT: Because of a bug with the Telemetry File while importing it into TP, you need to install it manually!! (Really sorry)
+Todo:
+Press "win+r" -> Copy this into the Window: "%appdata%/TouchPortal/plugins" 
+Open the ".tpp" file with WinRar or 7Zip -> Extract the ETS2_Dashboard folder into the Plugins folder.
+Restart TP and press on "Ok" (to start a single time, need to do it every start on TP) or "Trust anyways" and Enjoy!
+
 You need the [Touch Portal](https://www.touch-portal.com) Application
 
 Installing
