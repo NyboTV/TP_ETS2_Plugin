@@ -13,7 +13,7 @@
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
 
 # Plugin is still in Work!! Just dont have much time!
-# Attention!! This ReadMe is OUT-OF-DATE!
+## Attention!! This ReadMe is OUT-OF-DATE!
 Im currently working on Version 2.0.0 and this Version takes a LONG time. It will be a BIG Update with MANY new Function!
 Im going to make a Pre-Release in the Future so you can see it yourself!
 
@@ -66,6 +66,7 @@ ps: The ReadMe is not fully outdated. just some options are missing or not corre
 
 ## How to Install
 
+# IMPORTANT: Because of a bug with the Telemetry File while importing it into TP, you need to install it manually!! (Really sorry)
 You need the [Touch Portal](https://www.touch-portal.com) Application
 
 Installing
