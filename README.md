@@ -257,6 +257,15 @@ The Settings are moving! Currently you only can Edit the Settings by Following t
 -> Press "Win+r" -> Type in: "%appdata%/TouchPortal/plugins" -> Goto my Plugins Folder -> Config -> Edit Config you want! 
 (IMPORTANT: DO NOT CHANGE ANYTHING IN "cfg.json"! Except "refreshInterval"!)
 
+| Settings                  | Description                                           | Available Values      |
+|---------------------------|:-----------------------------------------------------:|----------------------:|
+| currency                  | Shows you how many Servers are Online                 | Everything you want!  |
+| weight                    | Shows you the Server Name of the selected Server      | Everything you want!  |
+| unit                      | Shows you all Online Players of the selected Server   | Everything you want!  |
+| timeFormat                | Shows you all Players in queue of the selected Server | US (12H) || EU (24H)  |
+
+IMPORTANT!! If the available values are all in capital letters, you must do the same! Otherwise it will not work!
+
 
 ### AutoUpdater 
 
