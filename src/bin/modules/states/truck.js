@@ -93,22 +93,54 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let	BatteryVoltageWarningOn = ""
     let	BatteryVoltageWarningOnOld = ""
 
-    let	BlinkerLeftActive = ""
-    let	BlinkerRightActive = ""
-    let	BlinkerLeftOn = ""
-    let	BlinkerRightOn = ""
-    let HazardLightsOn = ""
 
+    // Indicator
+    let	BlinkerLeftActive = ""
+    let BlinkerLeftActiveOld = ""
+
+    let	BlinkerRightActive = ""
+    let BlinkerRightActiveOld = ""
+    
+    let	BlinkerLeftOn = ""
+    let	BlinkerLeftOnOld = ""
+
+    let	BlinkerRightOn = ""
+    let	BlinkerRightOnOld = ""
+    
+    let HazardLightsOn = ""
+    let HazardLightsOnOld = ""
+
+
+    // Lights
     let	LightsDashboardValue = ""
+    let LightsDashboardValueOld = ""
+
     let	LightsDashboardOn = ""
+    let	LightsDashboardOnOld = ""
+    
     let	LightsParkingOn = ""
+    let	LightsParkingOnOld = ""
+    
     let	LightsBeamLowOn = ""
+    let	LightsBeamLowOnOld = ""
+    
     let	LightsBeamHighOn = ""
+    let	LightsBeamHighOnOld = ""
+    
     let	LightsAuxFrontOn = ""
+    let	LightsAuxFrontOnOld = ""
+    
     let	LightsAuxRoofOn = ""
+    let	LightsAuxRoofOnOld = ""
+    
     let	LightsBeaconOn = ""
+    let	LightsBeaconOnOld = ""
+    
     let	LightsBrakeOn = ""
+    let	LightsBrakeOnOld = ""
+    
     let	LightsReverseOn = ""
+    let	LightsReverseOnOld = ""
 
     var states = []
 
@@ -148,8 +180,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             CruiseControlSpeed = truck.cruiseControlSpeed
             CruiseControlOn = truck.cruiseControlOn
             
-            Speed = truck.speed
-            EngineRPM = truck.engineRpm
+            Speed = Math.round(truck.speed)
+            EngineRPM = Math.round(truck.engineRpm)
 
             ShifterType = truck.shifterType
             Gear = truck.displayedGear
@@ -161,14 +193,14 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             ParkBrakeOn = truck.parkBrakeOn
             MotorBrakeOn = truck.motorBrakeOn
 
-            Fuel = truck.fuel
+            Fuel = Math.round(truck.fuel * 100) / 100
             FuelCapacity = truck.fuelCapacity
-            AdBlue = truck.adblue
+            AdBlue = Math.round(truck.adblue)
 
-            AirPressure = truck.airPressure
-            OilTemp = truck.oilTemperature
-            WaterTemp = truck.waterTemperature
-            BatteryVoltage = truck.batteryVoltage
+            AirPressure = Math.round(truck.airPressure)
+            OilTemp = Math.round(truck.oilTemperature)
+            WaterTemp = Math.round(truck.waterTemperature)
+            BatteryVoltage = Math.round(truck.batteryVoltage)
 
             FuelWarningOn = truck.fuelWarningOn        
             AdBlueWarningOn = truck.adblueWarningOn
@@ -182,7 +214,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             BlinkerRightActive = truck.blinkerRightActive
             BlinkerLeftOn = truck.blinkerLeftOn
             BlinkerRightOn = truck.blinkerRightOn
-            HazardLightsOn = ""
+            HazardLightsOn = false
         
             LightsDashboardValue = truck.lightsDashboardValue
             LightsDashboardOn = truck.lightsDashboardOn
@@ -242,8 +274,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(Speed !== SpeedOld) {
                 SpeedOld = Speed
 
-                Speed = Math.round(Speed)
-
                 var data = {
                     id: "Nybo.ETS2.Dashboard.Speed",
                     value: `${Speed}`
@@ -254,8 +284,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(EngineRPM !== EngineRPMOld) {
                 EngineRPMOld = EngineRPM
-
-                EngineRPM = Math.round(EngineRPM)
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.EngineRPM",
@@ -282,21 +310,34 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(EngineOn !== EngineOnOld) {
                 EngineOnOld = EngineOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.EngineOn",
-                    value: `${EngineOn}`
-                }
-
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.EngineOn",
+                        value: `${EngineOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_EngineOn",
+                        value: `${EngineOn}`
+                    }
+                ]
+                
                 states.push(data)
             }
             
             if(ElectricOn !== ElectricOnOld) {
                 ElectricOnOld = ElectricOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.ElectricOn",
-                    value: `${ElectricOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.ElectricOn",
+                        value: `${ElectricOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_ElectricOn",
+                        value: `${ElectricOn}`
+                    }
+                ]
+                    
 
                 states.push(data)
             }
@@ -304,10 +345,16 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(WipersOn !== WipersOnOld) {
                 WipersOnOld = WipersOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.WipersON",
-                    value: `${WipersOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.WipersON",
+                        value: `${WipersOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_WipersOn",
+                        value: `${WipersOn}`
+                    }
+                ]
 
                 states.push(data)
             }
@@ -315,10 +362,16 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(ParkBrakeOn !== ParkBrakeOnOld) {
                 ParkBrakeOnOld = ParkBrakeOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
-                    value: `${ParkBrakeOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
+                        value: `${ParkBrakeOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_ParkBrakeOn",
+                        value: `${ParkBrakeOn}`
+                    }
+                ]                    
 
                 states.push(data)
             }
@@ -336,8 +389,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(Fuel !== FuelOld) {
                 FuelOld = Fuel
-
-                Fuel = Math.round(Fuel * 100) / 100
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.Fuel",
@@ -363,8 +414,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(AdBlue !== AdBlueOld) {
                 AdBlueOld = AdBlue
 
-                AdBlue = Math.round(AdBlue)
-
                 var data = {
                     id: "Nybo.ETS2.Dashboard.AdBlue",
                     value: `${AdBlue}`
@@ -375,8 +424,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(AirPressure !== AirPressureOld) {
                 AirPressureOld = AirPressure
-                
-                AirPressure = Math.round(AirPressure)
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.AirPressure",
@@ -389,8 +436,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(OilTemp !== OilTempOld) {
                 OilTempOld = OilTemp
 
-                OilTemp = Math.round(OilTemp)
-
                 var data = {
                     id: "Nybo.ETS2.Dashboard.OilTemp",
                     value: `${OilTemp}`
@@ -401,8 +446,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(WaterTemp !== WaterTempOld) {
                 WaterTempOld = WaterTemp
-
-                WaterTemp = Math.round(WaterTemp)
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.WaterTemp",
@@ -415,8 +458,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(BatteryVoltage !== BatteryVoltageOld) {
                 BatteryVoltageOld = BatteryVoltage
 
-                BatteryVoltage = Math.round(BatteryVoltage)
-
                 var data = {
                     id: "Nybo.ETS2.Dashboard.BatteryVoltage",
                     value: `${BatteryVoltage}`
@@ -428,10 +469,17 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(FuelWarningOn !== FuelWarningOnOld) {
                 FuelWarningOnOld = FuelWarningOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.FuelWarningOn",
-                    value: `${FuelWarningOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.FuelWarningOn",
+                        value: `${FuelWarningOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_FuelWarningOn",
+                        value: `${FuelWarningOn}`
+                    }
+                ]
+                    
 
                 states.push(data)
             }
@@ -439,10 +487,16 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(AdBlueWarningOn !== AdBlueWarningOnOld) {
                 AdBlueWarningOnOld = AdBlueWarningOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.AdBlueWarningOn",
-                    value: `${AdBlueWarningOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.AdBlueWarningOn",
+                        value: `${AdBlueWarningOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_AdBlueWarningOn",
+                        value: `${AdBlueWarningOn}`
+                    }
+                ]                    
 
                 states.push(data)
             }
@@ -450,10 +504,16 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(AirPressureWarningOn !== AirPressureWarningOnOld) {
                 AirPressureWarningOnOld = AirPressureWarningOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.AirPressureWarningOn",
-                    value: `${AirPressureWarningOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.AirPressureWarningOn",
+                        value: `${AirPressureWarningOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_AirPressureWarningOn",
+                        value: `${AirPressureWarningOn}`
+                    }
+                ]                    
 
                 states.push(data)
             }
@@ -472,10 +532,17 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(OilPressureWarningOn !== OilPressureWarningOnOld) {
                 OilPressureWarningOnOld = OilPressureWarningOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.OilPressureWarningOn",
-                    value: `${OilPressureWarningOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.OilPressureWarningOn",
+                        value: `${OilPressureWarningOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_OilPressureWarningOn",
+                        value: `${OilPressureWarningOn}`
+                    }
+                ]
+                    
 
                 states.push(data)
             }
@@ -483,10 +550,17 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(WaterTempWarningOn !== WaterTempWarningOnOld) {
                 WaterTempWarningOnOld = WaterTempWarningOn
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.WaterTempWarningOn",
-                    value: `${WaterTempWarningOn}`
-                }
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.WaterTempWarningOn",
+                        value: `${WaterTempWarningOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_WaterTempWarningOn",
+                        value: `${WaterTempWarningOn}`
+                    }
+                ]
+                    
 
                 states.push(data)
             }
@@ -503,41 +577,201 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             }
 
 
-            /* 
-            STUCK ON BLINKER!!
+            // Indicator
+            if(BlinkerLeftActive !== BlinkerLeftActiveOld) {
+                BlinkerLeftActiveOld = BlinkerLeftActive
 
-            Testen ob die Blinker bei Aktivierung "Active" oder "on" zeigen. Danach weiter die abfrage bauen ob sich was geändert hat.
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.BlinkerLeftActive",
+                        value: `${BlinkerLeftActive}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_BlinkerLeftActive",
+                        value: `${BlinkerLeftActive}`
+                    }
+                ]
 
-            Danach TESTEN!!
-            */
+                states.push(data)
+            } 
 
-        
-            BlinkerLeftActive = truck.blinkerLeftActive
-            BlinkerRightActive = truck.blinkerRightActive
-            BlinkerLeftOn = truck.blinkerLeftOn
-            BlinkerRightOn = truck.blinkerRightOn
-            HazardLightsOn = ""
+            if(BlinkerRightActive !== BlinkerRightActiveOld) {
+                BlinkerRightActiveOld = BlinkerRightActive
 
-            console.log("ACTIVE               ON")
-            console.log([
-                BlinkerLeftActive,
-                BlinkerRightActive,
-                "",
-                BlinkerLeftOn,
-                BlinkerRightOn
-            ])
-        
-            LightsDashboardValue = truck.lightsDashboardValue
-            LightsDashboardOn = truck.lightsDashboardOn
-            LightsParkingOn = truck.lightsParkingOn
-            LightsBeamLowOn = truck.lightsBeamLowOn
-            LightsBeamHighOn = truck.lightsBeamHighOn
-            LightsAuxFrontOn = truck.lightsAuxFrontOn
-            LightsAuxRoofOn = truck.lightsAuxRoofOn
-            LightsBeaconOn = truck.lightsBeaconOn
-            LightsBrakeOn = truck.lightsBrakeOn
-            LightsReverseOn = truck.lightsReverseOn
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.BlinkerRightActive",
+                        value: `${BlinkerRightActive}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_BlinkerRightActive",
+                        value: `${BlinkerRightActive}`
+                    }
+                ]                    
+
+                states.push(data)
+            } 
+
+            if(BlinkerLeftOn !== BlinkerLeftOnOld) {
+                BlinkerLeftOnOld = BlinkerLeftOn
+
+                var data ={
+                        id: "Nybo.ETS2.Dashboard.BlinkerLeftOn",
+                        value: `${BlinkerLeftOn}`
+                    }
+
+                states.push(data)
+            }
             
+            if(BlinkerRightOn !== BlinkerRightOnOld) {
+                BlinkerRightOnOld = BlinkerRightOn
+
+                var data = {
+                        id: "Nybo.ETS2.Dashboard.BlinkerRightOn",
+                        value: `${BlinkerRightOn}`
+                    }                
+
+                states.push(data)
+            }
+
+            if (BlinkerLeftOn && BlinkerRightOn) {
+                HazardLightsOn = true
+                HazardLightsCounter = 1
+            }
+            if (HazardLightsCounter < 5) {
+                HazardLightsCounter = Math.floor(HazardLightsCounter + 1)
+            } else {
+                HazardLightsOn = false
+            }
+
+            if(HazardLightsOn !== HazardLightsOnOld) {
+                HazardLightsOnOld = HazardLightsOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.event_HazardLightsOn",
+                    value: `${HazardLightsOn}`
+                }
+
+                states.push(data)
+            }
+        
+
+            // Lights
+            if(LightsDashboardValue !== LightsDashboardValueOld) {
+                LightsDashboardValueOld = LightsDashboardValue
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsDashboardValue",
+                    value: `${LightsDashboardValue}`
+                }
+
+                states.push(data)
+            }
+
+            if(LightsDashboardOn !== LightsDashboardOnOld) {
+                LightsDashboardOnOld = LightsDashboardOn 
+
+                var data = [
+                    {
+                        id: "Nybo.ETS2.Dashboard.LightsDashboardOn",
+                        value: `${LightsDashboardOn}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.event_LightsDashboardOn",
+                        value: `${LightsDashboardOn}`
+                    }
+                ]                   
+
+                states.push(data)
+            }
+
+            if(LightsParkingOn !== LightsParkingOnOld) {
+                LightsParkingOnOld = LightsParkingOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsParkingOn",
+                    value: `${LightsParkingOn}`
+                }
+
+                states.push(data)
+            }
+
+            if(LightsBeamLowOn !== LightsBeamLowOnOld) {
+                LightsBeamLowOnOld = LightsBeamLowOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsBeamLowOn",
+                    value: `${LightsBeamLowOn}`
+                }
+
+                states.push(data)
+            }
+
+            if(LightsBeamHighOn !== LightsBeamHighOnOld) {
+                LightsBeamHighOnOld = LightsBeamHighOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsBeamHighOn",
+                    value: `${LightsBeamHighOn}`
+                }
+            }
+
+            if(LightsAuxFrontOn !== LightsAuxFrontOnOld) {
+                LightsAuxFrontOnOld = LightsAuxFrontOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsAuxFrontOn",
+                    value: `${LightsAuxFrontOn}`
+                }
+
+                states.push(data)
+            }
+
+            if(LightsAuxRoofOn !== LightsAuxRoofOnOld) {
+                LightsAuxRoofOnOld = LightsAuxRoofOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsAuxRoofOn",
+                    value: `${LightsAuxRoofOn}`
+                }
+
+                states.push(data)
+            }
+
+            if(LightsBeaconOn !== LightsBeaconOnOld) {
+                LightsBeaconOnOld = LightsBeaconOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsBeaconOn",
+                    value: `${LightsBeaconOn}`
+                }
+
+                states.push(data)
+            }
+
+            if(LightsBrakeOn !== LightsBrakeOnOld) {
+                LightsBrakeOnOld = LightsBrakeOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsBrakeOn",
+                    value: `${LightsBrakeOn}`
+                }
+
+                states.push(data)
+            }
+
+            if(LightsReverseOn !== LightsReverseOnOld) {
+                LightsReverseOnOld = LightsReverseOn
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.LightsReverseOn",
+                    value: `${LightsReverseOn}`
+                }
+
+                states.push(data)
+            }
+
+
             async function getGear(Gears, Shifter) {
                 return new Promise(async (resolve, reject) => {
                     if (Shifter === "automatic") {
@@ -563,144 +797,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             }
         
         
-            if (BlinkerLeftOn && BlinkerRightOn) {
-                HazardLightsOn = true
-                HazardLightsCounter = 1
-            }
-            
-            if (HazardLightsCounter < 5) {
-                HazardLightsCounter = Math.floor(HazardLightsCounter + 1)
-            } else {
-                HazardLightsOn = false
-            }
-        
-
-
-            if(AirPressureWarningOn === true) {
-                AirPressureWarningOn = "low"
-            } else if(AirPressureEmergencyOn === true) {
-                AirPressureWarningOn = "emergency"
-            } else {
-                AirPressureWarningOn = "high"
-            }
-            
-            /*
-                ,
-        
-                {
-                    id: "Nybo.ETS2.Dashboard.BlinkerLeftActive",
-                    value: `${BlinkerLeftActive}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.BlinkerRightActive",
-                    value: `${BlinkerRightActive}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.BlinkerLeftOn",
-                    value: `${BlinkerLeftOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.BlinkerRightOn",
-                    value: `${BlinkerRightOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.HazardLightsOn",
-                    value: `${HazardLightsOn}`
-                },
-        
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsDashboardValue",
-                    value: `${LightsDashboardValue}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsDashboardOn",
-                    value: `${LightsDashboardOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsParkingOn",
-                    value: `${LightsParkingOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsBeamLowOn",
-                    value: `${LightsBeamLowOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsBeamHighOn",
-                    value: `${LightsBeamHighOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsAuxFrontOn",
-                    value: `${LightsAuxFrontOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsAuxRoofOn",
-                    value: `${LightsAuxRoofOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsBeaconOn",
-                    value: `${LightsBeaconOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsBrakeOn",
-                    value: `${LightsBrakeOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.LightsReverseOn",
-                    value: `${LightsReverseOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_EngineOn",
-                    value: `${EngineOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_ElectricOn",
-                    value: `${ElectricOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_WipersOn",
-                    value: `${WipersOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_ParkBrakeOn",
-                    value: `${ParkBrakeOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_FuelWarningOn",
-                    value: `${FuelWarningOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_AdBlueWarningOn",
-                    value: `${AdBlueWarningOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_AirPressureWarningOn",
-                    value: `${AirPressureWarningOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_OilPressureWarningOn",
-                    value: `${OilPressureWarningOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_WaterTempWarningOn",
-                    value: `${WaterTempWarningOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_BlinkerLeftOn",
-                    value: `${BlinkerLeftOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_BlinkerRightOn",
-                    value: `${BlinkerRightOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_HazardLightsOn",
-                    value: `${HazardLightsOn}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.event_LightsDashboardOn",
-                    value: `${LightsDashboardOn}`
-                },
-                */
+            console.log("----------------------------------------------")
+            console.log("----------------------------------------------")
+            console.log(states)
             
     
             try {

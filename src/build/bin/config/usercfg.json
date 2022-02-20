@@ -2,7 +2,8 @@
     "Basics": {
         "currency": "Euro",
         "weight": "Tons",
-        "unit": "kmh"
+        "unit": "kmh",
+        "timeFormat": "EU"
     },
     "TruckersMP": {
         "TruckersMPServer": "1"

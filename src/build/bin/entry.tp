@@ -23,8 +23,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_EngineOn"
             }, 
@@ -35,8 +35,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_ElectricOn"
             }, 
@@ -47,8 +47,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_WipersOn"
             }, 
@@ -59,8 +59,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_ParkBrakeOn"
             }, 
@@ -74,8 +74,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_FuelWarningOn"
             }, 
@@ -86,8 +86,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_AdBlueWarningOn"
             }, 
@@ -98,9 +98,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "low",
-                  "high",
-                  "emergency"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_AirPressureWarningOn"
             }, 
@@ -111,8 +110,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "low",
-                  "high"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_OilPressureWarningOn"
             }, 
@@ -123,8 +122,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_WaterTempWarningOn"
             }, 
@@ -135,8 +134,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "low",
-                  "high"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_BatteryVoltageWarningOn"
             }, 
@@ -144,28 +143,28 @@
 
 
             {
-               "id":"event_BlinkerLeftOn",
+               "id":"event_BlinkerLeftActive",
                "name":"Blinker Left Status",
                "format":"If Blinker Left is $val then",
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
-            "valueStateId":"event_BlinkerLeftOn"
+            "valueStateId":"event_BlinkerLeftActive"
             }, 
             {
-               "id":"event_BlinkerRightOn",
+               "id":"event_BlinkerRightActive",
                "name":"Blinker Right Status",
                "format":"If Blinker Right is $val then",
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
-            "valueStateId":"event_BlinkerRightOn"
+            "valueStateId":"event_BlinkerRightActive"
             }, 
             {
                "id":"event_HazardLightsOn",
@@ -174,8 +173,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_HazardLightsOn"
             }, 
@@ -189,8 +188,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "on",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_LightsDashboardOn"
             }, 
@@ -204,8 +203,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "attached",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_TrailerAttached"
             }, 
@@ -219,8 +218,8 @@
                "type":"communicate",
                "valueType":"choice",
                "valueChoices": [
-                  "loaded",
-                  "off"
+                  "true",
+                  "false"
                ],
             "valueStateId":"event_CargoLoaded"
             }

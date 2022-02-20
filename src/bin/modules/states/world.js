@@ -12,6 +12,14 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let time = ""
     let timeOld = ""
 
+    let timeFormat = ""
+
+    var YY = ""
+    var MM = ""
+    var DD = ""
+    var hh = ""
+    var mm = ""
+
     var states = []
 
     // Json Vars
@@ -45,9 +53,34 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             world = telemetry.game
             time = world.time
 
+            timeFormat = userconfig.Basics.timeFormat
+
             if(time !== timeOld) {
                 timeOld = time
                 
+                time = time.replace('T', ' ').replace('Z', '').replace(':', ' ').replace(':', ' ').replace('-', ' ').replace('-', ' ')
+                time = time.split(' ').slice(0, 5)
+                
+                YY = `20` + Math.round(time[0])
+                MM = time[1]
+                DD = time[2]
+
+                hh = time[3]
+                mm = time[4]
+                
+                if(timeFormat === "EU") {
+                    time = `${hh}:${mm}, ${DD}.${MM}.${YY}`
+                } else if (timeFormat === "US") {
+                    if(hh > 12) {
+                        hh = hh-12
+                        time = `${MM}.${DD}.${YY}, ${hh}:${mm} PM`
+                    } else {
+                        time = `${MM}.${DD}.${YY}, ${hh}:${mm} AM`
+                    }
+                } else {
+                    time = "WRONG SETTING!!!"
+                }
+
                 var data = {
                     id: "Nybo.ETS2.Dashboard.Time",
                     value: `${time}`
