@@ -43,7 +43,7 @@ ps: The ReadMe is not fully outdated. just some options are missing or not corre
   - [Settings](#settings)
   - [Features Comming Soon](#features-comming-soon)
   - [Todo](#todo)
-  - [Issues](#issue-list)
+  - [Known Issues](#issue-list)
   - [Your Feature](#your-feature)
   - [Changelog](#changelog)
   - [Authors](#authors)
@@ -288,7 +288,10 @@ AutoUpdater is moving! Not currently Working!
 
 ## Issue List
 
-- Hazard Lights are not Working correctly
+- Event: Engine not Working [Found by Gargamosch]
+- Hazard Lights are not Working correctly 
+
+This whole Issue list is based on Feedback from the Users!
 
 ## Your Feature
 
