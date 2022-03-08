@@ -69,7 +69,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             trailer1 = telemetry.trailer1
             cargo = telemetry.cargo
 
-            Location = userconfig.Basics.location
+            Location = userconfig.Basics.unit
 
             TrailerAttached = trailer1.attached
             TrailerName = trailer1.name
