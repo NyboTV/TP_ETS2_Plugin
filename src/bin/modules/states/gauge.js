@@ -64,7 +64,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 			//Vars
 			gauge = telemetry.truck
-			location = userconfig.Basics.location
+			location = userconfig.Basics.unit
 
 			Speed = gauge.speed			
 			EngineRPM = gauge.engineRpm
