@@ -8,3 +8,7 @@
 
 Hazard Lights On - not Working
 Remaining Time - ${value:Nybo.ETS2.Dashboard.JobRemainingTime} - gives me something like: 0001-01-02T01:17:00Z is it possible to Format this, what does it mean?
+
+EngineOn Event not working
+
+MPH not working
