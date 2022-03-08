@@ -7,6 +7,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     var moduleName = path2.basename(__filename).replace('.js','')
     let ModuleLoaded = false
 
+    let location = ""
+
     let truck = ""
 
     let HazardLightsCounter = ""
@@ -227,6 +229,11 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             LightsBrakeOn = truck.lightsBrakeOn
             LightsReverseOn = truck.lightsReverseOn
 
+            location = userconfig.Basics.unit
+
+
+            // Script
+            
             if(Constructor !== ConstructorOld) {
                 ConstructorOld = Constructor
 
@@ -252,6 +259,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(CruiseControlSpeed !== CruiseControlSpeedOld) {
                 CruiseControlSpeedOld = CruiseControlSpeed
 
+                if(location === "imperial") {
+                    CruiseControlSpeed = Math.floor(CruiseControlSpeed / 1.609344)
+                }
+
                 var data = {
                     id: "Nybo.ETS2.Dashboard.CruiseControlSpeed",
                     value: `${CruiseControlSpeed}`
@@ -273,6 +284,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(Speed !== SpeedOld) {
                 SpeedOld = Speed
+
+                if(location === "imperial") {
+                    Speed = Math.floor(Speed / 1.609344)
+                }
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.Speed",
@@ -436,6 +451,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(OilTemp !== OilTempOld) {
                 OilTempOld = OilTemp
 
+                if(location === "imperial") {
+                    OilTemp = Math.floor(OilTemp * 9/5) + 32
+                }
+
                 var data = {
                     id: "Nybo.ETS2.Dashboard.OilTemp",
                     value: `${OilTemp}`
@@ -446,6 +465,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(WaterTemp !== WaterTempOld) {
                 WaterTempOld = WaterTemp
+
+                if(location === "imperial") {
+                    WaterTemp = Math.floor(WaterTemp * 9/5) + 32
+                }
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.WaterTemp",
@@ -714,6 +737,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                     id: "Nybo.ETS2.Dashboard.LightsBeamHighOn",
                     value: `${LightsBeamHighOn}`
                 }
+
+                states.push(data)
             }
 
             if(LightsAuxFrontOn !== LightsAuxFrontOnOld) {
@@ -771,7 +796,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-
             async function getGear(Gears, Shifter) {
                 return new Promise(async (resolve, reject) => {
                     if (Shifter === "automatic") {
@@ -794,13 +818,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                         resolve(Gears)
                     }
                 })
-            }
-        
-        
-            console.log("----------------------------------------------")
-            console.log("----------------------------------------------")
-            console.log(states)
-            
+            }            
     
             try {
                 if(states.length > 0) {

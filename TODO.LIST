@@ -1,26 +1,10 @@
-- Add an Array loop to sort out not changed states. So TP dont get useless states.
 
 - Add more Options to the Site
 - Input Field not working (Interface)
 
 
+- Events not working full
 
 
-- Events not working
-
-
-
-OK, so I did some further testing of things I would like to use in ATS - this is a list of things I noticed:
-Event: Engine ON - not working
-Event: Park Break ON - not working
-Dynamic Text for Lights Beam Low ${value:Nybo.ETS2.Dashboard.LightsBeamLowOn} shows true - using If statement of touchportal it is the oposite (Lights Beam Low On evaluates true if they are off)
-Lights Beam High On - not Working
 Hazard Lights On - not Working
-Cruise Control - ${value:Nybo.ETS2.Dashboard.CruiseControlSpeed} is it possible to show this in Miles per hour and rounded numbers (Integers) for ATS?
 Remaining Time - ${value:Nybo.ETS2.Dashboard.JobRemainingTime} - gives me something like: 0001-01-02T01:17:00Z is it possible to Format this, what does it mean?
-${value:Nybo.ETS2.Dashboard.SpeedLimit} Shows the Speed Limit in Kmh, is it possible to show in Mph
-${value:Nybo.ETS2.Dashboard.Speed} Actual Speed shows Kmh, is it possible to show in Mph
-${value:Nybo.ETS2.Dashboard.JobEstimatedDistance} Estimated Distance: Can you show that in miles, rounded to one digit after the point (1.4 Mi)
-${value:Nybo.ETS2.Dashboard.JobIncome} Jobg income gives me something like 4622undefined - can it show 4622 $ instead?
-
-Is it generally possible to calculate with your values in the dynamic Text Edit

@@ -53,8 +53,6 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
                     value: `${NextRestStopTime}`
                 },
             ]
-
-            console.log(states)
             
             try {
                 TPClient.stateUpdateMany(states);

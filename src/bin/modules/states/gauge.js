@@ -11,6 +11,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 	var gauge = ""
 
 	var location = ""
+	var locationOld = ""
 
 	let Speed = ""
 	let SpeedOld = ""
@@ -71,15 +72,16 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 			Fuel = gauge.fuel
 			FuelCapacity = gauge.fuelCapacity
 
-			if(Speed !== SpeedOld) {
+			if(Speed !== SpeedOld || location !== locationOld) {
 				SpeedOld = Speed
+				locationOld = location
 
-				if (location === "mph") {
-					Speed = Math.round(gauge.speed / 2 + (gauge.speed / 100 * 10))
+				if (location === "imperial") {
+					Speed = Math.floor(Speed / 1.609344)
 				} else {
-					Speed = Math.round(gauge.speed)
+					Speed = Math.round(Speed)
 				}
-
+				
 				SpeedGauge = await getSpeedGauge(Speed)
 
 				var data = {
@@ -89,6 +91,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 				states.push(data)
 			}
+
 
 			if(EngineRPM !== EngineRPMOld) {
 				EngineRPMOld = EngineRPM

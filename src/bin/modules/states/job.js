@@ -10,6 +10,9 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     var job = ""
     var navigation = ""
 
+    var location = ""
+    var locationOld = ""
+
     let JobIncome = ""
     let JobIncomeOld = ""
     let JobRemainingTime = ""
@@ -74,14 +77,12 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             JobDestinationCompany = job.destinationCompany
             JobEstimatedDistance = navigation.estimatedDistance
             Currency = userconfig.Basics.currency
+            location = userconfig.Basics.unit
 
             if(JobIncome !== JobIncomeOld || Currency !== CurrencyOld) {
                 JobIncomeOld = JobIncome
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
-
-                JobRemainingTime = new Date(JobRemainingTime)
-                JobRemainingTime = `${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.JobIncome",
@@ -94,6 +95,9 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
             if(JobRemainingTime !== JobRemainingTimeOld) {
                 JobRemainingTimeOld = JobRemainingTime
+                
+                JobRemainingTime = new Date(JobRemainingTime)
+                JobRemainingTime = `${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.JobRemainingTime",
@@ -102,6 +106,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
                 states.push(data)
             }
+
 
             if(JobSourceCity !== JobSourceCityOld) {
                 JobSourceCityOld = JobSourceCity
@@ -147,8 +152,13 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 states.push(data)
             }
 
-            if(JobEstimatedDistance !== JobEstimatedDistanceOld) {
+            if(JobEstimatedDistance !== JobEstimatedDistanceOld || locationOld !== location) {
                 JobEstimatedDistanceOld = JobEstimatedDistance
+                locationOld = location
+
+                if(location === "imperial") {
+                    JobEstimatedDistance = Math.round(Math.floor(JobEstimatedDistance/1.609344) * 100) / 100
+                }
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.JobEstimatedDistance",
