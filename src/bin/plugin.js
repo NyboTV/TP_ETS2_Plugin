@@ -175,7 +175,7 @@ const plugin = async (config, uConfig) => {
         
         
         const main_loop = async () => {
-            telemetry_status_online = true
+            //telemetry_status_online = true
             if(telemetry_status_online === false) {
                 await timeout(refreshInterval)
                 main_loop()
@@ -184,7 +184,7 @@ const plugin = async (config, uConfig) => {
         }
         
         logIt("INFO", "Loading `Telemetry Server`...")
-        //telemetry_loop()
+        telemetry_loop()
         logIt("INFO", "Loading `Modules`...")
         main_loop()
     }
