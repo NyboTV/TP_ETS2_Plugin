@@ -73,7 +73,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             JobDestinationCity = job.destinationCity
             JobDestinationCompany = job.destinationCompany
             JobEstimatedDistance = navigation.estimatedDistance
-            Currency = userconfig.Basics.Money
+            Currency = userconfig.Basics.currency
 
             if(JobIncome !== JobIncomeOld || Currency !== CurrencyOld) {
                 JobIncomeOld = JobIncome
