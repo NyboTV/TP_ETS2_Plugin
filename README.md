@@ -114,7 +114,7 @@ and then "Change the 'Icon' with the value from the plug-in status 'SpeedGauge/R
 
 Don't understand a single word? Just download the sample page and have a look at it
 
-Download it here: [Download](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Installers/Win/ETS2 Dashboard.tpz)
+Download it here: [Download](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Installers/Win/ETS2_Dashboard.tpz)
 (Link not working? You can get it on my Discord in the "Resource" Channel! https://discord.gg/PvXJsxpGFetou)
 Just click on the Gear in the Middle, in the Touch Portal and then on "Import Page".
 
