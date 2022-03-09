@@ -258,8 +258,8 @@ The Settings are moving! Currently you only can Edit the Settings by Following t
 
 | Settings                  | Description                                           | Available Values      |
 |---------------------------|:-----------------------------------------------------:|----------------------:|
-| currency                  | Shows your Money with the Currency you entered        | Only Supported once!  |
-| unit                      | Changes the Speed to MPH/KMH, Tons/Pounds and so on   |     Imperial/Metric   | 
+| currency                  | Shows your Money with the Currency you entered        | Look Supported Curr.  |
+| unit                      | Changes the Speed to MPH/KMH, Tons/Pounds and so on   |     imperial/metric   | 
 | timeFormat                | Shows the Ingame time as 12/24H Format                | US (12H) || EU (24H)  |
 
 ## Supported Currency's

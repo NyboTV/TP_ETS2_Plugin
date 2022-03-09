@@ -54,6 +54,7 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             time = world.time
 
             timeFormat = userconfig.Basics.timeFormat
+            timeFormat = timeFormat.toUpperCase()
 
             if(time !== timeOld) {
                 timeOld = time
@@ -68,9 +69,7 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 hh = time[3]
                 mm = time[4]
                 
-                if(timeFormat === "EU") {
-                    time = `${hh}:${mm}, ${DD}.${MM}.${YY}`
-                } else if (timeFormat === "US") {
+                if (timeFormat === "US") {
                     if(hh > 12) {
                         hh = hh-12
                         time = `${MM}.${DD}.${YY}, ${hh}:${mm} PM`
@@ -78,7 +77,7 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                         time = `${MM}.${DD}.${YY}, ${hh}:${mm} AM`
                     }
                 } else {
-                    time = "WRONG SETTING!!!"
+                    time = `${hh}:${mm}, ${DD}.${MM}.${YY}`
                 }
 
                 var data = {
