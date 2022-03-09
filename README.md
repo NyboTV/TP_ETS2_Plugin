@@ -121,7 +121,7 @@ Just click on the Gear in the Middle, in the Touch Portal and then on "Import Pa
 ## Plugin Events
 
 Nothing here yet :3 The Events are not fully ready to use. But you can try it!
-Just go on a button and Search in the List my Plugin. (No events are displayed? You had a version that I removed because it's not quite ready yet. Sorry!)
+Just go on a button and Search in the List my Plugin. (No events are displayed? You have a version where I removed the events because they are not quite ready yet. Sorry!)
 
 ## Plugin States
 
