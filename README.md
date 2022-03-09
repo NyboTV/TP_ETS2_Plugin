@@ -263,41 +263,41 @@ The Settings are moving! Currently you only can Edit the Settings by Following t
 | timeFormat                | Shows the Ingame time as 12/24H Format                | US (12H) || EU (24H)  |
 
 ## Supported Currency's
-| Code | Name                 |
-|------|----------------------|
-| EUR  | Euro                 |
-| USD  | United States Dollar |
-| CAD  | Canadian Dollar      |
-| HKD  | Hong Kong Dollar     |
-| ISK  | Icelandic Króna      |
-| PHP  | Philippine Peso      |
-| DDK  | Danish Krone         |
-| HUF  | Hungarian Forint     |
-| CZK  | Czech Koruna         |
-| AUD  | Australian Dollar    |
-| RON  | Romanian Leu         |
-| SEK  | Swedish Krona        |
-| IDR  | Indonesian Rupiah    |
-| INR  | Indian Rupee         |
-| BRL  | Brazilian Real       |
-| RUB  | Russian Ruble        |
-| HRK  | Croatian Kuna        |
-| JPY  | Japanse Yen          |
-| TBH  | Thai Baht            |
-| CHF  | Swiss Franc          |
-| SGD  | Singapore Dollar     |
-| PLN  | Polish złoty         |
-| BGN  | Bulgarian Lev        |
-| TRY  | Turkish Lira         |
-| CNY  | Chinese Renminbi     |
-| NOK  | Norwegian Krone      |
-| NZD  | New Zealand Dollar   |
-| ZAR  | South African Rand   |
-| MXN  | Mexican Peso         |
-| ILS  | Israeli Shekel       |
-| GBP  | Pound Sterling       |
-| KRW  | South Korean Won     |
-| MYR  | Malaysian Ringgit    | 
+| Code | Name                 | With Symbol |
+|------|----------------------|-------------|
+| EUR  | Euro                 |     Yes     |
+| USD  | United States Dollar |     Yes     |
+| CAD  | Canadian Dollar      |     Yes     |
+| GBP  | Pound Sterling       |     Yes     |
+| DDK  | Danish Krone         |     Yes     |
+| HKD  | Hong Kong Dollar     |     Yes     |
+| ISK  | Icelandic Króna      |     Yes     |
+| PHP  | Philippine Peso      |     Yes     |
+| HUF  | Hungarian Forint     |     Yes     |
+| CZK  | Czech Koruna         |     Yes     |
+| SEK  | Swedish Krona        |     Yes     |
+| PLN  | Polish złoty         |     Yes     |
+| KRW  | South Korean Won     |     Yes     |
+| AUD  | Australian Dollar    |     No      |
+| RON  | Romanian Leu         |     No      |
+| IDR  | Indonesian Rupiah    |     No      |
+| INR  | Indian Rupee         |     No      |
+| BRL  | Brazilian Real       |     No      |
+| RUB  | Russian Ruble        |     No      |
+| HRK  | Croatian Kuna        |     No      |
+| JPY  | Japanse Yen          |     No      |
+| TBH  | Thai Baht            |     No      |
+| CHF  | Swiss Franc          |     No      |
+| SGD  | Singapore Dollar     |     No      |
+| BGN  | Bulgarian Lev        |     No      |
+| TRY  | Turkish Lira         |     No      |
+| CNY  | Chinese Renminbi     |     No      |
+| NOK  | Norwegian Krone      |     No      |
+| NZD  | New Zealand Dollar   |     No      |
+| ZAR  | South African Rand   |     No      |
+| MXN  | Mexican Peso         |     No      |
+| ILS  | Israeli Shekel       |     No      |
+| MYR  | Malaysian Ringgit    |     No      | 
 
 
 IMPORTANT!! If the available values are all in capital letters, you must do the same! Otherwise it will not work!

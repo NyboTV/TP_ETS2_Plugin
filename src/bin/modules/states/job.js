@@ -253,6 +253,10 @@ function getSymbol(currency) {
             case "KRW":
                 resolve("₩")
             break;
+
+            default:
+                resolve("")
+            break;
         }
     })
 }
