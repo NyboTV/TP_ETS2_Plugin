@@ -25,7 +25,9 @@ let dirname = dirpath.includes(`\\src\\bin`)
 
 // Debug Section
 const debugMode = process.argv.includes("--debug")
-const sourceTest= process.argv.includes("--sourceTest")
+const sourceTest = process.argv.includes("--sourceTest")
+const noServer = process.argv.includes("--noServer")
+
 if(debugMode) {
     path = `./src/bin`
     interface_path = `./src/bin`
@@ -175,7 +177,10 @@ const plugin = async (config, uConfig) => {
         
         
         const main_loop = async () => {
-            //telemetry_status_online = true
+            if(noServer) {
+                telemetry_status_online = true
+            }
+
             if(telemetry_status_online === false) {
                 await timeout(refreshInterval)
                 main_loop()
@@ -184,7 +189,9 @@ const plugin = async (config, uConfig) => {
         }
         
         logIt("INFO", "Loading `Telemetry Server`...")
-        telemetry_loop()
+        if(noServer === false) {
+            telemetry_loop()
+        }
         logIt("INFO", "Loading `Modules`...")
         main_loop()
     }
@@ -365,7 +372,7 @@ const webinterface = async (config, uConfig) => {
             truckersmpStates    = uConfig.Modules.truckersmpStates
             worldStates         = uConfig.Modules.worldStates
 
-            location            = uConfig.Basics.Location
+            unit            = uConfig.Basics.unit
 
 
             if(PluginOnline)        { PluginOnline = true /*"1"*/ }      else { PluginOnline = false /*"2"*/ }
@@ -385,8 +392,14 @@ const webinterface = async (config, uConfig) => {
     async function userCFGInterface () {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
             unit = uConfig.Basics.unit
+            unit = unit.toLowerCase()
             currency = uConfig.Basics.currency
-            weight = uConfig.Basics.weight
+            
+            if(unit === "imperial") {
+                weight = "Pounds"
+            } else {
+                weight = "Tons"
+            }
         }
     }
 
@@ -504,8 +517,6 @@ const webinterface = async (config, uConfig) => {
             truckmpPlayer: truckmpPlayer,
             truckmpQueue: truckmpQueue,
             truckmpServerList: truckmpServerList,
-
-            location: location
         })
     })
 

@@ -13,12 +13,10 @@
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
 
 # Plugin is still in Work!! Just dont have much time!
-## Attention!! This ReadMe is OUT-OF-DATE!
-Im currently working on Version 2.0.0 and this Version takes a LONG time. It will be a BIG Update with MANY new Function!
-Im going to make a Pre-Release in the Future so you can see it yourself!
+## Attention!! PLEASE READ
 
-ps: The ReadMe is not fully outdated. just some options are missing or not correct. But the main stuff should be correct :3
-
+Hey! I need your Help! If you want your Currency inside the Plugin, then please create a Pull Request with your Currency!!
+Current Supported Currency: EUR, USD, CAD, GBP, DDK, HKD, ISK, PHP, HUF, CZK, SEK, PLN, KRW
 
 # [TP_ETS2_Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp)
 
@@ -41,6 +39,7 @@ ps: The ReadMe is not fully outdated. just some options are missing or not corre
     - [TruckersMP States](#truckersmp-states)
   - [AutoUpdater](#autoupdater)
   - [Settings](#settings)
+    - [Supported Currency's](#Supported-Currency's)
   - [Features Comming Soon](#features-comming-soon)
   - [Todo](#todo)
   - [Known Issues](#issue-list)
@@ -259,12 +258,49 @@ The Settings are moving! Currently you only can Edit the Settings by Following t
 
 | Settings                  | Description                                           | Available Values      |
 |---------------------------|:-----------------------------------------------------:|----------------------:|
-| currency                  | Shows your Money with the Currency you entered        | Everything you want!  |
-| unit                      | Changes the Speed to MPH/KMH, Tons/Pounds and so on   |     Imperial/Metric   | all lowercase! or it will not work!
+| currency                  | Shows your Money with the Currency you entered        | Only Supported once!  |
+| unit                      | Changes the Speed to MPH/KMH, Tons/Pounds and so on   |     Imperial/Metric   | 
 | timeFormat                | Shows the Ingame time as 12/24H Format                | US (12H) || EU (24H)  |
 
-IMPORTANT!! If the available values are all in capital letters, you must do the same! Otherwise it will not work!
+## Supported Currency's
+| Code | Name                 |
+|------|----------------------|
+| EUR  | Euro                 |
+| USD  | United States Dollar |
+| CAD  | Canadian Dollar      |
+| HKD  | Hong Kong Dollar     |
+| ISK  | Icelandic Króna      |
+| PHP  | Philippine Peso      |
+| DDK  | Danish Krone         |
+| HUF  | Hungarian Forint     |
+| CZK  | Czech Koruna         |
+| AUD  | Australian Dollar    |
+| RON  | Romanian Leu         |
+| SEK  | Swedish Krona        |
+| IDR  | Indonesian Rupiah    |
+| INR  | Indian Rupee         |
+| BRL  | Brazilian Real       |
+| RUB  | Russian Ruble        |
+| HRK  | Croatian Kuna        |
+| JPY  | Japanse Yen          |
+| TBH  | Thai Baht            |
+| CHF  | Swiss Franc          |
+| SGD  | Singapore Dollar     |
+| PLN  | Polish złoty         |
+| BGN  | Bulgarian Lev        |
+| TRY  | Turkish Lira         |
+| CNY  | Chinese Renminbi     |
+| NOK  | Norwegian Krone      |
+| NZD  | New Zealand Dollar   |
+| ZAR  | South African Rand   |
+| MXN  | Mexican Peso         |
+| ILS  | Israeli Shekel       |
+| GBP  | Pound Sterling       |
+| KRW  | South Korean Won     |
+| MYR  | Malaysian Ringgit    | 
 
+
+IMPORTANT!! If the available values are all in capital letters, you must do the same! Otherwise it will not work!
 
 ### AutoUpdater 
 

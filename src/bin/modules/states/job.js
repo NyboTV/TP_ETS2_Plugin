@@ -2,6 +2,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     // Loading Module
     const fs = require('fs')
     const sJSON = require('self-reload-json')
+    const { convert, addSymbol } = require('current-currency')
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -10,8 +11,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     var job = ""
     var navigation = ""
 
-    var location = ""
-    var locationOld = ""
+    var unit = ""
+    var unitOld = ""
 
     let JobIncome = ""
     let JobIncomeOld = ""
@@ -35,6 +36,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     
     let Currency = ""
     let CurrencyOld = ""
+
+    let Symbol = ""
 
     var states = []
 
@@ -77,21 +80,38 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             JobDestinationCompany = job.destinationCompany
             JobEstimatedDistance = navigation.estimatedDistance
             Currency = userconfig.Basics.currency
-            location = userconfig.Basics.unit
+            unit = userconfig.Basics.unit
+            unit = unit.toLowerCase()
 
             if(JobIncome !== JobIncomeOld || Currency !== CurrencyOld) {
                 JobIncomeOld = JobIncome
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.JobIncome",
-                    value: `${JobIncome}${Currency}`
+                if(Currency !== "EUR") {
+                    try {
+                        convert("EUR", JobIncome, `${Currency}`).then(async (res) => {
+                            JobIncome = Math.round(res.amount)
+
+                            Symbol = await getSymbol(res.currency)            
+                            
+                            TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol}${JobIncome}`);
+                        })
+                        
+                    } catch (e) {
+                        logIt("ERROR", "Error during Currency Convert!")
+                    }
+                } else {
+                    
+                    var data = {
+                        id: "Nybo.ETS2.Dashboard.JobIncome",
+                        value: `${JobIncome}€`
+                    }
+                    
+                    states.push(data)
                 }
-
-                states.push(data)
-
             }
+            
 
             if(JobRemainingTime !== JobRemainingTimeOld) {
                 JobRemainingTimeOld = JobRemainingTime
@@ -152,11 +172,11 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 states.push(data)
             }
 
-            if(JobEstimatedDistance !== JobEstimatedDistanceOld || locationOld !== location) {
+            if(JobEstimatedDistance !== JobEstimatedDistanceOld || unitOld !== unit) {
                 JobEstimatedDistanceOld = JobEstimatedDistance
-                locationOld = location
+                unitOld = unit
 
-                if(location === "imperial") {
+                if(unit === "imperial") {
                     JobEstimatedDistance = Math.round(Math.floor(JobEstimatedDistance/1.609344) * 100) / 100
                 }
 
@@ -182,4 +202,62 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 	configloop()
 	moduleloop()
 }
+
+function getSymbol(currency) {
+    return new Promise(async (resolve, reject) => {
+        switch(currency) {
+            case "USD":
+                resolve("$")
+            break;
+
+            case "CAD":
+                resolve("C$")
+            break;
+
+            case "GBP":
+                resolve("£")
+            break;
+
+            case "DDK":
+                resolve("kr.")
+            break;
+
+            case "HKD":
+                resolve("HK$")
+            break;
+
+            case "ISK":
+                resolve("Kr")
+            break;
+
+            case "PHP":
+                resolve("₱")
+            break;
+
+            case "HUF":
+                resolve("Ft")
+            break;
+
+            case "CZK":
+                resolve("Kč")
+            break;
+
+            case "SEK":
+                resolve("kr")
+            break;
+
+            case "PLN":
+                resolve("zł")
+            break;
+
+            case "KRW":
+                resolve("₩")
+            break;
+        }
+    })
+}
+
+
+
+
 module.exports = jobStates

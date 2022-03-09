@@ -34,7 +34,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
     let Weight = ""
     let WeightOld = ""
 
-    let Location = ""
+    let unit = ""
 
     var states = []
 
@@ -69,7 +69,8 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             trailer1 = telemetry.trailer1
             cargo = telemetry.cargo
 
-            Location = userconfig.Basics.unit
+            unit = userconfig.Basics.unit
+            unit = unit.toLowerCase()
 
             TrailerAttached = trailer1.attached
             TrailerName = trailer1.name
@@ -80,7 +81,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             CargoDamage = cargo.damage
             CargoMass = cargo.mass
 
-            if(Location === "imperial") {
+            if(unit === "imperial") {
                 Weight = "Pounds"
             } else {
                 Weight = "Tons"
@@ -159,7 +160,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 CargoMassOld = CargoMass
                 WeightOld = Weight
 
-                if (Location === "imperial") {
+                if (unit === "imperial") {
                     CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
                 } else {
                     CargoMass = Math.round(Math.floor(cargo.mass / 1000))

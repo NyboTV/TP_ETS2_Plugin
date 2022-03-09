@@ -12,3 +12,4 @@ src/server/Ets2Telemetry.log
 src/build/ETS2_Dashboard
 src/build/tmp/*
 *.html
+src/bin/tmp/tmp.json

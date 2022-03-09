@@ -5,6 +5,7 @@
   "main": "src/bin/plugin.js",
   "scripts": {
     "test": "node . --debug",
+    "testNoServer": "node . --debug --noServer",
     "test_exe": "pkg . --output=plugin-win.exe && node ./src/build/build.js --test",
     "release": "pkg . --output=plugin-win.exe && node ./src/build/build.js --release"
   },
@@ -42,6 +43,7 @@
   "homepage": "https://github.com/NyboTV/TP_ETS2_Plugin#readme",
   "dependencies": {
     "adm-zip": "^0.5.9",
+    "current-currency": "^1.6.2",
     "download-github-release": "^0.3.2",
     "express": "^4.17.2",
     "express-handlebars": "^6.0.2",

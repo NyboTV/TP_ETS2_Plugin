@@ -9,7 +9,7 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 	let ModuleLoaded = false
 
 	let navigation = ""
-	let location = ""
+	let unit = ""
 
 	let Speedlimit = ""
 	let SpeedlimitOld = ""
@@ -52,13 +52,42 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 			Speedlimit = navigation.speedLimit
 			SpeedlimitSign = ""
 
-			location = userconfig.Basics.unit
+			unit = userconfig.Basics.unit
+            unit = unit.toLowerCase()
 
 			if(Speedlimit !== SpeedlimitOld) {
 				SpeedlimitOld = Speedlimit
 
-				if(location === "imperial") {
-					Speedlimit = Math.floor(Math.floor(Speedlimit / 1.609344)/10) * 10
+				if(unit === "imperial") {
+					switch (Speedlimit) {
+						case 80:
+							Speedlimit = 50
+							break;
+						case 70: 
+							Speedlimit = 43
+							break;
+						case 60: 
+							Speedlimit = 37
+							break;
+						case 50: 
+							Speedlimit = 31
+							break;
+						case 40:
+							Speedlimit = 25
+							break;
+						case 30:
+							Speedlimit = 19
+							break;
+						case 20: 
+							Speedlimit = 12
+							break;
+						case 10:
+							Speedlimit = 6
+							break;
+						case 0:
+							Speedlimit = 0
+							break;						
+					}
 				}
 
 				SpeedlimitSign = await getSpeedLimitSign(Speedlimit)
@@ -76,6 +105,7 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 				states.push(data1)
 				states.push(data2)
 			}		
+
 		
 			try {
 				if(states.length > 0) {

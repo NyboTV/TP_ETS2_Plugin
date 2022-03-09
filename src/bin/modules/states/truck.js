@@ -7,7 +7,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     var moduleName = path2.basename(__filename).replace('.js','')
     let ModuleLoaded = false
 
-    let location = ""
+    let unit = ""
 
     let truck = ""
 
@@ -229,7 +229,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             LightsBrakeOn = truck.lightsBrakeOn
             LightsReverseOn = truck.lightsReverseOn
 
-            location = userconfig.Basics.unit
+            unit = userconfig.Basics.unit
+            unit = unit.toLowerCase()
 
 
             // Script
@@ -259,7 +260,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(CruiseControlSpeed !== CruiseControlSpeedOld) {
                 CruiseControlSpeedOld = CruiseControlSpeed
 
-                if(location === "imperial") {
+                if(unit === "imperial") {
                     CruiseControlSpeed = Math.floor(CruiseControlSpeed / 1.609344)
                 }
 
@@ -285,7 +286,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(Speed !== SpeedOld) {
                 SpeedOld = Speed
 
-                if(location === "imperial") {
+                if(unit === "imperial") {
                     Speed = Math.floor(Speed / 1.609344)
                 }
 
@@ -451,7 +452,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(OilTemp !== OilTempOld) {
                 OilTempOld = OilTemp
 
-                if(location === "imperial") {
+                if(unit === "imperial") {
                     OilTemp = Math.floor(OilTemp * 9/5) + 32
                 }
 
@@ -466,7 +467,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(WaterTemp !== WaterTempOld) {
                 WaterTempOld = WaterTemp
 
-                if(location === "imperial") {
+                if(unit === "imperial") {
                     WaterTemp = Math.floor(WaterTemp * 9/5) + 32
                 }
 

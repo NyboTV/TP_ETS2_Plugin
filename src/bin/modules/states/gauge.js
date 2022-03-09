@@ -10,8 +10,8 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 	var gauge = ""
 
-	var location = ""
-	var locationOld = ""
+	var unit = ""
+	var unitOld = ""
 
 	let Speed = ""
 	let SpeedOld = ""
@@ -65,18 +65,19 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 			//Vars
 			gauge = telemetry.truck
-			location = userconfig.Basics.unit
+			unit = userconfig.Basics.unit
+            unit = unit.toLowerCase()
 
 			Speed = gauge.speed			
 			EngineRPM = gauge.engineRpm
 			Fuel = gauge.fuel
 			FuelCapacity = gauge.fuelCapacity
 
-			if(Speed !== SpeedOld || location !== locationOld) {
+			if(Speed !== SpeedOld || unit !== unitOld) {
 				SpeedOld = Speed
-				locationOld = location
+				unitOld = unit
 
-				if (location === "imperial") {
+				if (unit === "imperial") {
 					Speed = Math.floor(Speed / 1.609344)
 				} else {
 					Speed = Math.round(Speed)
