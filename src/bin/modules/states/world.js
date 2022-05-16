@@ -44,6 +44,7 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
         for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {   
     
             if(ModuleLoaded === false) { 
+                states = []
             } else 
                      
             // States

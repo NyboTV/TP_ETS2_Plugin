@@ -8,6 +8,7 @@ const exec = require(`child_process`).exec
 const execute = require(`child_process`).execFile;
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
+const open = require('open')
 
 // Important Script Vars
 let path = ""
@@ -434,7 +435,7 @@ const webinterface = async (config, uConfig) => {
                         truckmpQueue = "OFFLINE"
                         truckmpServerList = "OFFLINE"
                     } else {                    
-                        TruckersMP = TruckersMP_tmp.response[uConfig.TruckersMP.TruckersMPServer - 1]
+                        TruckersMP = TruckersMP_tmp.response[uConfig.TruckersMP.TruckersMPServer]
                         
                         truckmpStatus = "ONLINE"
                         truckmpServer = TruckersMP.name
@@ -529,6 +530,7 @@ const webinterface = async (config, uConfig) => {
     
     logIt("INTERFACE", "Interface started.")
     await timeout(500)
+    //open('http://localhost:5000')
     logIt("INFO", "Loading `Plugin`...")
     plugin(config, uConfig)
 }

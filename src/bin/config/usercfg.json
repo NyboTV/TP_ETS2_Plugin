@@ -6,7 +6,7 @@
         "timeFormat": "EU"
     },
     "TruckersMP": {
-        "TruckersMPServer": "1"
+        "TruckersMPServer": "0"
     },
     "Modules": {
         "gameStates": true,
@@ -16,7 +16,7 @@
         "navigationStates": true,
         "trailerStates": true,
         "truckStates": true,
-        "truckersmpStates": false,
+        "truckersmpStates": true,
         "worldStates": true
     }
 }

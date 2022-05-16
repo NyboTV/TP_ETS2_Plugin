@@ -17,7 +17,7 @@
          "actions": [],
          "events": [
             {
-               "id":"Nybo.ETS2.Dashboard.event_EngineOn",
+               "id":"event_EngineOn",
                "name":"Engine Status",
                "format":"If Engine is $val then",
                "type":"communicate",
@@ -26,10 +26,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_EngineOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_EngineOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_ElectricOn",
+               "id":"event_ElectricOn",
                "name":"Electric Status",
                "format":"If Electric is $val then",
                "type":"communicate",
@@ -38,10 +38,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_ElectricOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_ElectricOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_WipersOn",
+               "id":"event_WipersOn",
                "name":"Wipers Status",
                "format":"If Wipers are $val then",
                "type":"communicate",
@@ -50,10 +50,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_WipersOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_WipersOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_ParkBrakeOn",
+               "id":"event_ParkBrakeOn",
                "name":"Park Brake Status",
                "format":"If Park Brake is $val then",
                "type":"communicate",
@@ -62,13 +62,13 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_ParkBrakeOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_ParkBrakeOn"
             }, 
 
 
 
             {
-               "id":"Nybo.ETS2.Dashboard.event_FuelWarningOn",
+               "id":"event_FuelWarningOn",
                "name":"Fuel Status",
                "format":"If Fuel Warning Light is $val then",
                "type":"communicate",
@@ -77,10 +77,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_FuelWarningOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_FuelWarningOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_AdBlueWarningOn",
+               "id":"event_AdBlueWarningOn",
                "name":"AdBlue Status",
                "format":"If AdBlue Warning Light is $val then",
                "type":"communicate",
@@ -89,10 +89,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_AdBlueWarningOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_AdBlueWarningOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_AirPressureWarningOn",
+               "id":"event_AirPressureWarningOn",
                "name":"Air Pressure Status",
                "format":"If AirPressure is $val then",
                "type":"communicate",
@@ -101,10 +101,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_AirPressureWarningOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_AirPressureWarningOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_OilPressureWarningOn",
+               "id":"event_OilPressureWarningOn",
                "name":"Oil Pressure Status",
                "format":"If Oil Pressure is $val then",
                "type":"communicate",
@@ -113,10 +113,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_OilPressureWarningOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_OilPressureWarningOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_WaterTempWarningOn",
+               "id":"event_WaterTempWarningOn",
                "name":"Water Temp Status",
                "format":"If Water Temp Warning Light is $val then",
                "type":"communicate",
@@ -125,10 +125,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_WaterTempWarningOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_WaterTempWarningOn"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_BatteryVoltageWarningOn",
+               "id":"event_BatteryVoltageWarningOn",
                "name":"Battery Status",
                "format":"If Battery Voltage is $val then",
                "type":"communicate",
@@ -137,13 +137,13 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_BatteryVoltageWarningOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_BatteryVoltageWarningOn"
             }, 
 
 
 
             {
-               "id":"Nybo.ETS2.Dashboard.event_BlinkerLeftActive",
+               "id":"event_BlinkerLeftActive",
                "name":"Blinker Left Status",
                "format":"If Blinker Left is $val then",
                "type":"communicate",
@@ -152,10 +152,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_BlinkerLeftActive"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_BlinkerLeftActive"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_BlinkerRightActive",
+               "id":"event_BlinkerRightActive",
                "name":"Blinker Right Status",
                "format":"If Blinker Right is $val then",
                "type":"communicate",
@@ -164,10 +164,10 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_BlinkerRightActive"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_BlinkerRightActive"
             }, 
             {
-               "id":"Nybo.ETS2.Dashboard.event_HazardLightsOn",
+               "id":"event_HazardLightsOn",
                "name":"Hazard Lights Status",
                "format":"If Hazard Lights are $val then",
                "type":"communicate",
@@ -176,13 +176,13 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_HazardLightsOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_HazardLightsOn"
             }, 
 
 
 
             {
-               "id":"Nybo.ETS2.Dashboard.event_LightsDashboardOn",
+               "id":"event_LightsDashboardOn",
                "name":"Dashboard Lights Status",
                "format":"If Dashboards Lights are $val then",
                "type":"communicate",
@@ -191,13 +191,13 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_LightsDashboardOn"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_LightsDashboardOn"
             }, 
 
 
 
             {
-               "id":"Nybo.ETS2.Dashboard.event_TrailerAttached",
+               "id":"event_TrailerAttached",
                "name":"Trailer Status",
                "format":"If Trailer is $val then",
                "type":"communicate",
@@ -206,13 +206,13 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_TrailerAttached"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_TrailerAttached"
             }, 
 
 
 
             {
-               "id":"Nybo.ETS2.Dashboard.event_CargoLoaded",
+               "id":"event_CargoLoaded",
                "name":"Cargo Status",
                "format":"If Cargo is $val then",
                "type":"communicate",
@@ -221,7 +221,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"event_CargoLoaded"
+            "valueStateId":"Nybo.ETS2.Dashboard.event_CargoLoaded"
             }
          ],
          "states": []

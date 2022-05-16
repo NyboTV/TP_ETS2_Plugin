@@ -30,6 +30,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
             for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval * 200), moduleLoop++) {
     
             if(ModuleLoaded === false) { 
+                return;
             } else 
 
             // Vars
@@ -52,6 +53,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 			}
 
 			https.get('https://api.truckersmp.com/v2/servers', (resp) => {
+                
 				var data = '';
 
 				resp.on('data', (chunk) => {
@@ -60,13 +62,16 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
 				resp.on('end', () => {
 
-					if (IsJsonString(data) === true) {
-						data = JSON.parse(data)
-
+                    
+                    if (IsJsonString(data) === true) {
+                        data = JSON.parse(data)
+                        
+                        
 						Servers = data.response.length
 						Server = data.response[TruckersMPServer]
 
-						ServerName = Server.name
+
+						ServerName = Server.shortname
 						ServerPlayers = Server.players
 						ServerPlayerQueue = Server.queue
 
@@ -87,39 +92,39 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                         APIOnline = false
 					}
 
-				})
-			})
+                    var states = [
+                        {
+                        id: "Nybo.ETS2.Dashboard.Servers",
+                        value: `${Servers}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.ServerName",
+                        value: `${ServerName}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.ServerPlayers",
+                        value: `${ServerPlayers}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.ServerPlayerQueue",
+                        value: `${ServerPlayerQueue}`
+                    },
+                    {
+                        id: "Nybo.ETS2.Dashboard.APIOnline",
+                        value: `${APIOnline}`
+                    },
+                    ]
 
-            var states = [{
-                    id: "Nybo.ETS2.Dashboard.Servers",
-                    value: `${Servers}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.ServerName",
-                    value: `${ServerName}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.ServerPlayers",
-                    value: `${ServerPlayers}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.ServerPlayerQueue",
-                    value: `${ServerPlayerQueue}`
-                },
-                {
-                    id: "Nybo.ETS2.Dashboard.APIOnline",
-                    value: `${APIOnline}`
-                },
-            ]
-        
-            try {
-                TPClient.stateUpdateMany(states);
                 
-            } catch (error) {
-                logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
-                
-            }
+                    try {
+                        TPClient.stateUpdateMany(states);                    
+                    } catch (error) {
+                        logIt("ERROR", `${moduleName}States Error: ${error}`)
+                        logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
+                    
+                    }
+                })
+            })
 		}
 	}
     

@@ -168,6 +168,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
         for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {
     
             if(ModuleLoaded === false) { 
+                states = []
             } else 
 
             // States
@@ -195,7 +196,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             ParkBrakeOn = truck.parkBrakeOn
             MotorBrakeOn = truck.motorBrakeOn
 
-            Fuel = Math.round(truck.fuel * 100) / 100
+            Fuel = Math.round(truck.fuel)
             FuelCapacity = truck.fuelCapacity
             AdBlue = Math.round(truck.adblue)
 
@@ -218,7 +219,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             BlinkerRightOn = truck.blinkerRightOn
             HazardLightsOn = false
         
-            LightsDashboardValue = truck.lightsDashboardValue
+            LightsDashboardValue = Math.round(truck.lightsDashboardValue * 100) / 100
             LightsDashboardOn = truck.lightsDashboardOn
             LightsParkingOn = truck.lightsParkingOn
             LightsBeamLowOn = truck.lightsBeamLowOn
@@ -326,72 +327,69 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(EngineOn !== EngineOnOld) {
                 EngineOnOld = EngineOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.EngineOn",
                         value: `${EngineOn}`
-                    },
-                    {
+                    }
+
+                var data_event =  {
                         id: "Nybo.ETS2.Dashboard.event_EngineOn",
                         value: `${EngineOn}`
                     }
-                ]
-
-                console.log(EngineOn)
                 
                 states.push(data)
+                states.push(data_event)
             }
             
             if(ElectricOn !== ElectricOnOld) {
                 ElectricOnOld = ElectricOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.ElectricOn",
                         value: `${ElectricOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_ElectricOn",
                         value: `${ElectricOn}`
                     }
-                ]
-                    
 
                 states.push(data)
+                states.push(data_event)
             }
             
             if(WipersOn !== WipersOnOld) {
                 WipersOnOld = WipersOn
 
-                var data = [
-                    {
-                        id: "Nybo.ETS2.Dashboard.WipersON",
+                var data = {
+                        id: "Nybo.ETS2.Dashboard.WipersOn",
                         value: `${WipersOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_WipersOn",
                         value: `${WipersOn}`
                     }
-                ]
 
                 states.push(data)
+                states.push(data_event)
             }
 
             if(ParkBrakeOn !== ParkBrakeOnOld) {
                 ParkBrakeOnOld = ParkBrakeOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
                         value: `${ParkBrakeOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_ParkBrakeOn",
                         value: `${ParkBrakeOn}`
-                    }
-                ]                    
+                    }               
 
                 states.push(data)
+                states.push(data_event)
             }
 
             if(MotorBrakeOn !== MotorBrakeOnOld) {
@@ -495,53 +493,52 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(FuelWarningOn !== FuelWarningOnOld) {
                 FuelWarningOnOld = FuelWarningOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.FuelWarningOn",
                         value: `${FuelWarningOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_FuelWarningOn",
                         value: `${FuelWarningOn}`
                     }
-                ]
-                    
 
                 states.push(data)
+                states.push(data_event)
             }
                 
             if(AdBlueWarningOn !== AdBlueWarningOnOld) {
                 AdBlueWarningOnOld = AdBlueWarningOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.AdBlueWarningOn",
                         value: `${AdBlueWarningOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_AdBlueWarningOn",
                         value: `${AdBlueWarningOn}`
-                    }
-                ]                    
+                    }                 
 
                 states.push(data)
+                states.push(data_event)
             }
                 
             if(AirPressureWarningOn !== AirPressureWarningOnOld) {
                 AirPressureWarningOnOld = AirPressureWarningOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.AirPressureWarningOn",
                         value: `${AirPressureWarningOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_AirPressureWarningOn",
                         value: `${AirPressureWarningOn}`
-                    }
-                ]                    
+                    }                 
 
                 states.push(data)
+                states.push(data_event)
             }
                 
             if(AirPressureEmergencyOn !== AirPressureEmergencyOnOld) {
@@ -558,37 +555,35 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(OilPressureWarningOn !== OilPressureWarningOnOld) {
                 OilPressureWarningOnOld = OilPressureWarningOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.OilPressureWarningOn",
                         value: `${OilPressureWarningOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_OilPressureWarningOn",
                         value: `${OilPressureWarningOn}`
                     }
-                ]
-                    
 
                 states.push(data)
+                states.push(data_event)
             }
         
             if(WaterTempWarningOn !== WaterTempWarningOnOld) {
                 WaterTempWarningOnOld = WaterTempWarningOn
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.WaterTempWarningOn",
                         value: `${WaterTempWarningOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_WaterTempWarningOn",
                         value: `${WaterTempWarningOn}`
                     }
-                ]
-                    
 
                 states.push(data)
+                states.push(data_event)
             }
 
             if(BatteryVoltageWarningOn !== BatteryVoltageWarningOnOld) {
@@ -607,41 +602,41 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(BlinkerLeftActive !== BlinkerLeftActiveOld) {
                 BlinkerLeftActiveOld = BlinkerLeftActive
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.BlinkerLeftActive",
                         value: `${BlinkerLeftActive}`
-                    },
-                    {
+                    }
+                
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_BlinkerLeftActive",
                         value: `${BlinkerLeftActive}`
                     }
-                ]
 
                 states.push(data)
+                states.push(data_event)
             } 
 
             if(BlinkerRightActive !== BlinkerRightActiveOld) {
                 BlinkerRightActiveOld = BlinkerRightActive
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.BlinkerRightActive",
                         value: `${BlinkerRightActive}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_BlinkerRightActive",
                         value: `${BlinkerRightActive}`
-                    }
-                ]                    
+                    }               
 
                 states.push(data)
+                states.push(data_event)
             } 
 
             if(BlinkerLeftOn !== BlinkerLeftOnOld) {
                 BlinkerLeftOnOld = BlinkerLeftOn
 
-                var data ={
+                var data = {
                         id: "Nybo.ETS2.Dashboard.BlinkerLeftOn",
                         value: `${BlinkerLeftOn}`
                     }
@@ -697,18 +692,18 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(LightsDashboardOn !== LightsDashboardOnOld) {
                 LightsDashboardOnOld = LightsDashboardOn 
 
-                var data = [
-                    {
+                var data = {
                         id: "Nybo.ETS2.Dashboard.LightsDashboardOn",
                         value: `${LightsDashboardOn}`
-                    },
-                    {
+                    }
+
+                var data_event = {
                         id: "Nybo.ETS2.Dashboard.event_LightsDashboardOn",
                         value: `${LightsDashboardOn}`
-                    }
-                ]                   
+                    }             
 
                 states.push(data)
+                states.push(data_event)
             }
 
             if(LightsParkingOn !== LightsParkingOnOld) {
