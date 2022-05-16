@@ -33,10 +33,14 @@ if(debugMode) {
     interface_path = `./src/bin`
     telemetry_path = "./src/bin/tmp"
 } else if(sourceTest) {
-    setInterval(() => {
-        console.log("Still On...")
-    }, 2000);
-    return;
+    function sourcetest() {
+        setInterval(() => {
+            console.log("Still On...")
+        }, 2000)
+        return;
+    }
+    sourcetest()
+
 } else if(dirname) {
     console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
 } else {

@@ -336,6 +336,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                         value: `${EngineOn}`
                     }
                 ]
+
+                console.log(EngineOn)
                 
                 states.push(data)
             }
