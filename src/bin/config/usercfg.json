@@ -1,23 +1,22 @@
 {
-    "Basics": {
-        "readME": "Hey User! Please read the ReadMe to understand what you can Change here!!",
-        "currency": "EUR",
-        "unit": "Metric",
-        "timeFormat": "EU"
-    },
-    "TruckersMP": {
-        "TruckersMPServer": "0"
-    },
-    "Modules": {
-        "gameStates": true,
-        "driverStates": true,
-        "gaugeStates": true,
-        "jobStates": true,
-        "navigationStates": true,
-        "trailerStates": true,
-        "truckStates": true,
-        "truckersmpStates": true,
-        "worldStates": true
-    }
+  "Basics": {
+    "readME": "Hey User! Please read the ReadMe to understand what you can Change here!!",
+    "currency": "EUR",
+    "unit": "metric",
+    "timeFormat": "EU"
+  },
+  "TruckersMP": {
+    "TruckersMPServer": "0"
+  },
+  "Modules": {
+    "gameStates": true,
+    "driverStates": true,
+    "gaugeStates": true,
+    "jobStates": true,
+    "navigationStates": true,
+    "trailerStates": true,
+    "truckStates": true,
+    "truckersmpStates": true,
+    "worldStates": true
+  }
 }
-

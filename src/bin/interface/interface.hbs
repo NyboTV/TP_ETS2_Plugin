@@ -4,33 +4,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ETS2 Dashboard</title>
     <link rel="stylesheet" href="style.css" media="screen">
-<link rel="stylesheet" href="index.css" media="screen">
+    <link rel="stylesheet" href="index.css" media="screen">
     <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
     <script class="u-script" type="text/javascript" src="index.js" defer=""></script>
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="ETS2 Dashboard">
     <meta property="og:type" content="website">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <body data-home-page="interface.hbs" data-home-page-title="ETS2 Dashboard" class="u-body u-xl-mode"><header class="u-clearfix u-header u-image u-header" id="sec-2c56" data-image-width="960" data-image-height="279"></header>
     <section class="u-clearfix u-grey-75 u-section-1" id="sec-2d1a">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <div class="u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
           <div class="u-gutter-0 u-layout">
-            <div id="StateButtons" class="u-layout-row">
+            <div class="u-layout-row">
               <div class="u-size-13-lg u-size-13-xl u-size-29-sm u-size-29-xs u-size-60-md">
                 <div class="u-layout-col">
                   <div class="u-container-style u-layout-cell u-size-60 u-layout-cell-1">
                     <div class="u-border-2 u-border-black u-container-layout u-valign-top u-container-layout-1">
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{gameStates}} u-btn-1">Game States</div>
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{driverStates}} u-btn-2">Driver States</div> 
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{gaugeStates}} u-btn-3">Gauge States</div> 
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{jobStates}} u-btn-4">Job States</div> 
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{navigationStates}} u-btn-5">Navigation States</div> 
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{trailerStates}} u-btn-6">Trailer States</div> 
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{truckStates}} u-btn-7">Truck States</div> 
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{truckersmpStates}} u-btn-8">TruckersMP States</div> 
-                        <div class="u-border-none u-btn u-button-style u-custom-color-{{worldStates}} u-btn-9">World States</div> 
+                        <div class="gameStates u-border-none u-btn u-button-style u-custom-color-{{gameStates}} u-btn-1">Game States</div>
+                        <div class="driverStates u-border-none u-btn u-button-style u-custom-color-{{driverStates}} u-btn-2">Driver States</div> 
+                        <div class="gaugeStates u-border-none u-btn u-button-style u-custom-color-{{gaugeStates}} u-btn-3">Gauge States</div> 
+                        <div class="jobStates u-border-none u-btn u-button-style u-custom-color-{{jobStates}} u-btn-4">Job States</div> 
+                        <div class="navigationStates u-border-none u-btn u-button-style u-custom-color-{{navigationStates}} u-btn-5">Navigation States</div> 
+                        <div class="trailerStates u-border-none u-btn u-button-style u-custom-color-{{trailerStates}} u-btn-6">Trailer States</div> 
+                        <div class="truckStates u-border-none u-btn u-button-style u-custom-color-{{truckStates}} u-btn-7">Truck States</div> 
+                        <div class="tmpStates u-border-none u-btn u-button-style u-custom-color-{{truckersmpStates}} u-btn-8">TruckersMP States</div> 
+                        <div class="worldStates u-border-none u-btn u-button-style u-custom-color-{{worldStates}} u-btn-9">World States</div> 
                     </div>
                   </div>
                 </div>
@@ -44,25 +45,25 @@
                           <h1 class="u-text u-text-default-xl u-text-1">ETS2 Dashboard<span style="font-weight: 700;"></span>
                           </h1>
                           <div class="u-align-center u-container-style u-grey-80 u-group u-group-1">
-                            <div class="u-container-layout u-container-layout-3">
+                            <div style="cursor: pointer;" class="currency u-container-layout u-container-layout-3">
                               <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-2">Currency</p>
                               <p class="u-align-center u-small-text u-text u-text-default u-text-variant u-text-3">{{currency}}</p>
                             </div>
                           </div>
                           <div class="u-align-center u-container-style u-grey-80 u-group u-group-2">
-                            <div class="u-container-layout u-container-layout-4">
+                            <div style="cursor: pointer;" class="weight u-container-layout u-container-layout-4">
                               <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-4">Weight Unit</p>
                               <p class="u-align-center u-small-text u-text u-text-default u-text-variant u-text-5">{{weight}}</p>
                             </div>
                           </div>
                           <div class="u-align-center u-container-style u-grey-80 u-group u-group-3">
-                            <div class="u-container-layout u-container-layout-5">
+                            <div style="cursor: pointer;" class="unit u-container-layout u-container-layout-5">
                               <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-6">Unit</p>
                               <p class="u-align-center u-small-text u-text u-text-default u-text-variant u-text-7">{{unit}}</p>
                             </div>
                           </div>
-                          <p class="u-align-center u-text u-text-default u-text-8"> Hello User. This is the next test version of the update 2.0.0. You can't edit anything here yet. But after all
-input settings are working, I will try to add the possibility to change things here</p>
+                          <p class="u-align-center u-text u-text-default u-text-8"> Hey User! This is the first Test of the NEW Settings Page! If you want to change anything here, 
+                            just Click on it! Not working on the Serverlist yet! (Attention! Do not Spam Click!!)</p>
                         </div>
                       </div>
                     </div>
@@ -71,8 +72,8 @@ input settings are working, I will try to add the possibility to change things h
                     <div class="u-layout-row">
                       <div class="u-size-41">
                         <div class="u-layout-col">
-                          <div class="u-align-left u-container-style u-custom-border u-layout-cell u-size-60 u-layout-cell-3">
-                            <div class="u-border-2 u-border-black u-container-layout u-container-layout-6">
+                          <div id="Servers" class="u-align-left u-container-style u-custom-border u-layout-cell u-size-60 u-layout-cell-3">
+                            <div id="tmpServer" class="u-border-2 u-border-black u-container-layout u-container-layout-6">
                               <div class="u-align-center u-container-style u-grey-80 u-group u-group-4">
                                 <div class="u-container-layout u-container-layout-7">
                                   <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-9">Players<br>
@@ -81,7 +82,7 @@ input settings are working, I will try to add the possibility to change things h
                                 </div>
                               </div>
                               <div class="u-align-center u-container-style u-grey-80 u-group u-group-5">
-                                <div class="u-container-layout u-container-layout-8">
+                                <div style="cursor: pointer;" class="server u-container-layout u-container-layout-8">
                                   <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-11">Server</p>
                                   <p class="u-align-center u-small-text u-text u-text-default u-text-variant u-text-12">{{truckmpServer}}</p>
                                 </div>
@@ -91,6 +92,9 @@ input settings are working, I will try to add the possibility to change things h
                                   <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-13">Server List<br>
                                   </p>
                                   <p class="u-align-center u-small-text u-text u-text-default u-text-variant u-text-14">{{truckmpServerList}}</p>
+                                  <script>
+                                  </script>
+
                                 </div>
                               </div>
                               <div class="u-align-center u-container-style u-grey-80 u-group u-hidden-sm u-hidden-xs u-group-7">
@@ -111,8 +115,8 @@ input settings are working, I will try to add the possibility to change things h
                       </div>
                       <div class="u-size-19">
                         <div class="u-layout-col">
-                          <div class="u-container-style u-custom-border u-layout-cell u-size-60 u-layout-cell-4">
-                            <div class="u-border-2 u-border-black u-container-layout u-container-layout-12">
+                          <div id="usage" class="u-container-style u-custom-border u-layout-cell u-size-60 u-layout-cell-4">
+                            <div id="cur_usage" class="u-border-2 u-border-black u-container-layout u-container-layout-12">
                               <h5 class="u-text u-text-19">CPU-Usage: {{cpu_usage}}</h5>
                               <h5 class="u-text u-text-default u-text-20">Memory-Usage: {{mem_usage}}</h5>
                               <h5 class="u-text u-text-default u-text-21">Storage-Usage: {{storage_usage}}</h5>
@@ -134,14 +138,8 @@ input settings are working, I will try to add the possibility to change things h
         </div>
       </div>
     </section> 
-    
-    <script type="text/javascript">
-      setInterval("reload_div();", 2000)
 
-      function reload_div(){
-        $('#StateButtons').load(location.href + ' #StateButtons')
-      }
-    </script>
+    <script src="interface.js" type="text/javascript"></script>
     
     <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-6f8e"></footer>
     <section class="u-backlink u-clearfix u-grey-80">

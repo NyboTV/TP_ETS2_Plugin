@@ -96,7 +96,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
                             Symbol = await getSymbol(res.currency)            
                             
-                            TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol}${JobIncome}`);
+                            TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
                         })
                         
                     } catch (e) {

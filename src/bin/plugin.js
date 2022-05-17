@@ -8,13 +8,16 @@ const exec = require(`child_process`).exec
 const execute = require(`child_process`).execFile;
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
-const open = require('open')
+const open = require('open');
+const { stringify } = require('querystring');
 
 // Important Script Vars
 let path = ""
+let cfg_path = ""
 let telemetry_path = ""
 let interface_path = ""
 let TruckersMP_tmp = ""
+let TruckersMP_Serverlist = ""
 
 let testNumber = 0
 
@@ -31,6 +34,7 @@ const noServer = process.argv.includes("--noServer")
 
 if(debugMode) {
     path = `./src/bin`
+    cfg_path = path
     interface_path = `./src/bin`
     telemetry_path = "./src/bin/tmp"
 } else if(sourceTest) {
@@ -46,6 +50,7 @@ if(debugMode) {
     console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
 } else {
     path = dirpath
+    cfg_path = path
     interface_path = dirpath
     telemetry_path = "./tmp"
 }
@@ -330,9 +335,10 @@ const plugin = async (config, uConfig) => {
 }
 
 const webinterface = async (config, uConfig) => {
+
     // Loading Modules
     const express = require('express');
-    const { engine } = require('express-handlebars');
+    const hbs = require('express-handlebars');
     const app = express();
     const path = require('path')
     const pid = require('pidusage')
@@ -442,6 +448,8 @@ const webinterface = async (config, uConfig) => {
                         truckmpPlayer = TruckersMP.players
                         truckmpQueue = TruckersMP.queue
                         truckmpServerList = TruckersMP_Array.join("\n")
+
+                        TruckersMP_Serverlist = TruckersMP_Array
                     }
                     
                 } catch (e) {
@@ -477,12 +485,11 @@ const webinterface = async (config, uConfig) => {
             })
         }
     }
-    
 
-    app.engine('hbs', engine({
+    app.engine('hbs', hbs.engine({
         extname: 'hbs', 
         defaultLayout: 'interface', 
-        layoutsDir: interface_path + '/interface' 
+        layoutsDir: interface_path + '/interface',
     }))
 
     StatesStatus()
@@ -508,6 +515,7 @@ const webinterface = async (config, uConfig) => {
             truckStates: truckStates,
             truckersmpStates: truckersmpStates,
             worldStates: worldStates,
+
             cpu_usage: cpu_usage,
             mem_usage: mem_usage,
             storage_usage: storage_usage,
@@ -522,7 +530,157 @@ const webinterface = async (config, uConfig) => {
             truckmpPlayer: truckmpPlayer,
             truckmpQueue: truckmpQueue,
             truckmpServerList: truckmpServerList,
+
         })
+    })
+
+    app.post('/setup', (req, res) => {
+
+        var states = req.rawHeaders[11]
+
+        states = states
+
+        switch (states) {
+            case `gameStates`:
+                if(gameStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `driverStates`:
+                if(driverStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `gaugeStates`:
+                if(gaugeStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `jobStates`:
+                if(jobStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `navigationStates`:
+                if(navigationStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `trailerStates`:
+                if(trailerStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `truckStates`:
+                if(truckStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `truckersmpStates`:
+                if(truckersmpStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+            
+            case `worldStates`:
+                if(worldStates === "1") {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                } else {
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                }
+            break;
+
+
+
+            case `currency`:
+                let currency_list = [
+                    "EUR",
+                    "USD",
+                    "CAD",
+                    "GBP",
+                    "DDK",
+                    "HKD",
+                    "ISK",
+                    "PHP",
+                    "HUF",
+                    "CZK",
+                    "SEK",
+                    "PLN",
+                    "KRW",
+                ]
+
+                var position = currency_list.indexOf(uConfig.Basics.currency)
+
+                var currency = currency_list[position + 1]
+
+                if(currency === undefined) {
+                    currency = "EUR"
+                }
+
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${currency}`)
+
+            break;
+
+            case `unit`:
+                let units = [
+                    "imperial",
+                    "metric"
+                ]
+
+                var position = units.indexOf(uConfig.Basics.unit)
+
+                var unit = units[position + 1]
+
+                if(unit === undefined) {
+                    unit = "imperial"
+                }
+
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, `${unit}`)
+
+            break;
+
+
+
+            case `server`:
+
+                var server = Math.floor(Number(uConfig.TruckersMP.TruckersMPServer) + 1)
+                
+                if(server >= TruckersMP_Serverlist.length) {
+                    server = 0
+                }
+
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `TruckersMPServer`, `${server}`)
+
+            break;
+            
+            default: break;
+        }
+
+        res.sendStatus(201)
+        //res.sendStatus(400)
     })
 
     logIt("INTERFACE", "Starting Interface...")
