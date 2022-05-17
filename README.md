@@ -252,17 +252,15 @@ Just go on a button and Search in the List my Plugin. (No events are displayed? 
 
 ## Settings
 
-The Settings are moving! Currently you only can Edit the Settings by Following this:
--> Press "Win+r" -> Type in: "%appdata%/TouchPortal/plugins/ETS2_Dashboard/config" -> Edit usercfg.json with any Editor 
-(IMPORTANT: DO NOT CHANGE ANYTHING IN "cfg.json"! Except "refreshInterval"!)
+If you want to change any Settings, look here: (Interface)[https://localhost:500] (Only working when Plugin runs)
 
-| Settings                  | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| currency                  | Shows your Money with the Currency you entered        | Look Supported Curr.  |
-| unit                      | Changes the Speed to MPH/KMH, Tons/Pounds and so on   |     imperial/metric   | 
-| timeFormat                | Shows the Ingame time as 12/24H Format                | US (12H) || EU (24H)  |
-| TruckersMP                | Sets up the TMP Server you want to see on your Board! | Depends on Server Count|
-| Modules                   | Dis/Enable the Module you want to use!                |       true/false      |
+| Settings                  | Description                                           |
+|---------------------------|:-----------------------------------------------------:|
+| currency                  | Shows your Money with the Currency you entered        |
+| unit                      | Changes the Speed to MPH/KMH, Tons/Pounds and so on   |
+| timeFormat                | Shows the Ingame time as 12/24H Format                |
+| TruckersMP                | Sets up the TMP Server you want to see on your Board! |
+| Modules                   | Dis/Enable the Module you want to use!                |
 
 ## Supported Currency's
 | Code | Name                 | With Symbol |
