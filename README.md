@@ -252,7 +252,7 @@ Just go on a button and Search in the List my Plugin. (No events are displayed? 
 
 ## Settings
 
-If you want to change any Settings, look here: (Interface)[https://localhost:500] (Only working when Plugin runs)
+If you want to change any Settings, look here: [Interface](http://localhost:500) (Only working when Plugin runs)
 
 | Settings                  | Description                                           |
 |---------------------------|:-----------------------------------------------------:|
