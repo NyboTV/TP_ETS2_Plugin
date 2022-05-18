@@ -345,6 +345,7 @@ If you want to see how this plugin is created, check out my Twitch Channel: http
 - Speedlimit and Cruise Control Fixed
 - More Logs
 - New API
+- Storage-Usage Fixed
 
 ### Changelog 2.0.0 PRE-RELEASE
 - Added fully new Interface
