@@ -8,6 +8,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let ModuleLoaded = false
 
     let unit = ""
+    let unitOld = ""
 
     let truck = ""
 
@@ -146,6 +147,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
     var states = []
 
+    var offline = false
+
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
@@ -169,6 +172,179 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     
             if(ModuleLoaded === false) { 
                 states = []
+                if(offline === false) {
+                    states = [
+                        {
+                        id: "Nybo.ETS2.Dashboard.Truck_Make",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.Model",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.CruiseControlSpeed",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.CruiseControlOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.Speed",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.EngineRPM",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.Gear",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.EngineOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.ElectricOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.WipersOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.MotorBrakeOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.Fuel",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.AdBlue",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.AirPressure",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.OilTemp",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.WaterTemp",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.BatteryVoltage",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.FuelCapacity",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.FuelWarningOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.AdBlueWarningOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.AirPressureWarningOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.AirPressureEmergencyOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.OilPressureWarningOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.WaterTempWarningOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.BatteryVoltageWarningOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.BlinkerLeftActive",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.BlinkerRightActive",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.BlinkerLeftOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.BlinkerRightOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.HazardLightsOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsDashboardValue",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsDashboardOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsParkingOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsBeamLowOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsBeamHighOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsAuxFrontOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsAuxRoofOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsBeaconOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsBrakeOn",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.LightsReverseOn",
+                        value: `MODULE OFFLINE` 
+                        }
+                    ]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
 
             // States
@@ -236,7 +412,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             // Script
             
-            if(Constructor !== ConstructorOld) {
+            if(Constructor !== ConstructorOld || offline === true) {
                 ConstructorOld = Constructor
 
                 var data = {
@@ -247,7 +423,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(Model !== ModelOld) {
+            if(Model !== ModelOld || offline === true) {
                 ModelOld = Model
 
                 var data = {
@@ -258,8 +434,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(CruiseControlSpeed !== CruiseControlSpeedOld) {
+            if(CruiseControlSpeed !== CruiseControlSpeedOld || unit !== unitOld || offline === true) {
                 CruiseControlSpeedOld = CruiseControlSpeed
+                unitOld = unit
 
                 if(unit === "imperial") {
                     CruiseControlSpeed = Math.floor(CruiseControlSpeed / 1.609344)
@@ -273,7 +450,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(CruiseControlOn !== CruiseControlOnOld) {
+            if(CruiseControlOn !== CruiseControlOnOld || offline === true) {
                 CruiseControlOnOld = CruiseControlOn
 
                 var data = {
@@ -284,7 +461,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(Speed !== SpeedOld) {
+            if(Speed !== SpeedOld || offline === true) {
                 SpeedOld = Speed
 
                 if(unit === "imperial") {
@@ -299,7 +476,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(EngineRPM !== EngineRPMOld) {
+            if(EngineRPM !== EngineRPMOld || offline === true) {
                 EngineRPMOld = EngineRPM
 
                 var data = {
@@ -310,7 +487,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(Gear !== GearOld || ShifterType !== ShifterTypeOld) {
+            if(Gear !== GearOld || ShifterType !== ShifterTypeOld || offline === true) {
                 GearOld = Gear
                 ShifterTypeOld = ShifterType
 
@@ -324,7 +501,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
         
-            if(EngineOn !== EngineOnOld) {
+            if(EngineOn !== EngineOnOld || offline === true) {
                 EngineOnOld = EngineOn
 
                 var data = {
@@ -341,7 +518,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
             
-            if(ElectricOn !== ElectricOnOld) {
+            if(ElectricOn !== ElectricOnOld || offline === true) {
                 ElectricOnOld = ElectricOn
 
                 var data = {
@@ -358,7 +535,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
             
-            if(WipersOn !== WipersOnOld) {
+            if(WipersOn !== WipersOnOld || offline === true) {
                 WipersOnOld = WipersOn
 
                 var data = {
@@ -375,7 +552,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
 
-            if(ParkBrakeOn !== ParkBrakeOnOld) {
+            if(ParkBrakeOn !== ParkBrakeOnOld || offline === true) {
                 ParkBrakeOnOld = ParkBrakeOn
 
                 var data = {
@@ -392,7 +569,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
 
-            if(MotorBrakeOn !== MotorBrakeOnOld) {
+            if(MotorBrakeOn !== MotorBrakeOnOld || offline === true) {
                 MotorBrakeOnOld = MotorBrakeOn
 
                 var data = {
@@ -403,7 +580,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(Fuel !== FuelOld) {
+            if(Fuel !== FuelOld || offline === true) {
                 FuelOld = Fuel
 
                 var data = {
@@ -414,7 +591,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelCapacity !== FuelCapacityOld) {
+            if(FuelCapacity !== FuelCapacityOld || offline === true) {
                 FuelCapacityOld = FuelCapacity
 
                 FuelCapacity = Math.round(FuelCapacity)
@@ -427,7 +604,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(AdBlue !== AdBlueOld) {
+            if(AdBlue !== AdBlueOld || offline === true) {
                 AdBlueOld = AdBlue
 
                 var data = {
@@ -438,7 +615,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(AirPressure !== AirPressureOld) {
+            if(AirPressure !== AirPressureOld || offline === true) {
                 AirPressureOld = AirPressure
 
                 var data = {
@@ -449,7 +626,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(OilTemp !== OilTempOld) {
+            if(OilTemp !== OilTempOld || offline === true) {
                 OilTempOld = OilTemp
 
                 if(unit === "imperial") {
@@ -464,7 +641,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(WaterTemp !== WaterTempOld) {
+            if(WaterTemp !== WaterTempOld || offline === true) {
                 WaterTempOld = WaterTemp
 
                 if(unit === "imperial") {
@@ -479,7 +656,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(BatteryVoltage !== BatteryVoltageOld) {
+            if(BatteryVoltage !== BatteryVoltageOld || offline === true) {
                 BatteryVoltageOld = BatteryVoltage
 
                 var data = {
@@ -490,7 +667,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelWarningOn !== FuelWarningOnOld) {
+            if(FuelWarningOn !== FuelWarningOnOld || offline === true) {
                 FuelWarningOnOld = FuelWarningOn
 
                 var data = {
@@ -507,7 +684,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
                 
-            if(AdBlueWarningOn !== AdBlueWarningOnOld) {
+            if(AdBlueWarningOn !== AdBlueWarningOnOld || offline === true) {
                 AdBlueWarningOnOld = AdBlueWarningOn
 
                 var data = {
@@ -524,7 +701,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
                 
-            if(AirPressureWarningOn !== AirPressureWarningOnOld) {
+            if(AirPressureWarningOn !== AirPressureWarningOnOld || offline === true) {
                 AirPressureWarningOnOld = AirPressureWarningOn
 
                 var data = {
@@ -541,7 +718,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
                 
-            if(AirPressureEmergencyOn !== AirPressureEmergencyOnOld) {
+            if(AirPressureEmergencyOn !== AirPressureEmergencyOnOld || offline === true) {
                 AirPressureEmergencyOnOld = AirPressureEmergencyOn
 
                 var data = {
@@ -552,7 +729,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
                 
-            if(OilPressureWarningOn !== OilPressureWarningOnOld) {
+            if(OilPressureWarningOn !== OilPressureWarningOnOld || offline === true) {
                 OilPressureWarningOnOld = OilPressureWarningOn
 
                 var data = {
@@ -569,7 +746,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
         
-            if(WaterTempWarningOn !== WaterTempWarningOnOld) {
+            if(WaterTempWarningOn !== WaterTempWarningOnOld || offline === true) {
                 WaterTempWarningOnOld = WaterTempWarningOn
 
                 var data = {
@@ -586,7 +763,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
 
-            if(BatteryVoltageWarningOn !== BatteryVoltageWarningOnOld) {
+            if(BatteryVoltageWarningOn !== BatteryVoltageWarningOnOld || offline === true) {
                 BatteryVoltageWarningOnOld = BatteryVoltageWarningOn
 
                 var data = {
@@ -599,7 +776,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 
             // Indicator
-            if(BlinkerLeftActive !== BlinkerLeftActiveOld) {
+            if(BlinkerLeftActive !== BlinkerLeftActiveOld || offline === true) {
                 BlinkerLeftActiveOld = BlinkerLeftActive
 
                 var data = {
@@ -616,7 +793,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             } 
 
-            if(BlinkerRightActive !== BlinkerRightActiveOld) {
+            if(BlinkerRightActive !== BlinkerRightActiveOld || offline === true) {
                 BlinkerRightActiveOld = BlinkerRightActive
 
                 var data = {
@@ -633,7 +810,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             } 
 
-            if(BlinkerLeftOn !== BlinkerLeftOnOld) {
+            if(BlinkerLeftOn !== BlinkerLeftOnOld || offline === true) {
                 BlinkerLeftOnOld = BlinkerLeftOn
 
                 var data = {
@@ -644,7 +821,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
             
-            if(BlinkerRightOn !== BlinkerRightOnOld) {
+            if(BlinkerRightOn !== BlinkerRightOnOld || offline === true) {
                 BlinkerRightOnOld = BlinkerRightOn
 
                 var data = {
@@ -655,7 +832,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if (BlinkerLeftOn && BlinkerRightOn) {
+            if (BlinkerLeftOn && BlinkerRightOn || offline === true) {
                 HazardLightsOn = true
                 HazardLightsCounter = 1
             }
@@ -665,20 +842,26 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 HazardLightsOn = false
             }
 
-            if(HazardLightsOn !== HazardLightsOnOld) {
+            if(HazardLightsOn !== HazardLightsOnOld || offline === true) {
                 HazardLightsOnOld = HazardLightsOn
 
                 var data = {
+                    id: "Nybo.ETS2.Dashboard.HazardLightsOn",
+                    value: `${HazardLightsOn}`
+                }
+
+                var data_event = {
                     id: "Nybo.ETS2.Dashboard.event_HazardLightsOn",
                     value: `${HazardLightsOn}`
                 }
 
                 states.push(data)
+                states.push(data_event)
             }
         
 
             // Lights
-            if(LightsDashboardValue !== LightsDashboardValueOld) {
+            if(LightsDashboardValue !== LightsDashboardValueOld || offline === true) {
                 LightsDashboardValueOld = LightsDashboardValue
 
                 var data = {
@@ -689,7 +872,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsDashboardOn !== LightsDashboardOnOld) {
+            if(LightsDashboardOn !== LightsDashboardOnOld || offline === true) {
                 LightsDashboardOnOld = LightsDashboardOn 
 
                 var data = {
@@ -706,7 +889,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
 
-            if(LightsParkingOn !== LightsParkingOnOld) {
+            if(LightsParkingOn !== LightsParkingOnOld || offline === true) {
                 LightsParkingOnOld = LightsParkingOn
 
                 var data = {
@@ -717,7 +900,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsBeamLowOn !== LightsBeamLowOnOld) {
+            if(LightsBeamLowOn !== LightsBeamLowOnOld || offline === true) {
                 LightsBeamLowOnOld = LightsBeamLowOn
 
                 var data = {
@@ -728,7 +911,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsBeamHighOn !== LightsBeamHighOnOld) {
+            if(LightsBeamHighOn !== LightsBeamHighOnOld || offline === true) {
                 LightsBeamHighOnOld = LightsBeamHighOn
 
                 var data = {
@@ -739,7 +922,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsAuxFrontOn !== LightsAuxFrontOnOld) {
+            if(LightsAuxFrontOn !== LightsAuxFrontOnOld || offline === true) {
                 LightsAuxFrontOnOld = LightsAuxFrontOn
 
                 var data = {
@@ -750,7 +933,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsAuxRoofOn !== LightsAuxRoofOnOld) {
+            if(LightsAuxRoofOn !== LightsAuxRoofOnOld || offline === true) {
                 LightsAuxRoofOnOld = LightsAuxRoofOn
 
                 var data = {
@@ -761,7 +944,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsBeaconOn !== LightsBeaconOnOld) {
+            if(LightsBeaconOn !== LightsBeaconOnOld || offline === true) {
                 LightsBeaconOnOld = LightsBeaconOn
 
                 var data = {
@@ -772,7 +955,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsBrakeOn !== LightsBrakeOnOld) {
+            if(LightsBrakeOn !== LightsBrakeOnOld || offline === true) {
                 LightsBrakeOnOld = LightsBrakeOn
 
                 var data = {
@@ -783,7 +966,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(LightsReverseOn !== LightsReverseOnOld) {
+            if(LightsReverseOn !== LightsReverseOnOld || offline === true) {
                 LightsReverseOnOld = LightsReverseOn
 
                 var data = {
@@ -816,7 +999,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                         resolve(Gears)
                     }
                 })
-            }            
+            }        
+            
+            offline = false
     
             try {
                 if(states.length > 0) {

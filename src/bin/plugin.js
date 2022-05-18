@@ -23,6 +23,9 @@ let testNumber = 0
 
 let PluginStarted = false
 let PluginOnline = false
+let PluginStandBy = false
+
+let PluginStatus = "Offline"
 
 let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
@@ -132,7 +135,7 @@ const plugin = async (config, uConfig) => {
         if(!fs.existsSync(`${telemetry_path}`)) { fs.mkdirSync(`${telemetry_path}`) }
 
         missing.forEach(file => {
-            logIt("MISSING", `File/Folder missing: ${file}`)
+            logIt("MISSING", `File/Folder missing: "${file}"`)
         })
     }
     if(firstInstall) {
@@ -343,6 +346,7 @@ const webinterface = async (config, uConfig) => {
     const path = require('path')
     const pid = require('pidusage')
     const fastFolderSize = require('fast-folder-size')
+    const axios = require('axios')
 
     var driverStates = false
     var gameStates = false
@@ -370,6 +374,8 @@ const webinterface = async (config, uConfig) => {
     var mem_usage = ""
     var storage_usage = ""
 
+    var cur_user = ""
+
 
     async function StatesStatus () {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
@@ -383,10 +389,18 @@ const webinterface = async (config, uConfig) => {
             truckersmpStates    = uConfig.Modules.truckersmpStates
             worldStates         = uConfig.Modules.worldStates
 
-            unit            = uConfig.Basics.unit
+            unit                = uConfig.Basics.unit
 
 
-            if(PluginOnline)        { PluginOnline = true /*"1"*/ }      else { PluginOnline = false /*"2"*/ }
+            if( [driverStates,gameStates,gaugeStates,jobStates,navigationStates,trailerStates,truckStates,truckersmpStates,worldStates].some(el => el == true)) {
+                if(PluginOnline)        { PluginOnline = "1" }      else { PluginOnline = "2" }
+                if(PluginOnline === "1") { PluginStatus = "Online" } else { PluginStatus = "Offline" }  
+            } else {
+                PluginOnline = "3"
+                PluginStatus = "StandBy"
+            }
+
+                
             if(driverStates)        { driverStates = "1" }      else { driverStates = "2" }
             if(gameStates)          { gameStates = "1" }        else { gameStates = "2" }
             if(gaugeStates)         { gaugeStates = "1" }       else { gaugeStates = "2" }
@@ -453,7 +467,6 @@ const webinterface = async (config, uConfig) => {
                     }
                     
                 } catch (e) {
-                    logIt("ERROR", `${e}`)
                     truckmpStatus = "OFFLINE"
                     truckmpServer = "API ERROR"
                     truckmpPlayer = "API ERROR"
@@ -462,6 +475,7 @@ const webinterface = async (config, uConfig) => {
                 }
             }
         }
+        
 
         truckmp_array()
         truckmp()
@@ -486,6 +500,27 @@ const webinterface = async (config, uConfig) => {
         }
     }
 
+    async function cur_user_online () {
+        axios.get('http://82.165.69.157:5000/')
+            .then(response => {
+                logIt("API", "Server connection successfull")
+            })
+            .catch(e => {
+                logIt("ERROR", "An Error Appeared! " + e)
+            })
+
+        for (var i = 0; i < Infinity; await timeout(10000), i++) {
+            axios.get('http://82.165.69.157:5000/ets2_plugin')
+                .then(response => {
+                    response = response.data
+                    cur_user = response.current_user
+                })
+                .catch(e => {
+                    logIt("ERROR", "An Error Appeared! " + e)
+                })
+        }
+    }
+
     app.engine('hbs', hbs.engine({
         extname: 'hbs', 
         defaultLayout: 'interface', 
@@ -496,6 +531,7 @@ const webinterface = async (config, uConfig) => {
     userCFGInterface()
     TruckersMPInterface()
     usage()
+    cur_user_online()
 
     app.set('views', path.join(interface_path, '/interface'))
     app.set('view engine', 'hbs')
@@ -519,7 +555,11 @@ const webinterface = async (config, uConfig) => {
             cpu_usage: cpu_usage,
             mem_usage: mem_usage,
             storage_usage: storage_usage,
+
             PluginOnline: PluginOnline,
+            PluginStatus: PluginStatus,  
+
+            UserOnline: cur_user,
 
             unit: unit,
             currency: currency,
@@ -540,147 +580,177 @@ const webinterface = async (config, uConfig) => {
 
         states = states
 
-        switch (states) {
-            case `gameStates`:
-                if(gameStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `driverStates`:
-                if(driverStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `gaugeStates`:
-                if(gaugeStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `jobStates`:
-                if(jobStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `navigationStates`:
-                if(navigationStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `trailerStates`:
-                if(trailerStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `truckStates`:
-                if(truckStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `truckersmpStates`:
-                if(truckersmpStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-            
-            case `worldStates`:
-                if(worldStates === "1") {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
-                } else {
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
-                }
-            break;
-
-
-
-            case `currency`:
-                let currency_list = [
-                    "EUR",
-                    "USD",
-                    "CAD",
-                    "GBP",
-                    "DDK",
-                    "HKD",
-                    "ISK",
-                    "PHP",
-                    "HUF",
-                    "CZK",
-                    "SEK",
-                    "PLN",
-                    "KRW",
-                ]
-
-                var position = currency_list.indexOf(uConfig.Basics.currency)
-
-                var currency = currency_list[position + 1]
-
-                if(currency === undefined) {
-                    currency = "EUR"
-                }
-
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${currency}`)
-
-            break;
-
-            case `unit`:
-                let units = [
-                    "imperial",
-                    "metric"
-                ]
-
-                var position = units.indexOf(uConfig.Basics.unit)
-
-                var unit = units[position + 1]
-
-                if(unit === undefined) {
-                    unit = "imperial"
-                }
-
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, `${unit}`)
-
-            break;
-
-
-
-            case `server`:
-
-                var server = Math.floor(Number(uConfig.TruckersMP.TruckersMPServer) + 1)
+        try {
+            switch (states) {
+                case `gameStates`:
+                    if(gameStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
                 
-                if(server >= TruckersMP_Serverlist.length) {
-                    server = 0
-                }
+                case `driverStates`:
+                    if(driverStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+                
+                case `gaugeStates`:
+                    if(gaugeStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+                
+                case `jobStates`:
+                    if(jobStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+                
+                case `navigationStates`:
+                    if(navigationStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+                
+                case `trailerStates`:
+                    if(trailerStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+                
+                case `truckStates`:
+                    if(truckStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+                
+                case `truckersmpStates`:
+                    if(truckersmpStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+                
+                case `worldStates`:
+                    if(worldStates === "1") {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, false)
+                    } else {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `${states}`, true)
+                    }
+                break;
+    
+    
+    
+                case `currency`:
+                    let currency_list = [
+                        "EUR",
+                        "USD",
+                        "CAD",
+                        "GBP",
+                        "DDK",
+                        "HKD",
+                        "ISK",
+                        "PHP",
+                        "HUF",
+                        "CZK",
+                        "SEK",
+                        "PLN",
+                        "KRW",
+                    ]
+    
+                    var position = currency_list.indexOf(uConfig.Basics.currency)
+    
+                    var currency = currency_list[position + 1]
+    
+                    if(currency === undefined) {
+                        currency = "EUR"
+                    }
+    
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${currency}`)
+    
+                break;
+    
+                case `unit`:
+                    let units = [
+                        "imperial",
+                        "metric"
+                    ]
+    
+                    var position = units.indexOf(uConfig.Basics.unit)
+    
+                    var unit = units[position + 1]
+    
+                    if(unit === undefined) {
+                        unit = "imperial"
+                    }
+    
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, `${unit}`)
+    
+                break;
+    
+    
+    
+                case `server`:
+    
+                    var server = Math.floor(Number(uConfig.TruckersMP.TruckersMPServer) + 1)
+                    
+                    if(server >= TruckersMP_Serverlist.length) {
+                        server = 0
+                    }
+    
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `TruckersMPServer`, `${server}`)
+    
+                break;
+                
 
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `TruckersMPServer`, `${server}`)
 
-            break;
-            
-            default: break;
+                case `status`:
+    
+                    var server = Math.floor(Number(uConfig.TruckersMP.TruckersMPServer) + 1)
+                    
+                    if(server >= TruckersMP_Serverlist.length) {
+                        server = 0
+                    }
+
+                    if(PluginStandBy === false) {
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `gameStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `driverStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `gaugeStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `jobStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `navigationStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `trailerStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `truckStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, `false`)
+                        replaceJSON(`${cfg_path}/config/usercfg.json`, `worldStates`, `false`)
+                    }
+
+                    PluginStandBy = true
+                                    
+                break;
+
+                default: break;
+            }
+            res.sendStatus(201)
+        } catch (e) {
+            res.sendStatus(400)
+            logIt("ERROR", "Something went wrong while Post Request! " + e)
         }
 
-        res.sendStatus(201)
-        //res.sendStatus(400)
     })
 
     logIt("INTERFACE", "Starting Interface...")

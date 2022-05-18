@@ -22,6 +22,8 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
     var states = []
 
+    var offline = false
+
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
@@ -45,6 +47,19 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     
             if(ModuleLoaded === false) { 
                 states = []
+                if(offline === false) {
+                    states = [
+                        {
+                        id: "Nybo.ETS2.Dashboard.Time",
+                        value: `MODULE OFFLINE` 
+                        }
+                    ]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
                      
             // States
@@ -57,7 +72,7 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             timeFormat = userconfig.Basics.timeFormat
             timeFormat = timeFormat.toUpperCase()
 
-            if(time !== timeOld) {
+            if(time !== timeOld || offline === true) {
                 timeOld = time
                 
                 time = time.replace('T', ' ').replace('Z', '').replace(':', ' ').replace(':', ' ').replace('-', ' ').replace('-', ' ')
@@ -88,6 +103,8 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
                 states.push(data)
             }
+
+            offline = false
             
             try {
                 if(states.length > 0) {

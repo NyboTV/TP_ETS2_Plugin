@@ -35,6 +35,7 @@ $(".truckStates").click(function(e) {
 
 $(".tmpStates").click(function(e) {
     httpPost("truckersmpStates")
+    alert("It can take up to 2 Minutes, until you see a Change!")
     reload()
 });
 
@@ -93,7 +94,7 @@ function reload() {
     setTimeout(() => {
         if(!error) 
         window.location.reload()
-    }, 450);
+    }, 550);
 }
 
 setInterval("reload()", 60000)
@@ -101,4 +102,5 @@ setInterval("reload()", 60000)
 setInterval("reload_div();", 3000)
 function reload_div(){
     $('#usage').load(' #cur_usage')
+    $('#Cur_User').load(' #Cur_User')
 }

@@ -2,10 +2,6 @@
 - Add more Options to the Site
 - Input Field not working (Interface)
 
-
-- Events not working full
-
-
 - Remaining Time not working with days
 
 
@@ -15,6 +11,3 @@ Remaining Time - ${value:Nybo.ETS2.Dashboard.JobRemainingTime} - gives me someth
 Retarder Brake and Step Count add.
 
 Blinker active not working
-
-
-Discord oder Webinterface endlich fertig machen

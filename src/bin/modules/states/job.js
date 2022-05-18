@@ -41,6 +41,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
     var states = []
 
+    var offline = false
+
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
@@ -64,6 +66,43 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     
             if(ModuleLoaded === false) { 
                 states = []
+                if(offline === false) {
+                    states = [
+                        {
+                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.JobRemainingTime",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.JobSourceCity",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.JobSourceCompany",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.JobDestinationCity",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.JobDestinationCompany",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.JobEstimatedDistance",
+                            value: `MODULE OFFLINE` 
+                        }
+                    ]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
             
             // States
@@ -84,7 +123,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
-            if(JobIncome !== JobIncomeOld || Currency !== CurrencyOld) {
+            if(JobIncome !== JobIncomeOld || Currency !== CurrencyOld || offline === true) {
                 JobIncomeOld = JobIncome
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
@@ -94,15 +133,19 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         convert("EUR", JobIncome, `${Currency}`).then(async (res) => {
                             JobIncome = Math.round(res.amount)
 
-                            Symbol = await getSymbol(res.currency)            
+                            Symbol = await getSymbol(res.currency)
+
+                            JobIncome = JobIncome.toLocaleString()
                             
                             TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
                         })
                         
                     } catch (e) {
-                        logIt("ERROR", "Error during Currency Convert!")
+                        logIt("ERROR", "Error during Currency Convert! " + e)
                     }
                 } else {
+
+                    JobIncome = JobIncome.toLocaleString()
                     
                     var data = {
                         id: "Nybo.ETS2.Dashboard.JobIncome",
@@ -114,11 +157,11 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             }
             
 
-            if(JobRemainingTime !== JobRemainingTimeOld) {
+            if(JobRemainingTime !== JobRemainingTimeOld || offline === true) {
                 JobRemainingTimeOld = JobRemainingTime
                 
                 JobRemainingTime = new Date(JobRemainingTime)
-                JobRemainingTime = `${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
+                JobRemainingTime = `${JobRemainingTime.getDay()}d ${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.JobRemainingTime",
@@ -129,7 +172,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             }
 
 
-            if(JobSourceCity !== JobSourceCityOld) {
+            if(JobSourceCity !== JobSourceCityOld || offline === true) {
                 JobSourceCityOld = JobSourceCity
 
                 var data = {
@@ -140,7 +183,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 states.push(data)
             }
 
-            if(JobSourceCompany !== JobSourceCompanyOld) {
+            if(JobSourceCompany !== JobSourceCompanyOld || offline === true) {
                 JobSourceCompanyOld = JobSourceCompany
 
                 var data = {
@@ -151,7 +194,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 states.push(data)
             }
 
-            if(JobDestinationCity !== JobDestinationCityOld) {
+            if(JobDestinationCity !== JobDestinationCityOld || offline === true) {
                 JobDestinationCityOld = JobDestinationCity
 
                 var data = {
@@ -162,7 +205,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 states.push(data)
             }
 
-            if(JobDestinationCompany !== JobDestinationCompanyOld) {
+            if(JobDestinationCompany !== JobDestinationCompanyOld || offline === true) {
                 JobDestinationCompanyOld = JobDestinationCompany
 
                 var data ={
@@ -173,7 +216,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 states.push(data)
             }
 
-            if(JobEstimatedDistance !== JobEstimatedDistanceOld || unitOld !== unit) {
+            if(JobEstimatedDistance !== JobEstimatedDistanceOld || unitOld !== unit || offline === true) {
                 JobEstimatedDistanceOld = JobEstimatedDistance
                 unitOld = unit
 
@@ -189,6 +232,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 states.push(data)
             }
         
+            offline = false
+
             try {
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);

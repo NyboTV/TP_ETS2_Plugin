@@ -59,6 +59,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     
             if(ModuleLoaded === false) { 
                 states = []
+                continue
             } else 
 
 			// States

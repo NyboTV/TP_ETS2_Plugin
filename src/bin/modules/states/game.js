@@ -1,3 +1,5 @@
+const { Console } = require('console')
+
 const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
     // Loading Module
     const fs = require('fs')
@@ -16,6 +18,8 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
     var pausedOld = ""
 
     var states = []
+
+    var offline = false
 
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
@@ -36,11 +40,32 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
     //Module Loop
     async function moduleloop () {
-            truckersmp = telemetry.game
-            for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {
+        truckersmp = telemetry.game
+        for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {
     
             if(ModuleLoaded === false) { 
                 states = []
+                if(offline === false) {
+                    states = [
+                        {
+                            id: "Nybo.ETS2.Dashboard.ConnectedStatus",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.GameType",
+                            value: `MODULE OFFLINE` 
+                        },
+                        {
+                            id: "Nybo.ETS2.Dashboard.IsPaused",
+                            value: `MODULE OFFLINE` 
+                        }
+                    ]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
 
             // States 
@@ -56,7 +81,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 gameName = "No Game found!"
             }
 
-            if(connected !== connectedOld) {
+            if(connected !== connectedOld || offline === true) {
                 connectedOld = connected
 
                 var data = {
@@ -67,7 +92,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 states.push(data)
             }
 
-            if(gameName !== gameNameOld) {
+            if(gameName !== gameNameOld || offline === true) {
                 gameNameOld = gameName
 
                 var data = {
@@ -78,7 +103,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 states.push(data)
             }
 
-            if(paused !== pausedOld) {
+            if(paused !== pausedOld || offline === true) {
                 pausedOld = paused
 
                 var data = {
@@ -89,6 +114,8 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 states.push(data)
             }
         
+            offline = false
+
             try {
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);

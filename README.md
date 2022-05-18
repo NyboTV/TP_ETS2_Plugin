@@ -340,6 +340,12 @@ If you want to see how this plugin is created, check out my Twitch Channel: http
 # Changelog
 ```
 
+### Changelog 2.1.1
+- New Interface fully working
+- Speedlimit and Cruise Control Fixed
+- More Logs
+- New API
+
 ### Changelog 2.0.0 PRE-RELEASE
 - Added fully new Interface
 - Fully new Structure for faster Refreshrate!
@@ -424,8 +430,9 @@ Changelog has been Added in Update 0.4.6
 - **Nico** - Plugin Creator - [NyboTV](https://github.com/NyboTV)
 
 # Thanks to
-- **Gitago** - He is an BIG help for fixing my Plugin! - He is Testing my Plugin and is reporting me what is not working
-- **Pjiesco** - He is an BIG help for Updating my Plugin! - He fully Updated my API for the Plugin for me!
+- **Gitago** - Helping for fixing the Plugin!
+- **Gargamosch** - helping for fixing the Plugin! 
+- **Pjiesco** - Helping for Updating the Plugin! 
 
 ## License
 

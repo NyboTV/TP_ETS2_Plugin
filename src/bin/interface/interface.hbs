@@ -63,7 +63,7 @@
                             </div>
                           </div>
                           <p class="u-align-center u-text u-text-default u-text-8"> Hey User! This is the first Test of the NEW Settings Page! If you want to change anything here, 
-                            just Click on it! Not working on the Serverlist yet! (Attention! Do not Spam Click!!)</p>
+                            just Click on it! Not working on the Serverlist yet! But you can click on "Server" to scroll through the List. (Attention! Do not Spam Click!!)</p>
                         </div>
                       </div>
                     </div>
@@ -120,11 +120,7 @@
                               <h5 class="u-text u-text-19">CPU-Usage: {{cpu_usage}}</h5>
                               <h5 class="u-text u-text-default u-text-20">Memory-Usage: {{mem_usage}}</h5>
                               <h5 class="u-text u-text-default u-text-21">Storage-Usage: {{storage_usage}}</h5>
-                              {{# if PluginOnline}}
-                              <a class="u-btn u-btn-round u-button-style u-custom-color-1 u-hidden-xs u-radius-50 u-btn-10">Plugin Started</a>
-                              {{ else }}
-                              <a class="u-btn u-btn-round u-button-style u-custom-color-2 u-hidden-xs u-radius-50 u-btn-10">Plugin Offline</a>
-                              {{/if}}
+                              <a class="u-btn u-btn-round u-button-style u-custom-color-{{PluginOnline}} u-hidden-xs u-radius-50 u-btn-10">Plugin {{PluginStatus}}</a>
                             </div>
                           </div>
                         </div>
@@ -152,6 +148,9 @@
       <a class="u-link" href="https://www.patreon.com/NyboTV" target="_blank">
         <span>NyboTV</span>
       </a>. 
+      <p class="u-text">
+        <span id="Cur_User"> ||   Current User Online: {{UserOnline}}</span>
+      </p>
     </section>
   </body>
 </html>

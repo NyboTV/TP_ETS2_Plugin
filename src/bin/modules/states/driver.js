@@ -14,6 +14,8 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     
     var states = []
 
+    let offline = false
+
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
@@ -37,6 +39,19 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     
             if(ModuleLoaded === false) { 
                 states = []
+                if(offline === false) {
+                    states = [
+                        {
+                        id: "Nybo.ETS2.Dashboard.NextRestTime",
+                        value: `MODULE OFFLINE` 
+                        }
+                    ]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
             
             // States
@@ -46,7 +61,7 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             driver = telemetry.game
             nextRestStopTime = driver.nextRestStopTime
 
-            if(nextRestStopTimeOld !== nextRestStopTime) {
+            if(nextRestStopTimeOld !== nextRestStopTime || offline === true) {
                 
                 nextRestStopTimeOld = nextRestStopTime
                 
@@ -61,10 +76,13 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
                 states.push(data)
             }
             
+            offline = false
+
             try {
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);
                 }
+
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
                 logIt("ERROR", `${moduleName}States Error. Retry...`)

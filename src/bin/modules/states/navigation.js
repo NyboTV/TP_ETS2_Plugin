@@ -9,13 +9,17 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 	let ModuleLoaded = false
 
 	let navigation = ""
+
 	let unit = ""
+	let unitOld = ""
 
 	let Speedlimit = ""
 	let SpeedlimitOld = ""
 	let SpeedlimitSign = ""
 	
 	var states = []
+
+	var offline = false
 	
 	// Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
@@ -43,6 +47,19 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
     
             if(ModuleLoaded === false) { 
                 states = []
+                if(offline === false) {
+                    states = [
+						{
+                        id: "Nybo.ETS2.Dashboard.SpeedLimit",
+                        value: `MODULE OFFLINE` 
+                    	}
+					]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
 
 			// States
@@ -53,42 +70,17 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 			Speedlimit = navigation.speedLimit
 			SpeedlimitSign = ""
 
+
 			unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
-			if(Speedlimit !== SpeedlimitOld) {
+			if(Speedlimit !== SpeedlimitOld || unit !== unitOld || offline === true) {
 				SpeedlimitOld = Speedlimit
+				unitOld = unit
+				
 
 				if(unit === "imperial") {
-					switch (Speedlimit) {
-						case 80:
-							Speedlimit = 50
-							break;
-						case 70: 
-							Speedlimit = 43
-							break;
-						case 60: 
-							Speedlimit = 37
-							break;
-						case 50: 
-							Speedlimit = 31
-							break;
-						case 40:
-							Speedlimit = 25
-							break;
-						case 30:
-							Speedlimit = 19
-							break;
-						case 20: 
-							Speedlimit = 12
-							break;
-						case 10:
-							Speedlimit = 6
-							break;
-						case 0:
-							Speedlimit = 0
-							break;						
-					}
+					Speedlimit = Math.round(Speedlimit/1.609)
 				}
 
 				SpeedlimitSign = await getSpeedLimitSign(Speedlimit)
@@ -107,6 +99,7 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 				states.push(data2)
 			}		
 
+			offline = false
 		
 			try {
 				if(states.length > 0) {

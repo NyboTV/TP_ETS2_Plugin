@@ -11,6 +11,10 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
 
+    var states = []
+
+    var offline = false
+
     // Check if User De/activates Module
     async function configloop () {
         for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
@@ -30,7 +34,36 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
             for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval * 200), moduleLoop++) {
     
             if(ModuleLoaded === false) { 
-                return;
+                states = []
+                if(offline === false) {
+                    states = [
+                        {
+                        id: "Nybo.ETS2.Dashboard.Servers",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.ServerName",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.ServerPlayers",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.ServerPlayerQueue",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.APIOnline",
+                        value: `MODULE OFFLINE` 
+                        }
+                    ]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
 
             // Vars
@@ -92,7 +125,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                         APIOnline = false
 					}
 
-                    var states = [
+                    states = [
                         {
                         id: "Nybo.ETS2.Dashboard.Servers",
                         value: `${Servers}`
@@ -115,6 +148,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                     },
                     ]
 
+                    offline = false
                 
                     try {
                         TPClient.stateUpdateMany(states);                    

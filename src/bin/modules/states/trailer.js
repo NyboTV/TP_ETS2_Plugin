@@ -38,6 +38,8 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
 
     var states = []
 
+    var offline = false
+
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
@@ -61,6 +63,43 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
     
             if(ModuleLoaded === false) { 
                 states = []
+                if(offline === false) {
+                    states = [
+                        {
+                        id: "Nybo.ETS2.Dashboard.TrailerAttached",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.TrailerName",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.TrailerChainType",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.CargoLoaded",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.CargoType",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.CargoDamage",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Dashboard.CargoMass",
+                        value: `MODULE OFFLINE` 
+                        }
+                    ]
+                    
+                    TPClient.stateUpdateMany(states);
+    
+                    offline = true
+                }
+                continue
             } else 
 
             // States
@@ -88,7 +127,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 Weight = "Tons"
             }
         
-            if(TrailerAttached !== TrailerAttachedOld) {
+            if(TrailerAttached !== TrailerAttachedOld || offline === true) {
                 TrailerAttachedOld = TrailerAttached
 
                 var data = {
@@ -99,7 +138,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
 
-            if(TrailerName !== TrailerNameOld) {
+            if(TrailerName !== TrailerNameOld || offline === true) {
                 TrailerNameOld = TrailerName
 
                 var data ={
@@ -110,7 +149,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
 
-            if(TrailerChainType !== TrailerChainTypeOld) {
+            if(TrailerChainType !== TrailerChainTypeOld || offline === true) {
                 TrailerChainTypeOld = TrailerChainType
 
                 var data = {
@@ -121,7 +160,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
 
-            if(CargoLoaded !== CargoLoadedOld) {
+            if(CargoLoaded !== CargoLoadedOld || offline === true) {
                 CargoLoadedOld = CargoLoaded
 
                 var data = {
@@ -132,7 +171,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
 
-            if(CargoType !== CargoTypeOld) {
+            if(CargoType !== CargoTypeOld || offline === true) {
                 CargoTypeOld = CargoType
 
                 var data = {
@@ -143,7 +182,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
 
-            if(CargoDamage !== CargoDamageOld) {
+            if(CargoDamage !== CargoDamageOld || offline === true) {
                 CargoDamageOld = CargoDamage
 
                 CargoDamage = Math.round(CargoDamage * 100)
@@ -156,7 +195,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
         
-            if(CargoMass !== CargoMassOld || Weight !== WeightOld) {
+            if(CargoMass !== CargoMassOld || Weight !== WeightOld || offline === true) {
 
                 CargoMassOld = CargoMass
                 WeightOld = Weight
@@ -175,6 +214,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
         
+            offline = false
         
             try {
                 if(states.length > 0) {
