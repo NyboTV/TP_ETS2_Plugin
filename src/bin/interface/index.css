@@ -36533,8 +36533,14 @@ a.u-link.u-text-hover-grey-90:hover {
         p.u-small-text
         {
         font-size: 0.875rem;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        }
+        p.u-small-text-serverlist
+        {
+        font-size: 0.775rem;
+        margin-top: 10px;
+        margin-bottom: 10px;
         }
         p:not(.u-text-variant)
         {

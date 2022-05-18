@@ -97,6 +97,7 @@ function reload() {
     }, 550);
 }
 
+
 setInterval("reload()", 60000)
       
 setInterval("reload_div();", 3000)

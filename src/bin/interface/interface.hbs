@@ -89,12 +89,10 @@
                               </div>
                               <div class="u-align-center u-container-style u-grey-80 u-group u-hidden-sm u-hidden-xs u-group-6">
                                 <div class="u-container-layout u-container-layout-9">
-                                  <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-13">Server List<br>
-                                  </p>
-                                  <p class="u-align-center u-small-text u-text u-text-default u-text-variant u-text-14">{{truckmpServerList}}</p>
-                                  <script>
-                                  </script>
-
+                                  <p class="u-align-center u-large-text u-text u-text-default u-text-variant u-text-13">Server List<br></p>
+                                  {{#each truckmpServerList}}
+                                  <p id="tmp_serverlist" class="tmp_serverlist u-align-center u-small-text-serverlist u-text u-text-default u-text-variant u-text-14">{{this.name}}</p>
+                                  {{/each}}
                                 </div>
                               </div>
                               <div class="u-align-center u-container-style u-grey-80 u-group u-hidden-sm u-hidden-xs u-group-7">

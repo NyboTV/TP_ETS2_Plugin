@@ -1,8 +1,8 @@
 {
   "Basics": {
     "readME": "Hey User! Please read the ReadMe to understand what you can Change here!!",
-    "currency": "EUR",
-    "unit": "imperial",
+    "currency": "USD",
+    "unit": "metric",
     "timeFormat": "EU"
   },
   "TruckersMP": {
@@ -13,10 +13,10 @@
     "driverStates": false,
     "gaugeStates": false,
     "jobStates": false,
-    "navigationStates": true,
+    "navigationStates": false,
     "trailerStates": false,
     "truckStates": false,
-    "truckersmpStates": false,
+    "truckersmpStates": true,
     "worldStates": false
   }
 }

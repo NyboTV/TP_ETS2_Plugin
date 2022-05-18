@@ -372,7 +372,6 @@ const webinterface = async (config, uConfig) => {
     var cpu_usage = ""
     var mem_usage = ""
     var storage_usage = ""
-    var size = ""
 
     var cur_user = ""
 
@@ -435,6 +434,7 @@ const webinterface = async (config, uConfig) => {
         
         async function truckmp_array () {
             for (var i = 0; i < Infinity; await timeout(500), i++) {
+
                 TruckersMP_Array = []
                 try {
                     TruckersMP_tmp.response.forEach(server => {
@@ -442,6 +442,7 @@ const webinterface = async (config, uConfig) => {
                     })
                 } catch (e) {
                 }
+
             }
         }
 
@@ -461,7 +462,9 @@ const webinterface = async (config, uConfig) => {
                         truckmpServer = TruckersMP.name
                         truckmpPlayer = TruckersMP.players
                         truckmpQueue = TruckersMP.queue
-                        truckmpServerList = TruckersMP_Array.join("\n")
+                        truckmpServerList = TruckersMP_tmp.response
+
+                        TruckersMP_Serverlist.forEach
 
                         TruckersMP_Serverlist = TruckersMP_Array
                     }
