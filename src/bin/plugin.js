@@ -9,7 +9,6 @@ const execute = require(`child_process`).execFile;
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 const open = require('open');
-const { stringify } = require('querystring');
 
 // Important Script Vars
 let path = ""
@@ -345,8 +344,8 @@ const webinterface = async (config, uConfig) => {
     const app = express();
     const path = require('path')
     const pid = require('pidusage')
-    const fastFolderSize = require('fast-folder-size')
     const axios = require('axios')
+    const getFolderSize = require("get-folder-size")
 
     var driverStates = false
     var gameStates = false
@@ -373,6 +372,7 @@ const webinterface = async (config, uConfig) => {
     var cpu_usage = ""
     var mem_usage = ""
     var storage_usage = ""
+    var size = ""
 
     var cur_user = ""
 
@@ -484,10 +484,14 @@ const webinterface = async (config, uConfig) => {
 
     async function usage () {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
-            pid(process.pid, function (err, stats) {
+            pid(process.pid, async function (err, stats) {
                 cpu_usage = Math.round(stats.cpu * 100) / 100 + "%"
                 mem_usage = Math.round(stats.memory / 1024 / 1024) + " MB"
-                fastFolderSize(dirpath, (err, size) => {
+
+                getFolderSize(dirpath, function(err, size) {
+                    if (err) { throw err; }
+                  
+                    
                     storage_usage = size
                     storage_usage = (storage_usage / 1000 / 1000).toFixed(2)
                     if(storage_usage >= 1000) {
@@ -495,7 +499,7 @@ const webinterface = async (config, uConfig) => {
                     } else {
                         storage_usage = storage_usage + " MB"
                     }
-                })
+                });
             })
         }
     }
