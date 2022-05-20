@@ -10,6 +10,7 @@ const execute = require(`child_process`).execFile;
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 const open = require('open');
+const axios = require('axios')
 
 // Important Script Vars
 let path = ""
@@ -329,12 +330,25 @@ const plugin = async (config, uConfig) => {
         logIt("INFO", "Loading 'Main Loader'...")
         main_loader()
     });
+
+    TPClient.on("Update", (curVersion, remoteVersion) => {
+
+        let optionsArray = [
+          {
+            "id":`${pluginId}Update`,
+            "title":"Take Me to Download"
+          },
+          {
+            "id":`${pluginId}Ignore`,
+            "title":"Ignore Update"
+          }
+        ];
     
-    
+        TPClient.sendNotification(`${pluginId}UpdateNotification`,"My Plugin has been updated", `A new version of my plugin ${remoteVersion} is available to download`, optionsArray);
+    });
+
     logIt("INFO", "Connecting to `Touch Portal`...")
-    TPClient.connect({
-        pluginId
-    })
+    TPClient.connect({pluginId, "updateUrl":"https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/package.json" })
 }
 
 const webinterface = async (config, uConfig) => {
@@ -345,7 +359,6 @@ const webinterface = async (config, uConfig) => {
     const app = express();
     const path = require('path')
     const pid = require('pidusage')
-    const axios = require('axios')
     const getFolderSize = require("get-folder-size")
 
     var driverStates = false
@@ -509,13 +522,11 @@ const webinterface = async (config, uConfig) => {
     }
 
     async function cur_user_online () {
-        axios.get('http://82.165.69.157:5000/')
-            .then(response => {
-                logIt("API", "Server connection successfull")
-            })
-            .catch(e => {
-                logIt("ERROR", "An Error Appeared! " + e)
-            })
+        
+        serverPing()
+        setInterval(() => {
+            serverPing()
+        }, 60000);
 
         for (var i = 0; i < Infinity; await timeout(10000), i++) {
             axios.get('http://82.165.69.157:5000/ets2_plugin')
@@ -682,7 +693,6 @@ const webinterface = async (config, uConfig) => {
                                         if(IsJsonString(data) === true) {
                                             data = JSON.parse(data)
                                             data = data.currency_list
-                                            
                                             resolve(data)
                                         }
                                     })
@@ -790,6 +800,18 @@ configs()
 // Other Function
 function isBetween(n, a, b) {
     return (n - a) * (n - b) <= 0
+}
+
+function serverPing () {
+    axios.get('http://82.165.69.157:5000/')
+    .then(response => {
+        if(debugMode) { logIt("API", "Server Ping successfull") }
+        return
+    })
+    .catch(e => {
+        logIt("ERROR", "An Error Appeared! " + e)
+        return
+    })
 }
 
 function IsJsonString(str) {
