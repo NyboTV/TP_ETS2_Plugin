@@ -3,6 +3,7 @@ const TouchPortalAPI = require(`touchportal-api`);
 const TPClient = new TouchPortalAPI.Client();
 const pluginID = `TP_ETS2_Plugin`;
 const http = require(`request`);
+const https = require('https')
 const fs = require(`fs`)
 const exec = require(`child_process`).exec
 const execute = require(`child_process`).execFile;
@@ -581,7 +582,7 @@ const webinterface = async (config, uConfig) => {
         })
     })
 
-    app.post('/setup', (req, res) => {
+    app.post('/setup', async (req, res) => {
 
         var states = req.rawHeaders[11]
 
@@ -664,24 +665,31 @@ const webinterface = async (config, uConfig) => {
     
     
                 case `currency`:
-                    let currency_list = [
-                        "EUR",
-                        "USD",
-                        "CAD",
-                        "GBP",
-                        "DDK",
-                        "HKD",
-                        "ISK",
-                        "PHP",
-                        "HUF",
-                        "CZK",
-                        "SEK",
-                        "PLN",
-                        "KRW",
-                    ]
-    
+                    function getCurrency() {
+                        return new Promise(async (resolve, reject) => {
+                            
+                            https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+                                var data = ''
+                    
+                                resp.on('data', (chunk) => {
+                                    data += chunk
+                                })
+                    
+                                resp.on('end', () => {
+                    
+                                    if(IsJsonString(data) === true) {
+                                        data = JSON.parse(data)
+                                        data = data.currency_list
+
+                                        resolve(data)
+                                    }
+                                })
+                            })
+                        })
+                    }
+
+                    var currency_list = await getCurrency()    
                     var position = currency_list.indexOf(uConfig.Basics.currency)
-    
                     var currency = currency_list[position + 1]
     
                     if(currency === undefined) {
@@ -777,6 +785,15 @@ configs()
 // Other Function
 function isBetween(n, a, b) {
     return (n - a) * (n - b) <= 0
+}
+
+function IsJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
 }
 
 function timeout(ms) {

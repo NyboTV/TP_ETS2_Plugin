@@ -1,7 +1,7 @@
 {
   "Basics": {
     "readME": "Hey User! Please read the ReadMe to understand what you can Change here!!",
-    "currency": "USD",
+    "currency": "EUR",
     "unit": "metric",
     "timeFormat": "EU"
   },

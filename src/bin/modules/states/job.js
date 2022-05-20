@@ -136,7 +136,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         convert("EUR", JobIncome, `${Currency}`).then(async (res) => {
                             JobIncome = Math.round(res.amount)
 
-                            Symbol = await getSymbol(res.currency)
+                            Symbol = await getSymbol(res.currency, userconfig)
 
                             JobIncome = JobIncome.toLocaleString()
                             
@@ -262,7 +262,7 @@ function IsJsonString(str) {
     return true;
 }
 
-function getSymbol(currency) {
+function getSymbol(currency, uConfig) {
     return new Promise(async (resolve, reject) => {
         
         https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
@@ -276,13 +276,18 @@ function getSymbol(currency) {
 
                 if(IsJsonString(data) === true) {
                     data = JSON.parse(data)
+                    data = data.currency
+
+                    data = data[`${currency}`]
 
                     console.log(data)
+                    
+                    resolve(data)
+
                 }
             })
         })
         
-        resolve("")
     })
 }
 
