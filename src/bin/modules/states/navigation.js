@@ -1,8 +1,9 @@
+// Loading Module
+const fs = require('fs')
+const sJSON = require('self-reload-json')
+const Jimp = require('jimp')
+
 const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
-	// Loading Module
-	const fs = require('fs')
-    const sJSON = require('self-reload-json')
-	const Jimp = require('jimp')
 	
 	var path2 = require('path')
 	var moduleName = path2.basename(__filename).replace('.js','')

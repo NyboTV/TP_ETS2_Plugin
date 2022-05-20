@@ -12,11 +12,11 @@
     "gameStates": false,
     "driverStates": false,
     "gaugeStates": false,
-    "jobStates": false,
+    "jobStates": true,
     "navigationStates": false,
     "trailerStates": false,
     "truckStates": false,
-    "truckersmpStates": true,
+    "truckersmpStates": false,
     "worldStates": false
   }
 }

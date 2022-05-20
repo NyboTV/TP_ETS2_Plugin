@@ -1,8 +1,11 @@
+// Loading Module
+const fs = require('fs')
+const sJSON = require('self-reload-json')
+const { convert, addSymbol } = require('current-currency')
+const https = require('https')
+
+
 const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
-    // Loading Module
-    const fs = require('fs')
-    const sJSON = require('self-reload-json')
-    const { convert, addSymbol } = require('current-currency')
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -249,63 +252,41 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 	moduleloop()
 }
 
+
+function IsJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
 function getSymbol(currency) {
     return new Promise(async (resolve, reject) => {
-        switch(currency) {
-            case "USD":
-                resolve("$")
-            break;
+        
+        https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+            var data = ''
 
-            case "CAD":
-                resolve("C$")
-            break;
+            resp.on('data', (chunk) => {
+                data += chunk
+            })
 
-            case "GBP":
-                resolve("£")
-            break;
+            resp.on('end', () => {
 
-            case "DDK":
-                resolve("kr.")
-            break;
+                if(IsJsonString(data) === true) {
+                    data = JSON.parse(data)
 
-            case "HKD":
-                resolve("HK$")
-            break;
-
-            case "ISK":
-                resolve("Kr")
-            break;
-
-            case "PHP":
-                resolve("₱")
-            break;
-
-            case "HUF":
-                resolve("Ft")
-            break;
-
-            case "CZK":
-                resolve("Kč")
-            break;
-
-            case "SEK":
-                resolve("kr")
-            break;
-
-            case "PLN":
-                resolve("zł")
-            break;
-
-            case "KRW":
-                resolve("₩")
-            break;
-
-            default:
-                resolve("")
-            break;
-        }
+                    console.log(data)
+                }
+            })
+        })
+        
+        resolve("")
     })
 }
+
+
 
 
 

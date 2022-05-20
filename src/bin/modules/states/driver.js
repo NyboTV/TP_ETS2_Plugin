@@ -1,7 +1,8 @@
+// Loading Module
+const fs = require('fs')
+const sJSON = require('self-reload-json')
+
 const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
-    // Loading Module
-    const fs = require('fs')
-    const sJSON = require('self-reload-json')
     
     // Vars
     var path2 = require('path')
