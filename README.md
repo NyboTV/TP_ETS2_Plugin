@@ -340,12 +340,15 @@ If you want to see how this plugin is created, check out my Twitch Channel: http
 # Changelog
 ```
 
-### Changelog 2.1.1
+### Changelog 2.1.2
 - New Interface fully working
 - Speedlimit and Cruise Control Fixed
 - More Logs
 - New API
 - Storage-Usage Fixed
+- Server list in Interface fixed
+- Folder Size Fixed
+- Interface Text Wight/Height
 
 ### Changelog 2.0.0 PRE-RELEASE
 - Added fully new Interface
