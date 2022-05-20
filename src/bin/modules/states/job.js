@@ -264,29 +264,30 @@ function IsJsonString(str) {
 
 function getSymbol(currency, uConfig) {
     return new Promise(async (resolve, reject) => {
-        
-        https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
-            var data = ''
+        try {
 
-            resp.on('data', (chunk) => {
-                data += chunk
-            })
-
-            resp.on('end', () => {
-
-                if(IsJsonString(data) === true) {
-                    data = JSON.parse(data)
-                    data = data.currency
-
-                    data = data[`${currency}`]
-
-                    console.log(data)
+            https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+                var data = ''
+                
+                resp.on('data', (chunk) => {
+                    data += chunk
+                })
+                
+                resp.on('end', () => {
                     
-                    resolve(data)
-
-                }
+                    if(IsJsonString(data) === true) {
+                        data = JSON.parse(data)
+                        data = data.currency
+                        data = data[`${currency}`]
+                        
+                        resolve(data)
+                        
+                    }
+                })
             })
-        })
+        } catch (e) {
+            logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")
+        }
         
     })
 }

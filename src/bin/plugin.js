@@ -668,23 +668,28 @@ const webinterface = async (config, uConfig) => {
                     function getCurrency() {
                         return new Promise(async (resolve, reject) => {
                             
-                            https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
-                                var data = ''
-                    
-                                resp.on('data', (chunk) => {
-                                    data += chunk
-                                })
-                    
-                                resp.on('end', () => {
-                    
-                                    if(IsJsonString(data) === true) {
-                                        data = JSON.parse(data)
-                                        data = data.currency_list
+                            try {
 
-                                        resolve(data)
-                                    }
+                                https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+                                    var data = ''
+                                    
+                                    resp.on('data', (chunk) => {
+                                        data += chunk
+                                    })
+                                    
+                                    resp.on('end', () => {
+                                        
+                                        if(IsJsonString(data) === true) {
+                                            data = JSON.parse(data)
+                                            data = data.currency_list
+                                            
+                                            resolve(data)
+                                        }
+                                    })
                                 })
-                            })
+                            } catch (e) {
+                                logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")
+                            }
                         })
                     }
 
