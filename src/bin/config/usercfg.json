@@ -1,7 +1,7 @@
 {
   "Basics": {
     "readME": "Hey User! Please read the ReadMe to understand what you can Change here!!",
-    "currency": "DKK",
+    "currency": "EUR",
     "unit": "metric",
     "timeFormat": "EU"
   },
@@ -9,14 +9,14 @@
     "TruckersMPServer": "0"
   },
   "Modules": {
-    "gameStates": false,
-    "driverStates": false,
-    "gaugeStates": false,
+    "gameStates": true,
+    "driverStates": true,
+    "gaugeStates": true,
     "jobStates": true,
-    "navigationStates": false,
-    "trailerStates": false,
-    "truckStates": false,
-    "truckersmpStates": false,
-    "worldStates": false
+    "navigationStates": true,
+    "trailerStates": true,
+    "truckStates": true,
+    "truckersmpStates": true,
+    "worldStates": true
   }
 }
