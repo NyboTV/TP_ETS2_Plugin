@@ -75,7 +75,7 @@
 - Game Information
 - more comming soon!
 
-If you want to see Planned Features, see [Todo List](TODO.LIST)
+If you want to see Planned Features, see [Roadmap](https://github.com/NyboTV/TP_ETS2_Plugin/projects/1)
 
 `NOTE: This file is edited by me only randomly. Sometimes I write something in it in German`
 
