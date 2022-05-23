@@ -45,8 +45,8 @@
       Wiki
     </a>
     <span> | </span>
-    <a href="#development">
-      Development
+    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages">
+      Pages
     </a>
     <span> | </span>
     <a href="#contribution">
