@@ -40,10 +40,9 @@ const pack = async () => {
     await tmp()
 
     //Copy Main File
-    fse.moveSync(`./plugin-win.exe`, `${OutputPath}/ets2_plugin.exe`)
+    fse.moveSync(`./ETS2_Dashboard-win32-x64`, `${OutputPath}/ETS2_Dashboard`)
     
-    //Copy Index File
-    //fse.copySync(`./index.exe`, `${OutputPath}/index.exe`)
+    OutputPath = `${OutputPath}/ETS2_Dashboard`
     //Copy Server Folder
     fse.copySync(`${InputPath}/bin/server`, `${OutputPath}/server`)
     //Copy IMG Folder

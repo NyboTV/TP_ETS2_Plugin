@@ -164,7 +164,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobRemainingTimeOld = JobRemainingTime
                 
                 JobRemainingTime = new Date(JobRemainingTime)
-                JobRemainingTime = `${JobRemainingTime.getDay()}d ${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
+                JobRemainingTime = `${JobRemainingTime.getDay()-1}d ${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.JobRemainingTime",
