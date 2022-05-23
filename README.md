@@ -69,8 +69,6 @@
 
 If you want to see Planned Features, see [Roadmap](https://github.com/NyboTV/TP_ETS2_Plugin/projects/1)
 
-`NOTE: This file is edited by me only randomly. Sometimes I write something in it in German`
-
 ## Download and Installation
 
 | ![](https://raw.githubusercontent.com/wiki/ryanoasis/nerd-fonts/screenshots/v1.0.x/windows-pass-sm.png)                                                                                                          |   
