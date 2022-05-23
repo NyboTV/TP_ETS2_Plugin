@@ -54,14 +54,6 @@
     </a>
   </h3>
 </div>
-
-<div align="center">
-  <sub>Translations:</sub>
-  <a href="docs/readme/de_de.md">
-    <span>:de:</span>
-  </a>
-  
-</div>
 <br />
 
 <h2 align="center">ETS2 Dashboard Plugin</h2>
