@@ -3,7 +3,7 @@
 <div align="center">
   <strong>ETS2 Dashboard Plugin für Touch Portal</strong><br>
   Ein Plugin, um das Euro Truck Dashboard auf Ihrem Tablett anzuzeigen<br>
-  <sub>ANur für Windows</sub>
+  <sub>Nur für Windows</sub>
 </div>
 
 <br>
