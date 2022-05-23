@@ -58,13 +58,13 @@ const pack = async () => {
 
 	zip.addLocalFolder(`${OutputPath}`, 'ETS2_Dashboard');
 
-	zip.writeZip("./Installers/Win/ETS2_Dashboard.zip");
-    fse.renameSync('./Installers/Win/ETS2_Dashboard.zip', './Installers/Win/ETS2_Dashboard.tpp', { overwrite: true })
+	zip.writeZip(`${OutputPath}/ETS2_Dashboard.zip`);
+    fse.renameSync(`${OutputPath}/ETS2_Dashboard.zip`, `${OutputPath}/ETS2_Dashboard.tpp`, { overwrite: true })
 
     if(testMode) {
         setTimeout(() => {
 
-            fse.copyFileSync(`./Installers/Win/ETS2_Dashboard.tpp`, `${InstallPath}/ETS2_Dashboard.tpp`)
+            fse.copyFileSync(`${OutputPath}/ETS2_Dashboard.tpp`, `${InstallPath}/ETS2_Dashboard.tpp`)
             fse.renameSync(`${InstallPath}/ETS2_Dashboard.tpp`, `${InstallPath}/ETS2_Dashboard.zip`, { overwrite: true })
             
             var zip = new AdmZip(`${InstallPath}/ETS2_Dashboard.zip`);
@@ -72,7 +72,7 @@ const pack = async () => {
             fse.removeSync(`${InstallPath}/ETS2_Dashboard.zip`) 
         }, 2000);
     } else if(Release) {
-        fs.copyFileSync('./Installers/Win/ETS2_Dashboard.tpp', 'P:/Dieser PC/Desktop/ETS2_Dashboard.tpp')
+        fs.copyFileSync(`${OutputPath}/ETS2_Dashboard.tpp`, 'P:/Dieser PC/Desktop/ETS2_Dashboard.tpp')
     }
 
     console.log("FINISHED")
