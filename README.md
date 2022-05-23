@@ -57,7 +57,7 @@
 
 <div align="center">
   <sub>Translations:</sub>
-  <a href="docs/lang/de_de.md#readme">
+  <a href="docs/readme/de_de.md">
     <span>:de:</span>
   </a>
   
