@@ -14,7 +14,29 @@
       {
          "id":"Game_Events",
          "name":"ETS2 Dashboard",
-         "actions": [],
+         "actions": [
+            {
+               "id": "settings_window",
+               "prefix": "",
+               "name":"Open/Close Settings",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"On press {$settings$} the Settings Menu",
+               "hasHoldFunctionality": true,
+               "data" :[
+                   {
+                       "id":"settings",
+                       "type": "choice",
+                       "label":  "Settings Window",
+                       "default": "",
+                       "valueChoices":[
+                          "open",
+                          "close"
+                       ]
+                   }
+               ]
+            }
+         ],
          "events": [
             {
                "id":"event_EngineOn",
