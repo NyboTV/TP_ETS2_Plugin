@@ -2,6 +2,12 @@
 # Changelog
 ```
 
+### Changelog 2.5.0
+- New Interface with own GUI
+- More Settings
+- More Currencys
+- Bug Fixes
+
 ### Changelog 2.1.2
 - New Interface fully working
 - Speedlimit and Cruise Control Fixed
