@@ -12,7 +12,7 @@
 ![Issues](https://img.shields.io/github/issues/NyboTV/TP_ETS2_Plugin)
 ![Pull Requests](https://img.shields.io/github/issues-pr/NyboTV/TP_ETS2_Plugin)
 
-# Plugin is still in Work!! Just dont have much time!
+# README IS GETTING UPDATED!!
 ## Attention!! PLEASE READ
 
 Hey! I need your Help! If you want your Currency inside the Plugin, then please create a Pull Request with your Currency!!
