@@ -109,9 +109,9 @@ Möchtest du die neuen Funktionen der neuesten Version sehen? Dann schaue die [C
 
 
 ## Mitwirkende
-- **Gitago** - Hilfe bei der Reparatur des Plugins!
-- **Gargamosch** - Hilfe bei der Reparatur des Plugins! 
-- **Pjiesco** - Hilfe bei der Aktualisierung des Plugins! 
+- **Gitago** - Beim Fixxen des Plugins geholfen!
+- **Gargamosch** - Beim Fixxen des Plugins geholfen! 
+- **Pjiesco** - Beim Fixxen des Plugins geholfen! 
 
 
 
@@ -119,6 +119,3 @@ Möchtest du die neuen Funktionen der neuesten Version sehen? Dann schaue die [C
 Dieses Projekt steht unter der MIT-Lizenz - siehe die [LICENSE](LICENSE) Datei für Details
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin?ref=badge_large)
-
-
-Übersetzt mit www.DeepL.com/Translator (kostenlose Version)
