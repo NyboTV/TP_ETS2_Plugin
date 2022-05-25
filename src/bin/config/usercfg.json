@@ -1,7 +1,7 @@
 {
   "Basics": {
     "readME": "Hey User! Please read the ReadMe to understand what you can Change here!!",
-    "currency": "EUR",
+    "currency": "TBH",
     "unit": "imperial",
     "timeFormat": "EU"
   },
@@ -12,11 +12,11 @@
     "driverStates": false,
     "gameStates": false,
     "gaugeStates": false,
-    "jobStates": false,
+    "jobStates": true,
     "navigationStates": false,
     "trailerStates": false,
     "truckStates": false,
-    "truckersmpStates": true,
-    "worldStates": true
+    "truckersmpStates": false,
+    "worldStates": false
   }
 }
