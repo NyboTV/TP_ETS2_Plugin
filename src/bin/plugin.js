@@ -22,6 +22,11 @@ let TruckersMP_tmp = ""
 let TruckersMP_Serverlist = ""
 
 let open_settings = false
+let frame = false
+let version = ""
+
+let NOTIFICATION_TITLE = ''
+let NOTIFICATION_BODY = ''
 
 let testNumber = 0
 
@@ -175,11 +180,11 @@ const plugin = async (config, uConfig) => {
     let pluginId = pluginID
     
     
-    if(refreshInterval >= 300) {
+    if(refreshInterval >= 100) {
     } else {
-        replaceJSON(`${path}/config/cfg.json`, "refreshInterval", 200)
+        replaceJSON(`${path}/config/cfg.json`, "refreshInterval", 100)
         logIt("WARN", "RefreshRate too low! Setting up RefreshRate...")
-        refreshInterval = 300
+        refreshInterval = 100
     }
     
     
@@ -368,7 +373,7 @@ const plugin = async (config, uConfig) => {
 const webinterface = async (config, uConfig) => {
 
     //Electron Window
-    window_browser()
+    window_browser(config)
 
     // Loading Modules
     const express = require('express');
@@ -592,6 +597,7 @@ const webinterface = async (config, uConfig) => {
             PluginStatus: PluginStatus,  
 
             UserOnline: cur_user,
+            version: version,
 
             unit: unit2,
             currency: currency,
@@ -813,6 +819,9 @@ const webinterface = async (config, uConfig) => {
     plugin(config, uConfig)
 }
 
+//Checks Version
+getVersion()
+
 //Loading Configs
 configs()
 
@@ -820,6 +829,29 @@ configs()
 // Other Function
 function isBetween(n, a, b) {
     return (n - a) * (n - b) <= 0
+}
+
+async function getVersion() {
+    return new Promise(async (resolve, reject) => {
+        axios.get('https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest')
+        .then(response => {
+            response = response.request.path
+            
+            response =  response.split(`NyboTV`)
+                        .pop()
+                        .split(`Tp_ETS2_Plugin`)
+                        .pop()
+                        .split(`releases`)
+                        .pop()
+                        .split(`/`)
+                        .pop()
+
+            version = response
+        })
+        .catch(e => {
+            logIt("ERROR", "An Error Appeared! " + e)
+        })
+    })
 }
 
 function serverPing () {
@@ -870,7 +902,7 @@ function getCurrency() {
     })
 }
 
-function window_browser () {
+function window_browser (config) {
     
     
     if (require('electron-squirrel-startup')) { 
@@ -882,11 +914,15 @@ function window_browser () {
 
             if(open_settings && BrowserWindow.getAllWindows().length === 0) {
 
+                if(debugMode) { frame = true }
+
                 const mainWindow = new BrowserWindow({
                     width: 1250,
                     height: 920,
+                    title: "ETS2 Dashboard Plugin",
                     acceptFirstMouse: true,
-                    frame: false,
+                    frame: frame, 
+                    transparent: false,
                     resizable: false,
                     webPreferences: {
                         nodeIntegration: true
@@ -894,28 +930,35 @@ function window_browser () {
                 });
                 
                 mainWindow.loadURL('http://localhost:5000')
-                
                 mainWindow.removeMenu()
+                mainWindow.setTitle("ETS2 Dashboard Plugin")
+                app.setAppUserModelId("ETS2 Dashboard Plugin")
                 
                 //mainWindow.webContents.openDevTools();
                 
                 app.on('window-all-closed', () => {
                 });
                 
-                app.whenReady().then(() => {
-                    
-                    //showNotification()
+                app.whenReady().then(() => {  
                 })
                 open_settings = false
+
+
+                if(version !== config.version) {
+                            
+                    NOTIFICATION_TITLE = "A new Version is Available!"
+                    NOTIFICATION_BODY = `The new Version "${version}" is now Available! You can find it on my Github Page!`
+                    
+                    showNotification()
+                }
             }
         }, 2000);
+
+        
     }
     
     app.on('ready', createWindow);
     
-
-    const NOTIFICATION_TITLE = 'Basic Notification'
-    const NOTIFICATION_BODY = 'Notification from the Main process'
     
     const showNotification = () => {
         new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()

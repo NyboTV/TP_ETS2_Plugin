@@ -9,11 +9,11 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
     let ModuleLoaded = false
 
     var game = ""
-    var connected = game.connected
+    var connected = ""
     var connectedOld = ""
-    var gameName = game.gameName
+    var gameName = ""
     var gameNameOld = ""
-    var paused = game.paused
+    var paused = ""
     var pausedOld = ""
 
     var states = []

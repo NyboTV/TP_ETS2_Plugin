@@ -13,7 +13,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
     let truck = ""
 
-    let HazardLightsCounter = ""
+    let HazardLightsCounter = 10
 
     let Constructor = ""
     let ConstructorOld = ""
@@ -394,7 +394,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             BlinkerRightActive = truck.blinkerRightActive
             BlinkerLeftOn = truck.blinkerLeftOn
             BlinkerRightOn = truck.blinkerRightOn
-            HazardLightsOn = false
+            HazardLightsOn = true
         
             LightsDashboardValue = Math.round(truck.lightsDashboardValue * 100) / 100
             LightsDashboardOn = truck.lightsDashboardOn
@@ -835,10 +835,11 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if (BlinkerLeftOn && BlinkerRightOn || offline === true) {
                 HazardLightsOn = true
-                HazardLightsCounter = 1
+                HazardLightsCounter = 0
             }
-            if (HazardLightsCounter < 5) {
-                HazardLightsCounter = Math.floor(HazardLightsCounter + 1)
+
+            if (HazardLightsCounter < 10) {
+                HazardLightsCounter++ 
             } else {
                 HazardLightsOn = false
             }

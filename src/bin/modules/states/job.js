@@ -11,6 +11,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     var moduleName = path2.basename(__filename).replace('.js','')
     let ModuleLoaded = false
 
+    let game = ""
+
     var job = ""
     var navigation = ""
 
@@ -112,6 +114,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             states = []
 
             // Vars
+            game = telemetry.game.gameName
+
             job = telemetry.job
             navigation = telemetry.navigation
 
@@ -131,32 +135,61 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
 
-                if(Currency !== "EUR") {
-                    try {
-                        convert("EUR", JobIncome, `${Currency}`).then(async (res) => {
-                            JobIncome = Math.round(res.amount)
-
-                            Symbol = await getSymbol(res.currency, userconfig)
-
-                            JobIncome = JobIncome.toLocaleString()
+                if(game === "ATS") {
+                    if(Currency !== "USD") {
+                        try {
+                            convert("USD", JobIncome, `${Currency}`).then(async (res) => {
+                                JobIncome = Math.round(res.amount)    
+                                Symbol = await getSymbol(res.currency, userconfig)
+                                JobIncome = JobIncome.toLocaleString()
+                                
+                                if(Symbol === "€") {
+                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${JobIncome} ${Symbol}`);
+                                } else {
+                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
+                                }
+                            })
                             
-                            TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
-                        })
+                        } catch (e) {
+                            logIt("ERROR", "Error during Currency Convert! " + e)
+                        }
+                    } else {
+    
+                        JobIncome = JobIncome.toLocaleString()
                         
-                    } catch (e) {
-                        logIt("ERROR", "Error during Currency Convert! " + e)
+                        var data = {
+                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            value: `$ ${JobIncome}`
+                        }
+                        
+                        states.push(data)
                     }
                 } else {
-
-                    JobIncome = JobIncome.toLocaleString()
-                    
-                    var data = {
-                        id: "Nybo.ETS2.Dashboard.JobIncome",
-                        value: `${JobIncome}€`
+                    if(Currency !== "EUR") {
+                        try {
+                            convert("EUR", JobIncome, `${Currency}`).then(async (res) => {
+                                JobIncome = Math.round(res.amount)
+                                Symbol = await getSymbol(res.currency, userconfig)
+                                JobIncome = JobIncome.toLocaleString()
+                                
+                                TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
+                            })
+                            
+                        } catch (e) {
+                            logIt("ERROR", "Error during Currency Convert! " + e)
+                        }
+                    } else {
+    
+                        JobIncome = JobIncome.toLocaleString()
+                        
+                        var data = {
+                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            value: `${JobIncome}€`
+                        }
+                        
+                        states.push(data)
                     }
-                    
-                    states.push(data)
-                }
+                }                
             }
             
 
@@ -225,7 +258,12 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
                 if(unit === "imperial") {
                     JobEstimatedDistance = Math.round(Math.floor(JobEstimatedDistance/1.609344) * 100) / 100
+                    
+                    JobEstimatedDistance = `${JobEstimatedDistance/1000} Miles`
+                } else {
+                    JobEstimatedDistance = `${JobEstimatedDistance/1000} KM`
                 }
+
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.JobEstimatedDistance",

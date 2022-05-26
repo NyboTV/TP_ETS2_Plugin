@@ -1,17 +1,6 @@
 {
-  "version": "2.1.0",
-  "-----------------": "----------",
-  "github_Username": "NyboTV",
-  "github_Repo": "TP_ETS2_Plugin",
-  "github_FileName": "ETS2_Dashboard_AutoUpdater",
-  "------------------": "---------",
-  "autoupdates": false,
-  "----------------": "-----------",
-  "design": "default",
-  "refreshInterval": 300,
-  "---------------": "-----------",
-  "--------------": "-----------",
-  "DEV STUFF ONLY": "DEV STUFF ONLY",
+  "version": "2.1.2",
+  "refreshInterval": 100,
   "debug": false,
   "firstInstall": true
 }
