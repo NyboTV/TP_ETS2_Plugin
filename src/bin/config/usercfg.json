@@ -3,7 +3,7 @@
     "currency": "EUR",
     "unit": "Kilometer",
     "weight": "Tons",
-    "temp": "Fahrenheit",
+    "temp": "Celsius",
     "timeFormat": "EU"
   },
   "TruckersMP": {

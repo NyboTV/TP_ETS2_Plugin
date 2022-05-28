@@ -76,9 +76,7 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
             unit = unit.toLowerCase()
 
 			if(Speedlimit !== SpeedlimitOld || unit !== unitOld || offline === true) {
-				SpeedlimitOld = Speedlimit
-				unitOld = unit
-				
+				SpeedlimitOld = Speedlimit				
 
 				if(unit === "miles") {
 					Speedlimit = Math.round(Speedlimit/1.609)
@@ -101,6 +99,8 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 			}		
 
 			offline = false
+			
+			unitOld = unit
 		
 			try {
 				if(states.length > 0) {

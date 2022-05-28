@@ -78,7 +78,6 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 			if(Speed !== SpeedOld || unit !== unitOld) {
 				SpeedOld = Speed
-				unitOld = unit
 
 				if (unit === "miles") {
 					Speed = Math.floor(Speed / 1.609344)
@@ -129,6 +128,9 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 			}
 						
 			// Module Stuff
+
+			
+			unitOld = unit
 	
 			try {
 				if(states.length > 0) {

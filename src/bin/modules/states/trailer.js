@@ -196,7 +196,6 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             if(CargoMass !== CargoMassOld || weight !== weightOld || offline === true) {
 
                 CargoMassOld = CargoMass
-                weightOld = weight
 
                 if (weight.toLowerCase() === "pounds") {
                     CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
@@ -213,6 +212,8 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             }
         
             offline = false
+
+            weightOld = weight
         
             try {
                 if(states.length > 0) {

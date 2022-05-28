@@ -443,7 +443,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(CruiseControlSpeed !== CruiseControlSpeedOld || unit !== unitOld || offline === true) {
                 CruiseControlSpeedOld = CruiseControlSpeed
-                unitOld = unit
 
                 if(unit === "miles") {
                     CruiseControlSpeed = Math.floor(CruiseControlSpeed / 1.609344)
@@ -635,7 +634,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(OilTemp !== OilTempOld || temp !== tempOld || offline === true) {
                 OilTempOld = OilTemp
-                tempOld = temp
 
                 if(temp === "fahrenheit") {
                     OilTemp = Math.floor(OilTemp * 9/5) + 32
@@ -656,7 +654,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(WaterTemp !== WaterTempOld || temp !== tempOld || offline === true) {
                 WaterTempOld = WaterTemp
-                tempOld = temp
 
                 if(temp === "fahrenheit") {
                     WaterTemp = Math.floor(WaterTemp * 9/5) + 32
@@ -1022,6 +1019,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             }        
             
             offline = false
+            
+            tempOld = temp
+            unitOld = unit
     
             try {
                 if(states.length > 0) {

@@ -254,7 +254,6 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
             if(JobEstimatedDistance !== JobEstimatedDistanceOld || unitOld !== unit || offline === true) {
                 JobEstimatedDistanceOld = JobEstimatedDistance
-                unitOld = unit
 
                 if(unit === "miles") {
                     JobEstimatedDistance = Math.round(Math.floor(JobEstimatedDistance/1.609344) * 100) / 100
@@ -274,6 +273,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             }
         
             offline = false
+            
+            unitOld = unit
 
             try {
                 if(states.length > 0) {
