@@ -633,31 +633,43 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(OilTemp !== OilTempOld || offline === true) {
+            if(OilTemp !== OilTempOld || temp !== tempOld || offline === true) {
                 OilTempOld = OilTemp
+                tempOld = temp
 
-                if(unit === "miles") {
+                if(temp === "fahrenheit") {
                     OilTemp = Math.floor(OilTemp * 9/5) + 32
-                }
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.OilTemp",
-                    value: `${OilTemp}`
+                    var data = {
+                        id: "Nybo.ETS2.Dashboard.OilTemp",
+                        value: `${OilTemp} F°`
+                    }
+                } else {
+                    var data = {
+                        id: "Nybo.ETS2.Dashboard.OilTemp",
+                        value: `${OilTemp} C°`
+                    }
                 }
 
                 states.push(data)
             }
 
-            if(WaterTemp !== WaterTempOld || offline === true) {
+            if(WaterTemp !== WaterTempOld || temp !== tempOld || offline === true) {
                 WaterTempOld = WaterTemp
+                tempOld = temp
 
-                if(temp === "f") {
+                if(temp === "fahrenheit") {
                     WaterTemp = Math.floor(WaterTemp * 9/5) + 32
-                }
 
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.WaterTemp",
-                    value: `${WaterTemp}`
+                    var data = {
+                        id: "Nybo.ETS2.Dashboard.WaterTemp",
+                        value: `${WaterTemp} F°`
+                    }
+                } else {
+                    var data = {
+                        id: "Nybo.ETS2.Dashboard.WaterTemp",
+                        value: `${WaterTemp} C°`
+                    }
                 }
 
                 states.push(data)

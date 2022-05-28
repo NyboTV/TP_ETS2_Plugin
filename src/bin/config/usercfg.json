@@ -1,9 +1,9 @@
 {
   "Basics": {
     "currency": "EUR",
-    "unit": "Miles",
+    "unit": "Kilometer",
     "weight": "Tons",
-    "temp": "Celsius",
+    "temp": "Fahrenheit",
     "timeFormat": "EU"
   },
   "TruckersMP": {

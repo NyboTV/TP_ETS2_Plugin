@@ -188,7 +188,7 @@ function reload() {
     }
 
     function timeout() {
-        settimeout = setTimeout(function(){ window.location.reload()}, 550)
+        settimeout = setTimeout(function(){ window.location.reload()}, 650)
     }
 }
 

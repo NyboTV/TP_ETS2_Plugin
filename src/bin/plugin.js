@@ -456,7 +456,6 @@ const webinterface = async (config, uConfig) => {
             currency = uConfig.Basics.currency
             currency_list = await getCurrency()
             currency_list.splice(currency_list.indexOf(currency), 1);
-
             
             if(unit === "miles") {
                 unit2 = false

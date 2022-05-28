@@ -32,9 +32,6 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
     let CargoMass = ""
     let CargoMassOld = ""
 
-    let Weight = ""
-    let WeightOld = ""
-
     let unit = ""
 
     let weight = ""
@@ -117,7 +114,6 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             unit = unit.toLowerCase()
 
             weight = userconfig.Basics.weight
-            weight = weight.toLowerCase()
 
             TrailerAttached = trailer1.attached
             TrailerName = trailer1.name
@@ -128,11 +124,6 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             CargoDamage = cargo.damage
             CargoMass = cargo.mass
 
-            if(weight === "tons") {
-                Weight = "Pounds"
-            } else {
-                Weight = "Tons"
-            }
         
             if(TrailerAttached !== TrailerAttachedOld || offline === true) {
                 TrailerAttachedOld = TrailerAttached
@@ -202,12 +193,12 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 states.push(data)
             }
         
-            if(CargoMass !== CargoMassOld || Weight !== WeightOld || offline === true) {
+            if(CargoMass !== CargoMassOld || weight !== weightOld || offline === true) {
 
                 CargoMassOld = CargoMass
-                WeightOld = Weight
+                weightOld = weight
 
-                if (weight === "tons") {
+                if (weight.toLowerCase() === "pounds") {
                     CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
                 } else {
                     CargoMass = Math.round(Math.floor(cargo.mass / 1000))
@@ -215,7 +206,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.CargoMass",
-                    value: `${CargoMass} ${Weight}`
+                    value: `${CargoMass} ${weight}`
                 }
 
                 states.push(data)
