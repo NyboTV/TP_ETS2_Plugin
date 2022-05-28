@@ -52,6 +52,10 @@
     <a href="#contribution">
       Contribution
     </a>
+    <span> | </span>
+    <a href="https://discord.gg/PvXJsxpGFe">
+      Discord
+    </a>
   </h3>
 </div>
 <br />
