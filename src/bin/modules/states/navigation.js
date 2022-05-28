@@ -80,7 +80,7 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 				unitOld = unit
 				
 
-				if(unit === "imperial") {
+				if(unit === "miles") {
 					Speedlimit = Math.round(Speedlimit/1.609)
 				}
 

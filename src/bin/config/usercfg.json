@@ -1,8 +1,9 @@
 {
   "Basics": {
-    "readME": "Hey User! Please read the ReadMe to understand what you can Change here!!",
     "currency": "EUR",
-    "unit": "metric",
+    "unit": "Miles",
+    "weight": "Tons",
+    "temp": "Celsius",
     "timeFormat": "EU"
   },
   "TruckersMP": {

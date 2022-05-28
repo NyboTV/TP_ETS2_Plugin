@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <title>ETS2 Dashboard</title>
-    <meta property="og:title" content="Positive Steel Ostrich" />
+    <meta property="og:title" content="ETS2 Dashboard" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,7 +31,6 @@
         background-color: var(--dl-color-gray-white);
 
       }
-
     </style>
     <link
       rel="stylesheet"
@@ -61,7 +60,7 @@
           </div>
         </header>
         <div class="home-sidebar">
-          {{#if driverStates}}
+            {{#if driverStates}}
             <button style="cursor: pointer;" id="driverstates" class="driverStates home-button-1 button">Driver States</button>
           {{else}} 
             <button style="cursor: pointer;" id="driverstates" class="driverStates home-button-2 button">Driver States</button>
@@ -114,22 +113,21 @@
           {{else}}
             <button style="cursor: pointer;" id="worldstates" class="worldStates home-button-2 button">World States</button>
           {{/if}}
-
         </div>
         <div class="home-settings">
           <div class="home-unit">
             <span class="home-text01">Unit</span>
-            <div class="home-select">
-              {{#if unit}}
-              <div style="cursor: pointer;" class="home-text15">Metric</div>
-              {{else}}
-              <div style="cursor: pointer;" class="home-text16">Imperial</div>
-              {{/if}}
-            </div>
+            <div style="cursor: pointer;" class="unit home-text02">
+                {{#if unit}}
+                Kilometer
+                {{else}}
+                Miles
+                {{/if}}
+              </div>
           </div>
           <div class="home-currency">
-            <span class="home-text02">Currency</span>
-            <select class="home-select1">
+            <span class="home-text03">Currency</span>
+            <select class="home-select">
                 <option value="{{currency}}" selected>{{currency}}</option>
               {{#each currency_list}}
                 <option class="currency_list" value="{{this}}">{{this}}</option>
@@ -137,71 +135,78 @@
             </select>
           </div>
           <div class="home-weight">
-            <span class="home-text03">Weight</span>
-            <div class="home-select2">
-              {{#if unit}}
-              <div class="home-text17">Tons</div>
+            <span class="home-text04">Weight</span>
+            <div style="cursor: pointer;" class="weight home-text05">
+              {{#if weight}}
+                Tons
               {{else}}
-              <div class="home-text18">Pounds</div>
+                Pounds
+              {{/if}}
+            </div>
+          </div>
+          <div class="home-temp">
+            <span class="home-text07">Temp</span>
+            <div style="cursor: pointer;" class="temp home-text08">
+              {{#if temp}}
+                Celsius
+              {{else}}
+                Fahrenheit
               {{/if}}
             </div>
           </div>
         </div>
         <div class="home-truckersmp">
           <div class="home-server">
-            <span class="home-text04">Server</span>
-            <select class="home-select3">
+            <span class="home-text09">Server</span>
+            <select class="home-select1">
                 <option value="tmpserver">{{truckmpServer}}</option>
               {{#each truckmpServerList}}
                 <option value="tmpserver">{{this.name}}</option>
               {{/each}}
             </select>
-            <script>
-              console.log(truckmpServerList)
-            </script>
           </div>
           <div class="home-player">
-            <span class="home-text05">Players</span>
-            <span class="home-text06">{{truckmpPlayer}}</span>
+            <span class="home-text10">Players</span>
+            <span class="home-text11">{{truckmpPlayer}}</span>
           </div>
           <div class="home-status">
-            <span class="home-text07">Status</span>
-            <span class="home-text08">{{truckmpStatus}}</span>
+            <span class="home-text12">Status</span>
+            <span class="home-text13">{{truckmpStatus}}</span>
           </div>
           <div class="home-queue">
-            <span class="home-text09">Queue</span>
-            <span class="home-text10">{{truckmpQueue}}</span>
+            <span class="home-text14">Queue</span>
+            <span class="home-text15">{{truckmpQueue}}</span>
           </div>
         </div>
         <footer class="home-footer">
           <button style="cursor: pointer;" class="close home-button09 button">Close</button>
           <div class="home-container1">
-            <span class="home-text11">
+            <span class="home-text16">
               © 2022, ETS2_Dashboard created by NyboTV
             </span>
           </div>
           <div class="home-icon-group"></div>
-          <div class="Cur-User">
-            <span class="Cur_User home-text12">Current User Online: {{UserOnline}}</span>
-          </div>
+          <span class="home-text17">Current User Online: {{UserOnline}}</span>
           <button style="cursor: pointer;" class="plugin-status home-button10 button_status-Plugin-{{PluginOnline}} button">Plugin {{PluginStatus}}</button>
         </footer>
-        <div id="home-usage" >
-          <div id="home_usage" class="home-usage">
-            <span class="home-cpu">CPU: {{cpu_usage}}</span>
-            <span class="home-memory">Memory: {{mem_usage}}</span>
-            <span class="home-storage">Storage: {{storage_usage}}</span>
-          </div>
+        <div id="home-usage">
+        <div id="home_usage" class="home-usage">
+          <span class="home-cpu">CPU: {{cpu_usage}}</span>
+          <span class="home-memory">Memory: {{mem_usage}}</span>
+          <span class="home-storage">Storage: {{storage_usage}}</span>
         </div>
-        <span class="home-text13">
-          <span class="home-text14">
+        </div>
+        <span class="home-text18">
+          <span class="home-text19">
             Hey Guys! I just tested a new Website Builder Tool.
           </span>
+          <span>I think i can</span>
           <br />
-          <span>I think i can do</span>
+          <span>do</span>
           <span>more with this.</span>
           <span>I hope you Enjoy this new &quot;Style&quot;</span>
           <br />
+          <span></span>
           <span>and i hope you</span>
           <span>enjoy</span>
           <span>the new Features!</span>

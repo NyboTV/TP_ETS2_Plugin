@@ -46,18 +46,18 @@ $(".worldStates").click(function(e) {
 
 
 
-$(".currency").click(function(e) {
-    httpPost("currency")
-    reload()
-}) 
 
 $(".weight").click(function(e) {
-    httpPost("unit")
+    httpPost("weight")
     reload()
 }) 
 
 $(".unit").click(function(e) {
     httpPost("unit")
+    reload()
+}) 
+$(".temp").click(function(e) {
+    httpPost("temp")
     reload()
 }) 
 
@@ -71,16 +71,11 @@ $(".server").click(function(e) {
 
 
 $(".home-select").click(async function(e) {
-    httpPost("unit")
-    reload()
-})
-
-$(".home-select1").click(async function(e) {
     var position  = ""
     var currency_list = ""
     var currency = ""
 
-    position = document.querySelector('.home-select1').selectedIndex
+    position = document.querySelector('.home-select').selectedIndex
     position = Number(position)
     currency_list = await getJson("currency_list")
     currency = currency_list.currency
@@ -102,11 +97,9 @@ $(".home-select1").click(async function(e) {
     toReload = true
 })
 
-$(".home-select3").click(async function(e) {
-    position = document.querySelector('.home-select3').selectedIndex
+$(".home-select1").click(async function(e) {
+    position = document.querySelector('.home-select1').selectedIndex
     position = Number(position-1)
-    
-    console.log(position)
 
     httpPost("server", position)
 

@@ -399,6 +399,8 @@ const webinterface = async (config, uConfig) => {
     var currency_list = ""
     var weight = ""
     var weight2 = ""
+    var temp = ""
+    var temp2 = ""
 
     var TruckersMP = ""
 
@@ -444,17 +446,34 @@ const webinterface = async (config, uConfig) => {
         for (var i = 0; i < Infinity; await timeout(500), i++) {
             unit = uConfig.Basics.unit
             unit = unit.toLowerCase()
+
+            weight = uConfig.Basics.weight
+            weight = weight.toLowerCase()
+
+            temp = uConfig.Basics.temp
+            temp = temp.toLowerCase()
+
             currency = uConfig.Basics.currency
             currency_list = await getCurrency()
             currency_list.splice(currency_list.indexOf(currency), 1);
 
             
-            if(unit === "imperial") {
-                weight2 = false
+            if(unit === "miles") {
                 unit2 = false
             } else {
-                weight2 = true
                 unit2 = true
+            }
+
+            if(weight === "pounds") {
+                weight2 = false
+            } else {
+                weight2 = true
+            }
+
+            if(temp === "fahrenheit") {
+                temp2 = false
+            } else {
+                temp2 = true
             }
         }
     }
@@ -603,6 +622,7 @@ const webinterface = async (config, uConfig) => {
             currency: currency,
             currency_list: currency_list,
             weight: weight2,
+            temp: temp2,
 
             truckmpStatus: truckmpStatus,
             truckmpServer: truckmpServer,
@@ -717,8 +737,8 @@ const webinterface = async (config, uConfig) => {
     
                 case `unit`:
                     let units = [
-                        "imperial",
-                        "metric"
+                        "Miles",
+                        "Kilometer"
                     ]
     
                     var position = units.indexOf(uConfig.Basics.unit)
@@ -726,14 +746,50 @@ const webinterface = async (config, uConfig) => {
                     var unit = units[position + 1]
     
                     if(unit === undefined) {
-                        unit = "imperial"
+                        unit = "Miles"
                     }
     
                     replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, `${unit}`)
     
                 break;
+
+                case `weight`:
+                    let weights = [
+                        "Tons",
+                        "Pounds"
+                    ]
     
+                    var position = weights.indexOf(uConfig.Basics.weight)
     
+                    var weight = weights[position + 1]
+    
+                    if(weight === undefined) {
+                        weight = "Tons"
+                    }
+    
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, `${weight}`)
+    
+                break;
+
+                case `temp`:
+                    let temps = [
+                        "Celsius",
+                        "Fahrenheit"
+                    ]
+    
+                    var position = temps.indexOf(uConfig.Basics.temp)
+    
+                    var temp = temps[position + 1]
+    
+                    if(temp === undefined) {
+                        temp = "Celsius"
+                    }
+    
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, `${temp}`)
+    
+                break;
+
+
     
                 case `server`:
 
@@ -990,6 +1046,9 @@ function logIt() {
         fs.writeFileSync(`${path}/logs/latest.log`, "Plugin Started")
         PluginStarted = true
     }
+
+
+
     let curTime = new Date().toISOString().
     replace(/T/, ` `).
     replace(/\..+/, ``)
@@ -998,6 +1057,4 @@ function logIt() {
     console.log(curTime, ":", pluginID, ":" + type + ":", message.join(" "));
     fs.appendFileSync(`${path}/logs/latest.log`, `\n${curTime}:${pluginID}:${type}:${message.join(" ")}`)
 }
-    
-
     

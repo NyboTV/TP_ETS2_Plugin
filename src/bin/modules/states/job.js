@@ -256,7 +256,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobEstimatedDistanceOld = JobEstimatedDistance
                 unitOld = unit
 
-                if(unit === "imperial") {
+                if(unit === "miles") {
                     JobEstimatedDistance = Math.round(Math.floor(JobEstimatedDistance/1.609344) * 100) / 100
                     
                     JobEstimatedDistance = `${JobEstimatedDistance/1000} Miles`

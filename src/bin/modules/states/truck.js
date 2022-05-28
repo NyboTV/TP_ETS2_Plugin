@@ -11,6 +11,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let unit = ""
     let unitOld = ""
 
+    let temp = ""
+    let tempOld = ""
+
     let truck = ""
 
     let HazardLightsCounter = 10
@@ -410,6 +413,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
+            temp = userconfig.Basics.temp
+            temp = temp.toLowerCase()
+
 
             // Script
             
@@ -439,7 +445,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 CruiseControlSpeedOld = CruiseControlSpeed
                 unitOld = unit
 
-                if(unit === "imperial") {
+                if(unit === "miles") {
                     CruiseControlSpeed = Math.floor(CruiseControlSpeed / 1.609344)
                 }
 
@@ -465,7 +471,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(Speed !== SpeedOld || offline === true) {
                 SpeedOld = Speed
 
-                if(unit === "imperial") {
+                if(unit === "miles") {
                     Speed = Math.floor(Speed / 1.609344)
                 }
 
@@ -630,7 +636,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(OilTemp !== OilTempOld || offline === true) {
                 OilTempOld = OilTemp
 
-                if(unit === "imperial") {
+                if(unit === "miles") {
                     OilTemp = Math.floor(OilTemp * 9/5) + 32
                 }
 
@@ -645,7 +651,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(WaterTemp !== WaterTempOld || offline === true) {
                 WaterTempOld = WaterTemp
 
-                if(unit === "imperial") {
+                if(temp === "f") {
                     WaterTemp = Math.floor(WaterTemp * 9/5) + 32
                 }
 
