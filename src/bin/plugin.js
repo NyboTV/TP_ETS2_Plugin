@@ -334,7 +334,6 @@ const plugin = async (config, uConfig) => {
     
     // TouchPortal Info 
     TPClient.on("Info", async(data) => {
-        
         // Start
         logIt("INFO", "Loading 'Main Loader'...")
         main_loader()
@@ -615,7 +614,7 @@ const webinterface = async (config, uConfig) => {
             PluginStatus: PluginStatus,  
 
             UserOnline: cur_user,
-            version: version,
+            version: config.version,
 
             unit: unit2,
             currency: currency,
@@ -998,8 +997,13 @@ function window_browser (config) {
                 })
                 open_settings = false
 
+                version = version.split('.')
+                version = version.join('')
 
-                if(version !== config.version) {
+                var versionOld = config.version.split('.')
+                versionOld = versionOld.join('')
+
+                if(version > versionOld) {
                             
                     NOTIFICATION_TITLE = "A new Version is Available!"
                     NOTIFICATION_BODY = `The new Version "${version}" is now Available! You can find it on my Github Page!`

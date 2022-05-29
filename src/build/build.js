@@ -1,6 +1,8 @@
 const fs = require('fs')
 const fse = require('fs-extra')
 const AdmZip = require('adm-zip')
+const replaceJSON = require(`replace-json-property`).replace
+const prompt = require('prompt')
 
 const Release = process.argv.includes("--release");
 const testMode = process.argv.includes("--test");
@@ -13,31 +15,10 @@ if(fs.existsSync(`./src/build/ETS2_Dashboard`)) {
     fs.rmSync(`./src/build/ETS2_Dashboard`, { recursive: true })
 }
 
-
-const tmp = async () => {
-
-    if(fs.existsSync(`${OutputPath}`)) {
-        fse.remove(`${OutputPath}`, err => { 
-            if(err) return console.error(err)
-            console.log("TMP Folder Removed")
-        })
-    }
-
-    if(fs.existsSync(`${OutputPath}`) === false) {
-        fs.mkdirSync(`${OutputPath}`)
-        console.log("TMP Folder Created")
-    }
-
-    if(fs.existsSync(`${InputPath}/build/ETS2_Dashboard`)) {
-        fse.removeSync(`${InputPath}/build/ETS2_Dashboard`, { recursive: true })
-        console.log("ETS Folder removed")
-    }
-}
-
 const pack = async () => {
 
-    //ReCreate TMP Folder
     await tmp()
+    await version()
 
     //Copy Main File
     fse.moveSync(`./ETS2_Dashboard-win32-x64`, `${OutputPath}/ETS2_Dashboard`)
@@ -80,3 +61,46 @@ const pack = async () => {
         
 }
 pack()
+
+
+async function tmp () {
+    return new Promise(async (resolve, reject) => {
+        if(fs.existsSync(`${OutputPath}`)) {
+            fse.remove(`${OutputPath}`, err => { 
+                if(err) return console.error(err)
+                console.log("TMP Folder Removed")
+            })
+        }
+        
+        if(fs.existsSync(`${OutputPath}`) === false) {
+            fs.mkdirSync(`${OutputPath}`)
+            console.log("TMP Folder Created")
+        }
+        
+        if(fs.existsSync(`${InputPath}/build/ETS2_Dashboard`)) {
+            fse.removeSync(`${InputPath}/build/ETS2_Dashboard`, { recursive: true })
+            console.log("ETS Folder removed")
+        }
+
+        setTimeout(() => {
+            resolve()
+        }, 500);
+    })
+}
+
+async function version() {
+    return new Promise(async (resolve, reject) => {
+        prompt.start()
+
+        prompt.get([version], function (err, result) {
+            if(err) return console.log(err)
+        
+            replaceJSON('./src/bin/config/cfg.json', 'version', result.version)
+            replaceJSON('./src/build/bin/config/cfg.json', 'version', result.version)
+
+            resolve()
+        })
+    })
+    
+}
+

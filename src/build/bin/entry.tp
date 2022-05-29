@@ -85,6 +85,19 @@
                   "false"
                ],
             "valueStateId":"Nybo.ETS2.Dashboard.event_ParkBrakeOn"
+            },  
+            {
+               "id":"event_Retarder",
+               "name":"Retarder Status",
+               "format":"If Retarder is $val then",
+               "type":"communicate",
+               "valueType":"choice",
+               "valueChoices": [
+                  "1",
+                  "2",
+                  "3"
+               ],
+            "valueStateId":"Nybo.ETS2.Dashboard.event_Retarder"
             }, 
 
 
@@ -410,6 +423,12 @@
                "id":"Nybo.ETS2.Dashboard.MotorBrakeOn",
                "type":"text",
                "desc":"ETS2:Motor Brake On",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.Retarder",
+               "type":"text",
+               "desc":"ETS2:Retarder",
                "default":"-"
             },
 

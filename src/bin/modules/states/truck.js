@@ -57,6 +57,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let	MotorBrakeOn = ""
     let	MotorBrakeOnOld = ""
 
+    let Retarder = ""
+    let RetarderOld = ""
+
 
     let	Fuel = ""
     let	FuelOld = ""
@@ -376,6 +379,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             ParkBrakeOn = truck.parkBrakeOn
             MotorBrakeOn = truck.motorBrakeOn
 
+            Retarder = truck.retarderBrake
+
             Fuel = Math.round(truck.fuel)
             FuelCapacity = truck.fuelCapacity
             AdBlue = Math.round(truck.adblue)
@@ -584,6 +589,23 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 }
 
                 states.push(data)
+            }
+
+            if(Retarder !== RetarderOld || offline === true) {
+                RetarderOld = Retarder
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.Retarder",
+                    value: `${Retarder}`
+                }
+
+                var data_event = {
+                    id: "Nybo.ETS2.Dashboard.event_Retarder",
+                    value: `${Retarder}`
+                }
+
+                states.push(data)
+                states.push(data_event)
             }
 
             if(Fuel !== FuelOld || offline === true) {
