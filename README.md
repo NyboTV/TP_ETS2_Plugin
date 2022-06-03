@@ -37,6 +37,9 @@
       Features
     </a>
     <span> | </span>
+    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/projects/1">
+      Roadmap
+    </a><span> | </span>
     <a href="#download-and-installation">
       Downloads
     </a>
