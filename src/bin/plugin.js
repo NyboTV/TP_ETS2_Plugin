@@ -25,6 +25,7 @@ let open_settings = false
 let frame = false
 let version = ""
 
+let notificationShowed = false
 let NOTIFICATION_TITLE = ''
 let NOTIFICATION_BODY = ''
 
@@ -43,6 +44,7 @@ let dirname = dirpath.includes(`\\src\\bin`)
 const debugMode = process.argv.includes("--debug")
 const sourceTest = process.argv.includes("--sourceTest")
 const noServer = process.argv.includes("--noServer")
+const OfflineMode = process.argv.includes("--Offline") 
 
 if(debugMode) {
     path = `./src/bin`
@@ -65,6 +67,10 @@ if(debugMode) {
     cfg_path = path
     interface_path = dirpath
     telemetry_path = "./tmp"
+}
+
+if(OfflineMode) {
+    console.log("LOL")
 }
 
 // Checks and creates if neccessary Logs Folder
@@ -186,8 +192,7 @@ const plugin = async (config, uConfig) => {
         logIt("WARN", "RefreshRate too low! Setting up RefreshRate...")
         refreshInterval = 100
     }
-    
-    
+
     // Modules Loader
     function main_loader() {
         const telemetry_loop = async () => {
@@ -219,13 +224,12 @@ const plugin = async (config, uConfig) => {
         main_loop()
     }
     
-    
     // Modules
     async function modules() {
         await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig) 
         await gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
         await gaugeStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await jobStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await jobStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, OfflineMode)
         await navigationStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
         await trailerStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
         await truckStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
@@ -874,7 +878,9 @@ const webinterface = async (config, uConfig) => {
 }
 
 //Checks Version
-getVersion()
+if(!OfflineMode) {
+    getVersion()
+}
 
 //Loading Configs
 configs()
@@ -933,22 +939,34 @@ function getCurrency() {
     return new Promise(async (resolve, reject) => {
         try {
 
-            https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
-                var data = ''
-                
-                resp.on('data', (chunk) => {
-                    data += chunk
-                })
-                
-                resp.on('end', () => {
+            if(OfflineMode) {
+                let data = fs.readFileSync(`${path}/config/currency.json`)
+
+                data = JSON.parse(data)
+                data = data.currency_list
+
+                resolve(data)
+
+            } else {
+
+                https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+                    var data = ''
                     
-                    if(IsJsonString(data) === true) {
-                        data = JSON.parse(data)
-                        data = data.currency_list
-                        resolve(data)
-                    }
+                    resp.on('data', (chunk) => {
+                        data += chunk
+                    })
+                    
+                    resp.on('end', () => {
+                        
+                        if(IsJsonString(data) === true) {
+                            fs.writeFileSync(`${path}/config/currency.json`, `${data}`)
+                            data = JSON.parse(data)
+                            data = data.currency_list
+                            resolve(data)
+                        }
+                    })
                 })
-            })
+            }
         } catch (e) {
             logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")
             resolve(null)
@@ -997,8 +1015,8 @@ function window_browser (config) {
                 })
                 open_settings = false
 
-                version = version.split('.')
-                version = version.join('')
+                var version2 = version.split('.')
+                version2 = version2.join('')
 
                 var versionOld = config.version.split('.')
                 versionOld = versionOld.join('')
@@ -1008,7 +1026,10 @@ function window_browser (config) {
                     NOTIFICATION_TITLE = "A new Version is Available!"
                     NOTIFICATION_BODY = `The new Version "${version}" is now Available! You can find it on my Github Page!`
                     
-                    showNotification()
+                    if(notificationShowed === false) {
+                        showNotification()
+                    }
+                    notificationShowed = true
                 }
             }
         }, 2000);

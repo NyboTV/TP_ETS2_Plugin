@@ -1,5 +1,5 @@
 {
-   "sdk":1,
+   "sdk":3,
    "version":1,
    "name":"TP ETS2 Plugin",
    "id":"TP_ETS2_Plugin",

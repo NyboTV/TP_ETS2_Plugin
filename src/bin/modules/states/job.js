@@ -5,7 +5,7 @@ const { convert, addSymbol } = require('current-currency')
 const https = require('https')
 
 
-const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, OfflineMode) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -289,51 +289,63 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     
 	configloop()
 	moduleloop()
-}
 
-
-function IsJsonString(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
-
-function getSymbol(currency, uConfig) {
-    return new Promise(async (resolve, reject) => {
+    
+    
+    function IsJsonString(str) {
         try {
-
-            https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
-                var data = ''
-                
-                resp.on('data', (chunk) => {
-                    data += chunk
-                })
-                
-                resp.on('end', () => {
-                    
-                    if(IsJsonString(data) === true) {
-                        data = JSON.parse(data)
-                        data = data.currency
-                        data = data[`${currency}`]
-                        
-                        resolve(data)
-                        
-                    }
-                })
-            })
+            JSON.parse(str);
         } catch (e) {
-            logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")
+            return false;
         }
-        
-    })
+        return true;
+    }
+    
+    function getSymbol(currency, uConfig) {
+        return new Promise(async (resolve, reject) => {
+            
+            try {
+                if(OfflineMode) {
+                    let data = fs.readFileSync(`${path}/config/currency.json`)
+                    data = JSON.parse(data)
+                    data = data.currency
+                    data = data[`${currency}`]
+                    
+                    resolve(data)
+                    
+                } else {
+                    
+                    https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+                        var data = ''
+                        
+                        resp.on('data', (chunk) => {
+                            data += chunk
+                        })
+                        
+                        resp.on('end', () => {
+                            
+                            if(IsJsonString(data) === true) {
+                                fs.writeFileSync(`${path}/config/currency.json`, `${data}`)
+                                data = JSON.parse(data)
+                                data = data.currency
+                                data = data[`${currency}`]
+                                
+                                resolve(data)
+                                
+                            }
+                        })
+                    })
+                }
+            } catch (e) {
+                logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")
+            }
+            
+        })
+    }
+    
+    
+    
 }
-
-
-
-
 
 
 module.exports = jobStates

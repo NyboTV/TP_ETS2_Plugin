@@ -1,22 +1,23 @@
 {
-    "Basics": {
-        "currency": "EUR",
-        "unit": "Metric",
-        "timeFormat": "EU"
-    },
-    "TruckersMP": {
-        "TruckersMPServer": "0"
-    },
-    "Modules": {
-        "gameStates": true,
-        "driverStates": true,
-        "gaugeStates": true,
-        "jobStates": true,
-        "navigationStates": true,
-        "trailerStates": true,
-        "truckStates": true,
-        "truckersmpStates": true,
-        "worldStates": true
-    }
+  "Basics": {
+    "currency": "EUR",
+    "unit": "Kilometer",
+    "weight": "Tons",
+    "temp": "Celsius",
+    "timeFormat": "EU"
+  },
+  "TruckersMP": {
+    "TruckersMPServer": "0"
+  },
+  "Modules": {
+    "driverStates": true,
+    "gameStates": true,
+    "gaugeStates": true,
+    "jobStates": true,
+    "navigationStates": true,
+    "trailerStates": true,
+    "truckStates": true,
+    "truckersmpStates": true,
+    "worldStates": true
+  }
 }
-
