@@ -30,6 +30,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let	CruiseControlOn = ""
     let	CruiseControlOnOld = ""
 
+    let Odometer = ""
+    let OdometerOld = ""
+
     let	ShifterType = ""
     let	ShifterTypeOld = ""
 
@@ -63,6 +66,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
     let	Fuel = ""
     let	FuelOld = ""
+
+    let FuelConsumption = ""
+    let FuelConsumptionOld = ""
     
     let	AdBlue = ""
     let	AdBlueOld = ""
@@ -365,6 +371,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             CruiseControlSpeed = truck.cruiseControlSpeed
             CruiseControlOn = truck.cruiseControlOn
+
+            Odometer = Math.round(truck.odometer)
             
             Speed = Math.round(truck.speed)
             EngineRPM = Math.round(truck.engineRpm)
@@ -382,6 +390,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             Retarder = truck.retarderBrake
 
             Fuel = Math.round(truck.fuel)
+            FuelConsumption = truck.fuelAverageConsumption
             FuelCapacity = truck.fuelCapacity
             AdBlue = Math.round(truck.adblue)
 
@@ -467,6 +476,22 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 var data = {
                     id: "Nybo.ETS2.Dashboard.CruiseControlOn",
                     value: `${CruiseControlOn}`
+                }
+
+                states.push(data)
+            }
+
+            if(Odometer !== OdometerOld || unit !== unitOld || offline === true) {
+                OdometerOld = Odometer
+
+                if(unit === "miles") {
+                    Odometer = Math.floor(Odometer / 1.609344)
+                }
+
+                console.log(Odometer)
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.Odometer",
+                    value: `${Odometer}`
                 }
 
                 states.push(data)
@@ -614,6 +639,17 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 var data = {
                     id: "Nybo.ETS2.Dashboard.Fuel",
                     value: `${Fuel}`
+                }
+
+                states.push(data)
+            }
+
+            if(FuelConsumption !== FuelConsumptionOld || offline === true) {
+                FuelConsumptionOld = FuelConsumption
+
+                var data = {
+                    id: "Nybo.ETS2.Dashboard.FuelConsumption",
+                    value: `${FuelConsumption}`
                 }
 
                 states.push(data)

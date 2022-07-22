@@ -373,6 +373,12 @@
                "desc":"ETS2:Cruise Control On",
                "default":"-"
             },
+            {
+               "id":"Nybo.ETS2.Dashboard.Odometer",
+               "type":"text",
+               "desc":"ETS2:Shows Odometer",
+               "default":"-"
+            },
 
 
             {
@@ -437,6 +443,12 @@
                "id":"Nybo.ETS2.Dashboard.Fuel",
                "type":"text",
                "desc":"ETS2:Fuel",
+               "default":"-"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.FuelConsumption",
+               "type":"text",
+               "desc":"ETS2:Fuel Consumption",
                "default":"-"
             },
             {
