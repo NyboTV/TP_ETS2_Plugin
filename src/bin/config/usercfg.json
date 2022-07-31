@@ -1,7 +1,7 @@
 {
   "Basics": {
     "currency": "EUR",
-    "unit": "Kilometer",
+    "unit": "Miles",
     "weight": "Tons",
     "temp": "Celsius",
     "timeFormat": "EU"

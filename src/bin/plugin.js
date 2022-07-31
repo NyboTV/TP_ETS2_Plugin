@@ -25,6 +25,8 @@ let open_settings = false
 let frame = false
 let version = ""
 
+var ping = false
+
 let notificationShowed = false
 let NOTIFICATION_TITLE = ''
 let NOTIFICATION_BODY = ''
@@ -67,10 +69,6 @@ if(debugMode) {
     cfg_path = path
     interface_path = dirpath
     telemetry_path = "./tmp"
-}
-
-if(OfflineMode) {
-    console.log("LOL")
 }
 
 // Checks and creates if neccessary Logs Folder
@@ -561,21 +559,23 @@ const webinterface = async (config, uConfig) => {
     }
 
     async function cur_user_online () {
-        
-        serverPing()
-        setInterval(() => {
-            serverPing()
-        }, 60000);
 
-        for (var i = 0; i < Infinity; await timeout(10000), i++) {
-            axios.get('http://82.165.69.157:5000/ets2_plugin')
+        for (var i = 0; i < Infinity; await timeout(30000), i++) {
+            ping = await serverPing(ping)
+            console.log(ping)
+            if(ping) {
+                axios.get('http://82.165.69.157:5000/ets2_plugin')
                 .then(response => {
                     response = response.data
                     cur_user = response.current_user
                 })
                 .catch(e => {
                     logIt("ERROR", "An Error Appeared! " + e)
+                    cur_user = "Server Offline"
                 })
+            } else {
+                cur_user = "Server Offline"
+            }
         }
     }
 
@@ -914,15 +914,20 @@ async function getVersion() {
     })
 }
 
-function serverPing () {
-    axios.get('http://82.165.69.157:5000/')
-    .then(response => {
-        if(debugMode) { logIt("API", "Server Ping successfull") }
-        return
-    })
-    .catch(e => {
-        logIt("ERROR", "An Error Appeared! " + e)
-        return
+function serverPing() {
+    return new Promise(async (resolve, reject) => {
+        axios.get('http://82.165.69.157:5000/')
+        .then(response => {
+            if(debugMode) { logIt("API", "Server Ping successfull") }
+            resolve(true)
+            ping = true
+        })
+        .catch(e => {
+            if(ping) {
+                logIt("ERROR", e)
+            }
+            resolve(false)
+        })
     })
 }
 
