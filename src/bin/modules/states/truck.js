@@ -391,7 +391,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             Fuel = Math.round(truck.fuel)
             FuelConsumption = truck.fuelAverageConsumption
-            FuelCapacity = truck.fuelCapacity
+            FuelCapacity = Math.round(truck.fuelCapacity)
             AdBlue = Math.round(truck.adblue)
 
             AirPressure = Math.round(truck.airPressure)
@@ -647,8 +647,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelConsumption !== FuelConsumptionOld || offline === true) {
+            if(FuelConsumption !== FuelConsumptionOld || unit !== unitOld || offline === true) {
                 FuelConsumptionOld = FuelConsumption
+
+                if(unit === "miles") {
+                    FuelConsumption = Math.floor(FuelConsumption / 3.785)
+                }
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.FuelConsumption",
@@ -658,10 +662,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelCapacity !== FuelCapacityOld || offline === true) {
+            if(FuelCapacity !== FuelCapacityOld || unit !== unitOld || offline === true) {
                 FuelCapacityOld = FuelCapacity
 
-                FuelCapacity = Math.round(FuelCapacity)
+                if(unit === "miles") {
+                    FuelCapacity = Math.floor(FuelCapacity / 3.785)
+                }
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.FuelCapacity",
