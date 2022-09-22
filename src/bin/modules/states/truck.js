@@ -650,9 +650,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(FuelConsumption !== FuelConsumptionOld || unit !== unitOld || offline === true) {
                 FuelConsumptionOld = FuelConsumption
 
-                if(unit === "miles") {
-                    FuelConsumption = Math.floor(FuelConsumption / 3.785)
-                }
+                //if(unit === "miles") {
+                //    FuelConsumption = Math.floor(FuelConsumption / 3.785)
+                //}
 
                 var data = {
                     id: "Nybo.ETS2.Dashboard.FuelConsumption",
