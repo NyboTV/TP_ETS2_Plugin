@@ -53,8 +53,12 @@
       Pages
     </a>
     <span> | </span>
-    <a href="#contribution">
-      Contribution
+    <a href="#Third-Party-Software">
+      Third Party Software
+    </a>
+    <span> | </span>
+    <a href="#Contributors">
+      Contributors
     </a>
     <span> | </span>
     <a href="https://discord.gg/PvXJsxpGFe">
