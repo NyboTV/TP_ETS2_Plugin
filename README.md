@@ -106,12 +106,17 @@ Want to see new features of the latest version? Please refer to [CHANGELOG](CHAN
 - **Nico** - Plugin Creator - [NyboTV](https://github.com/NyboTV)
 
 
+## Third Party Software
+- **Funbit** - Original Telemetry Server - https://github.com/Funbit/ets2-telemetry-server
+- **mike-koch** - [OLD] Telemetry Server before 2.6.0 - https://github.com/mike-koch/ets2-telemetry-server 
+- **PauloTNCunha** - [NEW] Telemetry Server since Version 2.6.0 - https://github.com/PauloTNCunha/TelemetryServer4
+    
+   
 ## Contributors
 - **Gitago** - Helping for fixing the Plugin!
 - **Gargamosch** - helping for fixing the Plugin! 
-- **Pjiesco** - Helping for Updating the Plugin! 
-
-
+- **Pjiesco** - Helping for Updating the Plugin!    
+    
 
 ## License
 This project is licensed under the MIT - see the [LICENSE](LICENSE) file for details
