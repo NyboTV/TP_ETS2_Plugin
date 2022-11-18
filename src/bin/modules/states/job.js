@@ -145,6 +145,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                                 
                                 if(Symbol === "€") {
                                     TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${JobIncome} ${Symbol}`);
+                                } else if(Symbol === false) {
+                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${JobIncome} €`);
                                 } else {
                                     TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
                                 }
@@ -171,8 +173,11 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                                 JobIncome = Math.round(res.amount)
                                 Symbol = await getSymbol(res.currency, userconfig)
                                 JobIncome = JobIncome.toLocaleString()
-                                
-                                TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
+                                if(Symbol === false) {
+                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `Error while getting Symbole`);
+                                } else {
+                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
+                                }
                             })
                             
                         } catch (e) {
@@ -314,27 +319,32 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                     resolve(data)
                     
                 } else {
-                    
-                    https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
-                        var data = ''
+                    try {
+
+                        https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+                            var data = ''
                         
-                        resp.on('data', (chunk) => {
-                            data += chunk
-                        })
+                            resp.on('data', (chunk) => {
+                                data += chunk
+                            })
                         
-                        resp.on('end', () => {
+                            resp.on('end', () => {
                             
-                            if(IsJsonString(data) === true) {
-                                fs.writeFileSync(`${path}/config/currency.json`, `${data}`)
-                                data = JSON.parse(data)
-                                data = data.currency
-                                data = data[`${currency}`]
+                                if(IsJsonString(data) === true) {
+                                    fs.writeFileSync(`${path}/config/currency.json`, `${data}`)
+                                    data = JSON.parse(data)
+                                    data = data.currency
+                                    data = data[`${currency}`]
                                 
-                                resolve(data)
+                                    resolve(data)
                                 
-                            }
+                                }
+                            })
                         })
-                    })
+                    } catch (err) {
+                        logIt("ERROR", "No Internet connection...")
+                        resolve(false)
+                    }
                 }
             } catch (e) {
                 logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")

@@ -17,7 +17,7 @@
     "navigationStates": true,
     "trailerStates": true,
     "truckStates": true,
-    "truckersmpStates": true,
+    "truckersmpStates": false,
     "worldStates": true
   }
 }

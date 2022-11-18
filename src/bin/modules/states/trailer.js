@@ -214,7 +214,9 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             offline = false
 
             weightOld = weight
-        
+
+
+                    
             try {
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);

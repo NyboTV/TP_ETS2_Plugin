@@ -119,11 +119,8 @@ const plugin = async (config, uConfig) => {
         if(!fs.existsSync(`${path}/server`)) { missing.push("Server Folder") }
         if(!fs.existsSync(`${path}/server/Ets2Plugins`)) { missing.push("Ets2Plugins") }
         if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64`)) { missing.push("Ets2Plugins/win_x64") }
-        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x86`)) { missing.push("Ets2Plugins/win_x86") }
         if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins`)) { missing.push("Ets2Plugins/../plugins") }
-        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x86/plugins`)) { missing.push("Ets2Plugins/../plugins") }
         if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins/ets2-telemetry-server.dll`)) { missing.push("../plugins/ets2-telemetry-server.dll") }
-        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x86/plugins/ets2-telemetry-server.dll`)) { missing.push("../plugins/ets2-telemetry-server.dll") }
         if(!fs.existsSync(`${path}/server/Ets2Telemetry.exe.config`)) { missing.push("Ets2Telemetry.exe.config") }
         if(!fs.existsSync(`${path}/server/Ets2TestTelemetry.json`)) { missing.push("Ets2TestTelemetry.json") }
         if(!fs.existsSync(`${path}/server/Owin.dll`)) { missing.push("Owin.dll") }
@@ -368,7 +365,7 @@ const plugin = async (config, uConfig) => {
     });
 
     logIt("INFO", "Connecting to `Touch Portal`...")
-    TPClient.connect({pluginId, "updateUrl":"https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/package.json" })
+    TPClient.connect({pluginId})
 }
 
 const webinterface = async (config, uConfig) => {
@@ -562,7 +559,6 @@ const webinterface = async (config, uConfig) => {
 
         for (var i = 0; i < Infinity; await timeout(30000), i++) {
             ping = await serverPing(ping)
-            console.log(ping)
             if(ping) {
                 axios.get('http://82.165.69.157:5000/ets2_plugin')
                 .then(response => {
@@ -846,11 +842,23 @@ const webinterface = async (config, uConfig) => {
 
                 case `currency_list`:
                     var currency_list3 = await getCurrency()  
-                    var res_data = {
-                        "currency": uConfig.Basics.currency,
+                    if(currency_list3 === false) {
+                        break;
+                        // Optimieren
+                        var res_data = {
+                            "currency": "ERR",
+                            "list": "ERR"
+                        }
+                        res.send(res_data)
+                        
+                    } else {
+
+                        var res_data = {
+                            "currency": uConfig.Basics.currency,
                         "list": currency_list3
                     }
                     res.send(res_data)
+                }
                 break;
 
 
@@ -953,24 +961,29 @@ function getCurrency() {
                 resolve(data)
 
             } else {
+                try {
 
-                https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
-                    var data = ''
-                    
-                    resp.on('data', (chunk) => {
-                        data += chunk
-                    })
-                    
-                    resp.on('end', () => {
+                    https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
+                        var data = ''
                         
-                        if(IsJsonString(data) === true) {
-                            fs.writeFileSync(`${path}/config/currency.json`, `${data}`)
-                            data = JSON.parse(data)
-                            data = data.currency_list
-                            resolve(data)
-                        }
+                        resp.on('data', (chunk) => {
+                            data += chunk
+                        })
+                        
+                        resp.on('end', () => {
+                        
+                            if(IsJsonString(data) === true) {
+                                fs.writeFileSync(`${path}/config/currency.json`, `${data}`)
+                                data = JSON.parse(data)
+                                data = data.currency_list
+                                resolve(data)
+                            }
+                        })
                     })
-                })
+                } catch (err) {
+                    logIt("ERROR", "No Internet connection...")
+                    resolve(false)
+                }
             }
         } catch (e) {
             logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")

@@ -119,7 +119,7 @@
     },
     "trailer1":{
        "trailerNumber":1,
-       "attached":false,
+       "attached":true,
        "present":true,
        "id":"scs_lowloader.ch_4_extx2esii",
        "name":"",
@@ -401,11 +401,11 @@
     "cargo":{
        "cargoLoaded":true,
        "cargoId":"mobile_crane",
-       "cargo":"Mobilkran - UTM SD-833",
-       "mass":36150,
-       "unitMass":36150,
+       "cargo":"Mobilknran - UTM SD-833",
+       "mass":360150,
+       "unitMass":360150,
        "unitCount":1,
-       "damage":0.000159287476
+       "damage":1110.000159287476
     },
     "navigation":{
        "estimatedTime":"0001-01-01T01:16:33Z",
