@@ -122,7 +122,7 @@
        "attached":true,
        "present":true,
        "id":"scs_lowloader.ch_4_extx2esii",
-       "name":"",
+       "name":"test",
        "wearWheels":0.000372312817,
        "wearChassis":0.00248208619,
        "cargoDamage":0.000159287476,
@@ -390,7 +390,7 @@
     "job":{
        "income":92536,
        "deadlineTime":"0035-10-26T14:59:00Z",
-       "remainingTime":"0001-01-02T06:26:00Z",
+       "remainingTime":"0001-01-02T05:26:00Z",
        "sourceCity":"Dortmund",
        "sourceCompany":"Tree-ET",
        "destinationCity":"Klaipėda",
