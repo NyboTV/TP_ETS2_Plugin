@@ -855,10 +855,10 @@ const webinterface = async (config, uConfig) => {
 
                         var res_data = {
                             "currency": uConfig.Basics.currency,
-                        "list": currency_list3
+                            "list": currency_list3
+                        }
+                        res.send(res_data)
                     }
-                    res.send(res_data)
-                }
                 break;
 
 
