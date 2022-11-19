@@ -8,7 +8,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
     var moduleName = path2.basename(__filename).replace('.js','')
     let ModuleLoaded = false
 
-    let trailer1 = ""
+    let trailer = ""
     let cargo = ""
 
     let TrailerAttached = ""
@@ -107,7 +107,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             states = []
             
             // Vars
-            trailer1 = telemetry.trailer1
+            trailer = telemetry.trailer
             cargo = telemetry.cargo
 
             unit = userconfig.Basics.unit
@@ -115,12 +115,12 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
 
             weight = userconfig.Basics.weight
 
-            TrailerAttached = trailer1.attached
-            TrailerName = trailer1.name
-            TrailerChainType = trailer1.chainType
+            TrailerAttached = trailer.attached
+            TrailerName = trailer.name
+            TrailerChainType = trailer.chainType
         
             CargoLoaded = cargo.cargoLoaded
-            CargoType = cargo.cargo
+            CargoType = trailer.cargo
             CargoDamage = cargo.damage
             CargoMass = cargo.mass
 
