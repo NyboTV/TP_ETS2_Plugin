@@ -126,7 +126,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             JobDestinationCity = job.destinationCity
             JobDestinationCompany = job.destinationCompany
             JobEstimatedDistance = navigation.estimatedDistance
-            Currency = userconfig.Basics.currency
+            Currency = userconfig.Basics.currency 
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
@@ -135,6 +135,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
 
+                console.log(Currency)
+                
                 if(game === "ATS") {
                     if(Currency !== "USD") {
                         try {
@@ -166,7 +168,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         
                         states.push(data)
                     }
-                } else {
+                } else if (game === "ETS2") {
                     if(Currency !== "EUR") {
                         try {
                             convert("EUR", JobIncome, `${Currency}`).then(async (res) => {
@@ -194,7 +196,18 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         
                         states.push(data)
                     }
-                }                
+                } else {
+                    logIt("INFO", "ERROR WHILE GETTING GAME NAME. USING DEFAULT CURRENCY")
+
+                    JobIncome = JobIncome.toLocaleString()
+                        
+                        var data = {
+                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            value: `${JobIncome}€`
+                        }
+                        
+                        states.push(data)
+                }
             }
             
 

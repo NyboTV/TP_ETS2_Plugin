@@ -11,6 +11,7 @@ const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 const axios = require('axios');
 const { app, BrowserWindow, Tray, nativeImage, Notification } = require('electron');
+const checkInternetConnected = require('check-internet-connected');
 
 
 // Important Script Vars
@@ -26,6 +27,7 @@ let frame = false
 let version = ""
 
 var ping = false
+var OfflineMode = false
 
 let notificationShowed = false
 let NOTIFICATION_TITLE = ''
@@ -46,7 +48,6 @@ let dirname = dirpath.includes(`\\src\\bin`)
 const debugMode = process.argv.includes("--debug")
 const sourceTest = process.argv.includes("--sourceTest")
 const noServer = process.argv.includes("--noServer")
-const OfflineMode = process.argv.includes("--Offline") 
 
 if(debugMode) {
     path = `./src/bin`
@@ -158,6 +159,8 @@ const plugin = async (config, uConfig) => {
     // Script Modules
     const test = require(`./modules/test`);
 
+    const mainStates = require(`./modules/states/main`)
+
     const driverStates = require(`./modules/states/driver`);
     const gameStates = require(`./modules/states/Game`);
     const gaugeStates = require(`./modules/states/gauge`);
@@ -221,6 +224,7 @@ const plugin = async (config, uConfig) => {
     
     // Modules
     async function modules() {
+        await mainStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
         await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig) 
         await gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
         await gaugeStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
@@ -274,6 +278,7 @@ const plugin = async (config, uConfig) => {
             })    
         })
     }
+
     function Telemetry_Request(status) {
         return new Promise(async (resolve) => {
             
@@ -556,7 +561,9 @@ const webinterface = async (config, uConfig) => {
     }
 
     async function cur_user_online () {
+        cur_user = "Maintenance"
 
+        /*
         for (var i = 0; i < Infinity; await timeout(30000), i++) {
             ping = await serverPing(ping)
             if(ping) {
@@ -573,6 +580,7 @@ const webinterface = async (config, uConfig) => {
                 cur_user = "Server Offline"
             }
         }
+        */
     }
 
     app.engine('hbs', hbs.engine({
@@ -885,14 +893,29 @@ const webinterface = async (config, uConfig) => {
     plugin(config, uConfig)
 }
 
-//Checks Version
-if(!OfflineMode) {
+//Checks Internet
+setTimeout(async () => {
+
+    await checkInternetConnected()
+    .then((result) => {
+        logIt("INFO", "Internet Connected!")
+    })
+    .catch((ex) => {
+        logIt("INFO", "No Internet Connection!")
+        OfflineMode = true
+        
+        logIt("WARN", "Disable TruckersMP states to prevent errors...")
+        
+        replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, false)
+    });
+       
+    //Loading Configs
+    configs()
+    
+    //Checks Version
     getVersion()
-}
-
-//Loading Configs
-configs()
-
+    
+}, 1000);
     
 // Other Function
 function isBetween(n, a, b) {
@@ -901,6 +924,10 @@ function isBetween(n, a, b) {
 
 async function getVersion() {
     return new Promise(async (resolve, reject) => {
+        if (OfflineMode) {
+            version = false
+            return
+        } else
         axios.get('https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest')
         .then(response => {
             response = response.request.path
@@ -924,6 +951,11 @@ async function getVersion() {
 
 function serverPing() {
     return new Promise(async (resolve, reject) => {
+
+        if (OfflineMode) {
+            resolve(false)
+        } else
+
         axios.get('http://82.165.69.157:5000/')
         .then(response => {
             if(debugMode) { logIt("API", "Server Ping successfull") }
@@ -1039,15 +1071,19 @@ function window_browser (config) {
                 var versionOld = config.version.split('.')
                 versionOld = versionOld.join('')
 
-                if(version > versionOld) {
-                            
-                    NOTIFICATION_TITLE = "A new Version is Available!"
-                    NOTIFICATION_BODY = `The new Version "${version}" is now Available! You can find it on my Github Page!`
-                    
-                    if(notificationShowed === false) {
-                        showNotification()
+                if(version === false) {
+                } else {
+
+                    if(version > versionOld) {
+                        
+                        NOTIFICATION_TITLE = "A new Version is Available!"
+                        NOTIFICATION_BODY = `The new Version "${version}" is now Available! You can find it on my Github Page!`
+                        
+                        if(notificationShowed === false) {
+                            showNotification()
+                        }
+                        notificationShowed = true
                     }
-                    notificationShowed = true
                 }
             }
         }, 2000);

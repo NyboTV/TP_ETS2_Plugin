@@ -3,6 +3,7 @@ const fse = require('fs-extra')
 const AdmZip = require('adm-zip')
 const replaceJSON = require(`replace-json-property`).replace
 const prompt = require('prompt')
+const homeDir = require('os').homedir()
 
 const Release = process.argv.includes("--release");
 const testMode = process.argv.includes("--test");
@@ -10,6 +11,7 @@ const testMode = process.argv.includes("--test");
 let InputPath = "./src"
 let OutputPath = "./src/build/tmp"
 let InstallPath = "C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins"
+let desktopPath = `${homeDir}/Desktop`
 
 if(fs.existsSync(`./src/build/ETS2_Dashboard`)) {
     fs.rmSync(`./src/build/ETS2_Dashboard`, { recursive: true })
@@ -53,7 +55,7 @@ const pack = async () => {
             fse.removeSync(`${InstallPath}/ETS2_Dashboard.zip`) 
         }, 2000);
     } else if(Release) {
-        fs.copyFileSync(`${OutputPath}/ETS2_Dashboard.tpp`, 'P:/Dieser PC/Desktop/ETS2_Dashboard.tpp')
+        fs.copyFileSync(`${OutputPath}/ETS2_Dashboard.tpp`, `${desktopPath}/ETS2_Dashboard.tpp`)
     }
 
     console.log("FINISHED")

@@ -262,6 +262,44 @@
          "states": []
       },
       {
+         "id":"Main_States",
+         "name":"Main States",
+         "events":[],
+         "actions": [],
+         "states":[
+            {
+               "id":"Nybo.ETS2.Dashboard.currencyUnit",
+               "type":"text",
+               "desc":"ETS2:Shows current Currency Setting",
+               "default":"SETTING ERROR"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.speedUnit",
+               "type":"text",
+               "desc":"ETS2:Shows current Speed Unit",
+               "default":"SETTING ERROR"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.fluidUnit",
+               "type":"text",
+               "desc":"ETS2:Shows current Fluid Unit",
+               "default":"SETTING ERROR"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.weightUnit",
+               "type":"text",
+               "desc":"ETS2:Shows current Weight Unit",
+               "default":"SETTING ERROR"
+            },
+            {
+               "id":"Nybo.ETS2.Dashboard.tempUnit",
+               "type":"text",
+               "desc":"ETS2:Shows current Temp Unit",
+               "default":"SETTING ERROR"
+            },
+         ]
+      },
+      {
          "id":"Game_States",
          "name":"Game States",
          "events":[],
