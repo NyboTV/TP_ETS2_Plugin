@@ -16,25 +16,44 @@
          "name":"ETS2 Dashboard",
          "actions": [
             {
-               "id": "settings_window",
-               "prefix": "",
-               "name":"Open/Close Settings",
+               "id": "settings",
+               "prefix": "Settings:",
+               "name":"Open Settings Menu",
                "type":"communicate",
                "tryInline":"true",
-               "format":"On press {$settings$} the Settings Menu",
-               "hasHoldFunctionality": true,
-               "data" :[
-                   {
-                       "id":"settings",
-                       "type": "choice",
-                       "label":  "Settings Window",
-                       "default": "",
-                       "valueChoices":[
-                          "open",
-                          "close"
-                       ]
-                   }
-               ]
+               "format":"Settings: Open your Settings"
+            },
+            {
+               "id": "setting_speed",
+               "prefix": "Speed Unit:",
+               "name":"Fast Switch Speed Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Unit: Fast Switch your Unit"
+            },
+            {
+               "id": "setting_fluid",
+               "prefix": "Fluid Unit:",
+               "name":"Fast Switch Fluid Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Fluid Unit: Fast Switch your Fluid Unit"
+            },
+            {
+               "id": "setting_weight",
+               "prefix": "Weight Unit:",
+               "name":"Fast Switch Weight Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Weight: Fast Switch your Weight"
+            },
+            {
+               "id": "setting_temp",
+               "prefix": "Temp Unit:",
+               "name":"Fast Switch Temp Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Temp: Fast Switch your Temp"
             }
          ],
          "events": [

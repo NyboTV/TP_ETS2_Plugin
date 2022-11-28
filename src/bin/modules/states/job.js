@@ -134,8 +134,6 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobIncomeOld = JobIncome
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
-
-                console.log(Currency)
                 
                 if(game === "ATS") {
                     if(Currency !== "USD") {

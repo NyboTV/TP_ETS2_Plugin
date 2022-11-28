@@ -345,10 +345,86 @@ const plugin = async (config, uConfig) => {
 
     TPClient.on("Action", async (data,hold) => {
 
-        let settings = data.data[0].value
+        switch (data.actionId) {
 
-        if (settings === "open") {
-            open_settings = true
+            case `settings`:
+                open_settings = true
+            break;
+
+
+            case `setting_speed`:
+                let units = [
+                    "Miles",
+                    "Kilometer"
+                ]
+                
+                
+                var position = units.indexOf(uConfig.Basics.unit)
+                
+                var unit = units[position + 1]
+                
+                if(unit === undefined) {
+                    unit = "Miles"
+                }
+                
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, `${unit}`)
+                
+            break;
+                
+            case 'setting_fluid':
+                
+                let fluids = [
+                    "Galons",
+                    "Liters"
+                ]
+                
+                var position = fluids.indexOf(uConfig.Basics.fluid)
+                
+                var fluid = fluids[position + 1]
+                
+                if(fluid === undefined) {
+                    fluid = "Galons"
+                }
+                
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, `${fluid}`)
+            break;
+                
+            case `setting_weight`:
+                let weights = [
+                    "Tons",
+                    "Pounds"
+                ]
+                
+                var position = weights.indexOf(uConfig.Basics.weight)
+                
+                var weight = weights[position + 1]
+                
+                if(weight === undefined) {
+                    weight = "Tons"
+                }
+                
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, `${weight}`)
+                
+            break;
+
+            case `setting_temp`:
+                let temps = [
+                    "Celsius",
+                    "Fahrenheit"
+                ]
+                
+                var position = temps.indexOf(uConfig.Basics.temp)
+                
+                var temp = temps[position + 1]
+                
+                if(temp === undefined) {
+                    temp = "Celsius"
+                }
+                
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, `${temp}`)
+                
+            break;
+                
         }
 
     })
@@ -1025,15 +1101,14 @@ function getCurrency() {
 }
 
 function window_browser (config) {
-    
-    
+        
     if (require('electron-squirrel-startup')) { 
         app.quit();
     }
     
     const createWindow = () => {
         setInterval(() => {
-
+            console.log("TEST CREATEWINDOW")
             if(open_settings && BrowserWindow.getAllWindows().length === 0) {
 
                 if(debugMode) { frame = true }
@@ -1086,13 +1161,12 @@ function window_browser (config) {
                     }
                 }
             }
-        }, 2000);
+        }, 500);
 
         
     }
     
     app.on('ready', createWindow);
-    
     
     const showNotification = () => {
         new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
