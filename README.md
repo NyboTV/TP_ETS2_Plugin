@@ -5,7 +5,6 @@
   <strong>Project currenctly paused!! (Not finished or stopped! Just paused)</strong><br>
   A Plugin to show your Euro Truck Dashboard onto your Tablett<br>
   <sub>Available for Windows Only || This Project is still in Work!! (Just dont have much time)</sub>
-  <sub>My Other Projects: https://gn-network.eu<sub>
 </div>
 
 <br>
