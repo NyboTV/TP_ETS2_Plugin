@@ -2,7 +2,7 @@
 const fs = require('fs')
 const sJSON = require('self-reload-json') 
 
-const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -10,6 +10,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
     let unit = ""
     let unitOld = ""
+    
+    let unit2 = ""
+    let unit2Old = ""
 
     let temp = ""
     let tempOld = ""
@@ -110,6 +113,23 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let	BatteryVoltageWarningOnOld = ""
 
 
+    // Wears
+    let wearEngine = ""
+    let wearEngineOld = ""
+
+    let wearTransmission = ""
+    let wearTransmissionOld = ""
+
+    let wearCabin = "" 
+    let wearCabinOld = ""
+    
+    let wearChassis = ""
+    let wearChassisOld = ""
+    
+    let wearWheels = ""
+    let wearWheelsOld = ""
+
+
     // Indicator
     let	BlinkerLeftActive = ""
     let BlinkerLeftActiveOld = ""
@@ -161,6 +181,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     var states = []
 
     var offline = false
+    let dt3 = ""
 
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
@@ -182,173 +203,196 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     //Module Loop
     async function moduleloop () {
         for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {
+           
     
             if(ModuleLoaded === false) { 
                 states = []
                 if(offline === false) {
                     states = [
                         {
-                        id: "Nybo.ETS2.Dashboard.Truck_Make",
+                        id: "Nybo.ETS2.Truck.Truck_Make",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.Model",
+                        id: "Nybo.ETS2.Truck.Model",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.CruiseControlSpeed",
+                        id: "Nybo.ETS2.Truck.CruiseControlSpeed",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.CruiseControlOn",
+                        id: "Nybo.ETS2.Truck.CruiseControlOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.Speed",
+                        id: "Nybo.ETS2.Truck.Speed",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.EngineRPM",
+                        id: "Nybo.ETS2.Truck.EngineRPM",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.Gear",
+                        id: "Nybo.ETS2.Truck.Gear",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.EngineOn",
+                        id: "Nybo.ETS2.Truck.EngineOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.ElectricOn",
+                        id: "Nybo.ETS2.Truck.ElectricOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.WipersOn",
+                        id: "Nybo.ETS2.Truck.WipersOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
+                        id: "Nybo.ETS2.Truck.ParkBrakeOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.MotorBrakeOn",
+                        id: "Nybo.ETS2.Truck.MotorBrakeOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.Fuel",
+                        id: "Nybo.ETS2.Truck.Fuel",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.AdBlue",
+                        id: "Nybo.ETS2.Truck.AdBlue",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.AirPressure",
+                        id: "Nybo.ETS2.Truck.AirPressure",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.OilTemp",
+                        id: "Nybo.ETS2.Truck.OilTemp",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.WaterTemp",
+                        id: "Nybo.ETS2.Truck.WaterTemp",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.BatteryVoltage",
+                        id: "Nybo.ETS2.Truck.BatteryVoltage",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.FuelCapacity",
+                        id: "Nybo.ETS2.Truck.FuelCapacity",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.FuelWarningOn",
+                        id: "Nybo.ETS2.Truck.FuelWarningOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.AdBlueWarningOn",
+                        id: "Nybo.ETS2.Truck.AdBlueWarningOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.AirPressureWarningOn",
+                        id: "Nybo.ETS2.Truck.AirPressureWarningOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.AirPressureEmergencyOn",
+                        id: "Nybo.ETS2.Truck.AirPressureEmergencyOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.OilPressureWarningOn",
+                        id: "Nybo.ETS2.Truck.OilPressureWarningOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.WaterTempWarningOn",
+                        id: "Nybo.ETS2.Truck.WaterTempWarningOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.BatteryVoltageWarningOn",
+                        id: "Nybo.ETS2.Truck.BatteryVoltageWarningOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.BlinkerLeftActive",
+                        id: "Nybo.ETS2.Truck.BlinkerLeftActive",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.BlinkerRightActive",
+                        id: "Nybo.ETS2.Truck.BlinkerRightActive",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.BlinkerLeftOn",
+                        id: "Nybo.ETS2.Truck.BlinkerLeftOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.BlinkerRightOn",
+                        id: "Nybo.ETS2.Truck.BlinkerRightOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.HazardLightsOn",
+                        id: "Nybo.ETS2.Truck.HazardLightsOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsDashboardValue",
+                        id: "Nybo.ETS2.Truck.LightsDashboardValue",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsDashboardOn",
+                        id: "Nybo.ETS2.Truck.LightsDashboardOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsParkingOn",
+                        id: "Nybo.ETS2.Truck.LightsParkingOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsBeamLowOn",
+                        id: "Nybo.ETS2.Truck.LightsBeamLowOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsBeamHighOn",
+                        id: "Nybo.ETS2.Truck.LightsBeamHighOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsAuxFrontOn",
+                        id: "Nybo.ETS2.Truck.LightsAuxFrontOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsAuxRoofOn",
+                        id: "Nybo.ETS2.Truck.LightsAuxRoofOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsBeaconOn",
+                        id: "Nybo.ETS2.Truck.LightsBeaconOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsBrakeOn",
+                        id: "Nybo.ETS2.Truck.LightsBrakeOn",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.LightsReverseOn",
+                        id: "Nybo.ETS2.Truck.LightsReverseOn",
+                        value: `MODULE OFFLINE` 
+                        },
+
+                        
+                        {
+                        id: "Nybo.ETS2.Truck.wearEngine",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Truck.wearTransmission",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Truck.wearCabin",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Truck.wearChassis",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Truck.wearWheels",
                         value: `MODULE OFFLINE` 
                         }
                     ]
@@ -406,6 +450,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             OilPressureWarningOn = truck.oilPressureWarningOn
             WaterTempWarningOn = truck.waterTemperatureWarningOn
             BatteryVoltageWarningOn = truck.batteryVoltageWarningOn
+
+            wearEngine = truck.wearEngine
+            wearTransmission = truck.wearTransmission
+            wearCabin = truck.wearCabin
+            wearChassis = truck.wearChassis
+            wearWheels = truck.wearWheels
         
             BlinkerLeftActive = truck.blinkerLeftActive
             BlinkerRightActive = truck.blinkerRightActive
@@ -427,6 +477,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
+            unit2 = userconfig.Basics.fluid
+            unit2 = unit2.toLowerCase()
+
             temp = userconfig.Basics.temp
             temp = temp.toLowerCase()
 
@@ -437,7 +490,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 ConstructorOld = Constructor
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Truck_Make",
+                    id: "Nybo.ETS2.Truck.Truck_Make",
                     value: `${Constructor}`
                 }
 
@@ -448,7 +501,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 ModelOld = Model
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Model",
+                    id: "Nybo.ETS2.Truck.Model",
                     value: `${Model}`
                 }
 
@@ -463,7 +516,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.CruiseControlSpeed",
+                    id: "Nybo.ETS2.Truck.CruiseControlSpeed",
                     value: `${CruiseControlSpeed}`
                 }
 
@@ -474,7 +527,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 CruiseControlOnOld = CruiseControlOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.CruiseControlOn",
+                    id: "Nybo.ETS2.Truck.CruiseControlOn",
                     value: `${CruiseControlOn}`
                 }
 
@@ -489,7 +542,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Odometer",
+                    id: "Nybo.ETS2.Truck.Odometer",
                     value: `${Odometer}`
                 }
 
@@ -504,7 +557,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Speed",
+                    id: "Nybo.ETS2.Truck.Speed",
                     value: `${Speed}`
                 }
 
@@ -515,7 +568,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 EngineRPMOld = EngineRPM
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.EngineRPM",
+                    id: "Nybo.ETS2.Truck.EngineRPM",
                     value: `${EngineRPM}`
                 }
 
@@ -529,7 +582,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 Gear = await getGear(Gear, ShifterType)
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Gear",
+                    id: "Nybo.ETS2.Truck.Gear",
                     value: `${Gear}`
                 }
 
@@ -540,12 +593,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 EngineOnOld = EngineOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.EngineOn",
+                        id: "Nybo.ETS2.Truck.EngineOn",
                         value: `${EngineOn}`
                     }
 
                 var data_event =  {
-                        id: "Nybo.ETS2.Dashboard.event_EngineOn",
+                        id: "Nybo.ETS2.Event.EngineOn",
                         value: `${EngineOn}`
                     }
                 
@@ -557,12 +610,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 ElectricOnOld = ElectricOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.ElectricOn",
+                        id: "Nybo.ETS2.Truck.ElectricOn",
                         value: `${ElectricOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_ElectricOn",
+                        id: "Nybo.ETS2.Event.ElectricOn",
                         value: `${ElectricOn}`
                     }
 
@@ -574,12 +627,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 WipersOnOld = WipersOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.WipersOn",
+                        id: "Nybo.ETS2.Truck.WipersOn",
                         value: `${WipersOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_WipersOn",
+                        id: "Nybo.ETS2.Event.WipersOn",
                         value: `${WipersOn}`
                     }
 
@@ -591,12 +644,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 ParkBrakeOnOld = ParkBrakeOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.ParkBrakeOn",
+                        id: "Nybo.ETS2.Truck.ParkBrakeOn",
                         value: `${ParkBrakeOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_ParkBrakeOn",
+                        id: "Nybo.ETS2.Event.ParkBrakeOn",
                         value: `${ParkBrakeOn}`
                     }               
 
@@ -608,7 +661,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 MotorBrakeOnOld = MotorBrakeOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.MotorBrakeOn",
+                    id: "Nybo.ETS2.Truck.MotorBrakeOn",
                     value: `${MotorBrakeOn}`
                 }
 
@@ -619,12 +672,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 RetarderOld = Retarder
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Retarder",
+                    id: "Nybo.ETS2.Truck.Retarder",
                     value: `${Retarder}`
                 }
 
                 var data_event = {
-                    id: "Nybo.ETS2.Dashboard.event_Retarder",
+                    id: "Nybo.ETS2.Event.Retarder",
                     value: `${Retarder}`
                 }
 
@@ -632,45 +685,47 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
 
-            if(Fuel !== FuelOld || unit !== unitOld || offline === true) {
+            if(Fuel !== FuelOld || unit2 !== unit2Old || offline === true) {
                 FuelOld = Fuel
 
-                if(unit === "miles") {
+                if(unit2 === "galons") {
                     Fuel = Math.floor(Fuel / 3.785)
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Fuel",
+                    id: "Nybo.ETS2.Truck.Fuel",
                     value: `${Fuel}`
                 }
 
                 states.push(data)
             }
 
-            if(FuelConsumption !== FuelConsumptionOld || unit !== unitOld || offline === true) {
+            if(FuelConsumption !== FuelConsumptionOld || unit2 !== unit2Old || offline === true) {
                 FuelConsumptionOld = FuelConsumption
 
-                if(unit === "miles") {
-                    FuelConsumption = Math.floor(FuelConsumption / 3.785)
+                if(unit2 === "galons") {
+                    FuelConsumption = Math.floor(FuelConsumption / 3.785).toFixed(2)
+                } else {
+                    FuelConsumption = (FuelConsumption/100)*100 
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.FuelConsumption",
+                    id: "Nybo.ETS2.Truck.FuelConsumption",
                     value: `${FuelConsumption}`
                 }
 
                 states.push(data)
             }
 
-            if(FuelCapacity !== FuelCapacityOld || unit !== unitOld || offline === true) {
+            if(FuelCapacity !== FuelCapacityOld || unit2 !== unit2Old || offline === true) {
                 FuelCapacityOld = FuelCapacity
 
-                if(unit === "miles") {
+                if(unit2 === "galons") {
                     FuelCapacity = Math.floor(FuelCapacity / 3.785)
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.FuelCapacity",
+                    id: "Nybo.ETS2.Truck.FuelCapacity",
                     value: `${FuelCapacity}`
                 }
 
@@ -681,7 +736,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 AdBlueOld = AdBlue
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.AdBlue",
+                    id: "Nybo.ETS2.Truck.AdBlue",
                     value: `${AdBlue}`
                 }
 
@@ -692,7 +747,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 AirPressureOld = AirPressure
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.AirPressure",
+                    id: "Nybo.ETS2.Truck.AirPressure",
                     value: `${AirPressure}`
                 }
 
@@ -706,12 +761,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                     OilTemp = Math.floor(OilTemp * 9/5) + 32
 
                     var data = {
-                        id: "Nybo.ETS2.Dashboard.OilTemp",
+                        id: "Nybo.ETS2.Truck.OilTemp",
                         value: `${OilTemp} F°`
                     }
                 } else {
                     var data = {
-                        id: "Nybo.ETS2.Dashboard.OilTemp",
+                        id: "Nybo.ETS2.Truck.OilTemp",
                         value: `${OilTemp} C°`
                     }
                 }
@@ -726,12 +781,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                     WaterTemp = Math.floor(WaterTemp * 9/5) + 32
 
                     var data = {
-                        id: "Nybo.ETS2.Dashboard.WaterTemp",
+                        id: "Nybo.ETS2.Truck.WaterTemp",
                         value: `${WaterTemp} F°`
                     }
                 } else {
                     var data = {
-                        id: "Nybo.ETS2.Dashboard.WaterTemp",
+                        id: "Nybo.ETS2.Truck.WaterTemp",
                         value: `${WaterTemp} C°`
                     }
                 }
@@ -743,7 +798,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 BatteryVoltageOld = BatteryVoltage
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.BatteryVoltage",
+                    id: "Nybo.ETS2.Truck.BatteryVoltage",
                     value: `${BatteryVoltage}`
                 }
 
@@ -754,12 +809,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 FuelWarningOnOld = FuelWarningOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.FuelWarningOn",
+                        id: "Nybo.ETS2.Truck.FuelWarningOn",
                         value: `${FuelWarningOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_FuelWarningOn",
+                        id: "Nybo.ETS2.Event.FuelWarningOn",
                         value: `${FuelWarningOn}`
                     }
 
@@ -771,12 +826,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 AdBlueWarningOnOld = AdBlueWarningOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.AdBlueWarningOn",
+                        id: "Nybo.ETS2.Truck.AdBlueWarningOn",
                         value: `${AdBlueWarningOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_AdBlueWarningOn",
+                        id: "Nybo.ETS2.Event.AdBlueWarningOn",
                         value: `${AdBlueWarningOn}`
                     }                 
 
@@ -788,12 +843,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 AirPressureWarningOnOld = AirPressureWarningOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.AirPressureWarningOn",
+                        id: "Nybo.ETS2.Truck.AirPressureWarningOn",
                         value: `${AirPressureWarningOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_AirPressureWarningOn",
+                        id: "Nybo.ETS2.Event.AirPressureWarningOn",
                         value: `${AirPressureWarningOn}`
                     }                 
 
@@ -805,7 +860,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 AirPressureEmergencyOnOld = AirPressureEmergencyOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.AirPressureEmergencyOn",
+                    id: "Nybo.ETS2.Truck.AirPressureEmergencyOn",
                     value: `${AirPressureEmergencyOn}`
                 }
 
@@ -816,12 +871,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 OilPressureWarningOnOld = OilPressureWarningOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.OilPressureWarningOn",
+                        id: "Nybo.ETS2.Truck.OilPressureWarningOn",
                         value: `${OilPressureWarningOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_OilPressureWarningOn",
+                        id: "Nybo.ETS2.Event.OilPressureWarningOn",
                         value: `${OilPressureWarningOn}`
                     }
 
@@ -833,12 +888,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 WaterTempWarningOnOld = WaterTempWarningOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.WaterTempWarningOn",
+                        id: "Nybo.ETS2.Truck.WaterTempWarningOn",
                         value: `${WaterTempWarningOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_WaterTempWarningOn",
+                        id: "Nybo.ETS2.Event.WaterTempWarningOn",
                         value: `${WaterTempWarningOn}`
                     }
 
@@ -850,7 +905,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 BatteryVoltageWarningOnOld = BatteryVoltageWarningOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.BatteryVoltageWarningOn",
+                    id: "Nybo.ETS2.Truck.BatteryVoltageWarningOn",
                     value: `${BatteryVoltageWarningOn}`
                 }
 
@@ -863,12 +918,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 BlinkerLeftActiveOld = BlinkerLeftActive
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.BlinkerLeftActive",
+                        id: "Nybo.ETS2.Truck.BlinkerLeftActive",
                         value: `${BlinkerLeftActive}`
                     }
                 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_BlinkerLeftActive",
+                        id: "Nybo.ETS2.Event.BlinkerLeftActive",
                         value: `${BlinkerLeftActive}`
                     }
 
@@ -880,12 +935,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 BlinkerRightActiveOld = BlinkerRightActive
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.BlinkerRightActive",
+                        id: "Nybo.ETS2.Truck.BlinkerRightActive",
                         value: `${BlinkerRightActive}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_BlinkerRightActive",
+                        id: "Nybo.ETS2.Event.BlinkerRightActive",
                         value: `${BlinkerRightActive}`
                     }               
 
@@ -897,7 +952,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 BlinkerLeftOnOld = BlinkerLeftOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.BlinkerLeftOn",
+                        id: "Nybo.ETS2.Truck.BlinkerLeftOn",
                         value: `${BlinkerLeftOn}`
                     }
 
@@ -908,7 +963,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 BlinkerRightOnOld = BlinkerRightOn
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.BlinkerRightOn",
+                        id: "Nybo.ETS2.Truck.BlinkerRightOn",
                         value: `${BlinkerRightOn}`
                     }                
 
@@ -930,17 +985,84 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 HazardLightsOnOld = HazardLightsOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.HazardLightsOn",
+                    id: "Nybo.ETS2.Truck.HazardLightsOn",
                     value: `${HazardLightsOn}`
                 }
 
                 var data_event = {
-                    id: "Nybo.ETS2.Dashboard.event_HazardLightsOn",
+                    id: "Nybo.ETS2.Event.HazardLightsOn",
                     value: `${HazardLightsOn}`
                 }
 
                 states.push(data)
                 states.push(data_event)
+            }
+
+
+            // Wears
+            if(wearEngine !== wearEngineOld || offline === true) {
+                wearEngineOld = wearEngine
+
+                wearEngine = Math.round(wearEngine*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Truck.wearEngine",
+                    value: `${wearEngine}%`
+                }
+
+                states.push(data)
+            }
+
+            if(wearTransmission !== wearTransmissionOld || offline === true) {
+                wearTransmissionOld = wearTransmission
+                
+                wearTransmission = Math.round(wearTransmission*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Truck.wearTransmission",
+                    value: `${wearTransmission}%`
+                }
+
+                states.push(data)
+            }
+            
+            if(wearCabin !== wearCabinOld || offline === true) {
+                wearCabinOld = wearCabin
+                
+                wearCabin = Math.round(wearCabin*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Truck.wearCabin",
+                    value: `${wearCabin}%`
+                }
+
+                states.push(data)
+            }
+            
+            if(wearChassis !== wearChassisOld || offline === true) {
+                wearChassisOld = wearChassis
+                
+                wearChassis = Math.round(wearChassis*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Truck.wearChassis",
+                    value: `${wearChassis}%`
+                }
+
+                states.push(data)
+            }
+            
+            if(wearWheels !== wearWheelsOld || offline === true) {
+                wearWheelsOld = wearWheels
+
+                wearWheels = Math.round(wearWheels*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Truck.wearWheels",
+                    value: `${wearWheels}%`
+                }
+
+                states.push(data)
             }
         
 
@@ -949,7 +1071,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsDashboardValueOld = LightsDashboardValue
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsDashboardValue",
+                    id: "Nybo.ETS2.Truck.LightsDashboardValue",
                     value: `${LightsDashboardValue}`
                 }
 
@@ -960,12 +1082,12 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsDashboardOnOld = LightsDashboardOn 
 
                 var data = {
-                        id: "Nybo.ETS2.Dashboard.LightsDashboardOn",
+                        id: "Nybo.ETS2.Truck.LightsDashboardOn",
                         value: `${LightsDashboardOn}`
                     }
 
                 var data_event = {
-                        id: "Nybo.ETS2.Dashboard.event_LightsDashboardOn",
+                        id: "Nybo.ETS2.Event.LightsDashboardOn",
                         value: `${LightsDashboardOn}`
                     }             
 
@@ -977,7 +1099,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsParkingOnOld = LightsParkingOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsParkingOn",
+                    id: "Nybo.ETS2.Truck.LightsParkingOn",
                     value: `${LightsParkingOn}`
                 }
 
@@ -988,7 +1110,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsBeamLowOnOld = LightsBeamLowOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsBeamLowOn",
+                    id: "Nybo.ETS2.Truck.LightsBeamLowOn",
                     value: `${LightsBeamLowOn}`
                 }
 
@@ -999,7 +1121,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsBeamHighOnOld = LightsBeamHighOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsBeamHighOn",
+                    id: "Nybo.ETS2.Truck.LightsBeamHighOn",
                     value: `${LightsBeamHighOn}`
                 }
 
@@ -1010,7 +1132,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsAuxFrontOnOld = LightsAuxFrontOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsAuxFrontOn",
+                    id: "Nybo.ETS2.Truck.LightsAuxFrontOn",
                     value: `${LightsAuxFrontOn}`
                 }
 
@@ -1021,7 +1143,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsAuxRoofOnOld = LightsAuxRoofOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsAuxRoofOn",
+                    id: "Nybo.ETS2.Truck.LightsAuxRoofOn",
                     value: `${LightsAuxRoofOn}`
                 }
 
@@ -1032,7 +1154,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsBeaconOnOld = LightsBeaconOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsBeaconOn",
+                    id: "Nybo.ETS2.Truck.LightsBeaconOn",
                     value: `${LightsBeaconOn}`
                 }
 
@@ -1043,7 +1165,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsBrakeOnOld = LightsBrakeOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsBrakeOn",
+                    id: "Nybo.ETS2.Truck.LightsBrakeOn",
                     value: `${LightsBrakeOn}`
                 }
 
@@ -1054,7 +1176,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 LightsReverseOnOld = LightsReverseOn
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.LightsReverseOn",
+                    id: "Nybo.ETS2.Truck.LightsReverseOn",
                     value: `${LightsReverseOn}`
                 }
 
@@ -1098,6 +1220,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 logIt("ERROR", `${moduleName}States Error: ${error}`)
                 logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
             }
+
 		}
 	}
 

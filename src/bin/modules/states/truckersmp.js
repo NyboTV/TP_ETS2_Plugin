@@ -3,7 +3,7 @@ const fs = require('fs')
 const sJSON = require('self-reload-json')
 const https = require('https')
 
-const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -39,23 +39,23 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 if(offline === false) {
                     states = [
                         {
-                        id: "Nybo.ETS2.Dashboard.Servers",
+                        id: "Nybo.ETS2.TruckersMP.Servers",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.ServerName",
+                        id: "Nybo.ETS2.TruckersMP.ServerName",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.ServerPlayers",
+                        id: "Nybo.ETS2.TruckersMP.ServerPlayers",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.ServerPlayerQueue",
+                        id: "Nybo.ETS2.TruckersMP.ServerPlayerQueue",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.APIOnline",
+                        id: "Nybo.ETS2.TruckersMP.APIOnline",
                         value: `MODULE OFFLINE` 
                         }
                     ]
@@ -128,23 +128,23 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
                     states = [
                         {
-                        id: "Nybo.ETS2.Dashboard.Servers",
+                        id: "Nybo.ETS2.TruckersMP.Servers",
                         value: `${Servers}`
                     },
                     {
-                        id: "Nybo.ETS2.Dashboard.ServerName",
+                        id: "Nybo.ETS2.TruckersMP.ServerName",
                         value: `${ServerName}`
                     },
                     {
-                        id: "Nybo.ETS2.Dashboard.ServerPlayers",
+                        id: "Nybo.ETS2.TruckersMP.ServerPlayers",
                         value: `${ServerPlayers}`
                     },
                     {
-                        id: "Nybo.ETS2.Dashboard.ServerPlayerQueue",
+                        id: "Nybo.ETS2.TruckersMP.ServerPlayerQueue",
                         value: `${ServerPlayerQueue}`
                     },
                     {
-                        id: "Nybo.ETS2.Dashboard.APIOnline",
+                        id: "Nybo.ETS2.TruckersMP.APIOnline",
                         value: `${APIOnline}`
                     },
                     ]

@@ -2,7 +2,7 @@
 const fs = require('fs')
 const sJSON = require('self-reload-json') 
 
-const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -19,6 +19,12 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
 
     let TrailerChainType = ""
     let TrailerChainTypeOld = ""
+
+    let Cargo = ""
+    let CargoOld = ""
+
+    let CargoID = ""
+    let CargoIDOld = ""
     
     let CargoLoaded = ""
     let CargoLoadedOld = ""
@@ -31,6 +37,15 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
 
     let CargoMass = ""
     let CargoMassOld = ""
+
+    let wear = ""
+    let wearOld = ""
+    
+    let wearWheels = ""
+    let wearWheelsOld = ""
+
+    let wearChassis = ""
+    let wearChassisOld = ""
 
     let unit = ""
 
@@ -67,31 +82,54 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 if(offline === false) {
                     states = [
                         {
-                        id: "Nybo.ETS2.Dashboard.TrailerAttached",
+                        id: "Nybo.ETS2.Trailer.TrailerAttached",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.TrailerName",
+                        id: "Nybo.ETS2.Trailer.TrailerName",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.TrailerChainType",
+                        id: "Nybo.ETS2.Trailer.TrailerChainType",
+                        value: `MODULE OFFLINE` 
+                        },
+                        
+                        {
+                        id: "Nybo.ETS2.Trailer.Cargo",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.CargoLoaded",
+                        id: "Nybo.ETS2.Trailer.CargoID",
+                        value: `MODULE OFFLINE` 
+                        },
+
+                        {
+                        id: "Nybo.ETS2.Trailer.CargoLoaded",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.CargoType",
+                        id: "Nybo.ETS2.Trailer.CargoType",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.CargoDamage",
+                        id: "Nybo.ETS2.Trailer.CargoDamage",
                         value: `MODULE OFFLINE` 
                         },
                         {
-                        id: "Nybo.ETS2.Dashboard.CargoMass",
+                        id: "Nybo.ETS2.Trailer.CargoMass",
+                        value: `MODULE OFFLINE` 
+                        },
+
+                        {
+                        id: "Nybo.ETS2.Trailer.Wear",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Trailer.wearWheels",
+                        value: `MODULE OFFLINE` 
+                        },
+                        {
+                        id: "Nybo.ETS2.Trailer.wearChassis",
                         value: `MODULE OFFLINE` 
                         }
                     ]
@@ -118,18 +156,25 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             TrailerAttached = trailer.attached
             TrailerName = trailer.name
             TrailerChainType = trailer.chainType
+
+            Cargo = cargo.cargo
+            CargoID = cargo.cargoId
         
-            CargoLoaded = cargo.cargoLoaded
             CargoType = trailer.cargo
+            CargoLoaded = cargo.cargoLoaded
             CargoDamage = cargo.damage
             CargoMass = cargo.mass
+
+            wear = trailer.wear
+            wearWheels = trailer.wearWheels
+            wearChassis = trailer.wearChassis
 
         
             if(TrailerAttached !== TrailerAttachedOld || offline === true) {
                 TrailerAttachedOld = TrailerAttached
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.TrailerAttached",
+                    id: "Nybo.ETS2.Trailer.TrailerAttached",
                     value: `${TrailerAttached}`
                 }
 
@@ -140,7 +185,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 TrailerNameOld = TrailerName
 
                 var data ={
-                    id: "Nybo.ETS2.Dashboard.TrailerName",
+                    id: "Nybo.ETS2.Trailer.TrailerName",
                     value: `${TrailerName}`
                 }
 
@@ -151,10 +196,32 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 TrailerChainTypeOld = TrailerChainType
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.TrailerChainType",
+                    id: "Nybo.ETS2.Trailer.TrailerChainType",
                     value: `${TrailerChainType}`
                 }
                 
+                states.push(data)
+            }
+
+            if(Cargo !== CargoOld || offline === true) {
+                CargoOld = Cargo
+
+                var data = {
+                    id: "Nybo.ETS2.Trailer.Cargo",
+                    value: `${Cargo}`
+                }
+
+                states.push(data)
+            }
+
+            if(CargoID !== CargoIDOld || offline === true) {
+                CargoIDOld = CargoID
+
+                var data = {
+                    id: "Nybo.ETS2.Trailer.CargoID",
+                    value: `${CargoID}`
+                }
+
                 states.push(data)
             }
 
@@ -162,7 +229,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 CargoLoadedOld = CargoLoaded
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.CargoLoaded",
+                    id: "Nybo.ETS2.Trailer.CargoLoaded",
                     value: `${CargoLoaded}`
                 }
 
@@ -173,7 +240,7 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 CargoTypeOld = CargoType
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.CargoType",
+                    id: "Nybo.ETS2.Trailer.CargoType",
                     value: `${CargoType}`
                 }
 
@@ -183,11 +250,11 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
             if(CargoDamage !== CargoDamageOld || offline === true) {
                 CargoDamageOld = CargoDamage
 
-                CargoDamage = Math.round(CargoDamage * 100)
+                CargoDamage = Math.round(CargoDamage*100)
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.CargoDamage",
-                    value: `${CargoDamage}`
+                    id: "Nybo.ETS2.Trailer.CargoDamage",
+                    value: `${CargoDamage}%`
                 }
 
                 states.push(data)
@@ -204,8 +271,47 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.CargoMass",
+                    id: "Nybo.ETS2.Trailer.CargoMass",
                     value: `${CargoMass} ${weight}`
+                }
+
+                states.push(data)
+            }
+
+            if(wear !== wearOld || offline === true) {
+                wearOld = wear
+
+                wear = Math.round(wear*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Trailer.Wear",
+                    value: `${wear}%`
+                }
+
+                states.push(data)
+            }
+
+            if(wearChassis !== wearChassisOld || offline === true) {
+                wearChassisOld = wearChassis
+
+                wearChassis = Math.round(wearChassis*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Trailer.wearChassis",
+                    value: `${wearChassis}%`
+                }
+
+                states.push(data)
+            }
+
+            if(wearWheels !== wearWheelsOld || offline === true) {
+                wearWheelsOld = wearWheels
+
+                wearWheels = Math.round(wearWheels*100)
+
+                var data = {
+                    id: "Nybo.ETS2.Trailer.wearWheels",
+                    value: `${wearWheels}%`
                 }
 
                 states.push(data)

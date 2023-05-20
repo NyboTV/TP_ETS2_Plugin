@@ -49,7 +49,7 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             // Module Stuff 
             var states = [
                 {
-                    id: "Nybo.ETS2.Dashboard.NextRestTime",
+                    id: "Nybo.ETS2.",
                     value: `${NextRestStopTime}`
                 },
             ]

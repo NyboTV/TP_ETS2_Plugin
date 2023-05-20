@@ -6,8 +6,8 @@
   "scripts": {
     "test": "electron . --debug",
     "testNoServer": "electron . --debug --noServer",
-    "test_exe": "npx electron-packager --overwrite --ignore='src/data' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --test",
-    "release": "npx electron-packager --overwrite --ignore='src/data' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --release"
+    "test_exe": "npx electron-packager --overwrite --ignore='Pages' --ignore='src/data' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --test",
+    "release": "npx electron-packager --overwrite --ignore='Pages' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --release"
   },
   "bin": {
     "main": "src/bin/plugin.js"
@@ -60,6 +60,7 @@
     "replace-json-property": "^1.8.0",
     "request": "^2.88.2",
     "self-reload-json": "^0.4.0",
+    "tcp-port-used": "^1.0.2",
     "touchportal-api": "^3.0.1"
   },
   "devDependencies": {

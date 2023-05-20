@@ -2,7 +2,7 @@
 const fs = require('fs')
 const sJSON = require('self-reload-json') 
 
-const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -51,7 +51,7 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 if(offline === false) {
                     states = [
                         {
-                        id: "Nybo.ETS2.Dashboard.Time",
+                        id: "Nybo.ETS2.World.Time",
                         value: `MODULE OFFLINE` 
                         }
                     ]
@@ -98,7 +98,7 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 }
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.Time",
+                    id: "Nybo.ETS2.World.Time",
                     value: `${time}`
                 }
 

@@ -3,7 +3,7 @@ const fs = require('fs')
 const sJSON = require('self-reload-json')
 const Jimp = require('jimp')
 
-const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -88,7 +88,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 				SpeedGauge = await getSpeedGauge(Speed)
 
 				var data = {
-					id: "Nybo.ETS2.Dashboard.SpeedGauge",
+					id: "Nybo.ETS2.Gauges.SpeedGauge",
 					value: `${SpeedGauge}`
 				}
 
@@ -103,7 +103,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 				RPMGauge = await getRPMGauge(EngineRPM)
 
 				var data = {
-					id: "Nybo.ETS2.Dashboard.RPMGauge",
+					id: "Nybo.ETS2.Gauges.RPMGauge",
 					value: `${RPMGauge}`
 				}
 
@@ -120,7 +120,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 				FuelGauge = await getFuelGauge(Fuel, FuelCapacity)
 
 				var data = {
-					id: "Nybo.ETS2.Dashboard.FuelGauge",
+					id: "Nybo.ETS2.Gauges.FuelGauge",
 					value: `${FuelGauge}`
 				}
 

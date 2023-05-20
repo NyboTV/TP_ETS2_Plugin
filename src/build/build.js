@@ -30,8 +30,6 @@ const pack = async () => {
     fse.copySync(`${InputPath}/bin/server`, `${OutputPath}/server`)
     //Copy IMG Folder
     fse.copySync(`${InputPath}/bin/images`, `${OutputPath}/images`) 
-    //Copy Interface Folder
-    fse.copySync(`${InputPath}/bin/interface`, `${OutputPath}/interface`) 
     //Copy Config Folder
     fse.copySync(`${InputPath}/build/bin/config`, `${OutputPath}/config`) 
     //Copy Entry File

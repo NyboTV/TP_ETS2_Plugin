@@ -1,6 +1,6 @@
 {
-  "version": "2.6.3",
-  "refreshInterval": 100,
+  "version": "2.7.5",
+  "refreshInterval": 150,
   "debug": false,
   "firstInstall": true
 }

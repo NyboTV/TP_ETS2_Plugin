@@ -2,7 +2,7 @@
 const fs = require('fs')
 const sJSON = require('self-reload-json')
 
-const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     // Vars
     var path2 = require('path')
@@ -37,13 +37,15 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     //Module Loop
     async function moduleloop () {
         for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {
+
+            
     
             if(ModuleLoaded === false) { 
                 states = []
                 if(offline === false) {
                     states = [
                         {
-                        id: "Nybo.ETS2.Dashboard.NextRestTime",
+                        id: "Nybo.ETS2.Drivers.NextRestTime",
                         value: `MODULE OFFLINE` 
                         }
                     ]
@@ -62,6 +64,7 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             driver = telemetry.game
             nextRestStopTime = driver.nextRestStopTime
 
+            
             if(nextRestStopTimeOld !== nextRestStopTime || offline === true) {
                 
                 nextRestStopTimeOld = nextRestStopTime
@@ -70,7 +73,7 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
                 nextRestStopTime = `${nextRestStopTime.getUTCHours()}:${nextRestStopTime.getUTCMinutes()}`
 
                 var data = {
-                            id: "Nybo.ETS2.Dashboard.NextRestTime",
+                            id: "Nybo.ETS2.Driver.NextRestTime",
                             value: `${nextRestStopTime}` 
                         }
                 
@@ -79,6 +82,7 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             
             offline = false
 
+            
             try {
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);

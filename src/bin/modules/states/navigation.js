@@ -3,7 +3,7 @@ const fs = require('fs')
 const sJSON = require('self-reload-json')
 const Jimp = require('jimp')
 
-const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
 	
 	var path2 = require('path')
 	var moduleName = path2.basename(__filename).replace('.js','')
@@ -17,6 +17,13 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 	let Speedlimit = ""
 	let SpeedlimitOld = ""
 	let SpeedlimitSign = ""
+
+	let estimatedDistance = ""
+	let estimatedDistanceOld = ""
+
+	let estimatedTime = ""
+	let estimatedTimeOld = ""
+	
 	
 	var states = []
 
@@ -51,7 +58,7 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
                 if(offline === false) {
                     states = [
 						{
-                        id: "Nybo.ETS2.Dashboard.SpeedLimit",
+                        id: "Nybo.ETS2.Navigation.SpeedLimit",
                         value: `MODULE OFFLINE` 
                     	}
 					]
@@ -69,6 +76,9 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 			// Vars
             navigation = telemetry.navigation
 			Speedlimit = navigation.speedLimit
+			estimatedDistance = navigation.estimatedDistance
+			estimatedTime = navigation.estimatedTime
+
 			SpeedlimitSign = ""
 
 
@@ -85,18 +95,61 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 				SpeedlimitSign = await getSpeedLimitSign(Speedlimit)
 
 				var data1 = {
-					id: "Nybo.ETS2.Dashboard.SpeedLimit",
+					id: "Nybo.ETS2.Navigation.SpeedLimit",
 					value: `${Speedlimit}`
 				}
 
 				var data2 = {
-					id: "Nybo.ETS2.Dashboard.SpeedLimitSign",
+					id: "Nybo.ETS2.Navigation.SpeedLimitSign",
 					value: `${SpeedlimitSign}`
 				}
 
 				states.push(data1)
 				states.push(data2)
 			}		
+
+
+            if(estimatedDistance !== estimatedDistanceOld || unitOld !== unit || offline === true) {
+                estimatedDistanceOld = estimatedDistance
+
+                if(unit === "miles") {
+                    estimatedDistance = Math.round(Math.floor(estimatedDistance/1.609344) * 100) / 100
+                    
+                    estimatedDistance = `${(estimatedDistance/1000).toFixed(2)} Miles`
+                } else {
+                    estimatedDistance = `${(estimatedDistance/1000).toFixed(2)} KM`
+                }
+
+
+                var data = {
+                    id: "Nybo.ETS2.Navigation.estimatedDistance",
+                    value: `${estimatedDistance}`
+                }
+
+                states.push(data)
+            }
+
+			if(estimatedTime !== estimatedTimeOld || offline === true) {
+                estimatedTimeOld = estimatedTime
+                
+                estimatedTime = new Date(estimatedTime)
+
+				if(estimatedTime.getDay()-1 === 0) {
+					estimatedTime = `${estimatedTime.getUTCHours()}:${estimatedTime.getUTCMinutes()}`
+				} else {
+					
+					estimatedTime = `${estimatedTime.getDay()-1}d ${estimatedTime.getUTCHours()}:${estimatedTime.getUTCMinutes()}`
+				}
+
+                var data = {
+                    id: "Nybo.ETS2.Navigation.estimatedTime",
+                    value: `${estimatedTime}`
+                }
+
+                states.push(data)
+            }
+
+
 
 			offline = false
 			

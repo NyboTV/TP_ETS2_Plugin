@@ -2,7 +2,7 @@
 const fs = require('fs')
 const sJSON = require('self-reload-json') 
 
-const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -45,7 +45,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
             if(currencyUnit !== currencyUnitOld) {
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.currencyUnit",
+                    id: "Nybo.ETS2.Setting.currencyUnit",
                     value: `${currencyUnit}`
                 }
                 currencyUnitOld = currencyUnit
@@ -55,7 +55,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
             if(speedUnit !== speedUnitOld) {
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.speedUnit",
+                    id: "Nybo.ETS2.Setting.speedUnit",
                     value: `${speedUnit}`
                 }
                 speedUnitOld = speedUnit
@@ -65,7 +65,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
             if(fluidUnit !== fluidUnitOld) {
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.fluidUnit",
+                    id: "Nybo.ETS2.Setting.fluidUnit",
                     value: `${fluidUnit}`
                 }
                 fluidUnitOld = fluidUnit
@@ -75,7 +75,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
             if(weightUnit !== weightUnitOld) {
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.weightUnit",
+                    id: "Nybo.ETS2.Setting.weightUnit",
                     value: `${weightUnit}`
                 }
                 weightUnitOld = weightUnit
@@ -85,7 +85,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
             if(tempUnit !== tempUnitOld) {
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.tempUnit",
+                    id: "Nybo.ETS2.Setting.tempUnit",
                     value: `${tempUnit}`
                 }
                 tempUnitOld = tempUnit

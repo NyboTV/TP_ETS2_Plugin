@@ -2,7 +2,7 @@
 const fs = require('fs')
 const sJSON = require('self-reload-json')
 
-const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig) => {
+const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -47,15 +47,15 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 if(offline === false) {
                     states = [
                         {
-                            id: "Nybo.ETS2.Dashboard.ConnectedStatus",
+                            id: "Nybo.ETS2.Game.ConnectedStatus",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.GameType",
+                            id: "Nybo.ETS2.Game.GameType",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.IsPaused",
+                            id: "Nybo.ETS2.Game.IsPaused",
                             value: `MODULE OFFLINE` 
                         }
                     ]
@@ -84,7 +84,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 connectedOld = connected
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.ConnectedStatus",
+                    id: "Nybo.ETS2.Game.ConnectedStatus",
                     value: `${connected}`
                 }
 
@@ -95,7 +95,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 gameNameOld = gameName
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.GameType",
+                    id: "Nybo.ETS2.Game.GameType",
                     value: `${gameName}`
                 }
 
@@ -106,7 +106,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                 pausedOld = paused
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.IsPaused",
+                    id: "Nybo.ETS2.Game.IsPaused",
                     value: `${paused}`
                 }
 

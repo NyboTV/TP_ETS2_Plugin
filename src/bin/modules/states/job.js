@@ -5,7 +5,7 @@ const { convert, addSymbol } = require('current-currency')
 const https = require('https')
 
 
-const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, OfflineMode) => {
+const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, OfflineMode, plugin_settings) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -35,9 +35,6 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
     let JobDestinationCompany = ""
     let JobDestinationCompanyOld = ""
-
-    let JobEstimatedDistance = ""
-    let JobEstimatedDistanceOld = ""
     
     let Currency = ""
     let CurrencyOld = ""
@@ -74,31 +71,31 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 if(offline === false) {
                     states = [
                         {
-                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            id: "Nybo.ETS2.Job.JobIncome",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.JobRemainingTime",
+                            id: "Nybo.ETS2.Job.JobRemainingTime",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.JobSourceCity",
+                            id: "Nybo.ETS2.Job.JobSourceCity",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.JobSourceCompany",
+                            id: "Nybo.ETS2.Job.JobSourceCompany",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.JobDestinationCity",
+                            id: "Nybo.ETS2.Job.JobDestinationCity",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.JobDestinationCompany",
+                            id: "Nybo.ETS2.Job.JobDestinationCompany",
                             value: `MODULE OFFLINE` 
                         },
                         {
-                            id: "Nybo.ETS2.Dashboard.JobEstimatedDistance",
+                            id: "Nybo.ETS2.Job.JobEstimatedDistance",
                             value: `MODULE OFFLINE` 
                         }
                     ]
@@ -126,7 +123,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             JobDestinationCity = job.destinationCity
             JobDestinationCompany = job.destinationCompany
             JobEstimatedDistance = navigation.estimatedDistance
-            Currency = userconfig.Basics.currency 
+            //Currency = plugin_settings.Currency 
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
@@ -144,11 +141,11 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                                 JobIncome = JobIncome.toLocaleString()
                                 
                                 if(Symbol === "€") {
-                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${JobIncome} ${Symbol}`);
+                                    TPClient.stateUpdate("Nybo.ETS2.Job.JobIncome", `${JobIncome} ${Symbol}`);
                                 } else if(Symbol === false) {
-                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${JobIncome} €`);
+                                    TPClient.stateUpdate("Nybo.ETS2.Job.JobIncome", `${JobIncome} €`);
                                 } else {
-                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
+                                    TPClient.stateUpdate("Nybo.ETS2.Job.JobIncome", `${Symbol} ${JobIncome}`);
                                 }
                             })
                             
@@ -160,7 +157,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         JobIncome = JobIncome.toLocaleString()
                         
                         var data = {
-                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            id: "Nybo.ETS2.Job.JobIncome",
                             value: `$ ${JobIncome}`
                         }
                         
@@ -174,9 +171,9 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                                 Symbol = await getSymbol(res.currency, userconfig)
                                 JobIncome = JobIncome.toLocaleString()
                                 if(Symbol === false) {
-                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `Error while getting Symbole`);
+                                    TPClient.stateUpdate("Nybo.ETS2.Job.JobIncome", `Error while getting Symbole`);
                                 } else {
-                                    TPClient.stateUpdate("Nybo.ETS2.Dashboard.JobIncome", `${Symbol} ${JobIncome}`);
+                                    TPClient.stateUpdate("Nybo.ETS2.Job.JobIncome", `${Symbol} ${JobIncome}`);
                                 }
                             })
                             
@@ -188,7 +185,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         JobIncome = JobIncome.toLocaleString()
                         
                         var data = {
-                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            id: "Nybo.ETS2.Job.JobIncome",
                             value: `${JobIncome}€`
                         }
                         
@@ -200,7 +197,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                     JobIncome = JobIncome.toLocaleString()
                         
                         var data = {
-                            id: "Nybo.ETS2.Dashboard.JobIncome",
+                            id: "Nybo.ETS2.Job.JobIncome",
                             value: `${JobIncome}€`
                         }
                         
@@ -216,7 +213,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobRemainingTime = `${JobRemainingTime.getDay()-1}d ${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.JobRemainingTime",
+                    id: "Nybo.ETS2.Job.JobRemainingTime",
                     value: `${JobRemainingTime}`
                 }
 
@@ -228,7 +225,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobSourceCityOld = JobSourceCity
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.JobSourceCity",
+                    id: "Nybo.ETS2.Job.JobSourceCity",
                     value: `${JobSourceCity}`
                 }
 
@@ -239,7 +236,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobSourceCompanyOld = JobSourceCompany
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.JobSourceCompany",
+                    id: "Nybo.ETS2.Job.JobSourceCompany",
                     value: `${JobSourceCompany}`
                 }
 
@@ -250,7 +247,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobDestinationCityOld = JobDestinationCity
 
                 var data = {
-                    id: "Nybo.ETS2.Dashboard.JobDestinationCity",
+                    id: "Nybo.ETS2.Job.JobDestinationCity",
                     value: `${JobDestinationCity}`
                 }
 
@@ -261,28 +258,8 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobDestinationCompanyOld = JobDestinationCompany
 
                 var data ={
-                    id: "Nybo.ETS2.Dashboard.JobDestinationCompany",
+                    id: "Nybo.ETS2.Job.JobDestinationCompany",
                     value: `${JobDestinationCompany}`
-                }
-
-                states.push(data)
-            }
-
-            if(JobEstimatedDistance !== JobEstimatedDistanceOld || unitOld !== unit || offline === true) {
-                JobEstimatedDistanceOld = JobEstimatedDistance
-
-                if(unit === "miles") {
-                    JobEstimatedDistance = Math.round(Math.floor(JobEstimatedDistance/1.609344) * 100) / 100
-                    
-                    JobEstimatedDistance = `${JobEstimatedDistance/1000} Miles`
-                } else {
-                    JobEstimatedDistance = `${JobEstimatedDistance/1000} KM`
-                }
-
-
-                var data = {
-                    id: "Nybo.ETS2.Dashboard.JobEstimatedDistance",
-                    value: `${JobEstimatedDistance}`
                 }
 
                 states.push(data)
