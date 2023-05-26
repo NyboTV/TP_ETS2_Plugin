@@ -123,7 +123,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             JobDestinationCity = job.destinationCity
             JobDestinationCompany = job.destinationCompany
             JobEstimatedDistance = navigation.estimatedDistance
-            //Currency = plugin_settings.Currency 
+            Currency = userconfig.Basics.currency
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
@@ -131,11 +131,15 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                 JobIncomeOld = JobIncome
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
+
+                console.log(Currency)
                 
                 if(game === "ATS") {
                     if(Currency !== "USD") {
                         try {
                             convert("USD", JobIncome, `${Currency}`).then(async (res) => {
+                                console.log(res)
+
                                 JobIncome = Math.round(res.amount)    
                                 Symbol = await getSymbol(res.currency, userconfig)
                                 JobIncome = JobIncome.toLocaleString()
@@ -272,6 +276,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             try {
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);
+                    console.log(states)
                 }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)

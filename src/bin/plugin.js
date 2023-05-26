@@ -99,10 +99,13 @@ const plugin = async (config, uConfig) => {
     const FilesCheck = async () => {
         let missing = []
         if(!fs.existsSync(`${path}/images`)) { missing.push("Images Folder") }
-        if(!fs.existsSync(`${path}/images/Gauge.png`)) { missing.push("Gauge.png") }
+        if(!fs.existsSync(`${path}/images/FuelNeedle.png`)) { missing.push("FuelNeedle.png") }
+        if(!fs.existsSync(`${path}/images/RPMNeedle.png`)) { missing.push("RPMNeedle.png") }
+        if(!fs.existsSync(`${path}/images/SpeedNeedle.png`)) { missing.push("SpeedNeedle.png") }
         if(!fs.existsSync(`${path}/images/RPMGauge.png`)) { missing.push("RPMGauge.png") }
         if(!fs.existsSync(`${path}/images/FuelGauge.png`)) { missing.push("FuelGauge.png") }
-        if(!fs.existsSync(`${path}/images/SpeedGauge.png`)) { missing.push("SpeedGauge.png") }
+        if(!fs.existsSync(`${path}/images/SpeedGauge_kmh.png`)) { missing.push("SpeedGauge_kmh.png") }
+        if(!fs.existsSync(`${path}/images/SpeedGauge_mph.png`)) { missing.push("SpeedGauge_mph.png") }
         if(!fs.existsSync(`${path}/images/speedlimit.png`)) { missing.push("speedlimit.png") }
         if(!fs.existsSync(`${path}/images/noSpeedlimit.png`)) { missing.push("noSpeedlimit.png") }
 

@@ -1,6 +1,6 @@
 {
   "Basics": {
-    "currency": "EUR",
+    "currency": "GBP",
     "unit": "Kilometer",
     "fluid": "Liters",
     "weight": "Tons",
@@ -11,14 +11,14 @@
     "TruckersMPServer": "6"
   },
   "Modules": {
-    "driverStates": true,
-    "gameStates": true,
+    "driverStates": false,
+    "gameStates": false,
     "gaugeStates": true,
-    "jobStates": true,
-    "navigationStates": true,
-    "trailerStates": true,
-    "truckStates": true,
+    "jobStates": false,
+    "navigationStates": false,
+    "trailerStates": false,
+    "truckStates": false,
     "truckersmpStates": true,
-    "worldStates": true
+    "worldStates": false
   }
 }

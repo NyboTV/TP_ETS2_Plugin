@@ -1,6 +1,7 @@
 // Loading Module
 const fs = require('fs')
 const sJSON = require('self-reload-json')
+const Plotly = require('plotly')
 
 const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
     
@@ -81,7 +82,6 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             }
             
             offline = false
-
             
             try {
                 if(states.length > 0) {
