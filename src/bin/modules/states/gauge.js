@@ -83,7 +83,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
 			Speed = gauge.speed			
 			EngineRPM = gauge.engineRpm
-			EngineRPMMax = 3000 //gauge.engineRpmMax
+			EngineRPMMax = 3000
 			Fuel = gauge.fuel
 			FuelCapacity = gauge.fuelCapacity
 
@@ -185,11 +185,12 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 			async function getRPMGauge(RPM) {
 				return new Promise(async (resolve, reject) => {
 					async function getRPMGauge(rotate) {
+						var getRPMGaugeRotate = -10
 		
 						let image_RPM_clone = image_arrow_rpm.clone()
 						let image2_RPM_clone = image2_RPM.clone()
 		
-						image_RPM_clone.rotate(rotate)
+						image_RPM_clone.rotate(Math.floor(getRPMGaugeRotate - rotate))
 						image_RPM_clone.resize(400, 400)
 						image2_RPM_clone.composite(image_RPM_clone, 0, 0)
 						image2_RPM_clone.getBase64Async(Jimp.AUTO)
@@ -198,25 +199,29 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 							})
 					}
 
-					for (var i = 0; EngineRPMMax >= 235; i++) {
+					for (var i = 0; EngineRPMMax >= 230; i++) {
 						EngineRPMMax = Math.round(Math.floor(EngineRPMMax * 0.95))
 						EngineRPM = Math.round(Math.floor(EngineRPM * 0.95))
 					}
-					// 235
+					// 230
 
-					getRPMGauge(-EngineRPM)
+					if(EngineRPM === 0) {
+						getRPMGauge(-9)
+					} else {
+						getRPMGauge(EngineRPM)
+					}
 				})
 			}
 		
 			async function getFuelGauge(Fuel, FuelCapacity) {
 				return new Promise(async (resolve, reject) => {
 					async function getFuelGauge(rotate) {
-						var getRPMGaugeRotate = -2
+						var getFuelGaugeRotate = -2
 		
 						let image_Fuel_clone = image_arrow_fuel.clone()
 						let image2_Fuel_clone = image2_Fuel.clone()
 		
-						image_Fuel_clone.rotate(Math.floor(getRPMGaugeRotate - rotate))
+						image_Fuel_clone.rotate(Math.floor(getFuelGaugeRotate - rotate))
 						image_Fuel_clone.resize(400, 400)
 						if (rotate > 170) {
 							image2_Fuel_clone.resize(350, 350)
