@@ -29,7 +29,7 @@ let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
 
 // Debug Section
-const debugMode = process.argv.includes("--debug")
+const debugMode = process.argv.includes("--debugging")
 const sourceTest = process.argv.includes("--sourceTest")
 const noServer = process.argv.includes("--noServer")
 
