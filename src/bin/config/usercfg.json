@@ -11,14 +11,14 @@
     "TruckersMPServer": "6"
   },
   "Modules": {
-    "driverStates": false,
-    "gameStates": false,
+    "driverStates": true,
+    "gameStates": true,
     "gaugeStates": true,
-    "jobStates": false,
-    "navigationStates": false,
-    "trailerStates": false,
-    "truckStates": false,
-    "truckersmpStates": true,
-    "worldStates": false
+    "jobStates": true,
+    "navigationStates": true,
+    "trailerStates": true,
+    "truckStates": true,
+    "truckersmpStates": false,
+    "worldStates": true
   }
 }

@@ -75,17 +75,25 @@ const worldStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 
             if(time !== timeOld || offline === true) {
                 timeOld = time
-                
-                time = time.replace('T', ' ').replace('Z', '').replace(':', ' ').replace(':', ' ').replace('-', ' ').replace('-', ' ')
-                time = time.split(' ').slice(0, 5)
-                
-                YY = `20` + Math.round(time[0])
-                MM = time[1]
-                DD = time[2]
 
+                time = time
+                .split("-")
+                .join(",")
+                .split("T")
+                .join(",")
+                .split("Z")
+                .join(",")
+                .split(":")
+                .join(",")
+                .split(",");
+
+                YY = Math.round(time[0]-1+2000)
+                MM = time[1]-1
+                DD = time[2]-1
+                
                 hh = time[3]
                 mm = time[4]
-                
+                                
                 if (timeFormat === "US") {
                     if(hh > 12) {
                         hh = hh-12

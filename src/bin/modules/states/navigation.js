@@ -23,7 +23,14 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 
 	let estimatedTime = ""
 	let estimatedTimeOld = ""
-	
+
+	let timeFormat = ""
+
+    var YY = ""
+    var MM = ""
+    var DD = ""
+    var hh = ""
+    var mm = ""
 	
 	var states = []
 
@@ -80,10 +87,13 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 			estimatedTime = navigation.estimatedTime
 
 			SpeedlimitSign = ""
-
+			
+            timeFormat = userconfig.Basics.timeFormat
+            timeFormat = timeFormat.toUpperCase()
 
 			unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
+
 
 			if(Speedlimit !== SpeedlimitOld || unit !== unitOld || offline === true) {
 				SpeedlimitOld = Speedlimit				
@@ -132,15 +142,26 @@ const navigationStates = async (TPClient, refreshInterval, telemetry_path, logIt
 			if(estimatedTime !== estimatedTimeOld || offline === true) {
                 estimatedTimeOld = estimatedTime
                 
-                estimatedTime = new Date(estimatedTime)
+				estimatedTime = estimatedTime
+				.split("-")
+				.join(",")
+				.split("T")
+				.join(",")
+				.split("Z")
+				.join(",")
+				.split(":")
+				.join(",")
+				.split(",")
+				
+                YY = estimatedTime[0]-1
+                MM = estimatedTime[1]-1
+                DD = estimatedTime[2]-1
 
-				if(estimatedTime.getDay()-1 === 0) {
-					estimatedTime = `${estimatedTime.getUTCHours()}:${estimatedTime.getUTCMinutes()}`
-				} else {
-					
-					estimatedTime = `${estimatedTime.getDay()-1}d ${estimatedTime.getUTCHours()}:${estimatedTime.getUTCMinutes()}`
-				}
-
+                hh = estimatedTime[3]
+                mm = estimatedTime[4]
+                
+                estimatedTime = `${DD}D, ${hh}:${mm}`
+                
                 var data = {
                     id: "Nybo.ETS2.Navigation.estimatedTime",
                     value: `${estimatedTime}`

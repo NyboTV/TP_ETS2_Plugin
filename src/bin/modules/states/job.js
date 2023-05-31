@@ -39,6 +39,14 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     let Currency = ""
     let CurrencyOld = ""
 
+    let timeFormat = ""
+
+    var YY = ""
+    var MM = ""
+    var DD = ""
+    var hh = ""
+    var mm = ""
+
     let Symbol = ""
 
     var states = []
@@ -126,19 +134,20 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             Currency = userconfig.Basics.currency
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
+            
+            timeFormat = userconfig.Basics.timeFormat
+            timeFormat = timeFormat.toUpperCase()
+
 
             if(JobIncome !== JobIncomeOld || Currency !== CurrencyOld || offline === true) {
                 JobIncomeOld = JobIncome
                 JobRemainingTimeOld = JobRemainingTime
                 CurrencyOld = Currency
-
-                console.log(Currency)
                 
                 if(game === "ATS") {
-                    if(Currency !== "USD") {
+                    if(Currency !== "USD" && OfflineMode === false) {
                         try {
                             convert("USD", JobIncome, `${Currency}`).then(async (res) => {
-                                console.log(res)
 
                                 JobIncome = Math.round(res.amount)    
                                 Symbol = await getSymbol(res.currency, userconfig)
@@ -168,7 +177,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         states.push(data)
                     }
                 } else if (game === "ETS2") {
-                    if(Currency !== "EUR") {
+                    if(Currency !== "EUR" && OfflineMode === false) {
                         try {
                             convert("EUR", JobIncome, `${Currency}`).then(async (res) => {
                                 JobIncome = Math.round(res.amount)
@@ -208,20 +217,37 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         states.push(data)
                 }
             }
-            
-
+       
             if(JobRemainingTime !== JobRemainingTimeOld || offline === true) {
                 JobRemainingTimeOld = JobRemainingTime
                 
-                JobRemainingTime = new Date(JobRemainingTime)
-                JobRemainingTime = `${JobRemainingTime.getDay()-1}d ${JobRemainingTime.getUTCHours()}:${JobRemainingTime.getUTCMinutes()}`
+                JobRemainingTime = JobRemainingTime
+                .split("-")
+                .join(",")
+                .split("T")
+                .join(",")
+                .split("Z")
+                .join(",")
+                .split(":")
+                .join(",")
+                .split(",");
 
+                YY = JobRemainingTime[0]-1
+                MM = JobRemainingTime[1]-1
+                DD = JobRemainingTime[2]-1
+
+                hh = JobRemainingTime[3]
+                mm = JobRemainingTime[4]
+            
+                JobRemainingTime = `${DD}D, ${hh}:${mm}`
+                
                 var data = {
                     id: "Nybo.ETS2.Job.JobRemainingTime",
                     value: `${JobRemainingTime}`
                 }
 
                 states.push(data)
+                
             }
 
 
@@ -268,7 +294,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
 
                 states.push(data)
             }
-        
+            
             offline = false
             
             unitOld = unit
@@ -276,7 +302,6 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
             try {
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);
-                    console.log(states)
                 }
             } catch (error) {
                 logIt("ERROR", `${moduleName}States Error: ${error}`)

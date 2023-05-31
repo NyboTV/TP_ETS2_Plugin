@@ -12,6 +12,14 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     let driver = ""
     let nextRestStopTime = ""
     let nextRestStopTimeOld = ""
+
+    let timeFormat = ""
+
+    var YY = ""
+    var MM = ""
+    var DD = ""
+    var hh = ""
+    var mm = ""
     
     var states = []
 
@@ -37,8 +45,6 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     //Module Loop
     async function moduleloop () {
         for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {
-
-            
     
             if(ModuleLoaded === false) { 
                 states = []
@@ -64,13 +70,32 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
             driver = telemetry.game
             nextRestStopTime = driver.nextRestStopTime
 
+            timeFormat = userconfig.Basics.timeFormat
+            timeFormat = timeFormat.toUpperCase()
+
             
             if(nextRestStopTimeOld !== nextRestStopTime || offline === true) {
-                
                 nextRestStopTimeOld = nextRestStopTime
+
+                nextRestStopTime = nextRestStopTime
+                .split("-")
+                .join(",")
+                .split("T")
+                .join(",")
+                .split("Z")
+                .join(",")
+                .split(":")
+                .join(",")
+                .split(",");
                 
-                nextRestStopTime = new Date(nextRestStopTime)
-                nextRestStopTime = `${nextRestStopTime.getUTCHours()}:${nextRestStopTime.getUTCMinutes()}`
+                YY = nextRestStopTime[0]-1
+                MM = nextRestStopTime[1]-1
+                DD = nextRestStopTime[2]-1
+                
+                hh = nextRestStopTime[3]
+                mm = nextRestStopTime[4]
+                    
+                nextRestStopTime = `${hh}:${mm}`
 
                 var data = {
                             id: "Nybo.ETS2.Driver.NextRestTime",
