@@ -107,7 +107,7 @@ Want to see new features of the latest version? Please refer to [CHANGELOG](CHAN
 
 ## Authors
 - **Nico/Nybo** - Plugin Creator - [NyboTV](https://github.com/NyboTV)
-- **Gargamosch** - Page Creator - [Gargamosch#6706]
+- **Gargamosch** - Page Creator - [Discord: Gargamosch#6706]()
 
 
 ## Third Party Software
