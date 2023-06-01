@@ -514,7 +514,7 @@ const FirstInstall = async () => {
 
         // Default page
         logIt("FirstInstall", "Asking Player for Default Page")
-        if(OfflineMode === false) {
+        if(OfflineMode) {
             defaultPageChoice = dialog.showMessageBoxSync(defaultPageWindow)
             if(defaultPageChoice >= 0 || defaultPageChoice <=1) {
                 logIt("FirstInstall", "Downloading Default Page")
