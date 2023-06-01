@@ -21,7 +21,19 @@
          "default":"EUR",
          "type":"text",
          "maxLength":3
+      },
+      {
+         "name":"Time_Format",
+         "default":"EU",
+         "type":"text",
+         "maxLength":2
+      },
+      {
+         "name":"TruckersMP_Server",
+         "default":"1",
+         "type":"text"
       }
+
    ],
    "categories":[
       {

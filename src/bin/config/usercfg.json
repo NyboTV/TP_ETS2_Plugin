@@ -8,7 +8,7 @@
     "timeFormat": "EU"
   },
   "TruckersMP": {
-    "TruckersMPServer": "6"
+    "TruckersMPServer": 1
   },
   "Modules": {
     "driverStates": true,

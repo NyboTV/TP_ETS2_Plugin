@@ -11,7 +11,10 @@ const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 const checkInternetConnected = require('check-internet-connected');
 const pid = require('pidusage')
-const getFolderSize = require("get-folder-size")
+const getFolderSize = require("get-folder-size");
+const AdmZip = require("adm-zip");
+const download = require('download');
+const { exit } = require('process');
 
 
 // Important Script Vars
@@ -57,9 +60,6 @@ if(debugMode) {
 // Checks and creates if neccessary Logs Folder
 if(fs.existsSync(`./logs`)) {  } else { fs.mkdirSync(`./logs`) }
 
-// Pre Start Stuff
-usage()
-
 logIt("INFO", "Starting...")
 
 const configs = async () => {
@@ -96,57 +96,16 @@ const plugin = async (config, uConfig) => {
     logIt("INFO", "Checking for Missing Files...")
     // Checking for missing Files
     let firstInstall = config.firstInstall
-    const FilesCheck = async () => {
-        let missing = []
-        if(!fs.existsSync(`${path}/images`)) { missing.push("Images Folder") }
-        if(!fs.existsSync(`${path}/images/FuelNeedle.png`)) { missing.push("FuelNeedle.png") }
-        if(!fs.existsSync(`${path}/images/RPMNeedle.png`)) { missing.push("RPMNeedle.png") }
-        if(!fs.existsSync(`${path}/images/SpeedNeedle.png`)) { missing.push("SpeedNeedle.png") }
-        if(!fs.existsSync(`${path}/images/RPMGauge.png`)) { missing.push("RPMGauge.png") }
-        if(!fs.existsSync(`${path}/images/FuelGauge.png`)) { missing.push("FuelGauge.png") }
-        if(!fs.existsSync(`${path}/images/SpeedGauge_kmh.png`)) { missing.push("SpeedGauge_kmh.png") }
-        if(!fs.existsSync(`${path}/images/SpeedGauge_mph.png`)) { missing.push("SpeedGauge_mph.png") }
-        if(!fs.existsSync(`${path}/images/speedlimit.png`)) { missing.push("speedlimit.png") }
-        if(!fs.existsSync(`${path}/images/noSpeedlimit.png`)) { missing.push("noSpeedlimit.png") }
-
-        
-        if(!fs.existsSync(`${path}/server`)) { missing.push("Server Folder") }
-        if(!fs.existsSync(`${path}/server/Ets2Plugins`)) { missing.push("Ets2Plugins") }
-        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64`)) { missing.push("Ets2Plugins/win_x64") }
-        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins`)) { missing.push("Ets2Plugins/../plugins") }
-        if(!fs.existsSync(`${path}/server/Ets2Plugins/win_x64/plugins/ets2-telemetry-server.dll`)) { missing.push("../plugins/ets2-telemetry-server.dll") }
-        if(!fs.existsSync(`${path}/server/Ets2Telemetry.exe.config`)) { missing.push("Ets2Telemetry.exe.config") }
-        if(!fs.existsSync(`${path}/server/Ets2TestTelemetry.json`)) { missing.push("Ets2TestTelemetry.json") }
-        if(!fs.existsSync(`${path}/server/Owin.dll`)) { missing.push("Owin.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.Practices.ServiceLocation.dll`)) { missing.push("Microsoft.Practices.ServiceLocation.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Cors.dll`)) { missing.push("Microsoft.Owin.Cors.dll") }
-        if(!fs.existsSync(`${path}/server/System.Web.Cors.dll`)) { missing.push("System.Web.Cors.dll") }
-        if(!fs.existsSync(`${path}/server/Owin.WebSocket.dll`)) { missing.push("Owin.WebSocket.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Security.dll`)) { missing.push("Microsoft.Owin.Security.dll") }
-        if(!fs.existsSync(`${path}/server/System.Web.Http.Owin.dll`)) { missing.push("System.Web.Http.Owin.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Hosting.dll`)) { missing.push("Microsoft.Owin.Hosting.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.Owin.dll`)) { missing.push("Microsoft.Owin.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Host.HttpListener.dll`)) { missing.push("Microsoft.Owin.Host.HttpListener.dll") }
-        if(!fs.existsSync(`${path}/server/System.Net.Http.Formatting.dll`)) { missing.push("System.Net.Http.Formatting.dll") }
-        if(!fs.existsSync(`${path}/server/log4net.dll`)) { missing.push("log4net.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.AspNet.SignalR.Core.dll`)) { missing.push("Microsoft.AspNet.SignalR.Core.dll") }
-        if(!fs.existsSync(`${path}/server/Ets2Telemetry.log`)) { missing.push("Ets2Telemetry.log") }
-        if(!fs.existsSync(`${path}/server/System.Web.Http.dll`)) { missing.push("System.Web.Http.dll") }
-        if(!fs.existsSync(`${path}/server/Ets2Telemetry.exe`)) { missing.push("Ets2Telemetry.exe") }
-        if(!fs.existsSync(`${path}/server/Newtonsoft.Json.dll`)) { missing.push("Newtonsoft.Json.dll") }
-        if(!fs.existsSync(`${path}/server/Microsoft.Owin.Diagnostics.dll`)) { missing.push("Microsoft.Owin.Diagnostics.dll") }
-
-
-        if(!fs.existsSync(`${telemetry_path}`)) { fs.mkdirSync(`${telemetry_path}`) }
-
-        missing.forEach(file => {
-            logIt("MISSING", `File/Folder missing: "${file}"`)
-        })
+    
+    if(firstInstall === true) {
+        if(debugMode === false) {
+            logIt("INFO", "Skipping First Install due to DebugMode")
+        } else {
+            if(await FirstInstall()) {
+                replaceJSON(`${path}/config/cfg.json`, "firstInstall", false)
+            }
+        }
     }
-    if(firstInstall) {
-        await FilesCheck()
-    }
-
 
     logIt("INFO", "Importing Modules...")
     // Script Modules
@@ -187,6 +146,11 @@ const plugin = async (config, uConfig) => {
 
     // Modules Loader
     function main_loader() {
+        
+        // Pre Start Stuff
+        usage()
+
+
         const telemetry_loop = async () => {
             telemetry_status = await Telemetry_Status()
             await Telemetry_Request(telemetry_status)
@@ -440,7 +404,8 @@ const plugin = async (config, uConfig) => {
         TPClient.sendNotification(`${pluginId} UpdateNotification`,"My Plugin has been updated", `A new version of my plugin ${remoteVersion} is available to download`, optionsArray);
     });
 
-    TPClient.on("Settings",async (data) => {
+
+    TPClient.on("Settings", async (data) => {
 
         CurrencyList = await getCurrency()
 
@@ -451,13 +416,20 @@ const plugin = async (config, uConfig) => {
             } else {
                 if(i === CurrencyList.length-1) {
                     logIt("INFO", "Currency not Found! Using Default!")                    
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${data[1].Currency}`)
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${data[1].Currency}`) 
                     break
                 }
             }
         }
 
+        await timeout(20)
         replaceJSON(`${cfg_path}/config/cfg.json`, `refreshInterval`, Number(data[0].Refresh_Interval))
+
+        await timeout(20)
+        replaceJSON(`${cfg_path}/config/usercfg.json`, `timeFormat`, data[2].Time_Format)
+
+        await timeout(20)
+        replaceJSON(`${cfg_path}/config/usercfg.json`, `TruckersMPServer`, Number(data[3].TruckersMP_Server))
 
     });
 
@@ -472,8 +444,6 @@ setTimeout(async () => {
     await checkInternetConnected()
     .then((result) => {
         logIt("INFO", "Internet Connected!")
-        
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, true)
     })
     .catch((ex) => {
         logIt("INFO", "No Internet Connection!")
@@ -498,6 +468,100 @@ function timeout(ms) {
         }, ms);
     })
 }
+
+const FirstInstall = async () => {
+    return new Promise(async (resolve, reject) => {
+        const { dialog } = require('electron')
+
+        logIt("FirstInstall", "First Install Script started...")
+
+        let serverInstallWindow  = {
+            type: "question",
+            buttons: ["Yes!", "No. Let me do the First Steps!"],
+            title: "ETS2 Dashboard Plugin: First Install Detected!",
+            message: "Hello! Did you ever Used this Plugin before?"
+        }
+        let serverInstallWindow2  = {
+            type: "info",
+            buttons: ["Okay!"],
+            title: "ETS2 Dashboard Plugin: First Install Detected!",
+            message: "Hello! To use this Plugin you need to install the Telemetry Server by Hand! \nTo do this, just open the 'Ets2Telemtry.exe' we just opend for you and click on Install and follow the Instruction!"
+        }
+
+        let defaultPageWindow  = {
+            type: "question",
+            buttons: ["Yes, the KMH Version.", "Yes, the MPH Version", "No"],
+            title: "ETS2 Dashboard Plugin: First Install Detected!",
+            message: "We have a Default Page for new Users! Do you want to install it?"
+        }
+        let defaultPageWindow2  = {
+            type: "info",
+            buttons: ["Okay!", "Restart now!"],
+            title: "ETS2 Dashboard Plugin: First Install Detected!",
+            message: "Please Restart TouchPortal to see the Default Page."
+        }
+
+        // Telemetry Server first Install
+        logIt("FirstInstall", "Asking for Telemetry Server...")
+        if(dialog.showMessageBoxSync(serverInstallWindow) === 1) {
+            logIt("FirstInstall", "Installing Telemetry Server...")
+            require('child_process').exec('start "" "%appdata%/TouchPortal/plugins/ETS2_Dashboard/server"');
+            await timeout(500)
+            dialog.showMessageBoxSync(serverInstallWindow2)
+        } else {
+            logIt("FirstInstall", "Telemetry already installed.")
+        }
+
+        // Default page
+        logIt("FirstInstall", "Asking Player for Default Page")
+        if(OfflineMode === false) {
+            defaultPageChoice = dialog.showMessageBoxSync(defaultPageWindow)
+            if(defaultPageChoice >= 0 || defaultPageChoice <=1) {
+                logIt("FirstInstall", "Downloading Default Page")
+
+                url = ""
+                if(defaultPageChoice === 0) { 
+                    url = "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/DefaultPage_KMH.zip" 
+
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, "Kilometer")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, "Liters")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, "Tons")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, "Celsius")             
+                }
+
+                if(defaultPageChoice === 1) { 
+                    url = "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/DefaultPage_MPH.zip"
+                    
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, "Miles")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, "Gallons")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, "Pounds")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, "Fahrenheit")                
+                }
+                
+                download_path = process.env.APPDATA + `/TouchPortal/plugins/ETS2_Dashboard/tmp/`; 
+                
+                
+                download(url,download_path)
+                .then(() => {
+                    logIt("FirstInstall", "Download Finished!")
+        
+                    var zip = new AdmZip(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/DefaultPage.zip`);
+                    zip.extractAllTo(`${process.env.APPDATA}/TouchPortal/`)
+        
+                    logIt("FirstInstall", "Install Finished!")
+                    dialog.showMessageBoxSync(defaultPageWindow2)
+                    resolve(true)
+                })
+                
+            } else {
+                logIt("FirstInstall", "Default Page install skipped...")
+                resolve(true)
+            }
+        }
+    })
+}
+
+    
 
 async function usage () {
     let cpu_usageOld = ""
