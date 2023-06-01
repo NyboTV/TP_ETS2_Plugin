@@ -35,6 +35,7 @@ let dirname = dirpath.includes(`\\src\\bin`)
 const debugMode = process.argv.includes("--debugging")
 const sourceTest = process.argv.includes("--sourceTest")
 const noServer = process.argv.includes("--noServer")
+const Testing = progess.argv.includes("--Testing")
 
 if(debugMode) {
     path = `./src/bin`
@@ -98,7 +99,7 @@ const plugin = async (config, uConfig) => {
     let firstInstall = config.firstInstall
     
     if(firstInstall === true) {
-        if(debugMode === false) {
+        if(debugMode) {
             logIt("INFO", "Skipping First Install due to DebugMode")
         } else {
             if(await FirstInstall()) {
