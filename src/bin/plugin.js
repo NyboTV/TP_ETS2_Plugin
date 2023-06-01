@@ -28,6 +28,8 @@ let cpu_usage = ""
 let mem_usage = ""
 let storage_usage = ""
 
+let CurrencyList = ""
+
 let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
 
@@ -35,7 +37,7 @@ let dirname = dirpath.includes(`\\src\\bin`)
 const debugMode = process.argv.includes("--debugging")
 const sourceTest = process.argv.includes("--sourceTest")
 const noServer = process.argv.includes("--noServer")
-const Testing = progess.argv.includes("--Testing")
+const Testing = process.argv.includes("--Testing")
 
 if(debugMode) {
     path = `./src/bin`
@@ -183,6 +185,8 @@ const plugin = async (config, uConfig) => {
     
     // Modules
     async function modules() {
+        await timeout(200) // Let the Plugin Load up
+
         await mainStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings)
         await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings) 
         await gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings)
@@ -408,8 +412,6 @@ const plugin = async (config, uConfig) => {
 
     TPClient.on("Settings", async (data) => {
 
-        CurrencyList = await getCurrency()
-
         for(var i = 0; i < CurrencyList.length; await timeout(1), i++) {
             if(CurrencyList[i] === data[1].Currency) {
                 replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${data[1].Currency}`)
@@ -423,13 +425,10 @@ const plugin = async (config, uConfig) => {
             }
         }
 
-        await timeout(20)
         replaceJSON(`${cfg_path}/config/cfg.json`, `refreshInterval`, Number(data[0].Refresh_Interval))
 
-        await timeout(20)
         replaceJSON(`${cfg_path}/config/usercfg.json`, `timeFormat`, data[2].Time_Format)
 
-        await timeout(20)
         replaceJSON(`${cfg_path}/config/usercfg.json`, `TruckersMPServer`, Number(data[3].TruckersMP_Server))
 
     });
@@ -438,6 +437,35 @@ const plugin = async (config, uConfig) => {
     TPClient.connect({pluginId})
 }
 
+
+// Auto Updater Idee
+/*
+User wird gefragt ob Update installiert werden soll. (Ja / Nein / Nein nicht erneut fragen)
+entry.tp datei wird ausführungspfad geändert in updater.exe und der prüft nach geänderten Dateien Online
+Danach wird wieder zurück zur originalen exe geschrieben
+
+Datei für datei wird verglichen
+Exe wird geprüft und nötig gestoppt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
 
 // Beginning of Script | Checks Internet
 setTimeout(async () => {
@@ -455,6 +483,10 @@ setTimeout(async () => {
         replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, false)
     });
        
+
+    // Pre Information
+    //CurrencyList = await getCurrency()
+    
     //Loading Configs
     configs()
     
@@ -497,7 +529,7 @@ const FirstInstall = async () => {
         }
         let defaultPageWindow2  = {
             type: "info",
-            buttons: ["Okay!", "Restart now!"],
+            buttons: ["Okay!", "Restart now! (Not a thing yet!)"],
             title: "ETS2 Dashboard Plugin: First Install Detected!",
             message: "Please Restart TouchPortal to see the Default Page."
         }
@@ -513,16 +545,17 @@ const FirstInstall = async () => {
             logIt("FirstInstall", "Telemetry already installed.")
         }
 
+
         // Default page
-        logIt("FirstInstall", "Asking Player for Default Page")
-        if(OfflineMode) {
+        if(OfflineMode === false) {
+            logIt("FirstInstall", "Asking Player for Default Page")
             defaultPageChoice = dialog.showMessageBoxSync(defaultPageWindow)
             if(defaultPageChoice >= 0 || defaultPageChoice <=1) {
                 logIt("FirstInstall", "Downloading Default Page")
 
-                url = ""
-                if(defaultPageChoice === 0) { 
-                    url = "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/DefaultPage_KMH.zip" 
+                download_File = ""
+                if(defaultPageChoice === 0) {  
+                    download_File = "DefaultPage_KMH.zip"
 
                     replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, "Kilometer")
                     replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, "Liters")
@@ -531,7 +564,7 @@ const FirstInstall = async () => {
                 }
 
                 if(defaultPageChoice === 1) { 
-                    url = "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/DefaultPage_MPH.zip"
+                    download_File = "DefaultPage_MPH.zip"
                     
                     replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, "Miles")
                     replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, "Gallons")
@@ -539,30 +572,35 @@ const FirstInstall = async () => {
                     replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, "Fahrenheit")                
                 }
                 
+                
+                url = "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/"+download_File
                 download_path = process.env.APPDATA + `/TouchPortal/plugins/ETS2_Dashboard/tmp/`; 
                 
-                
-                download(url,download_path)
-                .then(() => {
-                    logIt("FirstInstall", "Download Finished!")
-        
-                    var zip = new AdmZip(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/DefaultPage.zip`);
-                    zip.extractAllTo(`${process.env.APPDATA}/TouchPortal/`)
-        
-                    logIt("FirstInstall", "Install Finished!")
-                    dialog.showMessageBoxSync(defaultPageWindow2)
-                    resolve(true)
-                })
+                try {
+                    download(url,download_path)
+                    .then(() => {
+                        logIt("FirstInstall", "Download Finished!")
+            
+                        var zip = new AdmZip(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/${download_File}`);
+                        zip.extractAllTo(`${process.env.APPDATA}/TouchPortal/`)
+            
+                        logIt("FirstInstall", "Install Finished!")
+                        dialog.showMessageBoxSync(defaultPageWindow2)
+                        resolve(true)
+                    })
+                } catch (e) {
+                    logIt("FirstInstall", "Error while First Setup!! \n" + e)
+                }
                 
             } else {
                 logIt("FirstInstall", "Default Page install skipped...")
                 resolve(true)
             }
+        } else {
+            logIt("FirstInstall", "User is Offline, skipping DefaultPage Setup")
         }
     })
 }
-
-    
 
 async function usage () {
     let cpu_usageOld = ""

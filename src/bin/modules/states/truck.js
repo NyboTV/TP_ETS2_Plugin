@@ -11,8 +11,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let unit = ""
     let unitOld = ""
     
-    let unit2 = ""
-    let unit2Old = ""
+    let fluid = ""
+    let fluidOld = ""
 
     let temp = ""
     let tempOld = ""
@@ -477,8 +477,8 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
-            unit2 = userconfig.Basics.fluid
-            unit2 = unit2.toLowerCase()
+            fluid = userconfig.Basics.fluid
+            fluid = fluid.toLowerCase()
 
             temp = userconfig.Basics.temp
             temp = temp.toLowerCase()
@@ -685,10 +685,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data_event)
             }
 
-            if(Fuel !== FuelOld || unit2 !== unit2Old || offline === true) {
+            if(Fuel !== FuelOld || fluid !== fluidOld || offline === true) {
                 FuelOld = Fuel
 
-                if(unit2 === "galons") {
+                if(fluid === "galons") {
                     Fuel = Math.floor(Fuel / 3.785)
                 }
 
@@ -700,10 +700,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelConsumption !== FuelConsumptionOld || unit2 !== unit2Old || offline === true) {
+            if(FuelConsumption !== FuelConsumptionOld || fluid !== fluidOld || offline === true) {
                 FuelConsumptionOld = FuelConsumption
 
-                if(unit2 === "galons") {
+                if(fluid === "galons") {
                     FuelConsumption = Math.floor(FuelConsumption / 3.785).toFixed(2)
                 } else {
                     FuelConsumption = (FuelConsumption/100)*100 
@@ -717,11 +717,11 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelCapacity !== FuelCapacityOld || unit2 !== unit2Old || offline === true) {
+            if(FuelCapacity !== FuelCapacityOld || fluid !== fluidOld || offline === true) {
                 FuelCapacityOld = FuelCapacity
 
-                if(unit2 === "galons") {
-                    FuelCapacity = Math.floor(FuelCapacity / 3.785)
+                if(fluid === "galons") {
+                    FuelCapacity = FuelCapacity / 3.785
                 }
 
                 var data = {
