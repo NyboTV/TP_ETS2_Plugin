@@ -1,6 +1,6 @@
 {
   "Basics": {
-    "currency": "GBP",
+    "currency": "USD",
     "unit": "Kilometer",
     "fluid": "Liters",
     "weight": "Tons",
@@ -20,5 +20,6 @@
     "truckStates": true,
     "truckersmpStates": false,
     "worldStates": true
-  }
+  },
+  "prerelease": false
 }

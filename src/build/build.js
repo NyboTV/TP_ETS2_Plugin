@@ -4,6 +4,7 @@ const AdmZip = require('adm-zip')
 const replaceJSON = require(`replace-json-property`).replace
 const prompt = require('prompt')
 const homeDir = require('os').homedir()
+const sJSON = require('self-reload-json')
 
 const Release = process.argv.includes("--release");
 const testMode = process.argv.includes("--test");
@@ -12,6 +13,8 @@ let InputPath = "./src"
 let OutputPath = "./src/build/tmp"
 let InstallPath = "C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins"
 let desktopPath = `${homeDir}/Desktop`
+
+let latestVersion = new sJSON(`./src/bin/config/cfg.json`).version
 
 if(fs.existsSync(`./src/build/ETS2_Dashboard`)) {
     fs.rmSync(`./src/build/ETS2_Dashboard`, { recursive: true })
@@ -58,6 +61,7 @@ const pack = async () => {
 
     console.log("FINISHED")
     await tmp()
+    return
         
 }
 pack()
@@ -92,11 +96,13 @@ async function version() {
     return new Promise(async (resolve, reject) => {
         prompt.start()
 
+        console.log("Latest App Version: " + latestVersion)
         prompt.get([version], function (err, result) {
             if(err) return console.log(err)
         
             replaceJSON('./src/bin/config/cfg.json', 'version', result.version)
             replaceJSON('./src/build/bin/config/cfg.json', 'version', result.version)
+            replaceJSON('./package.json', 'version', result.version)
 
             resolve()
         })

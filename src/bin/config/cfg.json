@@ -1,6 +1,7 @@
 {
-  "version": "2.8.5.5",
+  "version": "2.8.5",
   "refreshInterval": 200,
   "debug": false,
-  "firstInstall": false
+  "firstInstall": true,
+  "UpdateCheck": true
 }

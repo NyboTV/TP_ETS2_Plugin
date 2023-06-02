@@ -20,5 +20,6 @@
     "truckStates": true,
     "truckersmpStates": true,
     "worldStates": true
-  }
+  },
+  "prerelease": false
 }
