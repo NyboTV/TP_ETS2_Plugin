@@ -252,12 +252,12 @@ const plugin = async (config, uConfig, CurrencyList) => {
                 return
             } else 
             
-            http.get(`http://localhost:25555/api/ets2/telemetry`, function(err, resp, body) {
+            http.get(`http://localhost:25555/api/ets2/telemetry`, async function(err, resp, body) {
                 
                 var data = ``;
                 data = body
                 
-                if (err) {
+                if (err != null) {
                     telemetry_status_online = false
                     
                     if(telemetry_retry === 1) {
@@ -266,11 +266,8 @@ const plugin = async (config, uConfig, CurrencyList) => {
                     logIt("WARN", `Telemetry Request Error! -> ${err}`)
                     telemetry_retry = 1
                     
-                    async function resolveIt() {
-                        await timeout(3000)
-                        resolve()
-                    }
-                    resolveIt() 
+                    await timeout(3000)
+                    resolve()
                     
                 } else
                 
@@ -413,8 +410,6 @@ const plugin = async (config, uConfig, CurrencyList) => {
 
     TPClient.on("Settings", async (data) => {
         
-        console.log(data)
-
         replaceJSON(`${cfg_path}/config/cfg.json`, `refreshInterval`, Number(data[0].Refresh_Interval))
 
         for(var i = 0; i < CurrencyList.length; await timeout(10), i++) {
@@ -529,11 +524,12 @@ const FirstInstall = async () => {
     
             // Telemetry Server first Install
             logIt("FirstInstall", "Asking for Telemetry Server...")
-            if(showDialog("question", ["Yes!", "No. Let me do the First Steps!"], "ETS2 Dashboard: First Install Detected!", "Hello! Did you ever used this Plugin before?") === 0) {
+            telemetryInstall = await showDialog("info", ["No. Let me do the First Steps", "Yes, im good"], "ETS2 Dashboard Plugin: First Install Detected!", "Hi! Did you ever used this Plugin before?")
+            if(telemetryInstall === 0) {
                 logIt("FirstInstall", "Installing Telemetry Server...")
                 require('child_process').exec('start "" "%appdata%/TouchPortal/plugins/ETS2_Dashboard/server"');
                 await timeout(500)
-                await showDialog("info", ["Okay!"], "ETS2 Dashboard", "To use this Plugin you need to install the Telemetry Server by Hand! \nTo do this, just open the 'Ets2Telemtry.exe' we just opend for you and click on Install and follow the Instruction!")
+                await showDialog("info", ["Okay!"], "ETS2 Dashboard", "To use this Plugin you need to install the Telemetry Server by Hand! \nTo do this, just open the 'Ets2Telemtry.exe' in the Folder we just opend for you and click on Install and follow the Instruction!")
             } else {
                 logIt("FirstInstall", "Telemetry already installed.")
             }
@@ -543,26 +539,16 @@ const FirstInstall = async () => {
             if(OfflineMode === false) {
                 logIt("FirstInstall", "Asking Player for Default Page")
                 defaultPageChoice = await showDialog("question", ["Yes, the KMH Version.", "Yes, the MPH Version", "No, Thanks"], "ETS2 Dashboard Plugin: First Install Detected!", "We have a Default Page for new Users! Do you want to install it?")
-                if(defaultPageChoice >= 0 || defaultPageChoice <=1) {
+                if(defaultPageChoice === 0 || defaultPageChoice === 1) {
                     logIt("FirstInstall", "Downloading Default Page")
     
                     download_File = ""
                     if(defaultPageChoice === 0) {  
-                        download_File = "DefaultPage_KMH.zip"
-    
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, "Kilometer")
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, "Liters")
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, "Tons")
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, "Celsius")             
+                        download_File = "DefaultPage_KMH.zip"          
                     }
     
                     if(defaultPageChoice === 1) { 
-                        download_File = "DefaultPage_MPH.zip"
-                        
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, "Miles")
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, "Gallons")
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, "Pounds")
-                        replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, "Fahrenheit")                
+                        download_File = "DefaultPage_MPH.zip"               
                     }
                     
                     
@@ -694,34 +680,47 @@ function AutoUpdate() {
         let uConfig = new sJSON(`${path}/config/usercfg.json`)
         let UpdateCheck = config.UpdateCheck
         let lastVersion = config.version
+        let newversion = ""
+        let PreReleaseAllowed = uConfig.prerelease
         let NeedUpdate = false
+
+        
+        logIt("AutoUpdate", "Checking for Updates... (Searching for PreRelease allowed: " + PreReleaseAllowed + ")")
 
         try {
             
             if(UpdateCheck === true && debugMode === false || Testing === true) {   
                 axios.get('https://api.github.com/repos/NyboTV/TP_ETS2_Plugin/releases')
                 .then(async function (response) {
-
-                    if(uConfig.prerelease === true) {
-
-                    } else {
-                        response = response.data[0]
-                    }
+                    response = response.data[0]
 
                     newversion = response.tag_name.split(".")
                     lastVersion = lastVersion.split(".")
-    
-                    for(var i = 0; i < newversion.length; await timeout(20), i++) {
-                        if(newversion[i] > lastVersion[i]) {
-                            NeedUpdate = true
-                        } 
+
+                    if(response.prerelease === true && PreReleaseAllowed === true) {
+                        for(var i = 0; i < newversion.length; await timeout(20), i++) {
+                            if(newversion[i] > lastVersion[i]) {
+                                NeedUpdate = true
+                            } 
+                        }
+                    } else if(response.prerelease === false) {
+                        for(var i = 0; i < newversion.length; await timeout(20), i++) {
+                            if(newversion[i] > lastVersion[i]) {
+                                NeedUpdate = true
+                            } 
+                        }
                     }
+                    
     
                     if(NeedUpdate === true) {
                         newversion = response.tag_name
                         url = `https://github.com/NyboTV/TP_ETS2_Plugin/releases/download/${newversion}/ETS2_Dashboard.tpp`
                         download_path = process.env.USERPROFILE + "/Downloads"
-                        UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install?")
+                        if(response.prerelease === true) {
+                            UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install? (Attention! Its a Pre-Release!)")
+                        } else {
+                            UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install?")
+                        }
         
                         if(UpdateQuestion === 0) {
                             logIt("AutoUpdate", "Update starting...")
@@ -750,21 +749,9 @@ function AutoUpdate() {
                                 InstallQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "Update Downloaded and unzipped! Do you want to install it now?")
 
                                 if(InstallQuestion === 0) {
-                                                                            
-                                        try {
-                                            await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
-                                            exit()
-
-                                        } catch(e) {
-                                            console.error();
-                                        } finally {
-                                            process.exit();
-                                        }
-                                        
-                                    
-                                    
-
+                                    await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
                                     exit()
+
                                 } else if (InstallQuestion === 1) {
                                     await showDialog("info", ["Okay!", "No"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File.")
                                     resolve(true)
@@ -786,8 +773,7 @@ function AutoUpdate() {
 
                 })
                 .catch(function (error) {
-                    // handle error
-                    console.log(error);
+                    logIt("Error", error)
                 })
 
             } else {
