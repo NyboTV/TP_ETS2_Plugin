@@ -61,7 +61,6 @@ const pack = async () => {
 
     console.log("FINISHED")
     await tmp()
-    return
         
 }
 pack()
@@ -73,22 +72,22 @@ async function tmp () {
             fse.remove(`${OutputPath}`, err => { 
                 if(err) return console.error(err)
                 console.log("TMP Folder Removed")
+                resolve()
             })
         }
         
         if(fs.existsSync(`${OutputPath}`) === false) {
             fs.mkdirSync(`${OutputPath}`)
             console.log("TMP Folder Created")
+            resolve()
         }
         
         if(fs.existsSync(`${InputPath}/build/ETS2_Dashboard`)) {
             fse.removeSync(`${InputPath}/build/ETS2_Dashboard`, { recursive: true })
             console.log("ETS Folder removed")
+            resolve()
         }
 
-        setTimeout(() => {
-            resolve()
-        }, 500);
     })
 }
 

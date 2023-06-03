@@ -54,6 +54,11 @@
          "type":"text"
       },
       {
+         "name":"AutoUpdate",
+         "default":"True",
+         "type":"text"
+      },
+      {
          "name":"PreRelease",
          "default":"False",
          "type":"text"

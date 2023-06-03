@@ -17,6 +17,7 @@ const system_path = require('path');
 const axios = require('axios')
 const { exec, execFile, spawn } = require(`child_process`)
 const { exit } = require('process');
+const ProgressBar = require('electron-progressbar')
 
 
 // Important Script Vars
@@ -98,6 +99,9 @@ const plugin = async (config, uConfig, CurrencyList) => {
 
     logIt("INFO", "Checking for Missing Files...")
     // Checking for missing Files
+    if(!fs.existsSync(`${path}/tmp`)) {fs.mkdirSync(`${path}/tmp`); logIt("Missing Files", "TMP Folder was missing...")}
+
+
     let firstInstall = config.firstInstall
     CurrencyList = CurrencyList.currency_list
     
@@ -141,10 +145,9 @@ const plugin = async (config, uConfig, CurrencyList) => {
     let plugin_settings = ""
     
     
-    if(refreshInterval >= 50) {
-    } else {
-        replaceJSON(`${path}/config/cfg.json`, "refreshInterval", 50)
+    if(refreshInterval < 50) {
         logIt("WARN", "RefreshRate too low! Setting up RefreshRate...")
+        replaceJSON(`${path}/config/cfg.json`, "refreshInterval", 50)
         refreshInterval = 50
     }
 
@@ -255,8 +258,8 @@ const plugin = async (config, uConfig, CurrencyList) => {
             http.get(`http://localhost:25555/api/ets2/telemetry`, async function(err, resp, body) {
                 
                 var data = ``;
-                data = body
-                
+                data = body 
+
                 if (err != null) {
                     telemetry_status_online = false
                     
@@ -284,7 +287,7 @@ const plugin = async (config, uConfig, CurrencyList) => {
                     if(telemetry_retry === 1) {
                         resolve()
                     }
-                    logIt("WARN", `Telemetry Data Request Error! -> ${err}`)
+                    logIt("WARN", `Telemetry Data Error! -> ${err}`)
                     telemetry_retry = 1
                     async function resolveIt() {
                         await timeout(3000)
@@ -433,7 +436,9 @@ const plugin = async (config, uConfig, CurrencyList) => {
         replaceJSON(`${cfg_path}/config/usercfg.json`, `timeFormat`, data[6].Time_Format)
         replaceJSON(`${cfg_path}/config/usercfg.json`, `TruckersMPServer`, Number(data[7].TruckersMP_Server))
 
-        let PreRelease = data[8].PreRelease.toLowerCase()
+        replaceJSON(`${cfg_path}/config/cfg.json`, `UpdateCheck`, Number(data[8].AutoUpdate))
+
+        let PreRelease = data[9].PreRelease.toLowerCase()
         if(PreRelease === "true") {
             PreRelease = true
         } else {
@@ -464,7 +469,7 @@ setTimeout(async () => {
     });
      
     // Checking for Update...
-    if(system_path.basename(process.cwd()) != "ETS2_Dashboard_autoupdate") {
+    if(system_path.basename(process.cwd()) != "ETS2_Dashboard_autoupdate" && OfflineMode === false) {
         await AutoUpdate()
     } 
     
@@ -509,7 +514,7 @@ const FirstInstall = async () => {
 
                 replaceJSON(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/config/cfg.json`, "firstInstall", false)
 
-                await showDialog("info", ["Ok"], "ETS2 Dashboard", "Update Done! Please Start TouchPortal again.")
+                await showDialog("info", ["Ok"], "ETS2 Dashboard", "Update Done! You can start TouchPortal again and delete this Folder")
                 
                 exit()
 
@@ -697,6 +702,8 @@ function AutoUpdate() {
                     newversion = response.tag_name.split(".")
                     lastVersion = lastVersion.split(".")
 
+                    if(debugMode) { console.log(newversion + "  " + lastVersion) }
+
                     if(response.prerelease === true && PreReleaseAllowed === true) {
                         for(var i = 0; i < newversion.length; await timeout(20), i++) {
                             if(newversion[i] > lastVersion[i]) {
@@ -716,15 +723,21 @@ function AutoUpdate() {
                         newversion = response.tag_name
                         url = `https://github.com/NyboTV/TP_ETS2_Plugin/releases/download/${newversion}/ETS2_Dashboard.tpp`
                         download_path = process.env.USERPROFILE + "/Downloads"
+
                         if(response.prerelease === true) {
                             UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install? (Attention! Its a Pre-Release!)")
                         } else {
                             UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install?")
                         }
+
+                        var progressBar = new ProgressBar({
+                            title: "ETS2 Dashboard Update",
+                            text: 'Preparing data...',
+                        });
         
                         if(UpdateQuestion === 0) {
                             logIt("AutoUpdate", "Update starting...")
-                            showDialog("info", ["Ok"], "ETS2 Dashboard: AutoUpdater", "We downloading the Plugin. Please wait...")
+                            progressBar.detail = 'Downloading Update...';
 
                             if(fs.existsSync(`${download_path}/ETS2_Dashboard_autoupdate`)) { 
                                 try {
@@ -733,10 +746,12 @@ function AutoUpdate() {
                                     await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' folder in your Downloads Folder")
                                 }
                             }
-
+                                                        
+                            
                             download(url,download_path)
                             .then(async () => {
                                 logIt("AutoUpdate", "Download Finished!")
+                                progressBar.detail = 'Unzipping Update...';
                                 
                                 var zip = new AdmZip(`${download_path}/ETS2_Dashboard.tpp`);
                                 logIt("AutoUpdate", "Unzipping...!")
@@ -744,26 +759,39 @@ function AutoUpdate() {
                                 fs.unlinkSync(`${download_path}/ETS2_Dashboard.tpp`)
                                 fs.renameSync(`${download_path}/ETS2_Dashboard`, `${download_path}/ETS2_Dashboard_autoupdate`)
                                 logIt("AutoUpdate", "Unzip Finished!")
+                                
+                                progressBar.setCompleted()
 
+                                await timeout(200)
 
                                 InstallQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "Update Downloaded and unzipped! Do you want to install it now?")
 
                                 if(InstallQuestion === 0) {
                                     await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
+                                    logIt("AutoUpdate", "Exiting Plugin due to Update...")
                                     exit()
 
                                 } else if (InstallQuestion === 1) {
-                                    await showDialog("info", ["Okay!", "No"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File.")
+                                    await showDialog("info", ["Okay!"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File.")
                                     resolve(true)
                                 }
 
-                            })    
+                            }).catch(async (e) => {
+                                logIt("Error", "Error while Connecting to Update")
+                                logIt("Error", e)
+                                progressBar.detail("Error while downloading")
+
+                                await timeout(2000)
+                                progressBar.setCompleted()
+                            })
                             
                         } else if(UpdateQuestion === 1) {
                             logIt("AutoUpdate", "Update Skipped")
+                            progressBar.setCompleted()
                             resolve()
                         } else if(UpdateQuestion === 2) {
                             logIt("AutoUpdate", "Update Skipped. Never ask Again!")
+                            progressBar.setCompleted()
                             replaceJSON(`${path}/config/cfg.json`, "UpdateCheck", false)
                         }
                     } else {

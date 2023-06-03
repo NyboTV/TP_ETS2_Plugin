@@ -2,6 +2,17 @@
 # Changelog
 ```
 
+### Changelog 3.0.0
+- Finally AutoUpdater
+- More Settings
+- New Values
+
+### Changelog 2.8.0
+- New Gauges System
+- Bug Fixes
+- New Values
+- New Settings
+
 ### Changelog 2.5.0
 - New Interface with own GUI
 - More Settings

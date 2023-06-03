@@ -1,6 +1,6 @@
 {
   "name": "tp_ets2_plugin",
-  "version": "2.8.5",
+  "version": "3.0.0",
   "description": "ETS2 Plugin for Touch Portal",
   "main": "src/bin/plugin.js",
   "scripts": {
@@ -8,7 +8,6 @@
     "testNewFunction": "electron . --debugging --Testing",
     "testNoServerNewFunction": "electron . --debugging --noServer --Testing",
     "testNoServer": "electron . --debugging --noServer",
-    "test_exe": "npx electron-packager --overwrite --ignore='Pages' --ignore='src/data' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --test",
     "release": "npx electron-packager --overwrite --ignore='Pages' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --release"
   },
   "bin": {
@@ -51,6 +50,7 @@
     "current-currency": "^1.6.2",
     "decompress": "^4.2.1",
     "download": "^8.0.0",
+    "electron-progressbar": "^2.1.0",
     "electron-squirrel-startup": "^1.0.0",
     "express": "^4.17.2",
     "express-handlebars": "^6.0.2",
