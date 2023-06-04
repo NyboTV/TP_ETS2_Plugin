@@ -817,15 +817,6 @@ function AutoUpdate() {
     })
 }
 
-function IsJsonString(str) {
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
-
 function logIt() {
     if(fs.existsSync(`${path}/logs`) === false) {
         fs.mkdirSync(`${path}/logs`)
