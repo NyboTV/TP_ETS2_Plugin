@@ -15,58 +15,40 @@ const AdmZip = require("adm-zip");
 const download = require('download');
 const system_path = require('path');
 const axios = require('axios')
-const { exec, execFile, spawn } = require(`child_process`)
+const { exec, execFile } = require(`child_process`)
 const { exit } = require('process');
 const ProgressBar = require('electron-progressbar')
 
-
-// Important Script Vars
-let path = ""
-let cfg_path = ""
-let telemetry_path = ""
-let OfflineMode = false
-let PluginStarted = false
-
-let cpu_usage = ""
-let mem_usage = ""
-let storage_usage = ""
-
-let dirpath = process.cwd()
-let dirname = dirpath.includes(`\\src\\bin`)
-
 // Debug Section
 const debugMode = process.argv.includes("--debugging")
-const sourceTest = process.argv.includes("--sourceTest")
 const noServer = process.argv.includes("--noServer")
 const Testing = process.argv.includes("--Testing")
 
-if(debugMode) {
-    path = `./src/bin`
-    cfg_path = path
-    telemetry_path = "./src/bin/tmp"
-} else if(sourceTest) {
-    function sourcetest() {
-        setInterval(() => {
-            console.log("Still On...")
-        }, 2000)
-        return;
-    }
-    sourcetest()
-} else if(dirname) {
-    console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start...") 
-} else {
-    path = dirpath
-    cfg_path = path
-    telemetry_path = "./tmp"
-}
+// Script Vars
+let path = ""
+let cfg_path = ""
+let telemetry_path = ""
+let PluginStarted = false
+let cpu_usage = ""
+let mem_usage = ""
+let storage_usage = ""
+let settings_error = 0
+
+// Path Vars
+let dirpath = process.cwd()
+let dirname = dirpath.includes(`\\src\\bin`)
+if (debugMode) { path = `./src/bin`; /**/ cfg_path = path; /**/ telemetry_path = "./src/bin/tmp" } else { path = dirpath; /**/ cfg_path = path; /**/ telemetry_path = "./tmp"; }
+if (dirname) {vconsole.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start..."); exit() } 
+let OfflineMode = JSON.parse(fs.readFileSync(`${path}/config/cfg.json`)).OfflineMode
+
 
 // Checks and creates if neccessary Logs Folder
-if(fs.existsSync(`./logs`)) {  } else { fs.mkdirSync(`./logs`) }
+if (!fs.existsSync(`./logs`)) { fs.mkdirSync(`./logs`) }
 
 logIt("INFO", "Starting...")
 
 const configs = async () => {
-    
+
     logIt("CONFIG", "Loading `Config Files`...")
     // Script Files
     let config = new sJSON(`${path}/config/cfg.json`)
@@ -78,38 +60,43 @@ const configs = async () => {
     logIt("INFO", "Loading `Plugin`...")
     plugin(config, uConfig, CurrencyList)
 
-     setTimeout(async () => {
-        
-        for(var i = 0; i < Infinity; await timeout(2000), i++) {
-            if(fs.existsSync(telemetry_path + "/truckersMP_TMP.json")) {
-                try {
-                    TruckersMP_tmp = new sJSON(`${telemetry_path}/truckersMP_TMP.json`)
-                    logIt("TRUCKERSMP", "TMP File found and loaded!")
-                    return
-                } catch (error) {
-                    logIt("ERROR", "TruckersMP TMP File Error!")
+    for (var i = 0; i < Infinity; await timeout(2000), i++) {
+        if (fs.existsSync(telemetry_path + "/truckersMP_TMP.json")) {
+            try {
+                TruckersMP_tmp = new sJSON(`${telemetry_path}/truckersMP_TMP.json`)
+                logIt("TRUCKERSMP", "TMP File found and loaded!")
+                return
+            } catch (error) {
+                logIt("ERROR", "TruckersMP TMP File Error! Retry: " + i + 1)
+                if (i === 2) {
+                    logIt("ERROR", "After 3 Retrys, TruckersMP disabled.")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, false)
                 }
             }
         }
-    }, 200);
+    }
 }
 
+
 const plugin = async (config, uConfig, CurrencyList) => {
-    
+
 
     logIt("INFO", "Checking for Missing Files...")
     // Checking for missing Files
-    if(!fs.existsSync(`${path}/tmp`)) {fs.mkdirSync(`${path}/tmp`); logIt("Missing Files", "TMP Folder was missing...")}
+    if (!fs.existsSync(`${path}/tmp`)) {
+        fs.mkdirSync(`${path}/tmp`);
+        logIt("Missing Files", "TMP Folder was missing...")
+    }
 
 
     let firstInstall = config.firstInstall
     CurrencyList = CurrencyList.currency_list
-    
-    if(firstInstall === true) {
-        if(debugMode && Testing === false) {
+
+    if (firstInstall === true) {
+        if (debugMode && Testing === false) {
             logIt("INFO", "Skipping First Install due to DebugMode")
         } else {
-            if(await FirstInstall()) {
+            if (await FirstInstall()) {
                 replaceJSON(`${path}/config/cfg.json`, "firstInstall", false)
             }
         }
@@ -130,22 +117,22 @@ const plugin = async (config, uConfig, CurrencyList) => {
     const truckStates = require(`./modules/states/truck`);
     const truckersmpStates = require(`./modules/states/truckersmp`);
     const worldStates = require(`./modules/states/world`);
-    
-    
+
+
     logIt("INFO", "Loading `Script Vars`...")
     // Script Vars
     let telemetry = ""
     let telemetry_retry = 0
     let telemetry_retry_start = 0
     let refreshInterval = config.refreshInterval
-    
+
     let telemetry_status = false
     let telemetry_status_online = false
     let pluginId = pluginID
     let plugin_settings = ""
-    
-    
-    if(refreshInterval < 50) {
+
+
+    if (refreshInterval < 50) {
         logIt("WARN", "RefreshRate too low! Setting up RefreshRate...")
         replaceJSON(`${path}/config/cfg.json`, "refreshInterval", 50)
         refreshInterval = 50
@@ -153,7 +140,7 @@ const plugin = async (config, uConfig, CurrencyList) => {
 
     // Modules Loader
     function main_loader() {
-        
+
         // Pre Start Stuff
         usage()
 
@@ -161,38 +148,38 @@ const plugin = async (config, uConfig, CurrencyList) => {
         const telemetry_loop = async () => {
             telemetry_status = await Telemetry_Status()
             await Telemetry_Request(telemetry_status)
-            
+
             await timeout(refreshInterval)
             telemetry_loop()
         }
-        
-        
+
+
         const main_loop = async () => {
-            if(noServer) {
+            if (noServer) {
                 telemetry_status_online = true
             }
 
-            if(telemetry_status_online === false) {
+            if (telemetry_status_online === false) {
                 await timeout(refreshInterval)
                 main_loop()
             } else
-            modules()
+                modules()
         }
-        
+
         logIt("INFO", "Loading `Telemetry Server`...")
-        if(noServer === false) {
+        if (noServer === false) {
             telemetry_loop()
         }
         logIt("INFO", "Loading `Modules`...")
         main_loop()
     }
-    
+
     // Modules
     async function modules() {
         await timeout(200) // Let the Plugin Load up
 
         await mainStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings)
-        await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings) 
+        await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings)
         await gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings)
         await gaugeStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings)
         await jobStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings, OfflineMode)
@@ -207,277 +194,258 @@ const plugin = async (config, uConfig, CurrencyList) => {
         logIt("INFO", "Starting Loop.")
         PluginOnline = true
     }
-    
-    
+
+
     // Telemetry Section
     function Telemetry_Status() {
         return new Promise(async (resolve) => {
-            
+
             const isRunning = (query, cb) => {
-                let platform = process.platform;
-                let cmd = ``;
-                switch (platform) {
-                    case `win32` : cmd = `tasklist`; break;
-                    case `darwin` : cmd = `ps -ax | grep ${query}`; break;
-                    case `linux` : cmd = `ps -A`; break;
-                    default: break;
-                }
-                exec(cmd, (err, stdout, stderr) => {
+                exec('tasklist', (err, stdout, stderr) => {
                     cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
                 });
             }
-            
+
             isRunning(`Ets2Telemetry.exe`, (status) => {
-                if(status) {
+                if (status) {
                     resolve(status)
                     telemetry_retry_start = 0
                 } else {
-                    if(telemetry_retry_start === 0) {
+                    if (telemetry_retry_start === 0) {
                         telemetry_status_online = false
                         execFile(`${path}/server/Ets2Telemetry.exe`, function(err, data) {
                             logIt("ERROR", err)
-                            logIt("ERROR",data.toString())
+                            logIt("ERROR", data.toString())
                         });
                         telemetry_retry_start = 1
                     }
                     resolve(status)
                 }
-            })    
+            })
         })
     }
 
     function Telemetry_Request(status) {
         return new Promise(async (resolve) => {
-            
-            if(status === false) {
+
+            if (status === false) {
                 telemetry_retry = 0
                 resolve()
                 return
-            } else 
-            
-            http.get(`http://localhost:25555/api/ets2/telemetry`, async function(err, resp, body) {
-                
-                var data = ``;
-                data = body 
+            } else
 
-                if (err != null) {
-                    telemetry_status_online = false
-                    
-                    if(telemetry_retry === 1) {
-                        resolve()
-                    }
-                    logIt("WARN", `Telemetry Request Error! -> ${err}`)
-                    telemetry_retry = 1
-                    
-                    await timeout(3000)
-                    resolve()
-                    
-                } else
-                
-                try {
-                    data = JSON.parse(data)
-                    telemetry = JSON.stringify(data)                    
-                    telemetry_retry = 0
-                    telemetry_status_online = true
-                    fs.writeFileSync(`${telemetry_path}/tmp.json`, `${telemetry}`, `utf8`)
-                    resolve()
-                } catch (error) {
-                    telemetry_status_online = false
-                    
-                    if(telemetry_retry === 1) {
-                        resolve()
-                    }
-                    logIt("WARN", `Telemetry Data Error! -> ${err}`)
-                    telemetry_retry = 1
-                    async function resolveIt() {
+                http.get(`http://localhost:25555/api/ets2/telemetry`, async function(err, resp, body) {
+
+                    var data = ``;
+                    data = body
+
+                    if (err != null) {
+                        telemetry_status_online = false
+
+                        if (telemetry_retry === 1) {
+                            resolve()
+                        }
+                        logIt("WARN", `Telemetry Request Error! -> ${err}`)
+                        telemetry_retry = 1
+
                         await timeout(3000)
                         resolve()
-                    }
-                    resolveIt()   
-                }
-            })
+
+                    } else
+
+                        try {
+                            data = JSON.parse(data)
+                            telemetry = JSON.stringify(data)
+                            telemetry_retry = 0
+                            telemetry_status_online = true
+                            fs.writeFileSync(`${telemetry_path}/tmp.json`, `${telemetry}`, `utf8`)
+                            resolve()
+                        } catch (error) {
+                            telemetry_status_online = false
+
+                            if (telemetry_retry === 1) {
+                                resolve()
+                            }
+                            logIt("WARN", `Telemetry Data Error! -> ${err}`)
+                            telemetry_retry = 1
+                            async function resolveIt() {
+                                await timeout(3000)
+                                resolve()
+                            }
+                            resolveIt()
+                        }
+                })
         })
     }
-    
-    
+
+
     // TouchPortal Info 
-    TPClient.on("Info", async(data) => {
+    TPClient.on("Info", async (data) => {
         // Start
         logIt("INFO", "Loading 'Main Loader'...")
         main_loader()
     });
 
-    TPClient.on("Action", async (data,hold) => {
-        
-        switch (data.actionId) {
-
-
-            case `settings`:
-                open_settings = true
-            break;
-
-
-            case `setting_speed`:
-                let units = [
-                    "Miles",
-                    "Kilometer"
-                ]
-                
-                
-                var position = units.indexOf(uConfig.Basics.unit)
-                
-                var unit = units[position + 1]
-                
-                if(unit === undefined) {
-                    unit = "Miles"
-                }
-                
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, `${unit}`)
-                
-            break;
-                
-            case 'setting_fluid':
-                
-                let fluids = [
-                    "Galons",
-                    "Liters"
-                ]
-                
-                var position = fluids.indexOf(uConfig.Basics.fluid)
-                
-                var fluid = fluids[position + 1]
-                
-                if(fluid === undefined) {
-                    fluid = "Galons"
-                }
-                
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, `${fluid}`)
-            break;
-                
-            case `setting_weight`:
-                let weights = [
-                    "Tons",
-                    "Pounds"
-                ]
-                
-                var position = weights.indexOf(uConfig.Basics.weight)
-                
-                var weight = weights[position + 1]
-                
-                if(weight === undefined) {
-                    weight = "Tons"
-                }
-                
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, `${weight}`)
-                
-            break;
-
-            case `setting_temp`:
-                let temps = [
-                    "Celsius",
-                    "Fahrenheit"
-                ]
-                
-                var position = temps.indexOf(uConfig.Basics.temp)
-                
-                var temp = temps[position + 1]
-                
-                if(temp === undefined) {
-                    temp = "Celsius"
-                }
-                
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, `${temp}`)
-                
-            break;
-                
-        }
+    TPClient.on("Action", async (data, hold) => {
 
     })
-
-    TPClient.on("Update", (curVersion, remoteVersion) => {
-
-        let optionsArray = [
-          {
-            "id":`${pluginId} Update`,
-            "title":"Take Me to Download"
-          },
-          {
-            "id":`${pluginId} Ignore`,
-            "title":"Ignore Update"
-          }
-        ];
     
-        TPClient.sendNotification(`${pluginId} UpdateNotification`,"My Plugin has been updated", `A new version of my plugin ${remoteVersion} is available to download`, optionsArray);
-    });
-
-
     TPClient.on("Settings", async (data) => {
-        
+
         replaceJSON(`${cfg_path}/config/cfg.json`, `refreshInterval`, Number(data[0].Refresh_Interval))
 
-        for(var i = 0; i < CurrencyList.length; await timeout(10), i++) {
-            if(CurrencyList[i] === data[1].Currency) {
+        for (var i = 0; i < CurrencyList.length; await timeout(10), i++) {
+            if (CurrencyList[i] === data[1].Currency) {
                 replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${data[1].Currency}`)
 
                 break
             } else {
-                if(i === CurrencyList.length-1) {
-                    logIt("INFO", "Currency not Found! Using Default!")                    
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `EUR`) 
+                if (i === CurrencyList.length - 1) {
+                    logIt("INFO", "Currency not Found! Using Default!")
+                    replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `EUR`)
+                    settings_error = settings_error+1
                     break
                 }
             }
         }
 
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, data[2].Unit)
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, data[3].Fluid)
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, data[4].Weight)
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, data[5].Temperature)
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `timeFormat`, data[6].Time_Format)
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `TruckersMPServer`, Number(data[7].TruckersMP_Server))
-
-        replaceJSON(`${cfg_path}/config/cfg.json`, `UpdateCheck`, Number(data[8].AutoUpdate))
-
-        let PreRelease = data[9].PreRelease.toLowerCase()
-        if(PreRelease === "true") {
-            PreRelease = true
-        } else {
-            PreRelease = false
+        switch (data[2].Unit.toLowerCase()) {
+            case 'kilometer':
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, data[2].Unit)
+                break;
+            case 'miles':
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, data[2].Unit)
+                break;
+            default:
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `unit`, "Kilometer")
+                logIt("SETTINGS", "Warning: " + data[2].Unit + " not Found! Setting Default Unit.")
+                settings_error = settings_error+1
         }
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `prerelease`, PreRelease)
+
+        switch (data[3].Fluid.toLowerCase()) {
+            case 'liters':
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, data[3].Fluid)
+                break;
+            case 'galons':    
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, data[3].Fluid)
+                break;
+            default:
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `fluid`, "Liters")   
+                logIt("SETTINGS", "Warning: " + data[3].Fluid + " not found! Setting Default Fluid.")             
+                settings_error = settings_error+1
+        }
+
+        switch (data[4].Weight.toLowerCase()) {
+            case "tons":
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, data[4].Weight)
+                break;
+            case "pounds":
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, data[4].Weight)
+                break;
+            default:
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `weight`, "Tons")
+                logIt("SETTINGS", "Warning: " + data[4].Weight + " not Found. Setting Default Weight.")
+                settings_error = settings_error+1
+        }
+
+        switch (data[5].Temperature.toLowerCase()) {
+            case "celsius": 
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, data[5].Temperature)
+                break;
+            case "fahrenheit":
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, data[5].Temperature)
+                break;
+            default:
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `temp`, "Celsius")
+                logIt("SETTINGS", "Warning: " + data[5].Temperature + " not Found! Setting Default Temperature.")
+                settings_error = settings_error+1
+        }
+
+        switch (data[6].Time_Format.toLowerCase()) {
+            case "us": 
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `timeFormat`, data[6].Time_Format)
+                break;
+            case "eu":
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `timeFormat`, data[6].Time_Format)
+                break;
+            default:
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `timeFormat`, "EU")
+                logIt("SETTINGS", "Warning: " + data[6].Time_Format + " not Found! Setting Default Time Format.")
+                settings_error = settings_error+1
+        }
+
+        switch (data[8].AutoUpdate.toLowerCase()) {
+            case "true":
+                replaceJSON(`${cfg_path}/config/cfg.json`, `UpdateCheck`, true)
+                break;
+            case "false":
+                replaceJSON(`${cfg_path}/config/cfg.json`, `UpdateCheck`, false)
+                break;
+            default:
+                settings_error = settings_error+1
+        }
+
+        switch (data[9].PreRelease.toLowerCase()) {
+            case "true":
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `PreRelease`, true)
+                break;
+            case "false":
+                replaceJSON(`${cfg_path}/config/usercfg.json`, `PreRelease`, false)
+                break;
+            default:
+                settings_error = settings_error+1
+        }
+
+        switch (data[10].OfflineMode.toLowerCase()) {
+            case "true":
+                replaceJSON(`${cfg_path}/config/cfg.json`, `OfflineMode`, true)
+                break;
+            case "false":
+                replaceJSON(`${cfg_path}/config/cfg.json`, `OfflineMode`, false)
+                break;
+            default:
+                settings_error = settings_error+1
+        }
+
+        if(settings_error >= 1) {
+            showDialog("error", ["Ok"], "ETS2 Dashboard Settings", "Hey! You messed something up in the Settings! Please check them! Meanwhile we are using the Default Settings to prevent Crashes. Read more on Github.")
+        }
 
     });
 
     logIt("INFO", "Connecting to `Touch Portal`...")
-    TPClient.connect({pluginId})
+    TPClient.connect({
+        pluginId
+    })
 }
 
 // Beginning of Script | Checks Internet
 setTimeout(async () => {
 
-    await checkInternetConnected()
-    .then((result) => {
-        logIt("INFO", "Internet Connected!")
-    })
-    .catch((ex) => {
-        logIt("INFO", "No Internet Connection!")
-        OfflineMode = true
+    if(OfflineMode === false) {
+        await checkInternetConnected()
+        .then((result) => {
+            logIt("INFO", "Internet Connected!")
+        })
+        .catch((ex) => {
+            logIt("INFO", "No Internet Connection!")
+            OfflineMode = true
+            
+            logIt("WARN", "Disable TruckersMP states to prevent errors...")
+            replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, false)
+        });
         
-        logIt("WARN", "Disable TruckersMP states to prevent errors...")
-        
-        replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, false)
-    });
-     
-    // Checking for Update...
-    if(system_path.basename(process.cwd()) != "ETS2_Dashboard_autoupdate" && OfflineMode === false) {
-        await AutoUpdate()
-    } 
-    
+        // Checking for Update...
+        if (system_path.basename(process.cwd()) != "ETS2_Dashboard_autoupdate" && OfflineMode === false) {
+            await AutoUpdate()
+        }
+    }
+
     //Loading Configs
     configs()
-    
+
 }, 100);
-    
+
 // Other Function
 function timeout(ms) {
     return new Promise(async (resolve, reject) => {
@@ -491,12 +459,13 @@ function timeout(ms) {
 const FirstInstall = async () => {
     return new Promise(async (resolve, reject) => {
 
-        if(system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate") {
+        // Outside of TP Updating in TP Folder
+        if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate") {
             logIt("AutoUpdate", "AutoUpdate Detected...")
 
             UpdateQuestion = await showDialog("warning", ["Yes", "No"], "ETS2 Dashboard", "Do you want to Update your Plugin?")
 
-            if(UpdateQuestion === 0) {
+            if (UpdateQuestion === 0) {
 
                 await showDialog("warning", ["Done"], "ETS2 Dashboard", "Please fully Close TouchPortal! Remember: Its getting minimized in your System-Tray!")
 
@@ -504,18 +473,23 @@ const FirstInstall = async () => {
 
                 async function delete_Plugin() {
 
-                    fs.rmSync(TP_path, { recursive: true, force: true })
-                    
+                    fs.rmSync(TP_path, {
+                        recursive: true,
+                        force: true
+                    })
+
                 }
 
                 await delete_Plugin()
 
-                fse.copySync(process.env.USERPROFILE + "/Downloads/ETS2_Dashboard_autoupdate", TP_path, { overwrite: true })
+                fse.copySync(process.env.USERPROFILE + "/Downloads/ETS2_Dashboard_autoupdate", TP_path, {
+                    overwrite: true
+                })
 
                 replaceJSON(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/config/cfg.json`, "firstInstall", false)
 
                 await showDialog("info", ["Ok"], "ETS2 Dashboard", "Update Done! You can start TouchPortal again and delete this Folder")
-                
+
                 exit()
 
             } else if (UpdateQuestion === 1) {
@@ -526,11 +500,11 @@ const FirstInstall = async () => {
         } else {
 
             logIt("FirstInstall", "First Install Script started...")
-    
+
             // Telemetry Server first Install
             logIt("FirstInstall", "Asking for Telemetry Server...")
             telemetryInstall = await showDialog("info", ["No. Let me do the First Steps", "Yes, im good"], "ETS2 Dashboard Plugin: First Install Detected!", "Hi! Did you ever used this Plugin before?")
-            if(telemetryInstall === 0) {
+            if (telemetryInstall === 0) {
                 logIt("FirstInstall", "Installing Telemetry Server...")
                 require('child_process').exec('start "" "%appdata%/TouchPortal/plugins/ETS2_Dashboard/server"');
                 await timeout(500)
@@ -538,47 +512,47 @@ const FirstInstall = async () => {
             } else {
                 logIt("FirstInstall", "Telemetry already installed.")
             }
-    
-    
+
+
             // Default page
-            if(OfflineMode === false) {
+            if (OfflineMode === false) {
                 logIt("FirstInstall", "Asking Player for Default Page")
                 defaultPageChoice = await showDialog("question", ["Yes, the KMH Version.", "Yes, the MPH Version", "No, Thanks"], "ETS2 Dashboard Plugin: First Install Detected!", "We have a Default Page for new Users! Do you want to install it?")
-                if(defaultPageChoice === 0 || defaultPageChoice === 1) {
+                if (defaultPageChoice === 0 || defaultPageChoice === 1) {
                     logIt("FirstInstall", "Downloading Default Page")
-    
+
                     download_File = ""
-                    if(defaultPageChoice === 0) {  
-                        download_File = "DefaultPage_KMH.zip"          
+                    if (defaultPageChoice === 0) {
+                        download_File = "DefaultPage_KMH.zip"
                     }
-    
-                    if(defaultPageChoice === 1) { 
-                        download_File = "DefaultPage_MPH.zip"               
+
+                    if (defaultPageChoice === 1) {
+                        download_File = "DefaultPage_MPH.zip"
                     }
-                    
-                    
-                    url = "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/"+download_File
-                    download_path = process.env.APPDATA + `/TouchPortal/plugins/ETS2_Dashboard/tmp/`; 
-                    
+
+
+                    url = "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/" + download_File
+                    download_path = process.env.APPDATA + `/TouchPortal/plugins/ETS2_Dashboard/tmp/`;
+
                     try {
-                        download(url,download_path)
-                        .then(async () => {
-                            logIt("FirstInstall", "Download Finished!")
-                
-                            var zip = new AdmZip(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/${download_File}`);
-                            logIt("FirstInstall", "Unzipping...")
-                            zip.extractAllTo(`${process.env.APPDATA}/TouchPortal/`)
-                            logIt("FirstInstall", "Unzip Finished! Deleting tmp File")
-                            fs.unlinkSync(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/${download_File}`)
-                
-                            logIt("FirstInstall", "Install Finished!")
-                            await showDialog("info",["Okay!", "Restart now! (Not a thing yet!)"], "ETS2 Dashboard Plugin: First Install Detected!", "Please Restart TouchPortal to see the Default Page.")
-                            resolve(true)
-                        })
+                        download(url, download_path)
+                            .then(async () => {
+                                logIt("FirstInstall", "Download Finished!")
+
+                                var zip = new AdmZip(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/${download_File}`);
+                                logIt("FirstInstall", "Unzipping...")
+                                zip.extractAllTo(`${process.env.APPDATA}/TouchPortal/`)
+                                logIt("FirstInstall", "Unzip Finished! Deleting tmp File")
+                                fs.unlinkSync(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/${download_File}`)
+
+                                logIt("FirstInstall", "Install Finished!")
+                                await showDialog("info", ["Okay!", "Restart now! (Not a thing yet!)"], "ETS2 Dashboard Plugin: First Install Detected!", "Please Restart TouchPortal to see the Default Page.")
+                                resolve(true)
+                            })
                     } catch (e) {
                         logIt("FirstInstall", "Error while First Setup!! \n" + e)
                     }
-                    
+
                 } else {
                     logIt("FirstInstall", "Default Page install skipped...")
                     resolve(true)
@@ -590,23 +564,25 @@ const FirstInstall = async () => {
     })
 }
 
-async function usage () {
+async function usage() {
     let cpu_usageOld = ""
     let mem_usageOld = ""
     let storage_usageOld = ""
 
     for (var i = 0; i < Infinity; await timeout(1500), i++) {
-        pid(process.pid, async function (err, stats) {
+        pid(process.pid, async function(err, stats) {
             cpu_usage = Math.round(stats.cpu * 100) / 100 + "%"
             mem_usage = Math.round(stats.memory / 1024 / 1024) + " MB"
 
             getFolderSize(dirpath, function(err, size) {
-                if (err) { throw err; }
-              
-                
+                if (err) {
+                    throw err;
+                }
+
+
                 storage_usage = size
                 storage_usage = (storage_usage / 1000 / 1000).toFixed(2)
-                if(storage_usage >= 1000) {
+                if (storage_usage >= 1000) {
                     storage_usage = (storage_usage / 1000).toFixed(2) + " GB"
                 } else {
                     storage_usage = storage_usage + " MB"
@@ -614,12 +590,12 @@ async function usage () {
             });
         })
 
-        if(PluginStarted === true) {
+        if (PluginStarted === true) {
             states = []
 
-            if(cpu_usage !== cpu_usageOld) {
+            if (cpu_usage !== cpu_usageOld) {
                 cpu_usageOld = cpu_usage
-    
+
                 var data = {
                     id: "Nybo.ETS2.Usage.CPU_Usage",
                     value: `${cpu_usage}`
@@ -628,7 +604,7 @@ async function usage () {
                 states.push(data)
             }
 
-            if(mem_usage !== mem_usageOld) {
+            if (mem_usage !== mem_usageOld) {
                 mem_usageOld = mem_usage
 
                 var data = {
@@ -640,9 +616,9 @@ async function usage () {
 
             }
 
-            if(storage_usage !== storage_usageOld) {
+            if (storage_usage !== storage_usageOld) {
                 storage_usageOld = storage_usage
-                
+
                 var data = {
                     id: "Nybo.ETS2.Usage.Storage_Usage",
                     value: `${storage_usage}`
@@ -653,7 +629,7 @@ async function usage () {
             }
 
             try {
-                if(states.length > 0) {
+                if (states.length > 0) {
                     TPClient.stateUpdateMany(states);
                 }
             } catch (error) {
@@ -665,15 +641,15 @@ async function usage () {
 }
 
 function showDialog(type, buttons, title, message) {
-    return new Promise(async (resolve, reject) => { 
+    return new Promise(async (resolve, reject) => {
 
-        let data  = {
+        let data = {
             type: type,
             buttons: buttons,
             title: title,
             message: message
         }
-        
+
         resolve(dialog.showMessageBoxSync(data))
 
     })
@@ -689,120 +665,120 @@ function AutoUpdate() {
         let PreReleaseAllowed = uConfig.prerelease
         let NeedUpdate = false
 
-        
-        logIt("AutoUpdate", "Checking for Updates... (Searching for PreRelease allowed: " + PreReleaseAllowed + ")")
-
         try {
-            
-            if(UpdateCheck === true && debugMode === false || Testing === true) {   
+            if (UpdateCheck === true && debugMode === false || Testing === true) {
+                logIt("AutoUpdate", "Checking for Updates... (Searching for PreRelease allowed: " + PreReleaseAllowed + ")")
+
                 axios.get('https://api.github.com/repos/NyboTV/TP_ETS2_Plugin/releases')
-                .then(async function (response) {
-                    response = response.data[0]
+                    .then(async function(response) {
+                        response = response.data[0]
 
-                    newversion = response.tag_name.split(".")
-                    lastVersion = lastVersion.split(".")
+                        newversion = response.tag_name.split(".")
+                        lastVersion = lastVersion.split(".")
 
-                    if(debugMode) { console.log(newversion + "  " + lastVersion) }
-
-                    if(response.prerelease === true && PreReleaseAllowed === true) {
-                        for(var i = 0; i < newversion.length; await timeout(20), i++) {
-                            if(newversion[i] > lastVersion[i]) {
-                                NeedUpdate = true
-                            } 
-                        }
-                    } else if(response.prerelease === false) {
-                        for(var i = 0; i < newversion.length; await timeout(20), i++) {
-                            if(newversion[i] > lastVersion[i]) {
-                                NeedUpdate = true
-                            } 
-                        }
-                    }
-                    
-    
-                    if(NeedUpdate === true) {
-                        newversion = response.tag_name
-                        url = `https://github.com/NyboTV/TP_ETS2_Plugin/releases/download/${newversion}/ETS2_Dashboard.tpp`
-                        download_path = process.env.USERPROFILE + "/Downloads"
-
-                        if(response.prerelease === true) {
-                            UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install? (Attention! Its a Pre-Release!)")
-                        } else {
-                            UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install?")
+                        if (debugMode) {
+                            console.log(newversion + "  " + lastVersion)
                         }
 
-                        var progressBar = new ProgressBar({
-                            title: "ETS2 Dashboard Update",
-                            text: 'Preparing data...',
-                        });
-        
-                        if(UpdateQuestion === 0) {
-                            logIt("AutoUpdate", "Update starting...")
-                            progressBar.detail = 'Downloading Update...';
-
-                            if(fs.existsSync(`${download_path}/ETS2_Dashboard_autoupdate`)) { 
-                                try {
-                                    fs.unlinkSync(`${download_path}/ETS2_Dashboard_autoupdate`) 
-                                } catch (e) {
-                                    await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' folder in your Downloads Folder")
+                        if (response.prerelease === true && PreReleaseAllowed === true) {
+                            for (var i = 0; i < newversion.length; await timeout(20), i++) {
+                                if (newversion[i] > lastVersion[i]) {
+                                    NeedUpdate = true
                                 }
                             }
-                                                        
-                            
-                            download(url,download_path)
-                            .then(async () => {
-                                logIt("AutoUpdate", "Download Finished!")
-                                progressBar.detail = 'Unzipping Update...';
-                                
-                                var zip = new AdmZip(`${download_path}/ETS2_Dashboard.tpp`);
-                                logIt("AutoUpdate", "Unzipping...!")
-                                zip.extractAllTo(`${download_path}`)
-                                fs.unlinkSync(`${download_path}/ETS2_Dashboard.tpp`)
-                                fs.renameSync(`${download_path}/ETS2_Dashboard`, `${download_path}/ETS2_Dashboard_autoupdate`)
-                                logIt("AutoUpdate", "Unzip Finished!")
-                                
-                                progressBar.setCompleted()
+                        } else if (response.prerelease === false) {
+                            for (var i = 0; i < newversion.length; await timeout(20), i++) {
+                                if (newversion[i] > lastVersion[i]) {
+                                    NeedUpdate = true
+                                }
+                            }
+                        }
 
-                                await timeout(200)
 
-                                InstallQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "Update Downloaded and unzipped! Do you want to install it now?")
+                        if (NeedUpdate === true) {
+                            newversion = response.tag_name
+                            url = `https://github.com/NyboTV/TP_ETS2_Plugin/releases/download/${newversion}/ETS2_Dashboard.tpp`
+                            download_path = process.env.USERPROFILE + "/Downloads"
 
-                                if(InstallQuestion === 0) {
-                                    await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
-                                    logIt("AutoUpdate", "Exiting Plugin due to Update...")
-                                    exit()
+                            if (response.prerelease === true) {
+                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install? (Attention! Its a Pre-Release!)")
+                            } else {
+                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install?")
+                            }
 
-                                } else if (InstallQuestion === 1) {
-                                    await showDialog("info", ["Okay!"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File.")
-                                    resolve(true)
+                            var progressBar = new ProgressBar({
+                                title: "ETS2 Dashboard Update",
+                                text: 'Preparing data...',
+                            });
+
+                            if (UpdateQuestion === 0) {
+                                logIt("AutoUpdate", "Update starting...")
+                                progressBar.detail = 'Downloading Update...';
+
+                                if (fs.existsSync(`${download_path}/ETS2_Dashboard_autoupdate`)) {
+                                    try {
+                                        fs.unlinkSync(`${download_path}/ETS2_Dashboard_autoupdate`)
+                                    } catch (e) {
+                                        await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' folder in your Downloads Folder")
+                                    }
                                 }
 
-                            }).catch(async (e) => {
-                                logIt("Error", "Error while Connecting to Update")
-                                logIt("Error", e)
-                                progressBar.detail("Error while downloading")
 
-                                await timeout(2000)
+                                download(url, download_path)
+                                    .then(async () => {
+                                        logIt("AutoUpdate", "Download Finished!")
+                                        progressBar.detail = 'Unzipping Update...';
+
+                                        var zip = new AdmZip(`${download_path}/ETS2_Dashboard.tpp`);
+                                        logIt("AutoUpdate", "Unzipping...!")
+                                        zip.extractAllTo(`${download_path}`)
+                                        fs.unlinkSync(`${download_path}/ETS2_Dashboard.tpp`)
+                                        fs.renameSync(`${download_path}/ETS2_Dashboard`, `${download_path}/ETS2_Dashboard_autoupdate`)
+                                        logIt("AutoUpdate", "Unzip Finished!")
+
+                                        progressBar.setCompleted()
+
+                                        await timeout(200)
+
+                                        InstallQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "Update Downloaded and unzipped! Do you want to install it now?")
+
+                                        if (InstallQuestion === 0) {
+                                            await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
+                                            logIt("AutoUpdate", "Exiting Plugin due to Update...")
+                                            exit()
+
+                                        } else if (InstallQuestion === 1) {
+                                            await showDialog("info", ["Okay!"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File.")
+                                            resolve(true)
+                                        }
+
+                                    }).catch(async (e) => {
+                                        logIt("Error", "Error while Connecting to Update")
+                                        logIt("Error", e)
+                                        progressBar.detail("Error while downloading")
+
+                                        await timeout(2000)
+                                        progressBar.setCompleted()
+                                    })
+
+                            } else if (UpdateQuestion === 1) {
+                                logIt("AutoUpdate", "Update Skipped")
                                 progressBar.setCompleted()
-                            })
-                            
-                        } else if(UpdateQuestion === 1) {
-                            logIt("AutoUpdate", "Update Skipped")
-                            progressBar.setCompleted()
+                                resolve()
+                            } else if (UpdateQuestion === 2) {
+                                logIt("AutoUpdate", "Update Skipped. Never ask Again!")
+                                progressBar.setCompleted()
+                                replaceJSON(`${path}/config/cfg.json`, "UpdateCheck", false)
+                            }
+                        } else {
+                            logIt("AutoUpdate", "No Update Found.")
                             resolve()
-                        } else if(UpdateQuestion === 2) {
-                            logIt("AutoUpdate", "Update Skipped. Never ask Again!")
-                            progressBar.setCompleted()
-                            replaceJSON(`${path}/config/cfg.json`, "UpdateCheck", false)
                         }
-                    } else {
-                        logIt("AutoUpdate", "No Update Found.")
-                        resolve()
-                    }
 
-                })
-                .catch(function (error) {
-                    logIt("Error", error)
-                })
+                    })
+                    .catch(function(error) {
+                        logIt("Error", error)
+                    })
 
             } else {
                 logIt("AutoUpdater", "Disabled")
@@ -818,10 +794,10 @@ function AutoUpdate() {
 }
 
 function logIt() {
-    if(fs.existsSync(`${path}/logs`) === false) {
+    if (fs.existsSync(`${path}/logs`) === false) {
         fs.mkdirSync(`${path}/logs`)
     }
-    if(PluginStarted === false) {
+    if (PluginStarted === false) {
         fs.writeFileSync(`${path}/logs/latest.log`, "Plugin Started")
         PluginStarted = true
     }
@@ -836,4 +812,3 @@ function logIt() {
     console.log(curTime, ":", pluginID, ":" + type + ":", message.join(" "));
     fs.appendFileSync(`${path}/logs/latest.log`, `\n${curTime}:${pluginID}:${type}:${message.join(" ")}`)
 }
-    

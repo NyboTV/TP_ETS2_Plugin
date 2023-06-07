@@ -62,6 +62,11 @@
          "name":"PreRelease",
          "default":"False",
          "type":"text"
+      },
+      {
+         "name":"OfflineMode",
+         "default":"False",
+         "type":"text"
       }
 
    ],
