@@ -64,7 +64,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 title: "ETS2 Dashboard Update",
                                 text: 'Preparing data...',
                                 indeterminate: false,
-                                maxValue: 6
+                                maxValue: 6+1
                             });
                             
                             progressBar.value += 1
@@ -132,7 +132,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 title: "ETS2 Dashboard Update",
                                 text: 'Deleting data...',
                                 indeterminate: false,
-                                maxValue: FolderSize
+                                maxValue: FolderSize+1
                             });
                             
                             progressBar2.value +=1
@@ -192,7 +192,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 title: "ETS2 Dashboard Update",
                                 text: 'Copying data...',
                                 indeterminate: false,
-                                maxValue: FolderSize
+                                maxValue: FolderSize+1
                             });
                             
                             progressBar3.value +=1
@@ -235,6 +235,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 await timeout(200)
                                 resolve()
                             })
+
                         })
                     }
     

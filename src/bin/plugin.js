@@ -16,7 +16,6 @@ const AdmZip = require("adm-zip");
 // Import System Modules
 const { exit } = require('process');
 // Import Electron Modules
-const { dialog } = require('electron')
 const ProgressBar = require('electron-progressbar')
 // import Custom Modules
 const logIt = require('./modules/script/logIt') 
@@ -50,10 +49,10 @@ const Testing = process.argv.includes("--testing")
 let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
 if (debugMode) { path = `./src/bin`; /**/ cfg_path = path; /**/ telemetry_path = "./src/bin/tmp" } else { path = dirpath; /**/ cfg_path = path; /**/ telemetry_path = "./tmp"; }
-if (dirname) {vconsole.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start..."); exit() } 
+if (dirname) {console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start..."); exit() } 
 
 // First Setup Folder Creation
-if(!fs.existsSync(path+"/tmp")) return fs.mkdirSync(path+"/tmp")
+if(!fs.existsSync(`${path}/tmp`)) { fs.mkdirSync(`${path}/tmp`) }
 
 const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyList, uConfig, refreshInterval, OfflineMode) => {
     let settings_error = 0
@@ -275,4 +274,12 @@ const main = async (path, cfg_path, telemetry_path) => {
     TouchPortalConnection(path, cfg_path, telemetry_path, CurrencyList, uConfig, refreshInterval, OfflineMode)
 }
 
+if(Testing) {
+    async function test() {
+        
+    }
+    test()
+}
+
 main(path, cfg_path, telemetry_path)
+
