@@ -95,19 +95,39 @@ async function tmp () {
 
 async function version() {
     return new Promise(async (resolve, reject) => {
-        prompt.start()
+        latestVersion = latestVersion.split(".")
+
+        latestVersion[0] = Number(latestVersion[0])
+        latestVersion[1] = Number(latestVersion[1])
+        latestVersion[2] = Number(latestVersion[2])
+
+        if(latestVersion[2] >= 9) {
+            if(latestVersion[1] >= 9) {
+                latestVersion[0] = Math.floor(latestVersion[0]+1)
+                latestVersion[1] = 0
+                latestVersion[2] = 0
+            } else {
+                latestVersion[1] = Math.floor(latestVersion[1]+1)
+                latestVersion[2] = 0                
+            }
+        } else {
+            latestVersion[2] = Math.floor(latestVersion[2]+1)
+        }
+
+        latestVersion[0] = `${latestVersion[0]}`
+        latestVersion[1] = `${latestVersion[1]}`
+        latestVersion[2] = `${latestVersion[2]}`
+
+        latestVersion = latestVersion.join(".")
 
         console.log("Latest App Version: " + latestVersion)
-        prompt.get([version], function (err, result) {
-            if(err) return console.log(err)
         
-            replaceJSON('./src/bin/config/cfg.json', 'version', result.version)
-            replaceJSON('./src/build/bin/config/cfg.json', 'version', result.version)
-            replaceJSON('./package.json', 'version', result.version)
+        replaceJSON('./src/bin/config/cfg.json', 'version', latestVersion)
+        replaceJSON('./src/build/bin/config/cfg.json', 'version', latestVersion)
+        replaceJSON('./package.json', 'version', latestVersion)
 
-            resolve()
-        })
+        resolve()
     })
-    
 }
+    
 
