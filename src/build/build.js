@@ -61,6 +61,7 @@ const pack = async () => {
 
     console.log("FINISHED")
     await tmp()
+    exit()
         
 }
 pack()

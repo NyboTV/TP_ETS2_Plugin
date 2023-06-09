@@ -61,10 +61,10 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     async function configloop () {
         for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
             if(module.Modules.jobStates === false) {
-                if(ModuleLoaded === true) { logIt("MODULE", `Module ${moduleName}States unloaded`) }
+                if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
                 ModuleLoaded = false
             } else if(ModuleLoaded === false) { 
-                logIt("MODULE", `Module ${moduleName}States loaded`)
+                logIt("MODULE", `${moduleName}States`, `Module loaded`)
                 ModuleLoaded = true 
             }
         }
@@ -163,7 +163,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                             })
                             
                         } catch (e) {
-                            logIt("ERROR", "Error during Currency Convert! " + e)
+                            logIt("MODULE", `${moduleName}States`, `Error during Currency Convert! ` + e)
                         }
                     } else {
     
@@ -191,7 +191,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                             })
                             
                         } catch (e) {
-                            logIt("ERROR", "Error during Currency Convert! " + e)
+                            logIt("MODULE", `${moduleName}States`, `ModuleError during Currency Convert! ` + e)
                         }
                     } else {
     
@@ -205,7 +205,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                         states.push(data)
                     }
                 } else {
-                    logIt("INFO", "ERROR WHILE GETTING GAME NAME. USING DEFAULT CURRENCY")
+                    logIt("MODULE", `${moduleName}States`, "ERROR WHILE GETTING GAME NAME. USING DEFAULT CURRENCY")
 
                     JobIncome = JobIncome.toLocaleString()
                         
@@ -304,8 +304,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
                     TPClient.stateUpdateMany(states);
                 }
             } catch (error) {
-                logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry...`)
+                logIt("MODULE", `${moduleName}States`, `Error: ${error}`)
             }
 		}
 	}
@@ -326,48 +325,12 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     
     function getSymbol(currency, uConfig) {
         return new Promise(async (resolve, reject) => {
-            
-            try {
-                if(OfflineMode) {
-                    let data = fs.readFileSync(`${path}/config/currency.json`)
-                    data = JSON.parse(data)
-                    data = data.currency
-                    data = data[`${currency}`]
+            let data = fs.readFileSync(`${path}/config/currency.json`)
+            data = JSON.parse(data)
+            data = data.currency
+            data = data[`${currency}`]
                     
-                    resolve(data)
-                    
-                } else {
-                    try {
-
-                        https.get('https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/src/data/currency.json', (resp) => {
-                            var data = ''
-                        
-                            resp.on('data', (chunk) => {
-                                data += chunk
-                            })
-                        
-                            resp.on('end', () => {
-                            
-                                if(IsJsonString(data) === true) {
-                                    fs.writeFileSync(`${path}/config/currency.json`, `${data}`)
-                                    data = JSON.parse(data)
-                                    data = data.currency
-                                    data = data[`${currency}`]
-                                
-                                    resolve(data)
-                                
-                                }
-                            })
-                        })
-                    } catch (err) {
-                        logIt("ERROR", "No Internet connection...")
-                        resolve(false)
-                    }
-                }
-            } catch (e) {
-                logIt("WARNING", "Currency List is getting Updated or doesent Exists!!")
-            }
-            
+            resolve(data)
         })
     }
     

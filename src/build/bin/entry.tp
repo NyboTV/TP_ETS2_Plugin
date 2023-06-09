@@ -23,32 +23,6 @@
          "maxLength":3
       },
       {
-         "name":"Unit",
-         "default":"Kilometer",
-         "type":"text"
-      },
-      {
-         "name":"Fluid",
-         "default":"Liters",
-         "type":"text"
-      },
-      {
-         "name":"Weight",
-         "default":"Tons",
-         "type":"text"
-      },
-      {
-         "name":"Temperature",
-         "default":"Celsius",
-         "type":"text"
-      },
-      {
-         "name":"Time_Format",
-         "default":"EU",
-         "type":"text",
-         "maxLength":2
-      },
-      {
          "name":"TruckersMP_Server",
          "default":"1",
          "type":"text"
@@ -74,7 +48,48 @@
       {
          "id":"Game_Events",
          "name":"ETS2 Dashboard",
-         "actions": [],
+         "actions": [
+            {
+               "id": "setting_unit",
+               "prefix": "Speed Unit:",
+               "name":"Fast Switch Speed Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Unit: Fast Switch your Unit"
+            },
+            {
+               "id": "setting_fluid",
+               "prefix": "Fluid Unit:",
+               "name":"Fast Switch Fluid Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Fluid Unit: Fast Switch your Fluid Unit"
+            },
+            {
+               "id": "setting_weight",
+               "prefix": "Weight Unit:",
+               "name":"Fast Switch Weight Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Weight: Fast Switch your Weight"
+            },
+            {
+               "id": "setting_temp",
+               "prefix": "Temp Unit:",
+               "name":"Fast Switch Temp Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Temp: Fast Switch your Temp"
+            },
+            {
+               "id": "setting_time",
+               "prefix": "Time Format:",
+               "name":"Fast Switch Time Format",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Time: Fast Switch your Time Format"
+            }
+         ],
          "events": [
             {
                "id":"event_EngineOn",

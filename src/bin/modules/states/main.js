@@ -26,7 +26,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
     var states = []
 
-    logIt("MODULE", `Module ${moduleName}States loaded`)
+    logIt("MODULE", `${moduleName}States`, `Module loaded`)
 
     //Module Loop
     async function moduleloop () {
@@ -39,7 +39,18 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
             units = new sJSON(`${path}/config/usercfg.json`).Basics
             currencyUnit = units.currency
             speedUnit = units.unit
-            fluidUnit = units.fluid
+            switch(units.fluid) {
+                case 0:
+                    fluidUnit = "Liters"
+                break
+
+                case 1:
+                    fluidUnit = "US Galons"
+                break
+
+                case 2:
+                    fluidUnit = "UK Galons"
+            }
             weightUnit = units.weight
             tempUnit = units.temp
 
@@ -101,8 +112,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                     TPClient.stateUpdateMany(states);
                 }
             } catch (error) {
-                logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry...`)
+                logIt("MODULE", `${moduleName}States`, `Error: ${error}`)
             }
 		}
 	}

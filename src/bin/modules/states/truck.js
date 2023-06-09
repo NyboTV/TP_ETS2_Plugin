@@ -191,10 +191,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     async function configloop () {
         for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
             if(module.Modules.truckStates === false) {
-                if(ModuleLoaded === true) { logIt("MODULE", `Module ${moduleName}States unloaded`) }
+                if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
                 ModuleLoaded = false
             } else if(ModuleLoaded === false) { 
-                logIt("MODULE", `Module ${moduleName}States loaded`)
+                logIt("MODULE", `${moduleName}States`, `Module loaded`)
                 ModuleLoaded = true 
             }
         }
@@ -477,8 +477,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             unit = userconfig.Basics.unit
             unit = unit.toLowerCase()
 
-            fluid = userconfig.Basics.fluid
-            fluid = fluid.toLowerCase()
+            fluid = userconfig.Basics.fluid  // NUMBERS
 
             temp = userconfig.Basics.temp
             temp = temp.toLowerCase()
@@ -688,8 +687,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(Fuel !== FuelOld || fluid !== fluidOld || offline === true) {
                 FuelOld = Fuel
 
-                if(fluid === "galons") {
-                    Fuel = Math.floor(Fuel / 3.785)
+                if(fluid === 1) {
+                    Fuel = Math.floor(Fuel / 3.785)  // US
+                } else if (fluid === 2) {
+                    Fuel = Math.floor(Fuel / 4.546)  // British
                 }
 
                 var data = {
@@ -703,8 +704,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(FuelConsumption !== FuelConsumptionOld || fluid !== fluidOld || offline === true) {
                 FuelConsumptionOld = FuelConsumption
 
-                if(fluid === "galons") {
+                if(fluid === 1) {
                     FuelConsumption = Math.floor(FuelConsumption / 3.785).toFixed(2)
+                } else if (fluid === 2) {
+                    FuelConsumption = Math.floor(FuelConsumption / 4.546).toFixed(2)
                 } else {
                     FuelConsumption = (FuelConsumption/100)*100 
                 }
@@ -720,8 +723,10 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             if(FuelCapacity !== FuelCapacityOld || fluid !== fluidOld || offline === true) {
                 FuelCapacityOld = FuelCapacity
 
-                if(fluid === "galons") {
+                if(fluid === 1) {
                     FuelCapacity = FuelCapacity / 3.785
+                } else if (fluid === 2) {
+                    FuelCapacity = FuelCapacity / 4.546
                 }
 
                 var data = {
@@ -1217,8 +1222,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                     TPClient.stateUpdateMany(states);
                 }
             } catch (error) {
-                logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry in 3 Seconds`)
+                logIt("MODULE", `${moduleName}States`, `Error: ${error}`)
             }
 
 		}

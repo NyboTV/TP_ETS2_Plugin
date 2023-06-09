@@ -33,10 +33,10 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
     async function configloop () {
         for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
             if(module.Modules.driverStates === false) {
-                if(ModuleLoaded === true) { logIt("MODULE", `Module ${moduleName}States unloaded`) }
+                if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module  unloaded`) }
                 ModuleLoaded = false
             } else if(ModuleLoaded === false) { 
-                logIt("MODULE", `Module ${moduleName}States loaded`)
+                logIt("MODULE", `${moduleName}States`, `Module loaded`)
                 ModuleLoaded = true 
             }
         }
@@ -111,10 +111,8 @@ const driverStates = async (TPClient, refreshInterval, telemetry_path, logIt, ti
                 if(states.length > 0) {
                     TPClient.stateUpdateMany(states);
                 }
-
             } catch (error) {
-                logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry...`)
+                logIt("MODULE", `${moduleName}States`, `Error: ${error}`)
             }
         } 
     }

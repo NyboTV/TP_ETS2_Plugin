@@ -28,10 +28,10 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
     async function configloop () {
         for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
             if(module.Modules.gameStates === false) {
-                if(ModuleLoaded === true) { logIt("MODULE", `Module ${moduleName}States unloaded`) }
+                if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
                 ModuleLoaded = false
             } else if(ModuleLoaded === false) { 
-                logIt("MODULE", `Module ${moduleName}States loaded`)
+                logIt("MODULE", `${moduleName}States`, `Module loaded`)
                 ModuleLoaded = true 
             }
         }
@@ -120,8 +120,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                     TPClient.stateUpdateMany(states);
                 }
             } catch (error) {
-                logIt("ERROR", `${moduleName}States Error: ${error}`)
-                logIt("ERROR", `${moduleName}States Error. Retry...`)
+                logIt("MODULE", `${moduleName}States`, `Error: ${error}`)
             }
 		}
 	}

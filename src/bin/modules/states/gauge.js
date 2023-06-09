@@ -55,10 +55,10 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     async function configloop () {
         for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
             if(module.Modules.gaugeStates === false) {
-                if(ModuleLoaded === true) { logIt("MODULE", `Module ${moduleName}States unloaded`) }
+                if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
                 ModuleLoaded = false
             } else if(ModuleLoaded === false) { 
-                logIt("MODULE", `Module ${moduleName}States loaded`)
+                logIt("MODULE", `${moduleName}States`, `Module loaded`)
                 ModuleLoaded = true 
             }
         }
@@ -148,8 +148,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 					TPClient.stateUpdateMany(states);
 				}
 			} catch (error) {
-				logIt("ERROR", `${moduleName}States Error: ${error}`)
-				logIt("ERROR", `${moduleName}States Error. Retry...`)
+				logIt("MODULE", `${moduleName}States`, `Error: ${error}`)
 			}
 			
 			function isBetween(n, a, b) {
