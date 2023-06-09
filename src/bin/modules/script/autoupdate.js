@@ -155,15 +155,16 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                         fs.rmdirSync(Folder[i])                                
                                         progressBar2.value += 1
                                     }
+                                    
+                                    
                                 } catch (e) {
                                     logIt("AUTOUPDATE", "INFO", e)
                                 }
+                                
+                                progressBar2.setCompleted()
+                                await timeout(200)
+                                resolve()
                             })
-                                
-                            progressBar2.setCompleted()
-                                
-                            await timeout(200)
-                            resolve()
                         })
                     }
     
@@ -234,8 +235,6 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 await timeout(200)
                                 resolve()
                             })
-    
-                            
                         })
                     }
     

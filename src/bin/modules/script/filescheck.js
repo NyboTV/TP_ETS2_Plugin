@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 const filescheck = async (path, logIt) => {
     return new Promise(async (resolve, reject) => {
         logIt("FILESCHECK", "INFO", "Checking for missing Files/Folders...")

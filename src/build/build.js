@@ -5,6 +5,7 @@ const replaceJSON = require(`replace-json-property`).replace
 const prompt = require('prompt')
 const homeDir = require('os').homedir()
 const sJSON = require('self-reload-json')
+const { exit } = require('process');
 
 const Release = process.argv.includes("--release");
 const testMode = process.argv.includes("--test");

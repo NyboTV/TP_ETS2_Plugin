@@ -9,16 +9,11 @@ const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 // Import Internet Modules
 const checkInternetConnected = require('check-internet-connected');
-const http = require(`request`);
-const axios = require('axios')
-const download = require('download');
 // Import Path/Zip Modules
 const system_path = require('path');
 //const getFolderSize = require("get-folder-size");
 const AdmZip = require("adm-zip");
 // Import System Modules
-const pid = require('pidusage')
-const { exec, execFile } = require(`child_process`)
 const { exit } = require('process');
 // Import Electron Modules
 const { dialog } = require('electron')
@@ -45,7 +40,6 @@ const worldStates = require(`./modules/states/world`);
 const telemetry_Server = require('./modules/script/telemetry');
 
 
-
 logIt("MAIN", "INFO", "Starting Plugin...")
 // Debug Section
 const debugMode = process.argv.includes("--debugging")
@@ -58,6 +52,9 @@ let dirname = dirpath.includes(`\\src\\bin`)
 if (debugMode) { path = `./src/bin`; /**/ cfg_path = path; /**/ telemetry_path = "./src/bin/tmp" } else { path = dirpath; /**/ cfg_path = path; /**/ telemetry_path = "./tmp"; }
 if (dirname) {vconsole.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start..."); exit() } 
 
+// First Setup Folder Creation
+if(!fs.existsSync(path+"/tmp")) return fs.mkdirSync(path+"/tmp")
+
 const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyList, uConfig, refreshInterval, OfflineMode) => {
     let settings_error = 0
 
@@ -65,7 +62,7 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
         // After TP Ready, Modules gets loaded
         logIt("TOUCHPORTAL", "INFO", "TP loaded. Loading Modules")
         usage(TPClient, dirpath, logIt, timeout)    
-        if(!noServer) return telemetry_Server(path, logIt, timeout, refreshInterval)
+        if(!noServer) { telemetry_Server(path, logIt, timeout, refreshInterval) }
 
         await mainStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
         await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
@@ -224,9 +221,11 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
 }
 
 const main = async (path, cfg_path, telemetry_path) => {
+    // Let Plugin load up...
+    await timeout(500)
+
     // Pre-Setup // Checking Missing Files/Folders
-    fileCheck = await filescheck(path, logIt)
-    if(!filescheck) {
+    if(!await filescheck(path, logIt)) {
         await showDialog("error", ["OK"], "ETS2 Dashboard", "Missing Files/Folders! Plugin start aborted!")
         exit()
     }
@@ -260,15 +259,17 @@ const main = async (path, cfg_path, telemetry_path) => {
             replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, false)
         });
     }
-
-    // Checking for FirstInstall/UpdateNow
-    if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate" || Testing === true) {
-        await firstInstall(showDialog, logIt, OfflineMode)
-    }
     
     // Checking for Update...
     if (OfflineMode === false) {
+        logIt("MAIN", "INFO", "Starting AutoUpdate Script...")
         await AutoUpdate(config.UpdateCheck, uConfig.prerelease, config.version, logIt, showDialog, timeout)
+    }
+
+    // Checking for FirstInstall
+    if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate" || Testing === true) {
+        logIt("MAIN", "INFO", "Starting First Install Script...")
+        await firstInstall(showDialog, logIt, OfflineMode)
     }
 
     TouchPortalConnection(path, cfg_path, telemetry_path, CurrencyList, uConfig, refreshInterval, OfflineMode)

@@ -10,8 +10,9 @@ let start = true
 
 const logIt = async (module, type, message) => {
     
-    if(start) {
-        fs.writeFileSync(`${path}/logs/latest.log`, "Plugin Started")
+    if(start === true) {
+        if(!fs.existsSync(`${path}/logs`)) return fs.mkdirSync(`${path}/logs`)
+        fs.writeFileSync(`${path}/logs/latest.log`, "---Plugin Started---")
         start = false
     }
 
