@@ -276,7 +276,7 @@ const main = async (path, cfg_path, telemetry_path) => {
 
 if(Testing) {
     async function test() {
-        
+        // Nothing to Test
     }
     test()
 }

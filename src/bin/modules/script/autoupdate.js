@@ -31,7 +31,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
 
         try {
 
-            if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate" || Testing === true) {
+            if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate") {
                 logIt("AUTOUPDATE", "INFO", "AutoUpdate Detected...")
     
                 let currency = ""
@@ -298,14 +298,8 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install?")
                             }
 
-                            var progressBar = new ProgressBar({
-                                title: "ETS2 Dashboard Update",
-                                text: 'Preparing data...',
-                            });
-
                             if (UpdateQuestion === 0) {
                                 logIt("AUTOUPDATE", "INFO", "Update starting...")
-                                progressBar.detail = 'Downloading Update...';
 
                                 if (fs.existsSync(`${download_path}/ETS2_Dashboard_autoupdate`)) {
                                     try {
@@ -315,8 +309,33 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     }
                                 }
 
+                                let progressBar 
+                                var body = "";
+                                var cur = 0;
+                                var len = ""
+                                var total = ""
 
                                 download(url, download_path)
+                                    .on( 'response', function ( data ) {
+
+                                        len = parseInt(data.headers['content-length'], 10);
+                                        total = len / 1000000; //1048576 - bytes in  1Megabyte
+                                        
+                                        progressBar = new ProgressBar({
+                                            title: "ETS2 Dashboard Update",
+                                            text: 'AutoUpdate',
+                                            indeterminate: false,
+                                            maxValue: 101
+                                        });
+                                        
+                                        progressBar.on('progress', function(value) {
+                                            progressBar.detail = `Downloading Update: ${(100.0 * cur / len).toFixed(2)} || ${value}mb out of ${total.toFixed(2)}mb...`;
+                                        });
+                                    })                                    
+                                    .on('data', (chunk) => {
+                                        body += chunk;
+                                        cur += chunk.length;
+                                        progressBar.value = Math.round(Number((100.0 * cur / len)))})
                                     .then(async () => {
                                         logIt("AUTOUPDATE", "INFO", "Download Finished!")
                                         progressBar.detail = 'Unzipping Update...';
