@@ -268,7 +268,7 @@ const main = async (path, cfg_path, telemetry_path) => {
     // Checking for FirstInstall
     if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate" || Testing === true) {
         logIt("MAIN", "INFO", "Starting First Install Script...")
-        await firstInstall(showDialog, logIt, OfflineMode)
+        await firstInstall(showDialog, logIt, OfflineMode, timeout)
     }
 
     TouchPortalConnection(path, cfg_path, telemetry_path, CurrencyList, uConfig, refreshInterval, OfflineMode)
@@ -276,7 +276,6 @@ const main = async (path, cfg_path, telemetry_path) => {
 
 if(Testing) {
     async function test() {
-        // Nothing to Test
     }
     test()
 }

@@ -1,9 +1,10 @@
 // Import Writing Modules
 const fs = require(`fs`)
+const fse = require('fs-extra')
 const replaceJSON = require(`replace-json-property`).replace
 // Import Internet Modules
 const axios = require('axios')
-const download = require('download');
+const request = require('request');
 // Import File System Modules
 const AdmZip = require("adm-zip");
 const system_path = require('path');
@@ -100,7 +101,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 TruckersMPServer = OldValues.Basics.TruckersMPServer
                                 progressBar.value += 3
     
-                                progressBar.setCompleted()
+                                progressBar.close()
     
                                 await timeout(200)
                                 resolve()
@@ -301,84 +302,117 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                             if (UpdateQuestion === 0) {
                                 logIt("AUTOUPDATE", "INFO", "Update starting...")
 
-                                if (fs.existsSync(`${download_path}/ETS2_Dashboard_autoupdate`)) {
-                                    try {
-                                        fs.unlinkSync(`${download_path}/ETS2_Dashboard_autoupdate`)
-                                    } catch (e) {
-                                        await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' folder in your Downloads Folder")
-                                    }
-                                }
-
                                 let progressBar 
                                 var body = "";
                                 var cur = 0;
                                 var len = ""
                                 var total = ""
 
-                                download(url, download_path)
-                                    .on( 'response', function ( data ) {
+                                if (fs.existsSync(`${download_path}/ETS2_Dashboard_autoupdate`)) {
+                                    try {
+                                        fs.rmdirSync(`${download_path}/ETS2_Dashboard_autoupdate`, { recursive: true })
+                                    } catch (e) {
+                                        await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' Folder in your Downloads Folder")
+                                        logIt("AUTOUPDATE", "ERROR", e)
+                                    }
+                                }
 
-                                        len = parseInt(data.headers['content-length'], 10);
-                                        total = len / 1000000; //1048576 - bytes in  1Megabyte
-                                        
-                                        progressBar = new ProgressBar({
-                                            title: "ETS2 Dashboard Update",
-                                            text: 'AutoUpdate',
-                                            indeterminate: false,
-                                            maxValue: 101
-                                        });
-                                        
-                                        progressBar.on('progress', function(value) {
-                                            progressBar.detail = `Downloading Update: ${(100.0 * cur / len).toFixed(2)} || ${value}mb out of ${total.toFixed(2)}mb...`;
-                                        });
-                                    })                                    
-                                    .on('data', (chunk) => {
-                                        body += chunk;
-                                        cur += chunk.length;
-                                        progressBar.value = Math.round(Number((100.0 * cur / len)))})
-                                    .then(async () => {
-                                        logIt("AUTOUPDATE", "INFO", "Download Finished!")
-                                        progressBar.detail = 'Unzipping Update...';
+                                if(fs.existsSync(`${download_path}/ETS2_Dashboard.tpp`)) { 
+                                    try { 
+                                        fs.rmSync(`${download_path}/ETS2_Dashboard.tpp`) 
+                                    } catch (e) {
+                                        await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard.tpp' File in your Downloads Folder")
+                                        logIt("AUTOUPDATE", "ERROR", e)
+                                    }
+                                }
+                                
 
+                                let file = fs.createWriteStream(`${download_path}/ETS2_Dashboard.tpp`);
+                                request({
+                                    uri: url,
+                                    headers: {
+                                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                                        'Accept-Encoding': 'gzip, deflate, br',
+                                        'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8,ro;q=0.7,ru;q=0.6,la;q=0.5,pt;q=0.4,de;q=0.3',
+                                        'Cache-Control': 'max-age=0',
+                                        'Connection': 'keep-alive',
+                                        'Upgrade-Insecure-Requests': '1',
+                                        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
+                                    },
+                                    gzip: true
+                                })
+                                .on('response', function ( data ) {
+                                    len = parseInt(data.headers['content-length'], 10);
+                                    total = len / 1000000; //1048576 - bytes in  1Megabyte
+                                                                        
+                                    progressBar = new ProgressBar({
+                                        title: "ETS2 Dashboard Update",
+                                        text: 'AutoUpdate',
+                                        indeterminate: false,
+                                        maxValue: 101
+                                    });
+                                    
+                                    progressBar.on('progress', function(value) {
+                                        progressBar.detail = `Downloading Update: ${(100.0 * cur / len).toFixed(2)}% || ${value}mb out of ${total.toFixed(2)}mb...`;
+                                    });
+                                })
+                                .on('data', (chunk) => {
+                                    body += chunk
+                                    cur += chunk.length;
+                                    progressBar.value = Math.round(Number((100.0 * cur / len)))
+                                })
+                                .on('error', async (error) => {
+                                    logIt("AUTOUPDATER", "INFO", "Error while Downloading Update... " + error)
+                                    progressBar.detail = `Error while downloading Update... Closing in 5 Seconds...`
+                                    await timeout(5000)
+                                    exit()
+                                })
+                                .pipe(file)
+                                .on('finish', async () => {
+                                    progressBar.detail = `Download Completed.`
+                                    logIt("AUTOUPDATE", "INFO", "Download Finished!")
+                                    logIt("AUTOUPDATE", "INFO", "Waiting 1.5 Seconds to let the Script write the zip Header...")
+                                    await timeout(1500)
+                                    progressBar.detail = 'Unzipping Update...';
+                                    
+                                    try {
                                         var zip = new AdmZip(`${download_path}/ETS2_Dashboard.tpp`);
                                         logIt("AUTOUPDATE", "INFO", "Unzipping...!")
                                         zip.extractAllTo(`${download_path}`)
                                         fs.unlinkSync(`${download_path}/ETS2_Dashboard.tpp`)
                                         fs.renameSync(`${download_path}/ETS2_Dashboard`, `${download_path}/ETS2_Dashboard_autoupdate`)
                                         logIt("AUTOUPDATE", "INFO", "Unzip Finished!")
-
-                                        progressBar.setCompleted()
-
-                                        await timeout(200)
-
-                                        InstallQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "Update Downloaded and unzipped! Do you want to install it now?")
-
-                                        if (InstallQuestion === 0) {
-                                            await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
-                                            logIt("AUTOUPDATE", "INFO", "Exiting Plugin due to Update...")
-                                            exit()
-
-                                        } else if (InstallQuestion === 1) {
-                                            await showDialog("info", ["Okay!"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File.")
-                                            resolve(true)
-                                        }
-
-                                    }).catch(async (e) => {
-                                        logIt("AUTOUPDATE", "Error", "Error while Connecting to Update")
+                                    } catch (e) {
+                                        logIt("AUTOUPDATE", "Error", "Error while unzipping Update")
                                         logIt("AUTOUPDATE", "Error", e)
-                                        progressBar.detail("Error while downloading")
-
-                                        await timeout(2000)
-                                        progressBar.setCompleted()
-                                    })
+                                        progressBar.detail = "Error while unzipping Update..."
+                                        await timeout(5000)
+                                    }
+                                    
+                                    progressBar.close()
+                                    
+                                    await timeout(200)
+                                    
+                                    InstallQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "Update Downloaded and unzipped! Do you want to install it now?")
+                                    
+                                    if (InstallQuestion === 0) {
+                                        await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
+                                        logIt("AUTOUPDATE", "INFO", "Exiting Plugin due to Update...")
+                                        exit()
+                                        
+                                    } else if (InstallQuestion === 1) {
+                                        await showDialog("info", ["Okay!"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File.")
+                                        resolve()
+                                    }
+                                })                                
 
                             } else if (UpdateQuestion === 1) {
                                 logIt("AUTOUPDATE", "INFO", "Update Skipped")
-                                progressBar.setCompleted()
+                                progressBar.close()
                                 resolve()
                             } else if (UpdateQuestion === 2) {
                                 logIt("AUTOUPDATE", "INFO", "Update Skipped. Never ask Again!")
-                                progressBar.setCompleted()
+                                progressBar.close()
                                 replaceJSON(`${path}/config/cfg.json`, "UpdateCheck", false)
                             }
                         } else {

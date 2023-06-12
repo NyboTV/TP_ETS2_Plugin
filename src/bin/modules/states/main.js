@@ -54,6 +54,7 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
             weightUnit = units.weight
             tempUnit = units.temp
 
+
             if(currencyUnit !== currencyUnitOld) {
                 var data = {
                     id: "Nybo.ETS2.Setting.currencyUnit",

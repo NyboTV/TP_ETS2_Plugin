@@ -5,7 +5,7 @@ const AdmZip = require('adm-zip')
 // Import Internet Modules
 const download = require('download')
 
-const firstInstall = async (showDialog, logIt, OfflineMode) => {
+const firstInstall = async (showDialog, logIt, OfflineMode, timeout) => {
     return new Promise(async (resolve, reject) => {
         logIt("FIRSTINSTALL", "INFO", "First Install Script started...")
         

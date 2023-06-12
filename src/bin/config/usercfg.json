@@ -2,7 +2,7 @@
   "Basics": {
     "currency": "USD",
     "unit": "Miles",
-    "fluid": 0,
+    "fluid": 1,
     "weight": "Tons",
     "temp": "Celsius",
     "timeFormat": "EU"
