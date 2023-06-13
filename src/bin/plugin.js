@@ -236,7 +236,7 @@ const main = async (path, cfg_path, telemetry_path) => {
     await timeout(500)
 
     // Pre-Setup // Checking Missing Files/Folders
-    if (system_path.basename(process.cwd()) === "ETS2_Dashboard" || Testing === true) {
+    if (system_path.basename(process.cwd()) === "ETS2_Dashboard") {
         let MissingFiles = await filescheck(path, cfg_path, logIt, timeout)
         if(MissingFiles > 0) {
             await showDialog("error", ["OK"], "ETS2 Dashboard", `Missing ${MissingFiles} Files/Folders! Plugin start aborted!`)

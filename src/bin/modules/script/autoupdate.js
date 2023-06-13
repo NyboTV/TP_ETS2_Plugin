@@ -32,7 +32,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
 
         try {
 
-            if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate" || Testing === true) {
+            if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate") {
                 logIt("AUTOUPDATE", "INFO", "AutoUpdate Detected...")
     
                 let currency = ""
@@ -326,33 +326,6 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     }
                                 }
                                 
-
-                                //////
-                                /*
-
-                                Progressbar mit On Progress abwechseln lassen.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                
-                                */
-
-
                                 let file = fs.createWriteStream(`${download_path}/ETS2_Dashboard.tpp`);
                                 request({
                                     uri: url,
@@ -369,7 +342,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 })
                                 .on('response', function ( data ) {
                                     len = parseInt(data.headers['content-length'], 10);
-                                    total = len / 1000000; //1048576 - bytes in  1Megabyte
+                                    total = len / 1048576; //1048576 - bytes in  1Megabyte
                                                                         
                                     progressBar = new ProgressBar({
                                         title: "ETS2 Dashboard Update",
@@ -379,7 +352,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     });
                                     
                                     progressBar.on('progress', function(value) {
-                                        progressBar.detail = `Downloading Update: ${(100.0 * cur / len).toFixed(2)}% || ${value}mb out of ${total.toFixed(2)}mb...`;
+                                        progressBar.detail = `Downloading Update: ${(100.0 * cur / len).toFixed(2)}%`;
                                     });
                                 })
                                 .on('data', (chunk) => {
