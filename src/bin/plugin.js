@@ -46,9 +46,13 @@ const noServer = process.argv.includes("--noServer")
 const Testing = process.argv.includes("--testing")
 
 // Path Vars
+let path = ""
+let cfg_path = ""
+let telemetry_path = ""
+
 let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
-if (debugMode) { path = `./src/bin`; /**/ cfg_path = path; /**/ telemetry_path = "./src/bin/tmp" } else { path = dirpath; /**/ cfg_path = path; /**/ telemetry_path = "./tmp"; }
+if (debugMode) { path = `./src/bin`; /**/ cfg_path = path+"/config"; /**/ telemetry_path = "./src/bin/tmp" } else { path = dirpath; /**/ cfg_path = path+"/config"; /**/ telemetry_path = "./tmp"; }
 if (dirname) {console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start..."); exit() } 
 
 // First Setup Folder Creation
@@ -62,6 +66,14 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
         logIt("TOUCHPORTAL", "INFO", "TP loaded. Loading Modules")
         usage(TPClient, dirpath, logIt, timeout)    
         if(!noServer) { telemetry_Server(path, logIt, timeout, refreshInterval) }
+
+        // Checks for TMP File then continues
+        for(var i = 0; Infinity; await timeout(500)) {
+            if(!fs.existsSync(telemetry_path+"/tmp.json")) {
+            } else {
+                break
+            }
+        }
 
         await mainStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
         await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
@@ -154,31 +166,31 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
     
     TPClient.on("Settings", async (data) => {
 
-        replaceJSON(`${cfg_path}/config/cfg.json`, `refreshInterval`, Number(data[0].Refresh_Interval))
+        replaceJSON(`${cfg_path}/cfg.json`, `refreshInterval`, Number(data[0].Refresh_Interval))
 
         for (var i = 0; i < CurrencyList.length; await timeout(10), i++) {
             if (CurrencyList[i] === data[1].Currency) {
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `${data[1].Currency}`)
+                replaceJSON(`${cfg_path}/usercfg.json`, `currency`, `${data[1].Currency}`)
 
                 break
             } else {
                 if (i === CurrencyList.length - 1) {
                     logIt("INFO", "Currency not Found! Using Default!")
-                    replaceJSON(`${cfg_path}/config/usercfg.json`, `currency`, `EUR`)
+                    replaceJSON(`${cfg_path}/usercfg.json`, `currency`, `EUR`)
                     settings_error = settings_error+1
                     break
                 }
             }
         }
 
-        replaceJSON(`${cfg_path}/config/cfg.json`, `TruckersMPServer`, Number(data[2].TruckersMP_Server))
+        replaceJSON(`${cfg_path}/cfg.json`, `TruckersMPServer`, Number(data[2].TruckersMP_Server))
 
         switch (data[3].AutoUpdate.toLowerCase()) {
             case "true":
-                replaceJSON(`${cfg_path}/config/cfg.json`, `UpdateCheck`, true)
+                replaceJSON(`${cfg_path}/cfg.json`, `UpdateCheck`, true)
                 break;
             case "false":
-                replaceJSON(`${cfg_path}/config/cfg.json`, `UpdateCheck`, false)
+                replaceJSON(`${cfg_path}/cfg.json`, `UpdateCheck`, false)
                 break;
             default:
                 settings_error = settings_error+1
@@ -186,10 +198,10 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
 
         switch (data[4].PreRelease.toLowerCase()) {
             case "true":
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `PreRelease`, true)
+                replaceJSON(`${cfg_path}/usercfg.json`, `PreRelease`, true)
                 break;
             case "false":
-                replaceJSON(`${cfg_path}/config/usercfg.json`, `PreRelease`, false)
+                replaceJSON(`${cfg_path}/usercfg.json`, `PreRelease`, false)
                 break;
             default:
                 settings_error = settings_error+1
@@ -197,10 +209,10 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
 
         switch (data[5].OfflineMode.toLowerCase()) {
             case "true":
-                replaceJSON(`${cfg_path}/config/cfg.json`, `OfflineMode`, true)
+                replaceJSON(`${cfg_path}/cfg.json`, `OfflineMode`, true)
                 break;
             case "false":
-                replaceJSON(`${cfg_path}/config/cfg.json`, `OfflineMode`, false)
+                replaceJSON(`${cfg_path}/cfg.json`, `OfflineMode`, false)
                 break;
             default:
                 settings_error = settings_error+1
@@ -224,23 +236,26 @@ const main = async (path, cfg_path, telemetry_path) => {
     await timeout(500)
 
     // Pre-Setup // Checking Missing Files/Folders
-    if(!await filescheck(path, logIt)) {
-        await showDialog("error", ["OK"], "ETS2 Dashboard", "Missing Files/Folders! Plugin start aborted!")
-        exit()
+    if (system_path.basename(process.cwd()) === "ETS2_Dashboard" || Testing === true) {
+        let MissingFiles = await filescheck(path, cfg_path, logIt, timeout)
+        if(MissingFiles > 0) {
+            await showDialog("error", ["OK"], "ETS2 Dashboard", `Missing ${MissingFiles} Files/Folders! Plugin start aborted!`)
+            exit()
+        }
     }
 
     // Loading Configs 
     logIt("MAIN", "INFO", "Loading `Config Files`...")
-    let config = new sJSON(`${path}/config/cfg.json`)
-    let uConfig = new sJSON(`${path}/config/usercfg.json`)
-    let CurrencyList = new sJSON(`${path}/config/currency.json`)    
+    let config = new sJSON(`${cfg_path}/cfg.json`)
+    let uConfig = new sJSON(`${cfg_path}/usercfg.json`)
+    let CurrencyList = new sJSON(`${cfg_path}/currency.json`)    
     let OfflineMode = config.OfflineMode
     let refreshInterval = config.refreshInterval
 
     //Checking Settings
     if (refreshInterval < 50) {
         logIt("WARN", "RefreshRate too low! Setting up RefreshRate...")
-        replaceJSON(`${path}/config/cfg.json`, "refreshInterval", 50)
+        replaceJSON(`${cfg_path}/cfg.json`, "refreshInterval", 50)
         refreshInterval = 50
     }
     
@@ -255,14 +270,14 @@ const main = async (path, cfg_path, telemetry_path) => {
             OfflineMode = true
             
             logIt("MAIN", "WARN", "Disable TruckersMP states to prevent errors...")
-            replaceJSON(`${cfg_path}/config/usercfg.json`, `truckersmpStates`, false)
+            replaceJSON(`${cfg_path}/usercfg.json`, `truckersmpStates`, false)
         });
     }
     
     // Checking for Update...
     if (OfflineMode === false) {
         logIt("MAIN", "INFO", "Starting AutoUpdate Script...")
-        await AutoUpdate(config.UpdateCheck, uConfig.prerelease, config.version, logIt, showDialog, timeout)
+        await AutoUpdate(config.UpdateCheck, uConfig.PreRelease, config.version, logIt, showDialog, timeout)
     }
 
     // Checking for FirstInstall

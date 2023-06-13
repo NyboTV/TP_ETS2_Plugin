@@ -2,7 +2,7 @@ const fs = require('fs')
 const fse = require('fs-extra')
 const AdmZip = require('adm-zip')
 const replaceJSON = require(`replace-json-property`).replace
-const prompt = require('prompt')
+const path = require('path')
 const homeDir = require('os').homedir()
 const sJSON = require('self-reload-json')
 const { exit } = require('process');
@@ -39,8 +39,56 @@ const pack = async () => {
     //Copy Entry File
     fse.copySync(`${InputPath}/build/bin/entry.tp`, `${OutputPath}/entry.tp`) 
 
-	var zip = new AdmZip();
 
+    let Files  = [];
+    let Folder = [];
+    let FilesArray = []
+    let FilesArray2 = []
+
+    function ThroughDirectory(Directory) {
+        return new Promise(async (resolve, reject) => {
+            fs.readdirSync(Directory).forEach(File => {
+                const Absolute = path.join(Directory, File);
+                if (fs.statSync(Absolute).isDirectory()) { ThroughDirectory(Absolute); Folder.push(Absolute) }
+                else return Files.push(Absolute);
+            })
+            resolve()
+        })
+    }
+    
+    async function CheckArray() {
+        FilesArray = Folder.concat(Files)
+        return new Promise(async (resolve) => {
+            for (var i = 0; i < FilesArray.length; true, i++) {
+                element = FilesArray[i]
+                element = element.replace(`src\\build\\tmp\\ETS2_Dashboard\\`, '')
+                element = element.split('\\')
+                element = element.join(`/`)
+                FilesArray2.push(element)
+                if(FilesArray.length-1 === i) {
+                    resolve()
+                }
+            }
+        })
+    }
+
+    async function writeToFile() {
+        return new Promise(async (resolve) => {
+            fs.writeFile(`${OutputPath}/config/files.json`, JSON.stringify(FilesArray2), (err) => {
+                if (err)
+                    console.log(err);
+                else {
+                    resolve()
+                }
+            });
+        })
+    }
+
+    await ThroughDirectory(OutputPath);
+    await CheckArray()
+    await writeToFile()
+
+	var zip = new AdmZip();
 	zip.addLocalFolder(`${OutputPath}`, 'ETS2_Dashboard');
 
 	zip.writeZip(`${OutputPath}/ETS2_Dashboard.zip`);
