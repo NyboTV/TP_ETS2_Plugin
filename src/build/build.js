@@ -14,6 +14,9 @@ let InputPath = "./src"
 let OutputPath = "./src/build/tmp"
 let InstallPath = "C:/Users/nicoe/AppData/Roaming/TouchPortal/plugins"
 let desktopPath = `${homeDir}/Desktop`
+let curTime = new Date().toISOString().
+replace(/T/, ` `).
+replace(/\..+/, ``)
 
 let latestVersion = new sJSON(`./src/bin/config/cfg.json`).version
 
@@ -108,7 +111,7 @@ const pack = async () => {
         fs.copyFileSync(`${OutputPath}/ETS2_Dashboard.tpp`, `${desktopPath}/ETS2_Dashboard.tpp`)
     }
 
-    console.log("FINISHED")
+    console.log("FINISHED AT " + curTime)
     await tmp()
     exit()
         

@@ -58,8 +58,9 @@ if (dirname) {console.log("You are Trying to start the Script inside the Source 
 // First Setup Folder Creation
 if(!fs.existsSync(`${path}/tmp`)) { fs.mkdirSync(`${path}/tmp`) }
 
-const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyList, uConfig, refreshInterval, OfflineMode) => {
+const TouchPortalConnection = async (path, cfg_path, telemetry_path, uConfig, CurrencyList, refreshInterval, OfflineMode) => {
     let settings_error = 0
+    CurrencyList = CurrencyList.currency_list
 
     TPClient.on("Info", async (data) => {
         // After TP Ready, Modules gets loaded
@@ -94,20 +95,18 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
 
     TPClient.on("Action", async (data, hold) => {
 
-        console.log(data)
-
         switch(data.actionId) {
 
-            case 'setting_unit':
-                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).unit === "Kilometer") {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "unit", "Kilometer")
-                } else {
+            case 'setting_speed':
+                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.unit === "Kilometer") {
                     replaceJSON(`${cfg_path}/usercfg.json`, "unit", "Miles")
+                } else {
+                    replaceJSON(`${cfg_path}/usercfg.json`, "unit", "Kilometer")
                 }    
             break;
                 
             case 'setting_fluid':
-                let fluid = JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).fluid
+                let fluid = JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.fluid
                 switch(fluid) {
                     case 0:
                         replaceJSON(`${cfg_path}/usercfg.json`, "fluid", 1)
@@ -121,38 +120,34 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
                         replaceJSON(`${cfg_path}/usercfg.json`, "fluid", 0)
                     break
 
-                }
+                    default:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "fluid", 0)
+                    break
 
-                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).fluid === 2) {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "fluid", "uk_galon")
-                } else if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).fluid === 1) {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "fluid", "us_galon")
-                } else {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "fluid", "Galons")
-                }                
+                }           
             break;
             
             case 'setting_weight':
-                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).weight === "Tons") {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "weight", "Tons")
-                } else {
+                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.weight === "Tons") {
                     replaceJSON(`${cfg_path}/usercfg.json`, "weight", "Pounds")
+                } else {
+                    replaceJSON(`${cfg_path}/usercfg.json`, "weight", "Tons")
                 }
             break;
             
             case 'setting_temp':
-                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).temp === "Celsius") {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "temp", "Celsius")
-                } else {
+                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.temp === "Celsius") {
                     replaceJSON(`${cfg_path}/usercfg.json`, "temp", "Fahrenheit")
+                } else {
+                    replaceJSON(`${cfg_path}/usercfg.json`, "temp", "Celsius")
                 }
             break;
 
             case 'setting_time':
-                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).timeFormat === "EU") {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "timeFormat", "EU")
-                } else {
+                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.timeFormat === "EU") {
                     replaceJSON(`${cfg_path}/usercfg.json`, "timeFormat", "US")
+                } else {
+                    replaceJSON(`${cfg_path}/usercfg.json`, "timeFormat", "EU")
                 }
             break;
 
@@ -169,6 +164,7 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, CurrencyLis
         replaceJSON(`${cfg_path}/cfg.json`, `refreshInterval`, Number(data[0].Refresh_Interval))
 
         for (var i = 0; i < CurrencyList.length; await timeout(10), i++) {
+
             if (CurrencyList[i] === data[1].Currency) {
                 replaceJSON(`${cfg_path}/usercfg.json`, `currency`, `${data[1].Currency}`)
 
@@ -286,7 +282,7 @@ const main = async (path, cfg_path, telemetry_path) => {
         await firstInstall(showDialog, logIt, OfflineMode, timeout)
     }
 
-    TouchPortalConnection(path, cfg_path, telemetry_path, CurrencyList, uConfig, refreshInterval, OfflineMode)
+    TouchPortalConnection(path, cfg_path, telemetry_path, uConfig, CurrencyList, refreshInterval, OfflineMode)
 }
 
 if(Testing) {

@@ -1,10 +1,10 @@
 {
   "Basics": {
-    "currency": "USD",
-    "unit": "Miles",
-    "fluid": 1,
+    "currency": "CHF",
+    "unit": "Kilometer",
+    "fluid": 0,
     "weight": "Tons",
-    "temp": "Celsius",
+    "temp": "Fahrenheit",
     "timeFormat": "EU"
   },
   "TruckersMP": {

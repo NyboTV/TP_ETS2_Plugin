@@ -294,9 +294,9 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                             download_path = process.env.USERPROFILE + "/Downloads"
 
                             if (response.prerelease === true) {
-                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install? (Attention! Its a Pre-Release!)")
+                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", `We found a new Update! Version: PreRelease-${newversion}, Install?`)
                             } else {
-                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "We found a new Update! Install?")
+                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", `We found a new Update! Version: ${newversion}, Install?`)
                             }
 
                             if (UpdateQuestion === 0) {

@@ -50,12 +50,12 @@
          "name":"ETS2 Dashboard",
          "actions": [
             {
-               "id": "setting_unit",
+               "id": "setting_speed",
                "prefix": "Speed Unit:",
                "name":"Fast Switch Speed Unit",
                "type":"communicate",
                "tryInline":"true",
-               "format":"Unit: Fast Switch your Unit"
+               "format":"Unit: Fast Switch your Speed Unit"
             },
             {
                "id": "setting_fluid",

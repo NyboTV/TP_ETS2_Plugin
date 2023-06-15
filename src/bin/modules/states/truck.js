@@ -705,11 +705,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 FuelConsumptionOld = FuelConsumption
 
                 if(fluid === 1) {
-                    FuelConsumption = Math.floor(FuelConsumption / 3.785).toFixed(2)
+                    FuelConsumption = FuelConsumption / 3.785
                 } else if (fluid === 2) {
-                    FuelConsumption = Math.floor(FuelConsumption / 4.546).toFixed(2)
-                } else {
-                    FuelConsumption = (FuelConsumption/100)*100 
+                    FuelConsumption = FuelConsumption / 4.546
                 }
 
                 var data = {
@@ -1216,6 +1214,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             
             tempOld = temp
             unitOld = unit
+            //fluidOld = fluid
     
             try {
                 if(states.length > 0) {

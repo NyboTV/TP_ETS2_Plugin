@@ -95,6 +95,10 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 				} else {
 					Speed = Math.round(Speed)
 				}
+
+				if(Speed < 0) {
+					Speed = Math.abs(Speed)
+				}
 				
 				SpeedGauge = await getSpeedGauge(Speed)
 
