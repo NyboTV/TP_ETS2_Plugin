@@ -1,6 +1,11 @@
 
 # Changelog
 ```
+### Changelog 3.1.0
+- Fixed AutoUpdater
+- Moved Settings to "Fast Switch" in Plugin
+- Fixed Gauge going to negative when driving Backwards
+- Added File Checking System
 
 ### Changelog 3.0.0
 - Finally AutoUpdater
