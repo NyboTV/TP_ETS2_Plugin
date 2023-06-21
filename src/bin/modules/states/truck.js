@@ -513,11 +513,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 if(unit === "miles") {
                     CruiseControlSpeed = Math.floor(CruiseControlSpeed / 1.609344)
                 } else {
-                    CruiseControlSpeed = Math.floor(CruiseControlSpeed)
+                    CruiseControlSpeed = Math.round(CruiseControlSpeed)
                 }
-                
-                console.log(CruiseControlSpeed)
-
+            
                 var data = {
                     id: "Nybo.ETS2.Truck.CruiseControlSpeed",
                     value: `${CruiseControlSpeed}`
