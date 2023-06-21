@@ -277,7 +277,7 @@ const main = async (path, cfg_path, telemetry_path) => {
     }
 
     // Checking for FirstInstall
-    if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate" || Testing === true) {
+    if (system_path.basename(process.cwd()) === "ETS2_Dashboard" || Testing === true) {
         logIt("MAIN", "INFO", "Starting First Install Script...")
         await firstInstall(showDialog, logIt, OfflineMode, timeout)
     }

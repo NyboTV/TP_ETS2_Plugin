@@ -13,6 +13,7 @@ const filescheck = async (path, cfg_path, logIt, timeout) => {
                 if(fs.existsSync(element)) {
                 } else {
                     missing += 1
+                    logIt("FILESCHECK", "MISSING", `${element}`)
                 }
             });
         }

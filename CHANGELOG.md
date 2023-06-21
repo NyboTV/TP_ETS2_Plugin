@@ -1,6 +1,10 @@
 
 # Changelog
 ```
+### Changelog 3.1.5
+- Fixed FirstInstall Helper
+- Added Missing Files/Folder Logger
+
 ### Changelog 3.1.0
 - Fixed AutoUpdater
 - Moved Settings to "Fast Switch" in Plugin

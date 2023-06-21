@@ -122,11 +122,9 @@ pack()
 async function tmp () {
     return new Promise(async (resolve, reject) => {
         if(fs.existsSync(`${OutputPath}`)) {
-            fse.remove(`${OutputPath}`, err => { 
-                if(err) return console.error(err)
-                console.log("TMP Folder Removed")
-                resolve()
-            })
+            fse.removeSync(`${OutputPath}`, { recursive: true })
+            console.log("TMP Folder Removed")
+            resolve()
         }
         
         if(fs.existsSync(`${OutputPath}`) === false) {
