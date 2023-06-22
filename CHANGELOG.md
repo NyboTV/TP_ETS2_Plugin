@@ -1,6 +1,11 @@
 
 # Changelog
 ```
+
+### Changelog 3.1.7
+- Fixed FirstInstall Setup
+- Added Old Settings Applier
+
 ### Changelog 3.1.5
 - Fixed FirstInstall Helper
 - Added Missing Files/Folder Logger

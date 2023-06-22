@@ -35,6 +35,9 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
             if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate") {
                 logIt("AUTOUPDATE", "INFO", "AutoUpdate Detected...")
     
+                let OldValues = ""
+                let OldValuescfg = ""
+
                 let currency = ""
                 let unit = ""
                 let fluid = ""
@@ -70,24 +73,48 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     "Basics": {
                                         "currency": "EUR",
                                         "unit": "Kilometer",
-                                        "fluid": "Liters",
+                                        "fluid": 0,
                                         "weight": "Tons",
                                         "temp": "Celsius",
                                         "timeFormat": "EU"
                                     }
                                 }
                             }
+                            if(fs.existsSync(`${TP_path}/config/cfg.json`)) {
+                                OldValuescfg = JSON.parse(fs.readFileSync(`${TP_path}/config/cfg.json`))
+                            } else {
+                                OldValuescfg = {
+                                    "firstInstall": true
+                                }
+                            }
+
+                            console.log(OldValues)
+                            console.log(OldValuescfg)
 
                             await timeout(1000)
                             
                             currency = OldValues.Basics.currency
                             unit = OldValues.Basics.unit
-                            fluid = OldValues.Basics.fluid
+                            fluid = Number(OldValues.Basics.fluid)
                             weight = OldValues.Basics.weight
                             temp = OldValues.Basics.temp
                             timeFormat = OldValues.Basics.timeFormat
                             TruckersMPServer = OldValues.Basics.TruckersMPServer
-                            progressBar.value += 3
+                            firstInstall = OldValuescfg.firstInstall
+                            progressBar.value += 1
+
+                            replaceJSON(`./config/usercfg.json`, "currency", currency)
+                            replaceJSON(`./config/usercfg.json`, "unit", unit)
+                            replaceJSON(`./config/usercfg.json`, "fluid", fluid)
+                            replaceJSON(`./config/usercfg.json`, "weight", weight)
+                            replaceJSON(`./config/usercfg.json`, "temp", temp)
+                            replaceJSON(`./config/usercfg.json`, "timeFormat", timeFormat)
+
+                            progressBar.value += 1
+                            
+                            replaceJSON(`./config/cfg.json`, "firstInstall", firstInstall)
+
+                            progressBar.value += 1
 
                             await timeout(200)
                             resolve()
@@ -252,9 +279,9 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                         await CopyFiles(progressBar)
                         progressBar.detail = "Done."
                         
-                        replaceJSON(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/config/cfg.json`, "firstInstall", false)
-                        await showDialog("info", ["Ok"], "ETS2 Dashboard", "Update Done! You can start TouchPortal again and delete this Folder")
-                        
+                        logIt("AUTOUPDATE", "INFO", "Done.")
+                        showDialog("info", ["Ok"], "ETS2 Dashboard", "Update Done! You can start TouchPortal again and delete this Folder")
+                        await timeout(5000)
                         exit()
                     }) 
     

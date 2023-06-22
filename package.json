@@ -1,6 +1,6 @@
 {
   "name": "tp_ets2_plugin",
-  "version": "3.1.5",
+  "version": "3.1.6",
   "description": "Euro Truck Simulator 2 Plugin for TouchPortal",
   "main": "src/bin/plugin.js",
   "scripts": {
