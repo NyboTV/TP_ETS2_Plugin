@@ -277,9 +277,13 @@ const main = async (path, cfg_path, telemetry_path) => {
     }
 
     // Checking for FirstInstall
-    if (system_path.basename(process.cwd()) === "ETS2_Dashboard" || Testing === true) {
+    if (system_path.basename(process.cwd()) === "ETS2_Dashboard" && JSON.parse(fs.readFileSync(`${cfg_path}/cfg.json`)).firstInstall === true || Testing === true) {
         logIt("MAIN", "INFO", "Starting First Install Script...")
-        await firstInstall(showDialog, logIt, OfflineMode, timeout)
+        if(await firstInstall(showDialog, logIt, OfflineMode, timeout)) {
+            replaceJSON(`${cfg_path}/cfg.json`, "firstInstall", false)
+        } else {
+            logIt("MAIN", "ERROR", "Something went wrong while FirstInstall")
+        }
     }
 
     TouchPortalConnection(path, cfg_path, telemetry_path, uConfig, CurrencyList, refreshInterval, OfflineMode)

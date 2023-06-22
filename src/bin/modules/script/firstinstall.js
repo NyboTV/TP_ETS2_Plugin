@@ -1,5 +1,6 @@
 // Import Writing Modules
 const fs = require('fs')
+const replaceJSON = require(`replace-json-property`).replace
 // Import File System Modules
 const AdmZip = require('adm-zip')
 // Import Internet Modules
@@ -59,6 +60,7 @@ const firstInstall = async (showDialog, logIt, OfflineMode, timeout) => {
                     })
                 } catch (e) {
                     logIt("FIRSTINSTALL", "INFO", "Error while First Setup!! \n" + e)
+                    resolve(false)
                 }
                 
             } else {
@@ -67,6 +69,7 @@ const firstInstall = async (showDialog, logIt, OfflineMode, timeout) => {
             }
         } else {
             logIt("FIRSTINSTALL", "INFO", "User is Offline, skipping DefaultPage Setup")
+            resolve(false)
         }
     })
 }

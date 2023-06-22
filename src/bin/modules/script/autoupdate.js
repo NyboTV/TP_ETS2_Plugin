@@ -314,6 +314,11 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                             }
                         }
 
+                        if (!response.assets[0]) {
+                            NeedUpdate = false
+                            logIt("AUTOUPDATE", "WARNING", "AutoUpdate Check skipped. Asset is not present.")
+                        }
+
 
                         if (NeedUpdate === true) {
                             newversion = response.tag_name
