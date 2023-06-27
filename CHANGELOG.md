@@ -1,6 +1,11 @@
 
 # Changelog
 ```
+### Changelog 3.2.2
+- Fixed Config File getting Destroyed
+
+### Changelog 3.2.0
+- Added more Unit Support
 
 ### Changelog 3.1.7
 - Fixed FirstInstall Setup

@@ -1,14 +1,15 @@
 {
   "Basics": {
     "currency": "EUR",
-    "unit": "Kilometer", 
-    "fluid": "Liters",
-    "weight": "Tons",
+    "unit": "Kilometers",
+    "fluid": 0,
+    "fluidCon": 0,
+    "weight": 0,
     "temp": "Celsius",
     "timeFormat": "EU"
   },
   "TruckersMP": {
-    "TruckersMPServer": "0"
+    "TruckersMPServer": 1
   },
   "Modules": {
     "driverStates": true,
@@ -18,8 +19,8 @@
     "navigationStates": true,
     "trailerStates": true,
     "truckStates": true,
-    "truckersmpStates": true,
+    "truckersmpStates": false,
     "worldStates": true
   },
-  "PreRelease": false
+  "PreRelease": true
 }

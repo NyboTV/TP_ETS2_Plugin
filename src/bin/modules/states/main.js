@@ -57,18 +57,17 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
             }
             switch(units.fluidCon) {
                 case 0:
-                    fluidConUnit = "Liters"
+                    fluidConUnit = `Liters / ${speedUnit}`
                 break
 
                 case 1:
-                    fluidConUnit = "US Galons"
+                    fluidConUnit = `US Galons / ${speedUnit}`
                 break
 
                 case 2:
-                    fluidConUnit = "UK Galons"
+                    fluidConUnit = `Uk Galons / ${speedUnit}`
                 break
             }            
-            fluidConUnit = `${fluidConUnit} / ${speedUnit}`
 
             switch(units.weight) {
                 case 0:
