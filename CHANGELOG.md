@@ -1,6 +1,10 @@
 
 # Changelog
 ```
+### Changelog 3.2.4 
+- Added Auto Switch Gauge Picture
+- Fixed Consumption not calculating
+
 ### Changelog 3.2.2
 - Fixed Config File getting Destroyed
 

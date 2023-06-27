@@ -41,13 +41,10 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 	let image_arrow_rpm = await Jimp.read(`${path}/images/RPMNeedle.png`);
 	let image_arrow_fuel = await Jimp.read(`${path}/images/FuelNeedle.png`);
 
-
 	let image2_Speed = ""
-	if(userconfig.unit === "Kilometer") {
-		image2_Speed = await Jimp.read(`${path}/images/SpeedGauge_kmh.png`);
-	} else {
-		image2_Speed = await Jimp.read(`${path}/images/SpeedGauge_mph.png`);
-	}
+	let image2_Speed_KMH = await Jimp.read(`${path}/images/SpeedGauge_kmh.png`);
+	let image2_Speed_MPH = await Jimp.read(`${path}/images/SpeedGauge_mph.png`);
+
 	let image2_RPM = await Jimp.read(`${path}/images/RPMGauge.png`);
 	let image2_Fuel = await Jimp.read(`${path}/images/FuelGauge.png`);
 
@@ -90,17 +87,11 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 			if(Speed !== SpeedOld || unit !== unitOld) {
 				SpeedOld = Speed
 
-				if (unit === "miles") {
-					Speed = Math.floor(Speed / 1.609344)
-				} else {
-					Speed = Math.round(Speed)
-				}
-
 				if(Speed < 0) {
 					Speed = Math.abs(Speed)
 				}
 				
-				SpeedGauge = await getSpeedGauge(Speed)
+				SpeedGauge = await getSpeedGauge(Speed, unit)
 
 				var data = {
 					id: "Nybo.ETS2.Gauges.SpeedGauge",
@@ -159,8 +150,13 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 				return (n - a) * (n - b) <= 0
 			}
 			
-			async function getSpeedGauge(Speed) {
+			async function getSpeedGauge(Speed, unit) {
 				return new Promise(async (resolve, reject) => {
+					if(unit === "miles") {
+						image2_Speed = image2_Speed_MPH
+					} else {
+						image2_Speed = image2_Speed_KMH
+					}
 					
 					async function getSpeedGauge(rotate) {
 						var getSpeedGaugeRotate = -2
@@ -170,6 +166,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 						
 						image_Speed_clone.rotate(Math.floor(rotate))
 						image_Speed_clone.resize(400, 400)
+						image2_Speed_clone.resize(400, 400)
 						image2_Speed_clone.composite(image_Speed_clone, 0, 0)
 						image2_Speed_clone.getBase64Async(Jimp.AUTO)
 
@@ -177,8 +174,15 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 							resolve(base64.slice(22))
 						})
 					}
-					// -261
-					Speed = Math.floor(Speed/0.765)
+
+					if(unit === "miles") {
+						// -288
+						Speed = Math.floor(Speed/0.382)
+					} else {
+						// -261
+						Speed = Math.floor(Speed/0.765)
+					}
+					
 					Speed = -Speed 
 					await getSpeedGauge(Speed)
 					
@@ -195,6 +199,7 @@ const gaugeStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
 		
 						image_RPM_clone.rotate(Math.floor(getRPMGaugeRotate - rotate))
 						image_RPM_clone.resize(400, 400)
+						image2_RPM_clone.resize(400, 400)
 						image2_RPM_clone.composite(image_RPM_clone, 0, 0)
 						image2_RPM_clone.getBase64Async(Jimp.AUTO)
 							.then(base64 => {
