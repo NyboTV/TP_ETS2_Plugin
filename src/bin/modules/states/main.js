@@ -18,6 +18,9 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
     var fluidUnit = ""
     var fluidUnitOld = ""
 
+    var fluidConUnit = ""
+    var fluidConUnitOld = ""
+
     var weightUnit = ""
     var weightUnitOld = ""
 
@@ -50,8 +53,40 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
                 case 2:
                     fluidUnit = "UK Galons"
+                break
             }
-            weightUnit = units.weight
+            switch(units.fluidCon) {
+                case 0:
+                    fluidConUnit = "Liters"
+                break
+
+                case 1:
+                    fluidConUnit = "US Galons"
+                break
+
+                case 2:
+                    fluidConUnit = "UK Galons"
+                break
+            }            
+            fluidConUnit = `${fluidConUnit} / ${speedUnit}`
+
+            switch(units.weight) {
+                case 0:
+                    weightUnit = "Tons"
+                break
+
+                case 1:
+                    weightUnit = "US Tons"
+                break
+
+                case 2:
+                    weightUnit = "UK Tons"
+                break
+
+                case 3:
+                    weightUnit = "Pounds"
+                break
+            }
             tempUnit = units.temp
 
 
@@ -81,6 +116,16 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
                     value: `${fluidUnit}`
                 }
                 fluidUnitOld = fluidUnit
+                
+                states.push(data)
+            }
+
+            if(fluidConUnit !== fluidConUnitOld) {
+                var data = {
+                    id: "Nybo.ETS2.Setting.fluidConUnit",
+                    value: `${fluidConUnit}`
+                }
+                fluidConUnitOld = fluidConUnit
                 
                 states.push(data)
             }

@@ -66,6 +66,14 @@
                "format":"Fluid Unit: Fast Switch your Fluid Unit"
             },
             {
+               "id": "setting_fluidCon",
+               "prefix": "Fluid Consumption Unit:",
+               "name":"Fast Switch Fluid Consumption Unit",
+               "type":"communicate",
+               "tryInline":"true",
+               "format":"Fluid Unit: Fast Switch your Fluid Consumption Unit"
+            },
+            {
                "id": "setting_weight",
                "prefix": "Weight Unit:",
                "name":"Fast Switch Weight Unit",
@@ -355,6 +363,12 @@
                "id":"Nybo.ETS2.Setting.fluidUnit",
                "type":"text",
                "desc":"ETS2:Shows current Fluid Unit",
+               "default":"SETTING ERROR"
+            },
+            {
+               "id":"Nybo.ETS2.Setting.fluidConUnit",
+               "type":"text",
+               "desc":"ETS2:Shows current Fluid Consumption Unit",
                "default":"SETTING ERROR"
             },
             {

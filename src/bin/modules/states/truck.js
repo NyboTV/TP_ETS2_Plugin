@@ -14,6 +14,9 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     let fluid = ""
     let fluidOld = ""
 
+    let fluidCon = ""
+    let fluidConOld = ""
+
     let temp = ""
     let tempOld = ""
 
@@ -181,7 +184,6 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
     var states = []
 
     var offline = false
-    let dt3 = ""
 
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
@@ -478,6 +480,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             unit = unit.toLowerCase()
 
             fluid = userconfig.Basics.fluid  // NUMBERS
+            fluidCon = userconfig.Basics.fluidCon // NUMBERS
 
             temp = userconfig.Basics.temp
             temp = temp.toLowerCase()
@@ -703,13 +706,30 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelConsumption !== FuelConsumptionOld || fluid !== fluidOld || offline === true) {
+            if(FuelConsumption !== FuelConsumptionOld || fluidCon !== fluidConOld || offline === true) {
                 FuelConsumptionOld = FuelConsumption
+                fluidConOld = fluidCon
 
-                if(fluid === 1) {
-                    FuelConsumption = FuelConsumption / 3.785
-                } else if (fluid === 2) {
-                    FuelConsumption = FuelConsumption / 4.546
+                switch (fluidCon) {
+                    case 0:
+                        FuelConsumption = FuelConsumption
+                    break
+
+                    case 1:
+                        FuelConsumption = FuelConsumption / 3.785
+                    break
+
+                    case 2:
+                        FuelConsumption = FuelConsumption / 4.546
+                    break
+
+                    default:
+                        FuelConsumption = "ERROR"
+                    break
+                }
+
+                if(unit === "miles") {
+                    FuelConsumption = FuelConsumption * 1.609
                 }
 
                 var data = {
@@ -1216,7 +1236,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
             
             tempOld = temp
             unitOld = unit
-            //fluidOld = fluid
+            fluidOld = fluid
     
             try {
                 if(states.length > 0) {

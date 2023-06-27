@@ -264,10 +264,30 @@ const trailerStates = async (TPClient, refreshInterval, telemetry_path, logIt, t
 
                 CargoMassOld = CargoMass
 
-                if (weight.toLowerCase() === "pounds") {
-                    CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
-                } else {
-                    CargoMass = Math.round(Math.floor(cargo.mass / 1000))
+                switch (weight) {
+                    case 0:
+                        CargoMass = Math.round(Math.floor(cargo.mass / 1000))
+                        weight = "Tons"
+                    break
+
+                    case 1:
+                        CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 1.102311))
+                        weight = "US Tons"
+                    break
+
+                    case 2:
+                        CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 0.9843065))
+                        weight = "UK Tons"
+                    break
+
+                    case 3: 
+                        CargoMass = Math.round(Math.floor(cargo.mass / 1000 * 2204.6226))
+                        weight = "Pounds"
+                    break
+
+                    default:
+                        CargoMass = "ERROR"
+                    break
                 }
 
                 var data = {

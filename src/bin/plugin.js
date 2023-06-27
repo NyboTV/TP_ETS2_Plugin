@@ -123,16 +123,56 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, uConfig, Cu
                     default:
                         replaceJSON(`${cfg_path}/usercfg.json`, "fluid", 0)
                     break
+                    // Liter || USGallon || UKGallon
+                }           
+            break;
 
+            case 'setting_fluidCon':
+                let fluidCon = JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.fluidCon
+                switch(fluidCon) {
+                    case 0:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "fluidCon", 1)
+                    break
+
+                    case 1:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "fluidCon", 2)
+                    break
+
+                    case 2:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "fluidCon", 0)
+                    break
+
+                    default:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "fluidCon", 0)
+                    break
+                    // Liter || USGallon || UKGallon
                 }           
             break;
             
             case 'setting_weight':
-                if(JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.weight === "Tons") {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "weight", "Pounds")
-                } else {
-                    replaceJSON(`${cfg_path}/usercfg.json`, "weight", "Tons")
-                }
+                let weight = JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Basics.weight
+                switch(weight) {
+                    case 0:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "weight", 1)
+                    break
+
+                    case 1:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "weight", 2)
+                    break
+
+                    case 2:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "weight", 3)
+                    break
+
+                    case 3:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "weight", 0)
+                    break
+
+                    default:
+                        replaceJSON(`${cfg_path}/usercfg.json`, "weight", 0)
+                    break
+                    // Tons || USPounds || UKPounds ||
+                } 
             break;
             
             case 'setting_temp':
