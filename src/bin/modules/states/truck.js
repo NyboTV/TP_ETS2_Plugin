@@ -706,7 +706,7 @@ const truckStates = async (TPClient, refreshInterval, telemetry_path, logIt, tim
                 states.push(data)
             }
 
-            if(FuelConsumption !== FuelConsumptionOld || fluidCon !== fluidConOld || offline === true) {
+            if(FuelConsumption !== FuelConsumptionOld || unit !== unitOld || fluidCon !== fluidConOld || offline === true) {
                 FuelConsumptionOld = FuelConsumption
                 fluidConOld = fluidCon
 
