@@ -1,6 +1,12 @@
 
 # Changelog
 ```
+
+### Changelog 3.2.6
+- Added new Gauge System
+- Added more Units to setup
+- Fixed some Code
+
 ### Changelog 3.2.4 
 - Added Auto Switch Gauge Picture
 - Fixed Consumption not calculating

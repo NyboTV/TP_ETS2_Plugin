@@ -1,7 +1,7 @@
 {
   "Basics": {
     "currency": "EUR",
-    "unit": "Kilometer",
+    "unit": "Miles",
     "fluid": 1,
     "fluidCon": 0,
     "weight": 0,
