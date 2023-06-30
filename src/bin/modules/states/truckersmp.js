@@ -3,22 +3,26 @@ const fs = require('fs')
 const sJSON = require('self-reload-json')
 const https = require('https')
 
-const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, plugin_settings) => {
+const gameStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_path) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
     let ModuleLoaded = false
 
+    var states = []
+    
+    var offline = false
+    
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
+    let config = new sJSON(`${cfg_path}/cfg.json`)
 
-    var states = []
-
-    var offline = false
+    // Setting Values First Time to refresh
+    refreshInterval = config.refreshInterval
 
     // Check if User De/activates Module
     async function configloop () {
-        for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
+        for (var configLoop = 0; configLoop < Infinity; await timeout(refreshInterval), configLoop++) {
             if(module.Modules.truckersmpStates === false) {
                 fs.writeFileSync(telemetry_path + "/truckersMP_TMP.json", `{\n "response": { \n  "id": "false"\n }\n}`)
                 if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
@@ -32,7 +36,8 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
 
     //Module Loop
     async function moduleloop () {
-            for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval * 200), moduleLoop++) {
+        for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval * 200), moduleLoop++) {
+            refreshInterval = config.refreshInterval
     
             if(ModuleLoaded === false) { 
                 states = []
@@ -75,7 +80,7 @@ const gameStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
             var ServerPlayerQueue = ""
             var APIOnline = ""
             
-            var TruckersMPServer = Number(userconfig.TruckersMP.TruckersMPServer)
+            var TruckersMPServer = Number(cfg_path.TruckersMP.TruckersMPServer)
 
 			function IsJsonString(str) {
 				try {

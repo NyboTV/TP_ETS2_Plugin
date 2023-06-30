@@ -4,19 +4,14 @@ const TPClient = new TouchPortalAPI.Client();
 const pluginId = `TP_ETS2_Plugin`;
 // Import Writing Modules
 const fs = require(`fs`)
-const fse = require('fs-extra')
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 // Import Internet Modules
 const checkInternetConnected = require('check-internet-connected');
 // Import Path/Zip Modules
 const system_path = require('path');
-//const getFolderSize = require("get-folder-size");
-const AdmZip = require("adm-zip");
 // Import System Modules
 const { exit } = require('process');
-// Import Electron Modules
-const ProgressBar = require('electron-progressbar')
 // import Custom Modules
 const logIt = require('./modules/script/logIt') 
 const showDialog = require('./modules/script/showDialog')
@@ -58,13 +53,14 @@ if (dirname) {console.log("You are Trying to start the Script inside the Source 
 // First Setup Folder Creation
 if(!fs.existsSync(`${path}/tmp`)) { fs.mkdirSync(`${path}/tmp`) }
 
-const TouchPortalConnection = async (path, cfg_path, telemetry_path, uConfig, CurrencyList, refreshInterval, OfflineMode) => {
+const TouchPortalConnection = async (path, cfg_path, telemetry_path, OfflineMode) => {
     let settings_error = 0
-    CurrencyList = CurrencyList.currency_list
+    let CurrencyList = new sJSON(`${cfg_path}/currency.json`).currency_list   
+    let refreshInterval = new sJSON(`${cfg_path}/usercfg.json`).refreshInterval
 
     TPClient.on("Info", async (data) => {
         // After TP Ready, Modules gets loaded
-        logIt("TOUCHPORTAL", "INFO", "TP loaded. Loading Modules")
+        logIt("TOUCHPORTAL", "INFO", "TP loaded. Loading Modules...")
         usage(TPClient, dirpath, logIt, timeout)    
         if(!noServer) { telemetry_Server(path, logIt, timeout, refreshInterval) }
 
@@ -76,20 +72,23 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, uConfig, Cu
             }
         }
 
-        await mainStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await driverStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await gameStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await gaugeStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await jobStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, OfflineMode)
-        await navigationStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await trailerStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await truckStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await truckersmpStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
-        await worldStates(TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig)
+        await mainStates(       TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await driverStates(     TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await gameStates(       TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await gaugeStates(      TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await jobStates(        TPClient, telemetry_path, logIt, timeout, path, cfg_path, OfflineMode)
+        await navigationStates( TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await trailerStates(    TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await truckStates(      TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await truckersmpStates( TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        await worldStates(      TPClient, telemetry_path, logIt, timeout, path, cfg_path)
 
         await timeout(200)
         logIt("TOUCHPORTAL", "INFO", "Modules loaded.")
-        logIt("TOUCHPORTAL", "INFO", "Starting Loop.")
+        logIt("TOUCHPORTAL", "INFO", "Starting Loop...")
+
+        await timeout(500)
+        logIt("TOUCHPORTAL", "INFO", "Loop started.")
         
     });
 
@@ -288,10 +287,9 @@ const main = async (path, cfg_path, telemetry_path) => {
     // Loading Configs 
     logIt("MAIN", "INFO", "Loading `Config Files`...")
     let config = new sJSON(`${cfg_path}/cfg.json`)
-    let uConfig = new sJSON(`${cfg_path}/usercfg.json`)
-    let CurrencyList = new sJSON(`${cfg_path}/currency.json`)    
-    let OfflineMode = config.OfflineMode
+    let uConfig = new sJSON(`${cfg_path}/usercfg.json`) 
     let refreshInterval = config.refreshInterval
+    let OfflineMode = config.OfflineMode
 
     //Checking Settings
     if (refreshInterval < 50) {
@@ -331,7 +329,7 @@ const main = async (path, cfg_path, telemetry_path) => {
         }
     }
 
-    TouchPortalConnection(path, cfg_path, telemetry_path, uConfig, CurrencyList, refreshInterval, OfflineMode)
+    TouchPortalConnection(path, cfg_path, telemetry_path, OfflineMode)
 }
 
 if(Testing) {
@@ -340,5 +338,13 @@ if(Testing) {
     test()
 }
 
+async function variableReloader() {
+    setInterval(() => {
+        return
+    }, 200);
+}
+
+
+variableReloader()
 main(path, cfg_path, telemetry_path)
 

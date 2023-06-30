@@ -1,6 +1,6 @@
 {
   "version": "3.2.6",
-  "refreshInterval": 200,
+  "refreshInterval": 500,
   "debug": false,
   "firstInstall": false,
   "UpdateCheck": true,

@@ -5,7 +5,7 @@ const { convert, addSymbol } = require('current-currency')
 const https = require('https')
 
 
-const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, userconfig, OfflineMode, plugin_settings) => {
+const jobStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_path, OfflineMode) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -56,10 +56,15 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     // Json Vars
     let module = new sJSON(`${path}/config/usercfg.json`)
     var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
+    let config = new sJSON(`${cfg_path}/cfg.json`)
+    let userconfig = new sJSON(`${cfg_path}/usercfg.json`)
+
+    // Setting Values First Time to refresh
+    refreshInterval = config.refreshInterval
 
     // Check if User De/activates Module
     async function configloop () {
-        for (var configLoop = 0; configLoop < Infinity; await timeout(500), configLoop++) {
+        for (var configLoop = 0; configLoop < Infinity; await timeout(refreshInterval), configLoop++) {
             if(module.Modules.jobStates === false) {
                 if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
                 ModuleLoaded = false
@@ -73,6 +78,7 @@ const jobStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeo
     //Module Loop
     async function moduleloop () {
         for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {
+            refreshInterval = config.refreshInterval
     
             if(ModuleLoaded === false) { 
                 states = []

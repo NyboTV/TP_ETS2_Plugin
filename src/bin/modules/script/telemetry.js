@@ -1,5 +1,6 @@
 // Import Writing Modules
 const fs = require(`fs`)
+const sJSON = require('self-reload-json')
 // Import Internet Modules
 const http = require(`request`);
 // Import System Modules
@@ -14,8 +15,14 @@ const isRunning = (query, cb) => {
 let telemetry = ""
 let telemetry_status_online = false
 let telemetry_retry = 0
+let config = new sJSON(`${path}/config/cfg.json`)
+
+// Setting Values First Time to refresh
+refreshInterval = config.refreshInterval
 
 const telemetry_Server = async (path, logIt, timeout, refreshInterval) => {
+
+
     async function CheckTelemetryEXE() {
         return new Promise(async (resolve) => {
             isRunning(`Ets2Telemetry.exe`, async (status) => {
@@ -44,6 +51,7 @@ const telemetry_Server = async (path, logIt, timeout, refreshInterval) => {
 
     async function Telemetry() {
         for(var i = 0; Infinity; await timeout(refreshInterval)) {
+            refreshInterval = config.refreshInterval
             if(telemetry_status_online) {
                 http.get(`http://localhost:25555/api/ets2/telemetry`, async function(err, resp, body) {
                     var data = ``;

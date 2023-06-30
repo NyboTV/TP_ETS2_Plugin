@@ -2,7 +2,7 @@
 const fs = require('fs')
 const sJSON = require('self-reload-json') 
 
-const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, timeout, path, uConfig, plugin_settings) => {
+const mainStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_path) => {
     
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
@@ -30,16 +30,23 @@ const mainStates = async (TPClient, refreshInterval, telemetry_path, logIt, time
     var states = []
 
     logIt("MODULE", `${moduleName}States`, `Module loaded`)
+    
+    let config = new sJSON(`${cfg_path}/cfg.json`)
+    let userconfig = new sJSON(`${cfg_path}/usercfg.json`)
+
+    // Setting Values First Time to refresh
+    refreshInterval = config.refreshInterval
 
     //Module Loop
     async function moduleloop () {
         for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {   
+            refreshInterval = config.refreshInterval
                      
             // States
             states = []
 
             //Vars
-            units = uConfig.Basics
+            units = userconfig.Basics
             currencyUnit = units.currency
             speedUnit = units.unit
             switch(units.fluid) {
