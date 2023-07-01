@@ -26,7 +26,10 @@ if(fs.existsSync(`./src/build/ETS2_Dashboard`)) {
 
 const pack = async () => {
 
+    console.log("Deleting TMP")
     await tmp()
+
+    console.log("Changing Version")
     await version()
 
     //Copy Main File
@@ -38,9 +41,9 @@ const pack = async () => {
     //Copy IMG Folder
     fse.copySync(`${InputPath}/bin/images`, `${OutputPath}/images`) 
     //Copy Config Folder
-    fse.copySync(`${InputPath}/build/bin/config`, `${OutputPath}/config`) 
+    fse.copySync(`${InputPath}/bin/config`, `${OutputPath}/config`) 
     //Copy Entry File
-    fse.copySync(`${InputPath}/build/bin/entry.tp`, `${OutputPath}/entry.tp`) 
+    fse.copySync(`${InputPath}/bin/entry.tp`, `${OutputPath}/entry.tp`) 
 
 
     let Files  = [];
@@ -52,7 +55,19 @@ const pack = async () => {
         return new Promise(async (resolve, reject) => {
             fs.readdirSync(Directory).forEach(File => {
                 const Absolute = path.join(Directory, File);
-                if (fs.statSync(Absolute).isDirectory()) { ThroughDirectory(Absolute); Folder.push(Absolute) }
+                if (fs.statSync(Absolute).isDirectory()) { 
+                    fs.readdir(Absolute, function(err, files) {
+                        if (err) {
+                           // some sort of error
+                        } else {
+                           if (!files.length) {
+                           } else {
+                                ThroughDirectory(Absolute); 
+                                Folder.push(Absolute) 
+                           }
+                        }
+                    });
+                }
                 else return Files.push(Absolute);
             })
             resolve()
@@ -87,14 +102,20 @@ const pack = async () => {
         })
     }
 
+    console.log("Checking Dir")
     await ThroughDirectory(OutputPath);
+    console.log("Sorting Array")
     await CheckArray()
+    console.log("Writing to File")
     await writeToFile()
 
+    
+    console.log("Zipping Dir")
 	var zip = new AdmZip();
 	zip.addLocalFolder(`${OutputPath}`, 'ETS2_Dashboard');
 
 	zip.writeZip(`${OutputPath}/ETS2_Dashboard.zip`);
+    console.log("Dir Zipped")
     fse.renameSync(`${OutputPath}/ETS2_Dashboard.zip`, `${OutputPath}/ETS2_Dashboard.tpp`, { overwrite: true })
 
     if(testMode) {
@@ -111,8 +132,10 @@ const pack = async () => {
         fs.copyFileSync(`${OutputPath}/ETS2_Dashboard.tpp`, `${desktopPath}/ETS2_Dashboard.tpp`)
     }
 
-    console.log("FINISHED AT " + curTime)
+    console.log("Deleting TMP")
     await tmp()
+
+    console.log("FINISHED AT " + curTime)
     exit()
         
 }
@@ -172,7 +195,6 @@ async function version() {
         console.log("Latest App Version: " + latestVersion)
         
         replaceJSON('./src/bin/config/cfg.json', 'version', latestVersion)
-        replaceJSON('./src/build/bin/config/cfg.json', 'version', latestVersion)
         replaceJSON('./package.json', 'version', latestVersion)
 
         resolve()

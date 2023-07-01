@@ -1,8 +1,0 @@
-{
-  "version": "3.2.6",
-  "refreshInterval": 200,
-  "debug": false,
-  "firstInstall": true,
-  "UpdateCheck": true,
-  "OfflineMode": false
-}

@@ -12,6 +12,7 @@ const checkInternetConnected = require('check-internet-connected');
 const system_path = require('path');
 // Import System Modules
 const { exit } = require('process');
+const { exec, execFile } = require(`child_process`)
 // import Custom Modules
 const logIt = require('./modules/script/logIt') 
 const showDialog = require('./modules/script/showDialog')
@@ -33,6 +34,11 @@ const truckersmpStates = require(`./modules/states/truckersmp`);
 const worldStates = require(`./modules/states/world`);
 const telemetry_Server = require('./modules/script/telemetry');
 
+const isRunning = (query, cb) => {
+    exec('tasklist', (err, stdout, stderr) => {
+        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
+    });
+}
 
 logIt("MAIN", "INFO", "Starting Plugin...")
 // Debug Section
@@ -276,11 +282,9 @@ const main = async (path, cfg_path, telemetry_path) => {
         if(MissingFiles > 0) {
             UpdateQuestion = await showDialog("error", ["yes", "no"], "ETS2 Dashboard", `Missing ${MissingFiles} Files/Folders! Continue?`)
         
-            if (UpdateQuestion === 0) {
-                return
-            } else {
+            if (UpdateQuestion === 1) {
                 exit()
-            }
+            } 
         }
     }
 
@@ -338,13 +342,17 @@ if(Testing) {
     test()
 }
 
-async function variableReloader() {
-    setInterval(() => {
-        return
-    }, 200);
-}
+//Checks for TP exe
+setInterval(() => {
+    
+    isRunning(`TouchPortalServices.exe`, async (status) => {
+        if(status === false) {
+            logIt("MAIN", "ERROR", "TouchPortal is not Running anymore.")
+            exit()
+        }
+    })
 
+}, 200);
 
-variableReloader()
 main(path, cfg_path, telemetry_path)
 

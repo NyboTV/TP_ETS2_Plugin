@@ -520,7 +520,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                 CruiseControlSpeedOld = CruiseControlSpeed
 
                 if(unit === "miles") {
-                    CruiseControlSpeed = Math.floor(CruiseControlSpeed / 1.609344)
+                    CruiseControlSpeed = Math.round(CruiseControlSpeed / 1.609344)
                 } else {
                     CruiseControlSpeed = Math.round(CruiseControlSpeed)
                 }

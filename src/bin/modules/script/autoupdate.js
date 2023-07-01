@@ -442,12 +442,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
 
                             } else if (UpdateQuestion === 1) {
                                 logIt("AUTOUPDATE", "INFO", "Update Skipped")
-                                progressBar.close()
                                 resolve()
-                            } else if (UpdateQuestion === 2) {
-                                logIt("AUTOUPDATE", "INFO", "Update Skipped. Never ask Again!")
-                                progressBar.close()
-                                replaceJSON(`${path}/config/cfg.json`, "UpdateCheck", false)
                             }
                         } else {
                             logIt("AUTOUPDATE", "INFO", "No Update Found.")
