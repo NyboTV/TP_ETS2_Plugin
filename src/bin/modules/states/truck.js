@@ -563,7 +563,9 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                 SpeedOld = Speed
 
                 if(unit === "miles") {
-                    Speed = Math.floor(Speed / 1.609344)
+                    Speed = Math.round(Speed / 1.609344)
+                } else {
+                    Speed = Math.round(Speed)
                 }
 
                 var data = {

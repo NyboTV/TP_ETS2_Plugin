@@ -344,14 +344,14 @@ if(Testing) {
 
 //Checks for TP exe
 setInterval(() => {
-    
-    isRunning(`TouchPortalServices.exe`, async (status) => {
-        if(status === false) {
-            logIt("MAIN", "ERROR", "TouchPortal is not Running anymore.")
-            exit()
-        }
-    })
-
+    if(system_path.basename(process.cwd()) === "ETS2_Dashboard") {
+        isRunning(`TouchPortalServices.exe`, async (status) => {
+            if(status === false) {
+                logIt("MAIN", "ERROR", "TouchPortal is not Running anymore.")
+                exit()
+            }
+        })
+    }
 }, 200);
 
 main(path, cfg_path, telemetry_path)
