@@ -49,7 +49,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                 let Downloads_Path = process.env.USERPROFILE + "\\Downloads\\ETS2_Dashboard_autoupdate"
                 let TP_path = process.env.APPDATA + `/TouchPortal/plugins/ETS2_Dashboard`
     
-                UpdateQuestion = await showDialog("warning", ["Yes", "No"], "ETS2 Dashboard", "Do you want to Update your Plugin?")
+                UpdateQuestion = await showDialog("warning", ["Yes", "No"], "Do you want to Update your Plugin?")
     
                 if (UpdateQuestion === 0) {
                 
@@ -215,7 +215,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                             break
                         } else {
                             logIt("AUTOUPDATE", "INFO", "TP Still running...")
-                            await showDialog("warning", ["Done"], "ETS2 Dashboard", "Please fully Close TouchPortal! Remember: Its getting minimized in your System-Tray!")
+                            await showDialog("warning", ["Done"], "Please fully Close TouchPortal! Remember: Its getting minimized in your System-Tray!")
                             await timeout(500)
                         }
                     }
@@ -280,13 +280,13 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                         progressBar.detail = "Done."
                         
                         logIt("AUTOUPDATE", "INFO", "Done.")
-                        showDialog("info", ["Ok"], "ETS2 Dashboard", "Update Done! You can start TouchPortal again and delete this Folder")
+                        showDialog("info", ["Ok"], "Update Done! You can start TouchPortal again and delete this Folder")
                         await timeout(5000)
                         exit()
                     }) 
     
                 } else if (UpdateQuestion === 1) {
-                    await showDialog("info", ["Ok"], "ETS2 Dashboard", "Alright. Plugin is closing, due to execute in Downloads Folder!")
+                    await showDialog("info", ["Ok"], "Alright. Plugin is closing, due to execute in Downloads Folder!")
                     exit()
                 }
     
@@ -326,9 +326,9 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                             download_path = process.env.USERPROFILE + "/Downloads"
 
                             if (response.prerelease === true) {
-                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", `We found a new Update! Version: PreRelease-${newversion}, Install?`)
+                                UpdateQuestion = await showDialog("info", ["Yes", "No"], `We found a new Update! Version: PreRelease-${newversion}, Install?`)
                             } else {
-                                UpdateQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", `We found a new Update! Version: ${newversion}, Install?`)
+                                UpdateQuestion = await showDialog("info", ["Yes", "No"], `We found a new Update! Version: ${newversion}, Install?`)
                             }
 
                             if (UpdateQuestion === 0) {
@@ -344,7 +344,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     try {
                                         fs.rmdirSync(`${download_path}/ETS2_Dashboard_autoupdate`, { recursive: true })
                                     } catch (e) {
-                                        await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' Folder in your Downloads Folder")
+                                        await showDialog("warning", ["Done"], "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' Folder in your Downloads Folder")
                                         logIt("AUTOUPDATE", "ERROR", e)
                                     }
                                 }
@@ -353,7 +353,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     try { 
                                         fs.rmSync(`${download_path}/ETS2_Dashboard.tpp`) 
                                     } catch (e) {
-                                        await showDialog("warning", ["Done"], "ETS2 Dashboard", "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard.tpp' File in your Downloads Folder")
+                                        await showDialog("warning", ["Done"], "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard.tpp' File in your Downloads Folder")
                                         logIt("AUTOUPDATE", "ERROR", e)
                                     }
                                 }
@@ -423,16 +423,16 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     
                                     await timeout(200)
                                     
-                                    //InstallQuestion = await showDialog("info", ["Yes", "No"], "ETS2 Dashboard: AutoUpdater", "Update Downloaded and unzipped! Do you want to install it now?")
+                                    //InstallQuestion = await showDialog("info", ["Yes", "No"],  "Update Downloaded and unzipped! Do you want to install it now?")
                                     InstallQuestion = 1 // No Fix for ProgressBar Closes full plugin
                                     
                                     if (InstallQuestion === 0) {
-                                        await showDialog("warning", ["Ok"], "ETS2 Dashboard: AutoUpdater", "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
+                                        await showDialog("warning", ["Ok"],  "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
                                         logIt("AUTOUPDATE", "INFO", "Exiting Plugin due to Update...")
                                         exit()
                                         
                                     } else if (InstallQuestion === 1) {
-                                        await showDialog("info", ["Okay!"], "ETS2 Dashboard: AutoUpdater", "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File. Plugin is Closing...")
+                                        await showDialog("info", ["Okay!"],  "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File. Plugin is Closing...")
                                         
                                         progressBar.close()
                                         exit()

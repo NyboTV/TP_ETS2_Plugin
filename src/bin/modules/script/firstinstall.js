@@ -12,12 +12,12 @@ const firstInstall = async (showDialog, logIt, OfflineMode, timeout) => {
         
         // Telemetry Server first Install
         logIt("FIRSTINSTALL", "INFO", "Asking for Telemetry Server...")
-        telemetryInstall = await showDialog("info", ["No. Let me do the First Steps", "Yes, im good"], "ETS2 Dashboard Plugin: First Install Detected!", "Hi! Did you ever used this Plugin before?")
+        telemetryInstall = await showDialog("info", ["No. Let me do the First Steps", "Yes, im good"], "Hi! Did you ever used this Plugin before?")
         if (telemetryInstall === 0) {
             logIt("FIRSTINSTALL", "INFO", "Installing Telemetry Server...")
             require('child_process').exec('start "" "%appdata%/TouchPortal/plugins/ETS2_Dashboard/server"');
             await timeout(500)
-            await showDialog("info", ["Okay!"], "ETS2 Dashboard", "To use this Plugin you need to install the Telemetry Server by Hand! \nTo do this, just open the 'Ets2Telemtry.exe' in the Folder we just opend for you and click on Install and follow the Instruction!")
+            await showDialog("info", ["Okay!"], "To use this Plugin you need to install the Telemetry Server by Hand! \nTo do this, just open the 'Ets2Telemtry.exe' in the Folder we just opend for you and click on Install and follow the Instruction!")
         } else {
             logIt("FIRSTINSTALL", "INFO", "Telemetry already installed.")
         }
@@ -26,7 +26,7 @@ const firstInstall = async (showDialog, logIt, OfflineMode, timeout) => {
         // Default page
         if (OfflineMode === false) {
             logIt("FIRSTINSTALL", "INFO", "Asking Player for Default Page")
-            defaultPageChoice = await showDialog("question", ["Yes, the KMH Version.", "Yes, the MPH Version", "No, Thanks"], "ETS2 Dashboard Plugin: First Install Detected!", "We have a Default Page for new Users! Do you want to install it?")
+            defaultPageChoice = await showDialog("question", ["Yes, the KMH Version.", "Yes, the MPH Version", "No, Thanks"], "We have a Default Page for new Users! Do you want to install it?")
             if (defaultPageChoice === 0 || defaultPageChoice === 1) {
                 logIt("FIRSTINSTALL", "INFO", "Downloading Default Page")
                 
@@ -55,7 +55,7 @@ const firstInstall = async (showDialog, logIt, OfflineMode, timeout) => {
                         fs.unlinkSync(`${process.env.APPDATA}/TouchPortal/plugins/ETS2_Dashboard/tmp/${download_File}`)
                         
                         logIt("FIRSTINSTALL", "INFO", "Install Finished!")
-                        await showDialog("info", ["Okay!", "Restart now! (Not a thing yet!)"], "ETS2 Dashboard Plugin: First Install Detected!", "Please Restart TouchPortal to see the Default Page.")
+                        await showDialog("info", ["Okay!", "Restart (Not a thing yet!)"], "Please Restart TouchPortal to see the Default Page.")
                         resolve(true)
                     })
                 } catch (e) {

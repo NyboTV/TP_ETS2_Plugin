@@ -34,12 +34,6 @@ const truckersmpStates = require(`./modules/states/truckersmp`);
 const worldStates = require(`./modules/states/world`);
 const telemetry_Server = require('./modules/script/telemetry');
 
-const isRunning = (query, cb) => {
-    exec('tasklist', (err, stdout, stderr) => {
-        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-    });
-}
-
 logIt("MAIN", "INFO", "Starting Plugin...")
 // Debug Section
 const debugMode = process.argv.includes("--debugging")
@@ -260,7 +254,7 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, OfflineMode
         }
 
         if(settings_error >= 1) {
-            showDialog("error", ["Ok"], "ETS2 Dashboard Settings", "Hey! You messed something up in the Settings! Please check them! Meanwhile we are using the Default Settings to prevent Crashes. Read more on Github.")
+            showDialog("error", ["Ok"], "Hey! You messed something up in the Settings! Please check them! Meanwhile we are using the Default Settings to prevent Crashes. Read more on Github.")
         }
 
     });
@@ -280,11 +274,13 @@ const main = async (path, cfg_path, telemetry_path) => {
     if (system_path.basename(process.cwd()) === "ETS2_Dashboard") {
         let MissingFiles = await filescheck(path, cfg_path, logIt, timeout)
         if(MissingFiles > 0) {
-            UpdateQuestion = await showDialog("error", ["yes", "no"], "ETS2 Dashboard", `Missing ${MissingFiles} Files/Folders! Continue?`)
+            UpdateQuestion = await showDialog("error", ["yes", "no"], `Missing ${MissingFiles} Files/Folders! Continue?`)
         
             if (UpdateQuestion === 1) {
                 exit()
-            } 
+            } else {
+                await showDialog("info", "Ok", `Plugin Start aborted! Please send the Log File in Plugins Folder to the Creator on Discord!`)
+            }
         }
     }
 
@@ -343,16 +339,33 @@ if(Testing) {
 }
 
 //Checks for TP exe
+function isRunning(win, mac, linux){
+    return new Promise(function(resolve, reject){
+        const plat = process.platform
+        const cmd = plat == 'win32' ? 'tasklist' : (plat == 'darwin' ? 'ps -ax | grep ' + mac : (plat == 'linux' ? 'ps -A' : ''))
+        const proc = plat == 'win32' ? win : (plat == 'darwin' ? mac : (plat == 'linux' ? linux : ''))
+        if(cmd === '' || proc === ''){
+            resolve(false)
+        }
+        exec(cmd, function(err, stdout, stderr) {
+            resolve(stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1)
+        })
+    })
+}
+
+
 setInterval(() => {
-    if(system_path.basename(process.cwd()) === "ETS2_Dashboard") {
-        isRunning(`TouchPortalServices.exe`, async (status) => {
+    if(system_path.basename(process.cwd()) === "ETS2_Dashboard" || Testing === true) {
+
+        isRunning(`TouchPortalServices.exe`).then( async (status) => {
             if(status === false) {
                 logIt("MAIN", "ERROR", "TouchPortal is not Running anymore.")
                 exit()
             }
         })
+
     }
-}, 200);
+}, 5000);
 
 main(path, cfg_path, telemetry_path)
 
