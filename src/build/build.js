@@ -102,15 +102,23 @@ const pack = async () => {
         })
     }
 
-    console.log("Checking Dir")
+    console.log("Checking Dir...")
     await ThroughDirectory(OutputPath);
-    console.log("Sorting Array")
+    console.log("Sorting Array...")
     await CheckArray()
-    console.log("Writing to File")
+    console.log("Writing to File...")
     await writeToFile()
 
     
-    console.log("Zipping Dir")
+    console.log("Setting up Config File...")
+    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'firstInstall', true)
+    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'refreshInterval', 500)
+    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'debug', false)
+    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'UpdateCheck', true)
+    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'OfflineMode', false)
+
+    
+    console.log("Zipping Dir...")
 	var zip = new AdmZip();
 	zip.addLocalFolder(`${OutputPath}`, 'ETS2_Dashboard');
 
@@ -132,7 +140,7 @@ const pack = async () => {
         fs.copyFileSync(`${OutputPath}/ETS2_Dashboard.tpp`, `${desktopPath}/ETS2_Dashboard.tpp`)
     }
 
-    console.log("Deleting TMP")
+    console.log("Deleting TMP...")
     await tmp()
 
     console.log("FINISHED AT " + curTime)

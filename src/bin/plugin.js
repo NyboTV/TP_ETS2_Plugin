@@ -276,10 +276,10 @@ const main = async (path, cfg_path, telemetry_path) => {
         if(MissingFiles > 0) {
             UpdateQuestion = await showDialog("error", ["yes", "no"], `Missing ${MissingFiles} Files/Folders! Continue?`)
         
-            if (UpdateQuestion === 1) {
-                exit()
+            if (UpdateQuestion === 0) {
             } else {
                 await showDialog("info", "Ok", `Plugin Start aborted! Please send the Log File in Plugins Folder to the Creator on Discord!`)
+                exit()
             }
         }
     }
@@ -327,6 +327,8 @@ const main = async (path, cfg_path, telemetry_path) => {
         } else {
             logIt("MAIN", "ERROR", "Something went wrong while FirstInstall")
         }
+    } else {
+        logIt("MAIN", "INFO", "First Install Skipped.")
     }
 
     TouchPortalConnection(path, cfg_path, telemetry_path, OfflineMode)
