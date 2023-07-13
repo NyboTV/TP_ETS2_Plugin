@@ -111,11 +111,11 @@ const pack = async () => {
 
     
     console.log("Setting up Config File...")
-    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'firstInstall', true)
-    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'refreshInterval', 500)
-    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'debug', false)
-    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'UpdateCheck', true)
-    replaceJSON('./tmp/ETS2_Dashboard/config/cfg.json', 'OfflineMode', false)
+    replaceJSON('./src/build/tmp/ETS2_Dashboard/config/cfg.json', 'firstInstall', true)
+    replaceJSON('./src/build/tmp/ETS2_Dashboard/config/cfg.json', 'refreshInterval', 500)
+    replaceJSON('./src/build/tmp/ETS2_Dashboard/config/cfg.json', 'debug', false)
+    replaceJSON('./src/build/tmp/ETS2_Dashboard/config/cfg.json', 'UpdateCheck', true)
+    replaceJSON('./src/build/tmp/ETS2_Dashboard/config/cfg.json', 'OfflineMode', false)
 
     
     console.log("Zipping Dir...")
