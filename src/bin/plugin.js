@@ -4,6 +4,7 @@ const TPClient = new TouchPortalAPI.Client();
 const pluginId = `TP_ETS2_Plugin`;
 // Import Writing Modules
 const fs = require(`fs`)
+const fse = require('fs-extra')
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 // Import Internet Modules
@@ -47,6 +48,7 @@ let telemetry_path = ""
 
 let dirpath = process.cwd()
 let dirname = dirpath.includes(`\\src\\bin`)
+let download_path = process.env.USERPROFILE + "/Downloads"
 if (debugMode) { path = `./src/bin`; /**/ cfg_path = path+"/config"; /**/ telemetry_path = "./src/bin/tmp" } else { path = dirpath; /**/ cfg_path = path+"/config"; /**/ telemetry_path = "./tmp"; }
 if (dirname) {console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start..."); exit() } 
 
@@ -284,6 +286,19 @@ const main = async (path, cfg_path, telemetry_path) => {
         }
     }
 
+    //Deleting Old Update File
+    if(fs.existsSync(`${download_path}/ETS2_Dashboard.tpp`)) {
+        fs.rmSync(`${download_path}/ETS2_Dashboard.tpp`)
+    }
+
+    // Checking for Config Backup
+    if(fs.existsSync(`${download_path}/ETS2_Dashboard-Backup`)) {
+        logIt("MAIN", "INFO", "Found Old Config Backup... Loading Backup...")
+        fse.copySync(`${download_path}/ETS2_Dashboard-Backup`, `./config`)
+        fs.rmdirSync(`${download_path}/ETS2_Dashboard-Backup`, {recursive: true})
+        logIt("MAIN", "INFO", "Config Backup Deleted.")
+    }
+
     // Loading Configs 
     logIt("MAIN", "INFO", "Loading `Config Files`...")
     let config = new sJSON(`${cfg_path}/cfg.json`)
@@ -361,13 +376,20 @@ setInterval(() => {
 
         isRunning(`TouchPortal.exe`).then( async (status) => {
             if(status === false) {
-                logIt("MAIN", "ERROR", "TouchPortal is not Running anymore.")
+                logIt("MAIN", "ERROR", "TouchPortal is not Running (Or Restarting) anymore.")
+                exit()
+            }
+        })
+
+        isRunning(`TouchPortalServices.exe`).then( async (status) => {
+            if(status === false) {
+                logIt("MAIN", "ERROR", "TouchPortal is not Running (Or Restarting) anymore.")
                 exit()
             }
         })
 
     }
-}, 5000);
+}, 500);
 
 main(path, cfg_path, telemetry_path)
 

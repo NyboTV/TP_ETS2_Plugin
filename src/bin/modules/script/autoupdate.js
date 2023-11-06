@@ -5,9 +5,6 @@ const replaceJSON = require(`replace-json-property`).replace
 // Import Internet Modules
 const axios = require('axios')
 const request = require('request');
-// Import File System Modules
-const AdmZip = require("adm-zip");
-const system_path = require('path');
 // Import System Modules
 const { exit } = require('process');
 // Import Electron Modules
@@ -31,266 +28,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
         let NeedUpdate = false
 
         try {
-
-            if (system_path.basename(process.cwd()) === "ETS2_Dashboard_autoupdate") {
-                logIt("AUTOUPDATE", "INFO", "AutoUpdate Detected...")
-    
-                let OldValues = ""
-                let OldValuescfg = ""
-
-                let currency = ""
-                let unit = ""
-                let fluid = ""
-                let weight = ""
-                let temp = ""
-                let timeFormat = ""
-                let TruckersMPServer = ""
-                let FolderSize = ""
-                let Downloads_Path = process.env.USERPROFILE + "\\Downloads\\ETS2_Dashboard_autoupdate"
-                let TP_path = process.env.APPDATA + `/TouchPortal/plugins/ETS2_Dashboard`
-    
-                UpdateQuestion = await showDialog("warning", ["Yes", "No"], "Do you want to Update your Plugin?")
-    
-                if (UpdateQuestion === 0) {
-                
-                    async function CheckTPEXE() {
-                        return new Promise(async (resolve) => {
-                            isRunning(`TouchPortal.exe`, async (status) => {
-                                resolve(status)
-                            })
-                        })    
-                    } 
-
-                    async function PrepFiles() {
-                        return new Promise(async (resolve, reject) => {
-                            logIt("AUTOUPDATE", "INFO", "Prep. Files...")
-                            
-                            progressBar.value += 2
-                            if(fs.existsSync(`${TP_path}/config/usercfg.json`)) {
-                                OldValues = JSON.parse(fs.readFileSync(`${TP_path}/config/usercfg.json`))
-                            } else {
-                                OldValues = {
-                                    "Basics": {
-                                        "currency": "EUR",
-                                        "unit": "Kilometer",
-                                        "fluid": 0,
-                                        "weight": "Tons",
-                                        "temp": "Celsius",
-                                        "timeFormat": "EU"
-                                    }
-                                }
-                            }
-                            if(fs.existsSync(`${TP_path}/config/cfg.json`)) {
-                                OldValuescfg = JSON.parse(fs.readFileSync(`${TP_path}/config/cfg.json`))
-                            } else {
-                                OldValuescfg = {
-                                    "firstInstall": true
-                                }
-                            }
-
-                            console.log(OldValues)
-                            console.log(OldValuescfg)
-
-                            await timeout(1000)
-                            
-                            currency = OldValues.Basics.currency
-                            unit = OldValues.Basics.unit
-                            fluid = Number(OldValues.Basics.fluid)
-                            weight = OldValues.Basics.weight
-                            temp = OldValues.Basics.temp
-                            timeFormat = OldValues.Basics.timeFormat
-                            TruckersMPServer = OldValues.Basics.TruckersMPServer
-                            firstInstall = OldValuescfg.firstInstall
-                            progressBar.value += 1
-
-                            replaceJSON(`./config/usercfg.json`, "currency", currency)
-                            replaceJSON(`./config/usercfg.json`, "unit", unit)
-                            replaceJSON(`./config/usercfg.json`, "fluid", fluid)
-                            replaceJSON(`./config/usercfg.json`, "weight", weight)
-                            replaceJSON(`./config/usercfg.json`, "temp", temp)
-                            replaceJSON(`./config/usercfg.json`, "timeFormat", timeFormat)
-
-                            progressBar.value += 1
-                            
-                            replaceJSON(`./config/cfg.json`, "firstInstall", firstInstall)
-
-                            progressBar.value += 1
-
-                            await timeout(200)
-                            resolve()
-                        })    
-                    }
-                    
-                    async function DeleteFiles() {
-                        return new Promise(async (resolve, reject) => {
-                            logIt("AUTOUPDATE", "INFO", "Deleting Old Files...")
-
-                            let Files  = [];
-                            let Folder = [];
-                            function ThroughDirectory(Directory) {
-                                return new Promise(async (resolve, reject) => {
-                                    fs.readdirSync(Directory).forEach(File => {
-                                        const Absolute = system_path.join(Directory, File);
-                                        if (fs.statSync(Absolute).isDirectory()) { ThroughDirectory(Absolute); Folder.push(Absolute) }
-                                        else return Files.push(Absolute);
-                                    })
-                                    resolve()
-                                })
-                            }
-                            await ThroughDirectory(TP_path);
-
-                            try {
-                                for (var i = 0; i < Files.length; true, i++) {
-                                    fs.rmSync(Files[i])                                
-                                    progressBar.value += 1
-                                }
-                                
-                                for (var i = 0; i < Folder.length; true, i++) {
-                                    fs.rmdirSync(Folder[i])                                
-                                    progressBar.value += 1
-                                }
-                                
-                                
-                            } catch (e) {
-                                logIt("AUTOUPDATE", "INFO", e)
-                            }
-                            
-                            await timeout(200)
-                            resolve()
-                        })
-                    }
-    
-                    async function CopyFiles(Folder, Files) {
-                        return new Promise(async (resolve, reject) => {   
-                            logIt("AUTOUPDATE", "INFO", "Copy new Files...")
-
-                            let Files  = [];
-                            let Folder = [];
-                            function ThroughDirectory(Directory) {
-                                return new Promise(async (resolve, reject) => {
-                                    fs.readdirSync(Directory).forEach(File => {
-                                        const Absolute = system_path.join(Directory, File);
-                                        if (fs.statSync(Absolute).isDirectory()) { ThroughDirectory(Absolute); Folder.push(Absolute) }
-                                        else return Files.push(Absolute);
-                                    })
-                                    resolve()
-                                })
-                            }
-                            await ThroughDirectory(Downloads_Path);
-
-                            try {
-                                for (var i = 0; i < Folder.length; true, i++) {
-                                    element = Folder[i]
-                                    element = element.replace(`${Downloads_Path}`, '')
-                                    element = element.split('\\')
-                                    element = element.join(`/`)
-                                    progressBar.value += 1
-                                    if(!fs.existsSync(TP_path + element)) {
-                                        fs.mkdirSync(TP_path + element, { recursive: true })
-                                    }
-                                }
-                                
-                                for (var i = 0; i < Files.length; true, i++) {
-                                    
-                                    element = Files[i]
-                                    element = element.replace(`${Downloads_Path}`, '')
-                                    element = element.split('\\')
-                                    element = element.join(`/`)
-                                    fs.copyFileSync(Files[i], TP_path + element)            
-                                    progressBar.value += 1
-                                    
-                                }
-                            } catch (e) {
-                                logIt("AUTOUPDATE", "ERROR", e)
-                            }
-                            
-                            await timeout(200)
-                            resolve()
-
-                        })
-                    }
-    
-                    for(var i = 0; Infinity; await timeout(100)) {
-                        if(await CheckTPEXE() === false) {
-                            break
-                        } else {
-                            logIt("AUTOUPDATE", "INFO", "TP Still running...")
-                            await showDialog("warning", ["Done"], "Please fully Close TouchPortal! Remember: Its getting minimized in your System-Tray!")
-                            await timeout(500)
-                        }
-                    }
-
-                    
-                    let Files  = [];
-                    let Folder = [];
-                    let OldFolderSize = 0
-                    let NewFolderSize = 0
-                    let FolderSizes = 0
-                    let BarMode = 0
-
-                    function ThroughDirectory(Directory) {
-                        return new Promise(async (resolve, reject) => {
-
-                            fs.readdirSync(Directory).forEach(File => {
-                                const Absolute = system_path.join(Directory, File);
-                                if (fs.statSync(Absolute).isDirectory()) { ThroughDirectory(Absolute); Folder.push(Absolute) }
-                                else return Files.push(Absolute);
-                            })
-                            resolve()
-                        })
-                    }
-                    await ThroughDirectory(TP_path);
-                    OldFolderSize = Files.length+Folder.length
-                    await ThroughDirectory(Downloads_Path)
-                    NewFolderSize = Files.length+Folder.length-OldFolderSize
-                
-                    FolderSizes = Files.length+Folder.length
-
-                    var progressBar = new ProgressBar({
-                        title: "ETS2 Dashboard Update",
-                        text: 'Preparing data...',
-                        indeterminate: false,
-                        maxValue: FolderSizes+100
-                    });
-
-                    progressBar.value += 1
-
-                    progressBar.on('progress', function(value) {
-                        switch (BarMode) {
-                            case 0:
-                                progressBar.detail = `Preparing Data: ${value} out of 6...`;
-                            break;
-
-                            case 1:
-                                progressBar.detail = `Deleting Old Data: ${value-8} out of ${OldFolderSize}...`;
-                            break;
-
-                            case 2:
-                                progressBar.detail = `Copy New Data: ${value-OldFolderSize} out of ${NewFolderSize}...`;
-                            break;
-                        }
-                    });
-                    
-                    progressBar.on('ready', async function() {
-                        await PrepFiles(progressBar)
-                        BarMode = 1
-                        await DeleteFiles(progressBar)
-                        BarMode = 2
-                        await CopyFiles(progressBar)
-                        progressBar.detail = "Done."
-                        
-                        logIt("AUTOUPDATE", "INFO", "Done.")
-                        showDialog("info", ["Ok"], "Update Done! You can start TouchPortal again and delete this Folder")
-                        await timeout(5000)
-                        exit()
-                    }) 
-    
-                } else if (UpdateQuestion === 1) {
-                    await showDialog("info", ["Ok"], "Alright. Plugin is closing, due to execute in Downloads Folder!")
-                    exit()
-                }
-    
-            } else if (UpdateCheck === true && debugMode === false || Testing === true) {
+            if (UpdateCheck === true && debugMode === false || Testing === true) {
                 logIt("AUTOUPDATE", "INFO", "Checking for Updates... (Searching for PreRelease allowed: " + PreReleaseAllowed + ")")
 
                 axios.get('https://api.github.com/repos/NyboTV/TP_ETS2_Plugin/releases')
@@ -319,19 +57,23 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                             logIt("AUTOUPDATE", "WARNING", "AutoUpdate Check skipped. Asset is not present.")
                         }
 
-
                         if (NeedUpdate === true) {
                             newversion = response.tag_name
                             url = `https://github.com/NyboTV/TP_ETS2_Plugin/releases/download/${newversion}/ETS2_Dashboard.tpp`
                             download_path = process.env.USERPROFILE + "/Downloads"
 
                             if (response.prerelease === true) {
-                                UpdateQuestion = await showDialog("info", ["Yes", "No"], `We found a new Update! Version: PreRelease-${newversion}, Install?`)
+                                UpdateQuestion = await showDialog("question", ["No", "Yes", "Changelog"], `We found a new Update! Version: PreRelease-${newversion}, Install?`)
                             } else {
-                                UpdateQuestion = await showDialog("info", ["Yes", "No"], `We found a new Update! Version: ${newversion}, Install?`)
+                                UpdateQuestion = await showDialog("question", ["No", "Yes", "Changelog"], `We found a new Update! Version: ${newversion}, Install?`)
                             }
 
-                            if (UpdateQuestion === 0) {
+                            if (UpdateQuestion === 2) {
+                                UpdateQuestion = await showDialog("info", ["Later", "Update now!"], `*CHANGELOG* \n\n${response.body}`)
+                            }
+                        
+                            if (UpdateQuestion === 1) {
+                                showDialog("warning", ["Okay"], `If the Import will not start after the ProgressBar Closed, then you need to go to your Downloads Folder and execute the ETS2_Dashboard.tpp File! \n\nIf Windows will ask you which Programm you want to use to open the File, search the TouchPortal.exe and select it!`)
                                 logIt("AUTOUPDATE", "INFO", "Update starting...")
 
                                 let progressBar 
@@ -339,15 +81,6 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 var cur = 0;
                                 var len = ""
                                 var total = ""
-
-                                if (fs.existsSync(`${download_path}/ETS2_Dashboard_autoupdate`)) {
-                                    try {
-                                        fs.rmdirSync(`${download_path}/ETS2_Dashboard_autoupdate`, { recursive: true })
-                                    } catch (e) {
-                                        await showDialog("warning", ["Done"], "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard_autoupdate' Folder in your Downloads Folder")
-                                        logIt("AUTOUPDATE", "ERROR", e)
-                                    }
-                                }
 
                                 if(fs.existsSync(`${download_path}/ETS2_Dashboard.tpp`)) { 
                                     try { 
@@ -404,43 +137,33 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     logIt("AUTOUPDATE", "INFO", "Download Finished!")
                                     logIt("AUTOUPDATE", "INFO", "Waiting 1.5 Seconds to let the Script write the zip Header...")
                                     await timeout(1500)
-                                    progressBar.detail = 'Unzipping Update...';
-                                    
-                                    try {
-                                        var zip = new AdmZip(`${download_path}/ETS2_Dashboard.tpp`);
-                                        logIt("AUTOUPDATE", "INFO", "Unzipping...!")
-                                        zip.extractAllTo(`${download_path}`)
-                                        fs.unlinkSync(`${download_path}/ETS2_Dashboard.tpp`)
-                                        fs.renameSync(`${download_path}/ETS2_Dashboard`, `${download_path}/ETS2_Dashboard_autoupdate`)
-                                        logIt("AUTOUPDATE", "INFO", "Unzip Finished!")
-                                        progressBar.detail = "Done."
-                                    } catch (e) {
-                                        logIt("AUTOUPDATE", "Error", "Error while unzipping Update")
-                                        logIt("AUTOUPDATE", "Error", e)
-                                        progressBar.detail = "Error while unzipping Update..."
-                                        await timeout(5000)
-                                    }
+                                    progressBar.detail = 'Finishing Download...';
                                     
                                     await timeout(200)
+
+                                    logIt("AUTOUPDATE", "INFO", "Backup Config...")
+                                    progressBar.detail = 'Backup Config Files...';
                                     
-                                    //InstallQuestion = await showDialog("info", ["Yes", "No"],  "Update Downloaded and unzipped! Do you want to install it now?")
-                                    InstallQuestion = 1 // No Fix for ProgressBar Closes full plugin
+                                    fs.mkdirSync(`${download_path}/ETS2_Dashboard-Backup`)
+                                    fse.copySync("./config", `${download_path}/ETS2_Dashboard-Backup`)
+                                    replaceJSON(`${download_path}/ETS2_Dashboard-Backup/cfg.json`, "version", `${newversion}`)
                                     
-                                    if (InstallQuestion === 0) {
-                                        await showDialog("warning", ["Ok"],  "Due to AntiVirus Issues you have to execute the File by hand. Just go to your Downloads Folder -> 'ETS2_Dashboard_autoupdate' and execute the 'ETS2_Dashboard.exe'.")
-                                        logIt("AUTOUPDATE", "INFO", "Exiting Plugin due to Update...")
-                                        exit()
-                                        
-                                    } else if (InstallQuestion === 1) {
-                                        await showDialog("info", ["Okay!"],  "If you want to install it, just go to your Downloads Folder, into 'ETS2_Dashboard' and execute the 'ETS2_Dashboard.exe' File. Plugin is Closing...")
-                                        
-                                        progressBar.close()
-                                        exit()
-                                        //resolve()
+                                    await timeout(2000)
+                                    
+                                    progressBar.detail = 'Starting Install...';
+                                    
+                                    try{
+                                        exec(`${download_path}/ETS2_Dashboard.tpp`)
+                                    } catch (e) {
+                                        logIt("AUTOUPDATE", "ERROR", `${e}`)
                                     }
+                                    await timeout(1500)
+                                    logIt("AUTOUPDATE", "INFO", "Exiting Plugin due to Update...")
+                                    progressBar.close()
+                                    exit()
                                 })                                
 
-                            } else if (UpdateQuestion === 1) {
+                            } else if (UpdateQuestion === 0) {
                                 logIt("AUTOUPDATE", "INFO", "Update Skipped")
                                 resolve()
                             }
