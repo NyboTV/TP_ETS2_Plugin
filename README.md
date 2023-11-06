@@ -117,8 +117,8 @@ Want to see new features of the latest version? Please refer to [CHANGELOG](CHAN
     
    
 ## Contributors
-- **Gitago** - Helping for fixing the Plugin!
-- **Pjiesco** - Helping for Updating the Plugin!    
+- **Gitago** - Help with Fixing the plugin! 
+- **Pjiesco** - Help with updating the plugin!    
     
 
 ## License
