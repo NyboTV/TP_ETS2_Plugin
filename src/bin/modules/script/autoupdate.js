@@ -55,7 +55,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                 
                     async function CheckTPEXE() {
                         return new Promise(async (resolve) => {
-                            isRunning(`TouchPortalServices.exe`, async (status) => {
+                            isRunning(`TouchPortal.exe`, async (status) => {
                                 resolve(status)
                             })
                         })    

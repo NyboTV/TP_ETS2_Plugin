@@ -359,7 +359,7 @@ function isRunning(win, mac, linux){
 setInterval(() => {
     if(system_path.basename(process.cwd()) === "ETS2_Dashboard" || Testing === true) {
 
-        isRunning(`TouchPortalServices.exe`).then( async (status) => {
+        isRunning(`TouchPortal.exe`).then( async (status) => {
             if(status === false) {
                 logIt("MAIN", "ERROR", "TouchPortal is not Running anymore.")
                 exit()
