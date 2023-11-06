@@ -608,14 +608,8 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         id: "Nybo.ETS2.Truck.EngineOn",
                         value: `${EngineOn}`
                     }
-
-                var data_event =  {
-                        id: "Nybo.ETS2.Event.EngineOn",
-                        value: `${EngineOn}`
-                    }
                 
                 states.push(data)
-                states.push(data_event)
             }
             
             if(ElectricOn !== ElectricOnOld || offline === true) {
@@ -625,14 +619,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         id: "Nybo.ETS2.Truck.ElectricOn",
                         value: `${ElectricOn}`
                     }
-
-                var data_event = {
-                        id: "Nybo.ETS2.Event.ElectricOn",
-                        value: `${ElectricOn}`
-                    }
-
                 states.push(data)
-                states.push(data_event)
             }
             
             if(WipersOn !== WipersOnOld || offline === true) {
@@ -643,13 +630,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         value: `${WipersOn}`
                     }
 
-                var data_event = {
-                        id: "Nybo.ETS2.Event.WipersOn",
-                        value: `${WipersOn}`
-                    }
-
                 states.push(data)
-                states.push(data_event)
             }
 
             if(ParkBrakeOn !== ParkBrakeOnOld || offline === true) {
@@ -660,13 +641,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         value: `${ParkBrakeOn}`
                     }
 
-                var data_event = {
-                        id: "Nybo.ETS2.Event.ParkBrakeOn",
-                        value: `${ParkBrakeOn}`
-                    }               
-
                 states.push(data)
-                states.push(data_event)
             }
 
             if(MotorBrakeOn !== MotorBrakeOnOld || offline === true) {
@@ -688,13 +663,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                     value: `${Retarder}`
                 }
 
-                var data_event = {
-                    id: "Nybo.ETS2.Event.Retarder",
-                    value: `${Retarder}`
-                }
-
                 states.push(data)
-                states.push(data_event)
             }
 
             if(Fuel !== FuelOld || fluid !== fluidOld || offline === true) {
@@ -846,13 +815,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         value: `${FuelWarningOn}`
                     }
 
-                var data_event = {
-                        id: "Nybo.ETS2.Event.FuelWarningOn",
-                        value: `${FuelWarningOn}`
-                    }
-
                 states.push(data)
-                states.push(data_event)
             }
                 
             if(AdBlueWarningOn !== AdBlueWarningOnOld || offline === true) {
@@ -861,15 +824,9 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                 var data = {
                         id: "Nybo.ETS2.Truck.AdBlueWarningOn",
                         value: `${AdBlueWarningOn}`
-                    }
-
-                var data_event = {
-                        id: "Nybo.ETS2.Event.AdBlueWarningOn",
-                        value: `${AdBlueWarningOn}`
-                    }                 
+                    }             
 
                 states.push(data)
-                states.push(data_event)
             }
                 
             if(AirPressureWarningOn !== AirPressureWarningOnOld || offline === true) {
@@ -878,15 +835,9 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                 var data = {
                         id: "Nybo.ETS2.Truck.AirPressureWarningOn",
                         value: `${AirPressureWarningOn}`
-                    }
-
-                var data_event = {
-                        id: "Nybo.ETS2.Event.AirPressureWarningOn",
-                        value: `${AirPressureWarningOn}`
-                    }                 
+                    }         
 
                 states.push(data)
-                states.push(data_event)
             }
                 
             if(AirPressureEmergencyOn !== AirPressureEmergencyOnOld || offline === true) {
@@ -908,13 +859,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         value: `${OilPressureWarningOn}`
                     }
 
-                var data_event = {
-                        id: "Nybo.ETS2.Event.OilPressureWarningOn",
-                        value: `${OilPressureWarningOn}`
-                    }
-
                 states.push(data)
-                states.push(data_event)
             }
         
             if(WaterTempWarningOn !== WaterTempWarningOnOld || offline === true) {
@@ -925,13 +870,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         value: `${WaterTempWarningOn}`
                     }
 
-                var data_event = {
-                        id: "Nybo.ETS2.Event.WaterTempWarningOn",
-                        value: `${WaterTempWarningOn}`
-                    }
-
                 states.push(data)
-                states.push(data_event)
             }
 
             if(BatteryVoltageWarningOn !== BatteryVoltageWarningOnOld || offline === true) {
@@ -954,14 +893,8 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                         id: "Nybo.ETS2.Truck.BlinkerLeftActive",
                         value: `${BlinkerLeftActive}`
                     }
-                
-                var data_event = {
-                        id: "Nybo.ETS2.Event.BlinkerLeftActive",
-                        value: `${BlinkerLeftActive}`
-                    }
 
                 states.push(data)
-                states.push(data_event)
             } 
 
             if(BlinkerRightActive !== BlinkerRightActiveOld || offline === true) {
@@ -970,15 +903,9 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                 var data = {
                         id: "Nybo.ETS2.Truck.BlinkerRightActive",
                         value: `${BlinkerRightActive}`
-                    }
-
-                var data_event = {
-                        id: "Nybo.ETS2.Event.BlinkerRightActive",
-                        value: `${BlinkerRightActive}`
-                    }               
+                    }      
 
                 states.push(data)
-                states.push(data_event)
             } 
 
             if(BlinkerLeftOn !== BlinkerLeftOnOld || offline === true) {
@@ -1022,13 +949,7 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                     value: `${HazardLightsOn}`
                 }
 
-                var data_event = {
-                    id: "Nybo.ETS2.Event.HazardLightsOn",
-                    value: `${HazardLightsOn}`
-                }
-
                 states.push(data)
-                states.push(data_event)
             }
 
 
@@ -1117,15 +1038,9 @@ const truckStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_p
                 var data = {
                         id: "Nybo.ETS2.Truck.LightsDashboardOn",
                         value: `${LightsDashboardOn}`
-                    }
-
-                var data_event = {
-                        id: "Nybo.ETS2.Event.LightsDashboardOn",
-                        value: `${LightsDashboardOn}`
-                    }             
+                    }     
 
                 states.push(data)
-                states.push(data_event)
             }
 
             if(LightsParkingOn !== LightsParkingOnOld || offline === true) {

@@ -1,12 +1,13 @@
 {
-   "sdk":3,
+   "api":7,
    "version":1,
    "name":"TP ETS2 Plugin",
    "id":"TP_ETS2_Plugin",
-   "plugin_start_cmd":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\ETS2_Dashboard.exe\"",
+   "plugin_start_cmd_windows":"\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\ETS2_Dashboard.exe\"",
    "configuration":{
       "colorDark":"#f54242",
-      "colorLight":"#f5a442"
+      "colorLight":"#f5a442",
+      "parentCategory": "games"
    },
    "settings":[ 
       {
@@ -109,7 +110,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.EngineOn"
+            "valueStateId":"Nybo.ETS2.Truck.EngineOn"
             }, 
             {
                "id":"event_ElectricOn",
@@ -121,7 +122,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.ElectricOn"
+            "valueStateId":"Nybo.ETS2.Truck.ElectricOn"
             }, 
             {
                "id":"event_WipersOn",
@@ -133,7 +134,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.WipersOn"
+            "valueStateId":"Nybo.ETS2.Truck.WipersOn"
             }, 
             {
                "id":"event_ParkBrakeOn",
@@ -145,7 +146,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.ParkBrakeOn"
+            "valueStateId":"Nybo.ETS2.Truck.ParkBrakeOn"
             },  
             {
                "id":"event_Retarder",
@@ -158,7 +159,7 @@
                   "2",
                   "3"
                ],
-            "valueStateId":"Nybo.ETS2.Event.Retarder"
+            "valueStateId":"Nybo.ETS2.Truck.Retarder"
             }, 
 
 
@@ -173,7 +174,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.FuelWarningOn"
+            "valueStateId":"Nybo.ETS2.Truck.FuelWarningOn"
             }, 
             {
                "id":"event_AdBlueWarningOn",
@@ -185,7 +186,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.AdBlueWarningOn"
+            "valueStateId":"Nybo.ETS2.Truck.AdBlueWarningOn"
             }, 
             {
                "id":"event_AirPressureWarningOn",
@@ -197,7 +198,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.AirPressureWarningOn"
+            "valueStateId":"Nybo.ETS2.Truck.AirPressureWarningOn"
             }, 
             {
                "id":"event_OilPressureWarningOn",
@@ -209,7 +210,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.OilPressureWarningOn"
+            "valueStateId":"Nybo.ETS2.Truck.OilPressureWarningOn"
             }, 
             {
                "id":"event_WaterTempWarningOn",
@@ -221,7 +222,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.WaterTempWarningOn"
+            "valueStateId":"Nybo.ETS2.Truck.WaterTempWarningOn"
             }, 
             {
                "id":"event_BatteryVoltageWarningOn",
@@ -233,7 +234,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.BatteryVoltageWarningOn"
+            "valueStateId":"Nybo.ETS2.Truck.BatteryVoltageWarningOn"
             }, 
 
 
@@ -248,7 +249,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.BlinkerLeftActive"
+            "valueStateId":"Nybo.ETS2.Truck.BlinkerLeftActive"
             }, 
             {
                "id":"event_BlinkerRightActive",
@@ -260,7 +261,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.BlinkerRightActive"
+            "valueStateId":"Nybo.ETS2.Truck.BlinkerRightActive"
             }, 
             {
                "id":"event_HazardLightsOn",
@@ -272,7 +273,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.HazardLightsOn"
+            "valueStateId":"Nybo.ETS2.Truck.HazardLightsOn"
             }, 
 
 
@@ -287,7 +288,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.LightsDashboardOn"
+            "valueStateId":"Nybo.ETS2.Truck.LightsDashboardOn"
             }, 
 
 
@@ -302,7 +303,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.TrailerAttached"
+            "valueStateId":"Nybo.ETS2.Truck.TrailerAttached"
             }, 
 
 
@@ -317,7 +318,7 @@
                   "true",
                   "false"
                ],
-            "valueStateId":"Nybo.ETS2.Event.CargoLoaded"
+            "valueStateId":"Nybo.ETS2.Truck.CargoLoaded"
             }
          ],
          "states": [
