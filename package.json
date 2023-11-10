@@ -46,7 +46,7 @@
   "homepage": "https://github.com/NyboTV/TP_ETS2_Plugin#readme",
   "dependencies": {
     "adm-zip": "^0.5.10",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "check-internet-connected": "^2.0.6",
     "current-currency": "^1.6.2",
     "download": "^7.0.0",
