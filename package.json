@@ -1,6 +1,6 @@
 {
   "name": "tp_ets2_plugin",
-  "version": "3.4.4",
+  "version": "3.4.8",
   "description": "Euro Truck Simulator 2 Plugin for TouchPortal",
   "main": "src/bin/plugin.js",
   "scripts": {
@@ -52,8 +52,7 @@
     "current-currency": "^1.6.2",
     "download": "^7.0.0",
     "download-file": "^0.1.5",
-    "electron": "^25.1.0",
-    "electron-progressbar": "^2.1.0",
+    "electron-progressbar": "^2.2.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.1.1",
     "get-folder-size": "^2.0.0",
@@ -67,10 +66,11 @@
     "request": "^2.88.2",
     "self-reload-json": "^0.4.0",
     "touchportal-api": "^3.2.1",
+    "winston": "^3.12.0",
     "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
-    "electron": "^25.1.0",
+    "electron": "^29.1.0",
     "electron-packager": "^17.1.1"
   }
 }

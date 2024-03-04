@@ -119,14 +119,14 @@ const TouchPortalConnection = async () => {
                         let worldStates = data.game
     
                         
-                        pluginEvents.emit(`driverStates`, driverStates);
-                        pluginEvents.emit(`gameStates`, gameStates);
-                        pluginEvents.emit(`gaugeStates`, gaugeStates);
-                        pluginEvents.emit(`jobStates`, jobStates);
-                        pluginEvents.emit(`navigationStates`, navigationStates);
-                        pluginEvents.emit(`trailerStates`, trailerStates);
-                        pluginEvents.emit(`truckStates`, truckStates);
-                        pluginEvents.emit(`worldStates`, worldStates);
+                        if(module.driverStates) pluginEvents.emit(`driverStates`, driverStates);
+                        if(module.gameStates) pluginEvents.emit(`gameStates`, gameStates);
+                        if(module.gaugeStates) pluginEvents.emit(`gaugeStates`, gaugeStates);
+                        if(module.jobStates) pluginEvents.emit(`jobStates`, jobStates);
+                        if(module.navigationStates) pluginEvents.emit(`navigationStates`, navigationStates);
+                        if(module.trailerStates) pluginEvents.emit(`trailerStates`, trailerStates);
+                        if(module.truckStates) pluginEvents.emit(`truckStates`, truckStates);
+                        if(module.worldStates) pluginEvents.emit(`worldStates`, worldStates);
                     } catch (error) {        
                         logger.error(`[TELEMETRY] Telemetry Data Error! -> ${error}`)
                         console.log(error)

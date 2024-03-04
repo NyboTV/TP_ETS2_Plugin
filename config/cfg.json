@@ -1,8 +1,8 @@
 {
-  "version": "3.4.0",
-  "refreshInterval": 500,
+  "version": "3.9.9-alpha",
+  "refreshInterval": 200,
   "debug": false,
-  "firstInstall": true,
+  "firstInstall": false,
   "UpdateCheck": true,
   "OfflineMode": false
 }

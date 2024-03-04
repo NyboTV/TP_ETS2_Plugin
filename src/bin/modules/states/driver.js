@@ -12,9 +12,8 @@ const driverStates = async (TPClient, path, configs) => {
     let nextRestStopTimeOld
     
     logger.info(`[MODULES] - [${moduleName}] Module loaded`)
-    
-    pluginEvents.on(`${moduleName}States`, (telemetry) => {
-    
+
+    pluginEvents.on(`${moduleName}States`, (telemetry) => {    
         let nextRestStopTime = telemetry.nextRestStopTime
         
         let timeFormat = userconfig.Basics.timeFormat
