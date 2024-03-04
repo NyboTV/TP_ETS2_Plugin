@@ -5,7 +5,7 @@
     "paused": false,
     "time": "0002-09-16T07:02:00Z",
     "timeScale": 3.0,
-    "nextRestStopTime": "0001-01-01T10:16:00Z",
+    "nextRestStopTime": "0001-01-01T10:1:00Z",
     "version": "1.16",
     "telemetryPluginVersion": "10",
     "telemetryServerVersion": "4.1.2.3",

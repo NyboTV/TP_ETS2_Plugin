@@ -1,137 +1,82 @@
 // Loading Module
-const fs = require('fs')
-const sJSON = require('self-reload-json') 
+const { logger } = require('../script/logger')
+const pluginEvents = require('../script/emitter')
 
-const worldStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_path) => {
-    
+const worldStates = async (TPClient, path, configs) => {
+    const { config, userconfig } = configs
+
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
-    let ModuleLoaded = false
 
-    let world = ""
+    let world
+    let time, timeOld
+    let timeFormat
 
-    let time = ""
-    let timeOld = ""
-
-    let timeFormat = ""
-
-    var YY = ""
-    var MM = ""
-    var DD = ""
-    var hh = ""
-    var mm = ""
+    var YY, MM, DD, hh, mm
 
     var states = []
-
-    var offline = false
-
-    // Json Vars
-    let module = new sJSON(`${path}/config/usercfg.json`)
-    var telemetry = new sJSON(`${telemetry_path}/tmp.json`)
-    let config = new sJSON(`${cfg_path}/cfg.json`)
-    let userconfig = new sJSON(`${cfg_path}/usercfg.json`)
-
-    // Setting Values First Time to refresh
-    refreshInterval = config.refreshInterval
-
-    // Check if User De/activates Module
-    async function configloop () {
-        for (var configLoop = 0; configLoop < Infinity; await timeout(refreshInterval), configLoop++) {
-            if(module.Modules.worldStates === false) {
-                if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
-                ModuleLoaded = false
-            } else if(ModuleLoaded === false) { 
-                logIt("MODULE", `${moduleName}States`, `Module loaded`)
-                ModuleLoaded = true 
-            }
-        }
-    }
-
-    //Module Loop
-    async function moduleloop () {
-        for (var moduleLoop = 0; moduleLoop < Infinity; await timeout(refreshInterval), moduleLoop++) {   
-            refreshInterval = config.refreshInterval
     
-            if(ModuleLoaded === false) { 
-                states = []
-                if(offline === false) {
-                    states = [
-                        {
-                        id: "Nybo.ETS2.World.Time",
-                        value: `MODULE OFFLINE` 
-                        }
-                    ]
-                    
-                    TPClient.stateUpdateMany(states);
-    
-                    offline = true
-                }
-                continue
-            } else 
-                     
-            // States
-            states = []
+	logger.info(`[MODULES] - [${moduleName}] Module loaded`)
 
-            //Vars
-            world = telemetry.game
-            time = world.time
+	pluginEvents.on(`${moduleName}States`, (telemetry) => {
+		// States
+        states = []
 
-            timeFormat = userconfig.Basics.timeFormat
-            timeFormat = timeFormat.toUpperCase()
+        //Vars
+        world = telemetry
+        time = world.time
 
-            if(time !== timeOld || offline === true) {
-                timeOld = time
+        timeFormat = userconfig.Basics.timeFormat
+        timeFormat = timeFormat.toUpperCase()
 
-                time = time
-                .split("-")
-                .join(",")
-                .split("T")
-                .join(",")
-                .split("Z")
-                .join(",")
-                .split(":")
-                .join(",")
-                .split(",");
+        if(time !== timeOld) {
+            timeOld = time
 
-                YY = Math.round(time[0]-1+2000)
-                MM = time[1]-1
-                DD = time[2]-1
-                
-                hh = time[3]
-                mm = time[4]
-                                
-                if (timeFormat === "US") {
-                    if(hh > 12) {
-                        hh = hh-12
-                        time = `${MM}.${DD}.${YY}, ${hh}:${mm} PM`
-                    } else {
-                        time = `${MM}.${DD}.${YY}, ${hh}:${mm} AM`
-                    }
-                } else {
-                    time = `${hh}:${mm}, ${DD}.${MM}.${YY}`
-                }
+            time = time
+            .split("-")
+            .join(",")
+            .split("T")
+            .join(",")
+            .split("Z")
+            .join(",")
+            .split(":")
+            .join(",")
+            .split(",");
 
-                var data = {
-                    id: "Nybo.ETS2.World.Time",
-                    value: `${time}`
-                }
-
-                states.push(data)
-            }
-
-            offline = false
+            YY = Math.round(time[0]-1+2000)
+            MM = time[1]-1
+            DD = time[2]-1
             
-            try {
-                if(states.length > 0) {
-                    TPClient.stateUpdateMany(states);
+            hh = time[3]
+            mm = time[4]
+                            
+            if (timeFormat === "US") {
+                if(hh > 12) {
+                    hh = hh-12
+                    time = `${MM}.${DD}.${YY}, ${hh}:${mm} PM`
+                } else {
+                    time = `${MM}.${DD}.${YY}, ${hh}:${mm} AM`
                 }
-            } catch (error) {
-                logIt("MODULE", `${moduleName}States`, `Error: ${error}`)
+            } else {
+                time = `${hh}:${mm}, ${DD}.${MM}.${YY}`
             }
-		}
-	}
 
-	configloop()
-	moduleloop()    
+            var data = {
+                id: "Nybo.ETS2.World.Time",
+                value: `${time}`
+            }
+
+            states.push(data)
+        }
+		
+		try {
+			if(states.length > 0) {
+				TPClient.stateUpdateMany(states);
+				logger.debug(`Module '${moduleName} refreshed with ${states.length} values`)
+			}
+		} catch (error) {
+			logger.error(`[MODULE] ${moduleName} Error: ${error}`)
+		}
+	})
 }
 module.exports = worldStates

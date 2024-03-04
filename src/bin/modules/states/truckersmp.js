@@ -1,10 +1,13 @@
 // Loading Module
 const fs = require('fs')
-const sJSON = require('self-reload-json')
 const https = require('https')
+const { logger } = require('../script/logger')
+const sJSON = require(`self-reload-json`)
+const timeout = require('../script/timeout')
 
-const gameStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_path) => {
-    
+const gameStates = async (TPClient, path, configs) => {
+    const { config, userconfig } = configs
+
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
     let ModuleLoaded = false
@@ -12,19 +15,15 @@ const gameStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_pa
     var states = []
     
     var offline = false
-    
-    // Json Vars
-    let module = new sJSON(`${path}/config/usercfg.json`)
-    let config = new sJSON(`${cfg_path}/cfg.json`)
 
-    // Setting Values First Time to refresh
+    let module = new sJSON(`${path}/config/usercfg.json`)
     refreshInterval = config.refreshInterval
 
     // Check if User De/activates Module
     async function configloop () {
         for (var configLoop = 0; configLoop < Infinity; await timeout(refreshInterval), configLoop++) {
             if(module.Modules.truckersmpStates === false) {
-                fs.writeFileSync(telemetry_path + "/truckersMP_TMP.json", `{\n "response": { \n  "id": "false"\n }\n}`)
+                fs.writeFileSync(path+"/tmp/truckersMP_TMP.json", `{\n "response": { \n  "id": "false"\n }\n}`)
                 if(ModuleLoaded === true) { logIt("MODULE", `${moduleName}States`, `Module unloaded`) }
                 ModuleLoaded = false
             } else if(ModuleLoaded === false) { 
@@ -116,7 +115,7 @@ const gameStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_pa
 
                         Server = JSON.stringify(data)
                         
-                        fs.writeFileSync(telemetry_path + "/truckersMP_TMP.json", `${Server}`)
+                        fs.writeFileSync(path+"/tmp/truckersMP_TMP.json", `${Server}`)
 
                         APIOnline = true
 					} else {

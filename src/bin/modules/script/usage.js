@@ -2,7 +2,9 @@
 const pid = require('pidusage')
 const getFolderSize = require('get-folder-size')
 
-const usage = async (TPClient, dirpath, logIt, timeout) => {
+const usage = async (TPClient, logIt, timeout) => {
+    const dirpath = process.cwd()
+
     let cpu_usage = ""
     let cpu_usageOld = ""
 

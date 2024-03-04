@@ -1,41 +1,26 @@
 // Loading Module
-const fs = require('fs')
-const sJSON = require('self-reload-json') 
+const { logger } = require('../script/logger')
+const timeout = require('../script/timeout')
 
-const mainStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_path) => {
-    
+const mainStates = async (TPClient, path, configs) => {    
+    const { config, userconfig } = configs
     var path2 = require('path')
     var moduleName = path2.basename(__filename).replace('.js','')
 
-    var units = ""
-
-    var currencyUnit = ""
-    var currencyUnitOld = ""
-
-    var speedUnit = ""
-    var speedUnitOld = ""
-    
-    var fluidUnit = ""
-    var fluidUnitOld = ""
-
-    var fluidConUnit = ""
-    var fluidConUnitOld = ""
-
-    var weightUnit = ""
-    var weightUnitOld = ""
-
-    var tempUnit = ""
-    var tempUnitOld = ""
+    var currencyUnit, currencyUnitOld
+    var speedUnit, speedUnitOld
+    var fluidUnit, fluidUnitOld
+    var fluidConUnit, fluidConUnitOld
+    var weightUnit, weightUnitOld
+    var tempUnit, tempUnitOld
 
     var states = []
 
-    logIt("MODULE", `${moduleName}States`, `Module loaded`)
+    logger.info(`[MODULES] - [${moduleName}] Module loaded`)
     
-    let config = new sJSON(`${cfg_path}/cfg.json`)
-    let userconfig = new sJSON(`${cfg_path}/usercfg.json`)
 
     // Setting Values First Time to refresh
-    refreshInterval = config.refreshInterval
+    let refreshInterval = config.refreshInterval
 
     //Module Loop
     async function moduleloop () {
@@ -46,7 +31,7 @@ const mainStates = async (TPClient, telemetry_path, logIt, timeout, path, cfg_pa
             states = []
 
             //Vars
-            units = userconfig.Basics
+            let units = userconfig.Basics
             currencyUnit = units.currency
             speedUnit = units.unit
             switch(units.fluid) {

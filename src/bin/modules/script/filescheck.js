@@ -1,10 +1,9 @@
 const fs = require('fs')
 
-let missing = 0
-
-const filescheck = async (path, cfg_path, logIt, timeout) => {
+const filescheck = async (cfg_path, logger) => {
     return new Promise(async (resolve, reject) => {
-        logIt("FILESCHECK", "INFO", "Checking for missing Files/Folders...")
+        logger.info("[FILESCHECK] Checking for missing Files/Folders...")
+        let missing = 0
 
         if(!fs.existsSync(`${cfg_path}/files.json`)) { missing = 1 } else {
             let Files = JSON.parse(fs.readFileSync(`${cfg_path}/files.json`))
@@ -13,7 +12,7 @@ const filescheck = async (path, cfg_path, logIt, timeout) => {
                 if(fs.existsSync(element)) {
                 } else {
                     missing += 1
-                    logIt("FILESCHECK", "MISSING", `${element}`)
+                    logger.error(`[FILESCHECK] MISSING ${element}`)
                 }
             });
         }
@@ -21,7 +20,7 @@ const filescheck = async (path, cfg_path, logIt, timeout) => {
         if(missing > 0) {
             resolve(missing)
         } else {
-            logIt("FILESCHECK", "INFO", "Everything looks okay!")
+            logger.info("[FILESCHECK] Everything looks okay!")
             resolve(missing)
         }
     })

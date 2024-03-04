@@ -16,20 +16,14 @@ const { exec } = require(`child_process`)
 const debugMode = process.argv.includes("--debugging")
 const Testing = process.argv.includes("--testing")
 
-const isRunning = (query, cb) => {
-    exec('tasklist', (err, stdout, stderr) => {
-        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-    });
-}
-
-const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, showDialog, timeout) => {
+const AutoUpdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logger, showDialog, timeout) => {
     return new Promise(async (resolve, reject) => {
         let newversion = ""
         let NeedUpdate = false
 
         try {
             if (UpdateCheck === true && debugMode === false || Testing === true) {
-                logIt("AUTOUPDATE", "INFO", "Checking for Updates... (Searching for PreRelease allowed: " + PreReleaseAllowed + ")")
+                logger.info("[AUTOUPDATE] Checking for Updates... (Searching for PreRelease allowed: " + PreReleaseAllowed + ")")
 
                 axios.get('https://api.github.com/repos/NyboTV/TP_ETS2_Plugin/releases')
                     .then(async function(response) {
@@ -54,7 +48,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
 
                         if (!response.assets[0]) {
                             NeedUpdate = false
-                            logIt("AUTOUPDATE", "WARNING", "AutoUpdate Check skipped. Asset is not present.")
+                            logger.info("[AUTOUPDATE] Check skipped. Asset is not present.")
                         }
 
                         if (NeedUpdate === true) {
@@ -74,20 +68,19 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                         
                             if (UpdateQuestion === 1) {
                                 showDialog("warning", ["Okay"], `If the Import will not start after the ProgressBar Closed, then you need to go to your Downloads Folder and execute the ETS2_Dashboard.tpp File! \n\nIf Windows will ask you which Programm you want to use to open the File, search the TouchPortal.exe and select it!`)
-                                logIt("AUTOUPDATE", "INFO", "Update starting...")
+                                logger.info("[AUTOUPDATE] Update starting...")
 
                                 let progressBar 
                                 var body = "";
                                 var cur = 0;
                                 var len = ""
-                                var total = ""
 
                                 if(fs.existsSync(`${download_path}/ETS2_Dashboard.tpp`)) { 
                                     try { 
                                         fs.rmSync(`${download_path}/ETS2_Dashboard.tpp`) 
                                     } catch (e) {
                                         await showDialog("warning", ["Done"], "Due to AntiVirus issues we can not delete any Files outside this Plugin. Please delete the 'ETS2_Dashboard.tpp' File in your Downloads Folder")
-                                        logIt("AUTOUPDATE", "ERROR", e)
+                                        logger.error("[AUTOUPDATE] ERROR " + e)
                                     }
                                 }
                                 
@@ -111,7 +104,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                                                         
                                     progressBar = new ProgressBar({
                                         title: "ETS2 Dashboard Update",
-                                        text: 'AutoUpdate',
+                                        text: 'AUTOUPDATE',
                                         indeterminate: false,
                                         maxValue: 101
                                     });
@@ -126,7 +119,7 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     progressBar.value = Math.round(Number((100.0 * cur / len)))
                                 })
                                 .on('error', async (error) => {
-                                    logIt("AUTOUPDATER", "INFO", "Error while Downloading Update... " + error)
+                                    logger.error("[AUTOUPDATE] Error while Downloading Update... " + error)
                                     progressBar.detail = `Error while downloading Update... Closing in 5 Seconds...`
                                     await timeout(5000)
                                     exit()
@@ -134,14 +127,14 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                 .pipe(file)
                                 .on('finish', async () => {
                                     progressBar.detail = `Download Completed.`
-                                    logIt("AUTOUPDATE", "INFO", "Download Finished!")
-                                    logIt("AUTOUPDATE", "INFO", "Waiting 1.5 Seconds to let the Script write the zip Header...")
+                                    logger.info("[AUTOUPDATE] Download Finished!")
+                                    logger.info("[AUTOUPDATE] Waiting 1.5 Seconds to let the Script write the zip Header...")
                                     await timeout(1500)
                                     progressBar.detail = 'Finishing Download...';
                                     
                                     await timeout(200)
 
-                                    logIt("AUTOUPDATE", "INFO", "Backup Config...")
+                                    logger.info("[AUTOUPDATE] Backup Config...")
                                     progressBar.detail = 'Backup Config Files...';
                                     
                                     fs.mkdirSync(`${download_path}/ETS2_Dashboard-Backup`)
@@ -155,39 +148,38 @@ const autoupdate = async (UpdateCheck, PreReleaseAllowed, lastVersion, logIt, sh
                                     try{
                                         exec(`${download_path}/ETS2_Dashboard.tpp`)
                                     } catch (e) {
-                                        logIt("AUTOUPDATE", "ERROR", `${e}`)
+                                        logger.error(`[AUTOUPDATE] ERROR ${e}`)
                                     }
                                     await timeout(1500)
-                                    logIt("AUTOUPDATE", "INFO", "Exiting Plugin due to Update...")
+                                    logger.info("[AUTOUPDATE] Exiting Plugin due to Update...")
                                     progressBar.close()
                                     exit()
                                 })                                
 
                             } else if (UpdateQuestion === 0) {
-                                logIt("AUTOUPDATE", "INFO", "Update Skipped")
+                                logger.info("[AUTOUPDATE] Update Skipped")
                                 resolve()
                             }
                         } else {
-                            logIt("AUTOUPDATE", "INFO", "No Update Found.")
+                            logger.info("[AUTOUPDATE] No Update Found.")
                             resolve()
                         }
 
                     })
                     .catch(function(error) {
-                        logIt("AUTOUPDATE", "Error", error)
+                        logger.error("[AUTOUPDATE] Error " + error)
                     })
 
             } else {
-                logIt("AUTOUPDATE", "INFO", "Disabled")
+                logger.info("[AUTOUPDATE] Disabled")
                 resolve()
             }
 
         } catch (e) {
-            logIt("AUTOUPDATER", "INFO", "AutoUpdater Failed!")
-            logIt("AUTOUPDATER", "INFO", e)
+            logger.error("[AUTOUPDATE] ERROR " + e)
             //resolve()
         }
     })
 }
     
-module.exports = autoupdate
+module.exports = AutoUpdate

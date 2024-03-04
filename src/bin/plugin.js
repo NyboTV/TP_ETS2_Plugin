@@ -8,20 +8,26 @@ const fse = require('fs-extra')
 const replaceJSON = require(`replace-json-property`).replace
 const sJSON = require(`self-reload-json`)
 // Import Internet Modules
+const http = require(`request`);
 const checkInternetConnected = require('check-internet-connected');
 // Import Path/Zip Modules
 const system_path = require('path');
 // Import System Modules
 const { exit } = require('process');
-const { exec, execFile } = require(`child_process`)
 // import Custom Modules
-const logIt = require('./modules/script/logIt') 
+const { logger } = require('./modules/script/logger')
 const showDialog = require('./modules/script/showDialog')
 const timeout = require('./modules/script/timeout')
 const filescheck = require('./modules/script/filescheck')
 const AutoUpdate = require('./modules/script/autoupdate')
 const firstInstall = require('./modules/script/firstinstall')
 const usage = require('./modules/script/usage')
+const telemetry_Server = require('./modules/script/telemetry');
+const pluginEvents = require('./modules/script/emitter')
+// Debug Section
+const debugMode = process.argv.includes("--debugging")
+const noServer = process.argv.includes("--noServer")
+const Testing = process.argv.includes("--testing")
 // Import Plugin Modules
 const mainStates = require(`./modules/states/main`)
 const driverStates = require(`./modules/states/driver`);
@@ -33,65 +39,106 @@ const trailerStates = require(`./modules/states/trailer`);
 const truckStates = require(`./modules/states/truck`);
 const truckersmpStates = require(`./modules/states/truckersmp`);
 const worldStates = require(`./modules/states/world`);
-const telemetry_Server = require('./modules/script/telemetry');
 
-logIt("MAIN", "INFO", "Starting Plugin...")
-// Debug Section
-const debugMode = process.argv.includes("--debugging")
-const noServer = process.argv.includes("--noServer")
-const Testing = process.argv.includes("--testing")
+const dirpath = process.cwd()
+const path = debugMode ? `./src/bin` : dirpath
+const cfg_path = path+"/config"
+const telemetry_path = path+"/tmp"
+const download_path = process.env.USERPROFILE + "/Downloads"
 
-// Path Vars
-let path = ""
-let cfg_path = ""
-let telemetry_path = ""
-
-let dirpath = process.cwd()
-let dirname = dirpath.includes(`\\src\\bin`)
-let download_path = process.env.USERPROFILE + "/Downloads"
-if (debugMode) { path = `./src/bin`; /**/ cfg_path = path+"/config"; /**/ telemetry_path = "./src/bin/tmp" } else { path = dirpath; /**/ cfg_path = path+"/config"; /**/ telemetry_path = "./tmp"; }
-if (dirname) {console.log("You are Trying to start the Script inside the Source Folder without Debug mode! Abort Start..."); exit() } 
+let eventTimeout = {}
 
 // First Setup Folder Creation
 if(!fs.existsSync(`${path}/tmp`)) { fs.mkdirSync(`${path}/tmp`) }
 
-const TouchPortalConnection = async (path, cfg_path, telemetry_path, OfflineMode) => {
+const TouchPortalConnection = async () => {
     let settings_error = 0
     let CurrencyList = new sJSON(`${cfg_path}/currency.json`).currency_list   
-    let refreshInterval = new sJSON(`${cfg_path}/usercfg.json`).refreshInterval
+    let refreshInterval = new sJSON(`${cfg_path}/cfg.json`).refreshInterval
 
     TPClient.on("Info", async (data) => {
         // After TP Ready, Modules gets loaded
-        logIt("TOUCHPORTAL", "INFO", "TP loaded. Loading Modules...")
-        usage(TPClient, dirpath, logIt, timeout)    
-        if(!noServer) { telemetry_Server(path, logIt, timeout, refreshInterval) }
+        logger.info("[TOUCHPORTAL] TP loaded. Loading Modules...")
+        usage(TPClient, dirpath, timeout)    
+        if(!noServer) { telemetry_Server(path, telemetry_path, refreshInterval) }
 
-        // Checks for TMP File then continues
-        for(var i = 0; Infinity; await timeout(500)) {
-            if(!fs.existsSync(telemetry_path+"/tmp.json")) {
-            } else {
-                break
-            }
+        let config = new sJSON(`${cfg_path}/cfg.json`)
+        let userconfig = new sJSON(`${cfg_path}/usercfg.json`)
+
+        const configs = {
+            config,
+            userconfig
         }
 
-        await mainStates(       TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await driverStates(     TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await gameStates(       TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await gaugeStates(      TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await jobStates(        TPClient, telemetry_path, logIt, timeout, path, cfg_path, OfflineMode)
-        await navigationStates( TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await trailerStates(    TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await truckStates(      TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await truckersmpStates( TPClient, telemetry_path, logIt, timeout, path, cfg_path)
-        await worldStates(      TPClient, telemetry_path, logIt, timeout, path, cfg_path)
+        logger.info("[MODULES] Loading Modules...")
+        await mainStates(TPClient, path, configs)
+        await truckersmpStates(TPClient, path, configs)
 
-        await timeout(200)
-        logIt("TOUCHPORTAL", "INFO", "Modules loaded.")
-        logIt("TOUCHPORTAL", "INFO", "Starting Loop...")
+        await driverStates(TPClient, path, configs)
+        await gameStates(TPClient, path, configs)
+        await gaugeStates(TPClient, path, configs)
+        await jobStates(TPClient, path, configs)
+        await navigationStates(TPClient, path, configs)
+        await trailerStates(TPClient, path, configs)
+        await truckStates(TPClient, path, configs)
+        await worldStates(TPClient, path, configs)
 
-        await timeout(500)
-        logIt("TOUCHPORTAL", "INFO", "Loop started.")
+        logger.info("[MODULES] Loading Event listener...")
         
+        pluginEvents.on(`telemetryRequest`, () => { 
+            logger.info(`[MODULES] Starting Updates...`)
+            const telemetryLoop = async () => {
+                http.get(`http://localhost:25555/api/ets2/telemetry`, async function(err, resp, body) {
+                    var data = ``;
+                    data = body
+                    
+                    if (err != null) {
+                        logger.error("[TELEMETRY] Request Error")                        
+                        await timeout(3000)
+                        return
+                    }
+                    
+                    try {
+                        const module = JSON.parse(fs.readFileSync(`${cfg_path}/usercfg.json`)).Modules
+                        data = JSON.parse(data)
+                        
+                        let game = data.game
+                        let truck = data.truck
+                        let navigation = data.navigation
+                        let job = data.job
+                        let trailer = data.trailer
+                        let cargo = data.cargo
+                    
+                        let driverStates = data.game
+                        let gameStates = data.game
+                        let gaugeStates = data.truck
+                        let jobStates = {game, job, navigation}
+                        let navigationStates = data.navigation
+                        let trailerStates = {trailer, cargo}
+                        let truckStates = data.truck
+                        let worldStates = data.game
+    
+                        
+                        pluginEvents.emit(`driverStates`, driverStates);
+                        pluginEvents.emit(`gameStates`, gameStates);
+                        pluginEvents.emit(`gaugeStates`, gaugeStates);
+                        pluginEvents.emit(`jobStates`, jobStates);
+                        pluginEvents.emit(`navigationStates`, navigationStates);
+                        pluginEvents.emit(`trailerStates`, trailerStates);
+                        pluginEvents.emit(`truckStates`, truckStates);
+                        pluginEvents.emit(`worldStates`, worldStates);
+                    } catch (error) {        
+                        logger.error(`[TELEMETRY] Telemetry Data Error! -> ${error}`)
+                        console.log(error)
+                        await timeout(3000)
+                        return
+                    }
+                })
+                await new Promise(resolve => setTimeout(resolve, refreshInterval)); 
+                await telemetryLoop(); 
+            };
+            telemetryLoop()
+        })
     });
 
     TPClient.on("Action", async (data, hold) => {
@@ -192,8 +239,6 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, OfflineMode
                 }
             break;
 
-
-
             default:
             break;
         }
@@ -212,7 +257,7 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, OfflineMode
                 break
             } else {
                 if (i === CurrencyList.length - 1) {
-                    logIt("INFO", "Currency not Found! Using Default!")
+                    logger.info("[SETTINGS] Currency not Found! Using Default!")
                     replaceJSON(`${cfg_path}/usercfg.json`, `currency`, `EUR`)
                     settings_error = settings_error+1
                     break
@@ -261,25 +306,21 @@ const TouchPortalConnection = async (path, cfg_path, telemetry_path, OfflineMode
 
     });
 
-    logIt("TOUCHPORTAL", "INFO", "Connecting to `Touch Portal`...")
+    logger.info("[TOUCHPORTAL] Connecting to `Touch Portal`...")
     TPClient.connect({
         pluginId
     })
 
 }
 
-const main = async (path, cfg_path, telemetry_path) => {
-    // Let Plugin load up...
-    await timeout(500)
-
+const main = async () => {
     // Pre-Setup // Checking Missing Files/Folders
     if (system_path.basename(process.cwd()) === "ETS2_Dashboard") {
-        let MissingFiles = await filescheck(path, cfg_path, logIt, timeout)
+        let MissingFiles = await filescheck(cfg_path, logger)
         if(MissingFiles > 0) {
             UpdateQuestion = await showDialog("error", ["yes", "no"], `Missing ${MissingFiles} Files/Folders! Continue?`)
         
-            if (UpdateQuestion === 0) {
-            } else {
+            if (UpdateQuestion !== 0) {
                 await showDialog("info", "Ok", `Plugin Start aborted! Please send the Log File in Plugins Folder to the Creator on Discord!`)
                 exit()
             }
@@ -293,14 +334,14 @@ const main = async (path, cfg_path, telemetry_path) => {
 
     // Checking for Config Backup
     if(fs.existsSync(`${download_path}/ETS2_Dashboard-Backup`)) {
-        logIt("MAIN", "INFO", "Found Old Config Backup... Loading Backup...")
+        logger.info("[MAIN] Found Old Config Backup... Loading Backup...")
         fse.copySync(`${download_path}/ETS2_Dashboard-Backup`, `./config`)
         fs.rmdirSync(`${download_path}/ETS2_Dashboard-Backup`, {recursive: true})
-        logIt("MAIN", "INFO", "Config Backup Deleted.")
+        logger.info("[MAIN] Config Backup Deleted.")
     }
 
     // Loading Configs 
-    logIt("MAIN", "INFO", "Loading `Config Files`...")
+    logger.info("[MAIN] Loading `Config Files`...")
     let config = new sJSON(`${cfg_path}/cfg.json`)
     let uConfig = new sJSON(`${cfg_path}/usercfg.json`) 
     let refreshInterval = config.refreshInterval
@@ -308,7 +349,7 @@ const main = async (path, cfg_path, telemetry_path) => {
 
     //Checking Settings
     if (refreshInterval < 50) {
-        logIt("WARN", "RefreshRate too low! Setting up RefreshRate...")
+        logger.info("[WARN] RefreshRate too low! Setting up RefreshRate...")
         replaceJSON(`${cfg_path}/cfg.json`, "refreshInterval", 50)
         refreshInterval = 50
     }
@@ -317,79 +358,36 @@ const main = async (path, cfg_path, telemetry_path) => {
     if(OfflineMode === false) {
         await checkInternetConnected()
         .then((result) => {
-            logIt("MAIN", "INFO", "Internet Connected!")
+            logger.info("[MAIN] Internet Connected!")
         })
         .catch((ex) => {
-            logIt("MAIN", "INFO", "No Internet Connection!")
+            logger.info("[MAIN] No Internet Connection!")
             OfflineMode = true
             
-            logIt("MAIN", "WARN", "Disable TruckersMP states to prevent errors...")
+            logger.info("[MAIN] Disable TruckersMP states to prevent errors...")
             replaceJSON(`${cfg_path}/usercfg.json`, `truckersmpStates`, false)
         });
     }
     
     // Checking for Update...
     if (OfflineMode === false) {
-        logIt("MAIN", "INFO", "Starting AutoUpdate Script...")
-        await AutoUpdate(config.UpdateCheck, uConfig.PreRelease, config.version, logIt, showDialog, timeout)
+        logger.info("[MAIN] Starting AutoUpdate Script...")
+        await AutoUpdate(config.UpdateCheck, uConfig.PreRelease, config.version, logger, showDialog, timeout)
     }
 
     // Checking for FirstInstall
     if (system_path.basename(process.cwd()) === "ETS2_Dashboard" && JSON.parse(fs.readFileSync(`${cfg_path}/cfg.json`)).firstInstall === true || Testing === true) {
-        logIt("MAIN", "INFO", "Starting First Install Script...")
-        if(await firstInstall(showDialog, logIt, OfflineMode, timeout)) {
+        logger.info("[MAIN] Starting First Install Script...")
+        if(await firstInstall(showDialog, logger.info, OfflineMode, timeout)) {
             replaceJSON(`${cfg_path}/cfg.json`, "firstInstall", false)
         } else {
-            logIt("MAIN", "ERROR", "Something went wrong while FirstInstall")
+            logger.error("[MAIN] Something went wrong while FirstInstall")
         }
     } else {
-        logIt("MAIN", "INFO", "First Install Skipped.")
+        logger.info("[MAIN] First Install Skipped.")
     }
 
-    TouchPortalConnection(path, cfg_path, telemetry_path, OfflineMode)
+    TouchPortalConnection()
 }
 
-if(Testing) {
-    async function test() {
-    }
-    test()
-}
-
-//Checks for TP exe
-function isRunning(win, mac, linux){
-    return new Promise(function(resolve, reject){
-        const plat = process.platform
-        const cmd = plat == 'win32' ? 'tasklist' : (plat == 'darwin' ? 'ps -ax | grep ' + mac : (plat == 'linux' ? 'ps -A' : ''))
-        const proc = plat == 'win32' ? win : (plat == 'darwin' ? mac : (plat == 'linux' ? linux : ''))
-        if(cmd === '' || proc === ''){
-            resolve(false)
-        }
-        exec(cmd, function(err, stdout, stderr) {
-            resolve(stdout.toLowerCase().indexOf(proc.toLowerCase()) > -1)
-        })
-    })
-}
-
-
-setInterval(() => {
-    if(system_path.basename(process.cwd()) === "ETS2_Dashboard" || Testing === true) {
-
-        isRunning(`TouchPortal.exe`).then( async (status) => {
-            if(status === false) {
-                logIt("MAIN", "ERROR", "TouchPortal is not Running (Or Restarting) anymore.")
-                exit()
-            }
-        })
-
-        isRunning(`TouchPortalServices.exe`).then( async (status) => {
-            if(status === false) {
-                logIt("MAIN", "ERROR", "TouchPortal is not Running (Or Restarting) anymore.")
-                exit()
-            }
-        })
-
-    }
-}, 500);
-
-main(path, cfg_path, telemetry_path)
-
+main()

@@ -5,88 +5,59 @@ const sJSON = require('self-reload-json')
 const http = require(`request`);
 // Import System Modules
 const { exec, execFile } = require(`child_process`)
+// Custom Modules
+const timeout = require('./timeout')
+const { logger } = require('./logger')
+const { spawn } = require('child_process');
+const pluginEvents = require('../script/emitter')
 
-const isRunning = (query, cb) => {
-    exec('tasklist', (err, stdout, stderr) => {
-        cb(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
-    });
-}
+const telemetry_Server = async (path, telemetry_path, refreshInterval) => {
 
-let telemetry = ""
-let telemetry_status_online = false
-let telemetry_retry = 0
-let config = new sJSON(`${path}/config/cfg.json`)
+    const CheckTelemetryEXE = () => {
+        return new Promise((resolve) => {
+            const child = spawn('tasklist', ['/FI', 'IMAGENAME eq Ets2Telemetry.exe']);
 
-// Setting Values First Time to refresh
-refreshInterval = config.refreshInterval
+            child.stdout.on('data', (data) => {
+                if (data.toString().indexOf('Ets2Telemetry.exe') !== -1) {
+                    logger.info('[TELEMETRY] Telemetry task is now running')
+                    resolve(true)
+                }
+            });
 
-const telemetry_Server = async (path, logIt, timeout, refreshInterval) => {
+            child.on('exit', () => {
+                resolve(false)
+            });
+        });
+    };
 
+    const startTelemetryServer = () => {
+        const child = spawn(`${path}/server/Ets2Telemetry.exe`, {
+            windowsHide: true 
+        });
 
-    async function CheckTelemetryEXE() {
-        return new Promise(async (resolve) => {
-            isRunning(`Ets2Telemetry.exe`, async (status) => {
-                resolve(status)
-            })
-        })    
-    } 
-    
-    async function CheckTelemetryEXELoop() {
-        for(var i = 0; Infinity; await timeout(100)) {
-            if(await CheckTelemetryEXE() === true) {
-                telemetry_status_online = true
+        child.on('exit', (code, signal) => {
+            startTelemetryServer();
+        });
+    };
+
+    const Telemetry = () => {
+        CheckTelemetryEXE().then(async (running) => {
+            if (running) {
+                pluginEvents.emit(`telemetryRequest`)
             } else {
-                telemetry_status_online = false
-                execFile(`${path}/server/Ets2Telemetry.exe`, function(err, data) {
-                    if(telemetry_retry > 0) {
-                        logIt("TELEMETRY", "ERROR", err)
-                        logIt("TELEMETRY", "ERROR", data.toString())
-                    } 
-                });
-                await timeout(1000)
-                telemetry_retry = 1
+                logger.info('[TELEMETRY] Telemetry task is not running');
+                startTelemetryServer();
+                await timeout(2000)
+                Telemetry()
             }
-        }
-    }
+        }).catch((error) => {
+            logger.error('[TELEMETRY] Error checking telemetry task:', error);
+        });
+    };
 
-    async function Telemetry() {
-        for(var i = 0; Infinity; await timeout(refreshInterval)) {
-            refreshInterval = config.refreshInterval
-            if(telemetry_status_online) {
-                http.get(`http://localhost:25555/api/ets2/telemetry`, async function(err, resp, body) {
-                    var data = ``;
-                    data = body
-                    
-                    if (err != null) {
-                        telemetry_status_online = false
-                        logIt("TELEMETRY", "WARN", `Telemetry Request Error! -> ${err}`)
-                        telemetry_retry = 1
-                        
-                        await timeout(3000)
-                        return
-                    }
-                    
-                    try {
-                        data = JSON.parse(data)
-                        telemetry = JSON.stringify(data)
-                        fs.writeFileSync(`${telemetry_path}/tmp.json`, `${telemetry}`, `utf8`)
-                        telemetry_status_online = true
-                    } catch (error) {
-                        telemetry_status_online = false
-        
-                        logIt("TELEMETRY", "WARN", `Telemetry Data Error! -> ${err}`)
+    Telemetry();
+};
 
-                        await timeout(3000)
-                        return
-                    }
-                })
-            }
-        }
-    }
-
-    CheckTelemetryEXELoop()
-    Telemetry()
-}
 
     
 module.exports = telemetry_Server
