@@ -46,19 +46,17 @@ const navigationStates = async (TPClient, path, configs) => {
 
 
 		if(Speedlimit !== SpeedlimitOld || unit !== unitOld) {
-			SpeedlimitOld = Speedlimit				
-
+			SpeedlimitOld = Speedlimit		
 			if(unit === "miles") {
 				Speedlimit = Math.round(Speedlimit/1.609)
 			}
-
-			SpeedlimitSign = await getSpeedLimitSign(Speedlimit)
-
+			
 			var data1 = {
 				id: "Nybo.ETS2.Navigation.SpeedLimit",
 				value: `${Speedlimit}`
 			}
-
+						
+			SpeedlimitSign = await getSpeedLimitSign(Speedlimit)
 			var data2 = {
 				id: "Nybo.ETS2.Navigation.SpeedLimitSign",
 				value: `${SpeedlimitSign}`
@@ -103,10 +101,7 @@ const navigationStates = async (TPClient, path, configs) => {
 			.join(",")
 			.split(",")
 			
-			YY = estimatedTime[0]-1
-			MM = estimatedTime[1]-1
 			DD = estimatedTime[2]-1
-
 			hh = estimatedTime[3]
 			mm = estimatedTime[4]
 			
