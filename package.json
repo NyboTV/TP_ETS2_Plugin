@@ -1,6 +1,6 @@
 {
   "name": "tp_ets2_plugin",
-  "version": "4.1.0",
+  "version": "4.1.5",
   "description": "Euro Truck Simulator 2 Plugin for TouchPortal",
   "main": "src/bin/plugin.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "testNewFunction": "electron . --debugging --testing",
     "testNoServer": "electron . --debugging --noServer",
     "testNoServerNewFunction": "electron . --debugging --noServer --testing",
-    "release": "npx electron-packager --overwrite --ignore='Pages' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --release"
+    "release": "npx electron-packager --overwrite --ignore='Pages' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --release",
+    "pack": "node ./src/build/build.js --release"
   },
   "bin": {
     "main": "src/bin/plugin.js"

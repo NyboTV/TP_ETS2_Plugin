@@ -3,7 +3,7 @@ const fse = require('fs-extra')
 const AdmZip = require('adm-zip')
 const replaceJSON = require(`replace-json-property`).replace
 const path = require('path')
-const homeDir = require('os').homedir()
+const homeDir = "D:/Dieser PC/Desktop/ETS2_Dashboard.tpp"
 const sJSON = require('self-reload-json')
 const { exit } = require('process');
 
