@@ -37,8 +37,8 @@
       Features
     </a>
     <span> | </span>
-    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/projects/1">
-      Roadmap
+    <a href="CHANGELOG.md">
+      Changelog
     </a><span> | </span>
     <a href="#setup-guide">
       Downloads
@@ -50,14 +50,6 @@
     <span> | </span>
     <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages">
       Pages
-    </a>
-    <span> | </span>
-    <a href="#third-party-software">
-      Third Party Software
-    </a>
-    <span> | </span>
-    <a href="#authors">
-      Authors
     </a>
     <span> | </span>
     <a href="https://discord.gg/PvXJsxpGFe">
