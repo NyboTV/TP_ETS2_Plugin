@@ -1,6 +1,6 @@
 {
     "name": "tp_ets2_plugin",
-    "version": "5.0.9",
+    "version": "5.0.12",
     "description": "Euro Truck Simulator 2 Plugin for TouchPortal",
     "main": "dist/main.js",
     "bin": {
@@ -17,6 +17,7 @@
             "dist/**/*.js"
         ],
         "assets": [
+            "package.json",
             "node_modules/canvas/**/*",
             "node_modules/trucksim-telemetry/**/*"
         ],

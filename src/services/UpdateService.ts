@@ -12,6 +12,20 @@ const REPO_URL = 'https://api.github.com/repos/NyboTV/TP_ETS2_Plugin/releases';
 
 class UpdateService {
 
+    private getPackageVersion(): string {
+        try {
+            // In pkg, bundled assets are relative to __dirname (dist/services/...)
+            const pkgPath = path.join(__dirname, '..', '..', 'package.json');
+            if (fs.existsSync(pkgPath)) {
+                const pkg = fs.readJSONSync(pkgPath);
+                return pkg.version || '0.0.0';
+            }
+            return '0.0.0';
+        } catch (e) {
+            return '0.0.0';
+        }
+    }
+
     public async checkForUpdates() {
         if (!configService.cfg.UpdateCheck) return;
 
@@ -23,10 +37,15 @@ class UpdateService {
 
             const latestRelease = response.data[0];
             const latestVersion = latestRelease.tag_name;
-            const currentVersion = configService.cfg.version || '0.0.0'; // V1 used cfg.json version
+            const currentVersion = configService.cfg.version || this.getPackageVersion();
+
+            logger.info(`[UpdateService] Current version: ${currentVersion} | Latest version: ${latestVersion}`);
 
             // V1 Logic: Check PreRelease
-            if (latestRelease.prerelease && !configService.userCfg.PreRelease) return;
+            if (latestRelease.prerelease && !configService.userCfg.PreRelease) {
+                logger.info('[UpdateService] Newest version is a pre-release and not allowed in settings.');
+                return;
+            }
 
             if (this.isNewerVersion(latestVersion, currentVersion)) {
                 logger.info(`[UpdateService] New version found: ${latestVersion}`);
@@ -61,9 +80,9 @@ class UpdateService {
     }
 
     private isNewerVersion(newVer: string, oldVer: string): boolean {
-        // V1 Logic cleanup: split by "." and compare parts.
-        const v1 = newVer.replace('v', '').split('.').map(Number);
-        const v2 = oldVer.replace('v', '').split('.').map(Number);
+        const parseVersion = (v: string) => v.replace(/^v/, '').split('.').map(n => parseInt(n, 10) || 0);
+        const v1 = parseVersion(newVer);
+        const v2 = parseVersion(oldVer);
 
         for (let i = 0; i < Math.max(v1.length, v2.length); i++) {
             const n1 = v1[i] || 0;

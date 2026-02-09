@@ -58,6 +58,15 @@ async function build() {
         entryTp.version = parseInt(newVersion.split('.')[0]);
         await fs.writeJson(entryTpPath, entryTp, { spaces: 2 });
 
+        console.log('Updating root cfg.json version...');
+        const rootCfgPath = path.join(ROOT_DIR, 'config', 'cfg.json');
+        if (await fs.pathExists(rootCfgPath)) {
+            const cfg = await fs.readJson(rootCfgPath);
+            cfg.version = newVersion;
+            await fs.writeJson(rootCfgPath, cfg, { spaces: 2 });
+            console.log(`- Updated root cfg.json to version ${newVersion}`);
+        }
+
         // 3. Compile
         console.log('Compiling TypeScript...');
         execSync('npm run build', { stdio: 'inherit', cwd: ROOT_DIR });
@@ -109,9 +118,17 @@ async function build() {
 
             // Copy Folders
             await fs.copy(path.join(ROOT_DIR, 'config'), path.join(stagingPath, 'config'));
-            await fs.copy(path.join(ROOT_DIR, 'server'), path.join(stagingPath, 'server'));
             await fs.copy(path.join(ROOT_DIR, 'entry.tp'), path.join(stagingPath, 'entry.tp'));
             await fs.copy(path.join(ROOT_DIR, 'LICENSE'), path.join(stagingPath, 'LICENSE'));
+
+            // Inject version into packaged cfg.json
+            const stagingCfgPath = path.join(stagingPath, 'config', 'cfg.json');
+            if (await fs.pathExists(stagingCfgPath)) {
+                const cfg = await fs.readJson(stagingCfgPath);
+                cfg.version = newVersion;
+                await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
+                console.log(`- Injected version ${newVersion} into packaged cfg.json`);
+            }
 
             // Copy platform-specific SCS plugin
             const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);

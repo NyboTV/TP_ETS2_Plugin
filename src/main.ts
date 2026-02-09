@@ -12,7 +12,14 @@ import { setupService } from './services/SetupService';
 
 const main = async () => {
     try {
-        logger.info('Starting TP_ETS2_Plugin V2...');
+        // In pkg, bundled assets are relative to __dirname (dist/...)
+        const pkgPath = path.join(__dirname, '..', 'package.json');
+        let version = 'unknown';
+        if (fs.existsSync(pkgPath)) {
+            const pkg = fs.readJSONSync(pkgPath);
+            version = pkg.version || 'unknown';
+        }
+        logger.info(`Starting TP_ETS2_Plugin V2 (version ${version})...`);
 
         // Load Configs
         // Check for Config Backup (Restore after update)

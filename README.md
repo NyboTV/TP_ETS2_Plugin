@@ -3,15 +3,23 @@
 <div align="center">
   <strong>ETS2 Dashboard Plugin for Touch Portal</strong><br>
   A Plugin to show your Euro Truck Dashboard onto your Tablet<br>
-  <sub>Powered by trucksim-telemetry & Node.js</sub>
+  <sub>Powered by trucksim-telemetry & Node.js || Available for Windows, Linux and MacOS</sub>
 </div>
 
 <br>
 
 <div align="center">
+  <!-- Version -->
+  <a href="https://nybotv.github.io/TP_ETS2_Plugin/">
+    <img src="https://badge.fury.io/gh/NyboTV%2FTP_ETS2_Plugin.svg" alt="website">
+  </a>
   <!-- License -->
   <a href="LICENSE">
     <img alt="GitHub license" src="https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin">
+  </a>
+  <!-- Downloads total -->
+  <a href="https://github.com/NyboTV/TP_ETS2_Plugin/releases">
+    <img src="https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total.svg" alt="total download">
   </a>
   <!-- Downloads latest release -->
   <a href="https://github.com/NyboTV/TP_ETS2_Plugin/releases/latest">
@@ -19,7 +27,47 @@
   </a>
 </div>
 
-<br>
+<div align="center">
+  <h3>
+    <a href="https://nybotv.github.io/TP_ETS2_Plugin/">
+      Website
+    </a>
+    <span> | </span>
+    <a href="#features">
+      Features
+    </a>
+    <span> | </span>
+    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/projects/1">
+      Roadmap
+    </a><span> | </span>
+    <a href="#setup-guide">
+      Downloads
+    </a>
+    <span> | </span>
+    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki">
+      Wiki
+    </a>
+    <span> | </span>
+    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages">
+      Pages
+    </a>
+    <span> | </span>
+    <a href="#third-party-software">
+      Third Party Software
+    </a>
+    <span> | </span>
+    <a href="#authors">
+      Authors
+    </a>
+    <span> | </span>
+    <a href="https://discord.gg/PvXJsxpGFe">
+      Discord
+    </a>
+  </h3>
+</div>
+<br />
+
+<h2 align="center">ETS2 Dashboard Plugin V2</h2>
 
 ## Features
 
@@ -29,14 +77,20 @@
 - **Native Gauges**: Generates Speed, RPM, and Fuel gauge images dynamically.
 - **Job Info**: Live job data including income, destination, and deadlines.
 - **Navigation**: Speed limits, estimated time, and distance.
+- **Truck Information**: Detailed truck states, lights, damage, and wear.
+- **TruckersMP**: Live information from TruckersMP servers.
+
+If you want to see Planned Features, see [Roadmap](https://github.com/NyboTV/TP_ETS2_Plugin/projects/1)
 
 <br>
 
-## Installation
+## Download and Installation
 
-### Prerequisites
-- **Touch Portal** installed and running.
-- **Euro Truck Simulator 2** or **American Truck Simulator** installed.
+| ![](https://raw.githubusercontent.com/wiki/ryanoasis/nerd-fonts/screenshots/v1.0.x/windows-pass-sm.png) |
+|:---:|
+| [![latest version](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/latest/total.svg)](https://github.com/NyboTV/TP_ETS2_Plugin/releases/latest) |
+
+Want to see new features of the latest version? Please refer to [CHANGELOG](CHANGELOG.md).
 
 ### Setup Guide
 
@@ -64,22 +118,31 @@ If the setup cannot find your game folder:
 The plugin creates a `config/cfg.json` file where you can tweak:
 - `refreshInterval`: Polling rate in milliseconds (Default: 200).
 - `OfflineMode`: Disable currency conversion if internet is unavailable.
+- `UpdateCheck`: Enable or disable the automatic update check.
 
 <br>
 
-## Documentation & Wiki
-
-For detailed information on available States, Events, and Actions, please visit our **[GitHub Wiki](https://github.com/NyboTV/TP_ETS2_Plugin/wiki)** or check the `docs` folder included in this repository.
+## Authors
+- **Nico/Nybo** - Plugin Creator - [NyboTV](https://github.com/NyboTV)
+- **Gargamosch** - Page Creator - [Discord: Gargamosch#6706]()
 
 <br>
 
-## Credits
-
-- **NyboTV**: Plugin Creator
+## Third Party Software
+- **Funbit** - Original Telemetry Server - [Github](https://github.com/Funbit/ets2-telemetry-server)
+- **mike-koch** - [OLD] Telemetry Server before 2.6.0 - [Github](https://github.com/mike-koch/ets2-telemetry-server)
+- **PauloTNCunha** - [NEW] Telemetry Server since Version 2.6.0 - [Github](https://github.com/PauloTNCunha/TelemetryServer4)
 - **TruckSim-Telemetry**: Underlying Node.js library for reading memory.
 
 <br>
 
-## License
+## Contributors
+- **Gitago** - Help with Fixing the plugin! 
+- **Pjiesco** - Help with updating the plugin!    
 
+<br>
+
+## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin?ref=badge_large)
