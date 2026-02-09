@@ -1,86 +1,58 @@
 # Settings
 
-## Button Settings (Only up to Ver. 2.8.*)
-| Button   | Description                       |
-|----------|-----------------------------------|
-| Currency | Changes the Unit for the Currency |
-| Speed    | Changes the Unit for your Speed   |
-| Fluid    | Changes the Unit for your Fluid   |
-| Weight   | Changes the Unit for your Weight  |
-| Temp     | Changes the Unit for your Temp    |
+The plugin can be configured through Touch Portal's Settings tab or manually via the configuration files in the `config/` directory.
 
+## Plugin Settings (Touch Portal)
 
-## Refresh Interval
-Currently you can choose between 50ms and how long you want to wait :D
+These settings appear in the Touch Portal Desktop app once the plugin is installed.
 
+| Setting Name        | Description                                                                 | Default |
+|---------------------|-----------------------------------------------------------------------------|---------|
+| Refresh_Interval    | Polling rate in milliseconds for game telemetry (Min: 50ms)                 | 200     |
+| Currency            | Three-letter currency code for job income (e.g., EUR, USD, GBP)             | EUR     |
+| AutoUpdate          | Enable or disable the automatic update check on startup                     | true    |
+| OfflineMode         | If true, disables currency conversion to prevent errors when offline        | false   |
+| TruckersMP_Server   | The Server ID for TruckersMP status updates (e.g. 1 for Simulation 1)       | 1       |
+| PreRelease          | Enable checking for Pre-Release versions (Beta features)                    | false   |
 
-## Supported Currency's
-| Code | Name                 | With Symbol |
-|------|----------------------|-------------|
-| EUR  | Euro                 |     Yes     |
-| USD  | United States Dollar |     Yes     |
-| CAD  | Canadian Dollar      |     Yes     |
-| GBP  | Pound Sterling       |     Yes     |
-| DDK  | Danish Krone         |     Yes     |
-| HKD  | Hong Kong Dollar     |     Yes     |
-| ISK  | Icelandic Króna      |     Yes     |
-| PHP  | Philippine Peso      |     Yes     |
-| HUF  | Hungarian Forint     |     Yes     |
-| CZK  | Czech Koruna         |     Yes     |
-| SEK  | Swedish Krona        |     Yes     |
-| PLN  | Polish złoty         |     Yes     |
-| KRW  | South Korean Won     |     Yes     |
-| AUD  | Australian Dollar    |     No      |
-| RON  | Romanian Leu         |     No      |
-| IDR  | Indonesian Rupiah    |     No      |
-| INR  | Indian Rupee         |     No      |
-| BRL  | Brazilian Real       |     No      |
-| RUB  | Russian Ruble        |     No      |
-| HRK  | Croatian Kuna        |     No      |
-| JPY  | Japanse Yen          |     No      |
-| TBH  | Thai Baht            |     No      |
-| CHF  | Swiss Franc          |     No      |
-| SGD  | Singapore Dollar     |     No      |
-| BGN  | Bulgarian Lev        |     No      |
-| TRY  | Turkish Lira         |     No      |
-| CNY  | Chinese Renminbi     |     No      |
-| NOK  | Norwegian Krone      |     No      |
-| NZD  | New Zealand Dollar   |     No      |
-| ZAR  | South African Rand   |     No      |
-| MXN  | Mexican Peso         |     No      |
-| ILS  | Israeli Shekel       |     No      |
-| MYR  | Malaysian Ringgit    |     No      | 
+---
 
-## Time Format
-Supported Time Formats:
-EU / US
+## Configuration Files
 
-## Unit
-Supported Units:
-Miles / Kilometer
+For advanced users, you can manually edit the following files in `%appdata%/TouchPortal/plugins/ETS2_Dashboard/config/`:
 
-## Fluid 
-Supported Fluid:
-Gallons / Liters 
+### `cfg.json`
+Stores core plugin behavior settings like `UpdateCheck`, `OfflineMode`, and the current `version`.
 
-## Weight
-Supported Weight:
-Pounds / Tons
+### `usercfg.json`
+Stores user preferences for units and module toggles:
+- **Basics**: Units for speed (Kilometer/Miles), fluids (Liter/Gallons), weight (Tons/Pounds), and temperature (Celsius/Fahrenheit).
+- **Modules**: Allows disabling specific state tracking (e.g., `trailerStates`, `jobStates`) to save resources.
 
-## Temperature
-Supported Temp.:
-Fahrenheit / Celsius
+### `designs.json`
+Allows you to customize the visual appearance of the dynamic gauges (Colors, Shapes, Patterns).
 
-## TruckersMP Server
-You can choose the TMP Server by enterin the Server ID.
+---
 
-## AutoUpdate
-If you want AutoUpdates just let it on "True" if not, set it to "False"
+## Supported Currencies
 
-## PreRelease
-Enables Test Features and downloads latest Pre-Release
-True / False
+The plugin uses an external API for currency conversion. Most world currencies are supported, including:
 
+| Code | Name                 | Code | Name                 |
+|------|----------------------|------|----------------------|
+| EUR  | Euro                 | USD  | United States Dollar |
+| GBP  | Pound Sterling       | CAD  | Canadian Dollar      |
+| PLN  | Polish Złoty         | CZK  | Czech Koruna         |
+| HUF  | Hungarian Forint     | SEK  | Swedish Krona        |
+| CHF  | Swiss Franc          | JPY  | Japanese Yen         |
 
+*Note: If `OfflineMode` is on, the plugin will assume 1:1 conversion or just show the base game currency.*
 
+---
 
+## Technical Units
+
+- **Speed**: Kilometer per hour or Miles per hour.
+- **Fluid**: Liters, US Gallons, or UK Gallons.
+- **Weight**: Tons, US Tons, UK Tons, or Pounds (Lbs).
+- **Temperature**: Celsius or Fahrenheit.

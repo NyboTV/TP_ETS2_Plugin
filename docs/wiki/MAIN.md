@@ -1,38 +1,43 @@
 # ETS2 Dashboard Plugin Wiki
 
-Here you will find the values you need to create a page! If you don't know how to create a button with any value, scroll down!
+Welcome to the ETS2 Dashboard Wiki! This documentation will help you understand all the features, states, and actions available in the plugin so you can create beautiful and functional Touch Portal pages.
 
+## Navigation
 
+- [Plugin Data (Events, States, Actions)](DATA.md)
+  - [Events](DATA.md#events)
+  - [States](DATA.md#states)
+    - [Game States](DATA.md#game-states)
+    - [World States](DATA.md#world-states)
+    - [Driver States](DATA.md#driver-states)
+    - [Gauge States](DATA.md#gauge-states)
+    - [Truck States](DATA.md#truck-states)
+    - [Trailer States](DATA.md#trailer-states)
+    - [Job States](DATA.md#job-states)
+    - [Navigation States](DATA.md#navigation-states)
+    - [TruckersMP States](DATA.md#truckersmp-states)
+  - [Actions](DATA.md#actions)
+- [Settings & Configuration](SETTINGS.md)
+  - [Supported Currencies](SETTINGS.md#supported-currencies)
+- [Dashboard Pages](PAGES.md)
+  - [Your Page](PAGES.md#own-page)
+  - [User Pages](PAGES.md#user-pages)
 
-  - [Events](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#events)
-  - [States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#states)
-    - [Game States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#game-states)
-    - [World States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#world-states)
-    - [Driver States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#driver-states)
-    - [Gauge States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#gauge-states)
-    - [Truck States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#truck-states)
-    - [Trailer States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#trailer-states)
-    - [Job States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#job-states)
-    - [Navigation States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#navigation-states)
-    - [TruckersMP States](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#truckersmp-states)
-  - [Actions](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)#actions)
-  - [Settings](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Settings)
-    - [Supported Currency's](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Settings#supported-currencys)
-  - [Pages](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages)
-    - [Your Page](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages#own-page)
-    - [User Pages](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages#user-pages)
-
-
+---
 
 ## How to create a Button
 
-First click on a Button (Square) in Touch Portal. A New Window appears.
+### Dynamic Text (e.g., Gear or Speed)
+1. Click on a Button in Touch Portal.
+2. Go to the **Logic** tab in the left sidebar.
+3. Select **"Dynamic Text Updater"**.
+4. Click the **"+"** and navigate to `TP_ETS2_Plugin` to find the state you want (e.g., `Nybo.ETS2.Truck.Gear`).
+5. Click **Save**.
 
-Now if you want a "dynamic text value", for example for the gear, just click on "Logic" in the left bar and then on "Dynamic Text Updater".
-Now you can click on the "+" and go to my plugin and find the value you want. After that click on "Save" and open the page on your mobile. Now you can see the value on your mobile.
-
-If you want a "display" like for the fuel, proceed in the same way, but now click on "Values" and then on "When button state changes". Now go to "Visuals" and click on "Change visuals by plug-in state". Now make the following settings in the "On Event" tab: 
-"When the plug-in state [choose any state, preferably "Speed Gauge"] [choose "does not change to"] [leave it blank]. 
-Then "Change the 'Icon' with the value from the plug-in state [your display that you want]". 
-
-
+### Gauges & Images (e.g., Speedometer)
+1. Click on a Button in Touch Portal.
+2. Go to the **Values** tab.
+3. Add a **"When plug-in state changes"** or **"When button state changes"** event.
+4. Set it to trigger when the gauge state (e.g., `Nybo.ETS2.Gauges.SpeedGauge`) changes.
+5. In the "On Event" flow, go to **Visuals** -> **"Change visuals by plug-in state"**.
+6. Set it to **"Change the Icon with the value from the plug-in state"** and select your gauge state.

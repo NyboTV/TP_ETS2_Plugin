@@ -3,172 +3,157 @@
 ## Events
 
 ### Truck Events
+*Note: These are events that can trigger Touch Portal Flow.*
+*Note: Every Event starts with Nybo.ETS2.Truck.*Nybo.ETS2.*.* Nybo.ETS2.Game.* Nybo.ETS2.World.* Nybo.ETS2.Driver.* depends on the category of the event.*
 
 | Event                     | Description                                           | Available Values      |
 |---------------------------|:--------------------------------------------------------:|----------------------:|
-| EngineOn                  | Executes a user-defined function if the condition is met | true/false            |
-| ElectricOn                | Executes a user-defined function if the condition is met | true/false            |
-| WipersOn                  | Executes a user-defined function if the condition is met | true/false            |
-| ParkBrakeOn               | Executes a user-defined function if the condition is met | true/false            |
-| FuelWarningOn             | Executes a user-defined function if the condition is met | true/false            |
-| AdBlueWarningOn           | Executes a user-defined function if the condition is met | true/false            |
-| AirPressureWarningOn      | Executes a user-defined function if the condition is met | true/false            |
-| OilPressureWarningOn      | Executes a user-defined function if the condition is met | true/false            |
-| WaterTempWarningOn        | Executes a user-defined function if the condition is met | true/false            |
-| BatteryVoltageWarningOn   | Executes a user-defined function if the condition is met | true/false            |
-| BlinkerLeftActive         | Executes a user-defined function if the condition is met | true/false            |
-| BlinkerRightActive        | Executes a user-defined function if the condition is met | true/false            |
-| HazardLightsOn            | Executes a user-defined function if the condition is met | true/false            |
-| LightsDashboardOn         | Executes a user-defined function if the condition is met | true/false            |
-| TrailerAttached           | Executes a user-defined function if the condition is met | true/false            |
-| CargoLoaded               | Executes a user-defined function if the condition is met | true/false            |
+| EngineOn                  | Triggers when the engine is turned on or off          | true/false            |
+| ElectricOn                | Triggers when electronics are turned on or off        | true/false            |
+| WipersOn                  | Triggers when wipers are turned on or off             | true/false            |
+| ParkBrakeOn               | Triggers when parking brake is engaged or released    | true/false            |
+| HazardLightsOn            | Triggers when hazard lights are turned on or off      | true/false            |
+| TrailerAttached           | Triggers when a trailer is attached or detached       | true/false            |
+| CargoLoaded               | Triggers when cargo is loaded or unloaded             | true/false            |
 
 
 ## States
 
 ### Game States
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| ConnectedStatus           | Shows if you are Connected to an Game or not          | true/false            |
-| GameType                  | Shows the Game that is Captured by the Server         | ETS2/ATS              |
-| IsPaused                  | Shows you if the Game is Paused                       | true/false            |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Game.ConnectedStatus       | Shows if you are Connected to the Game SDK            | true/false            |
+| Nybo.ETS2.Game.GameType              | Shows the Game currently running                      | ETS2 / ATS            |
+| Nybo.ETS2.Game.IsPaused              | Shows if the Game is Paused                           | true/false            |
 
 ### World States
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| Time                      | Shows you the current ingame Time                     | Dynamic Text          |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.World.Time                 | Shows the current ingame Time (Day X, HH:MM)          | Dynamic Text          |
 
 ### Driver States
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| NextRestTime              | Shows you when the Driver has to Sleep                | Dynamic (Countdown)   |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Driver.NextRestTime        | Shows the time of the next required rest stop         | HH:MM                 |
 
-### Gauge States
+### Gauge States (Dynamic Images)
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| SpeedGauge                | Shows your Speed as an Image                          | Dynamic Image         |
-| RPMGauge                  | Shows your RPM as an Image                            | Dynamic Image         |
-| FuelGauge                 | Shows your speed as an Image                          | Dynamic Image         |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Gauges.SpeedGauge          | Current Speed as a dynamic image                      | Image                 |
+| Nybo.ETS2.Gauges.RPMGauge            | Current RPM as a dynamic image                        | Image                 |
+| Nybo.ETS2.Gauges.FuelGauge           | Current Fuel level as a dynamic image                 | Image                 |
 
 ### Truck States
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| Truck_Make                | Shows you the Model Creator                           | Dynamic Text          |
-| Model                     | Shows you the Model of the Truck                      | Dynamic Text          |
-| CruiseControlSpeed        | Shows you the Cruise Control Speed                    | Dynamic Text          |
-| CruiseControlOn           | Shows you if the Cruise Control is turned on          | true/false            |
-|                           |                                                       |                       |
-| Speed                     | Shows your current Speed                              | Dynamic Text          |
-| EngineRPM                 | Shows your current RPM                                | Dynamic Text          |
-| Gear                      | Shows your current Gear                               | Dynmaic Text          |
-|                           |                                                       |                       |
-| EngineOn                  | Shows if your Engine is on                            | true/false            |
-| ElectricOn                | Shows if your Electric is on                          | true/false            |
-| WipersOn                  | Shows if your Wipers are on                           | true/false            |
-| ParkBrakeOn               | Shows if your ParkBrake is on                         | true/false            |
-| MotorBrakeOn              | Shows if your MotorBrake is on                        | true/false            |
-| Retarder                  | Shows on which Step the Retarder is                   | Dynamic Text [1,2,3]  |
-|                           |                                                       |                       |
-| Fuel                      | Shows your current Fuel                               | Dynamic Text          |
-| AdBlue                    | Shows your current AdBlue                             | Dynamic Text          |
-| AirPressure               | Shows your current Air Pressure                       | Dynamic Text          |
-| OilTemp                   | Shows your current Oil Temperature                    | Dynamic Text          |
-| WaterTemp                 | Shows your current Water Temperature                  | Dynamic Text          |
-| BatteryVoltage            | Shows your current Battery Voltage                    | Dynamic Text          |
-|                           |                                                       |                       |
-| FuelCapacity              | Shows your Truck Fuel Capacity                        | Dynamic Text          |
-|                           |                                                       |                       |
-| FuelWarningOn             | Shows if your Fuel is Low                             | true/false            |
-| AdBlueWarningOn           | Shows if your AdBlue is Low                           | true/false            |
-| AirPressureWarning        | Shows if your Air Pressure is Low                     | true/false            |
-| AirPressureEmergencyOn    | Shows if your Air Pressure is critical Low            | true/false            |     
-| OilPressureWarning        | Shows if your Oil Pressure is critical Low/High       | true/false            |
-| WaterTempWarningOn        | Shows if your Water Temperature is High               | true/false            |
-| BatteryVoltageWarningOn   | Shows if your BatteryVoltage is low                   | true/false            |
-|                           |                                                       |                       |
-| BlinkerLeftActive         | Shows if your Blinker Left is Active                  | true/false            |
-| BlinkerRightActive        | Shows if your Blinker Right is Active                 | true/false            |
-| BlinkerLeftOn             | Shows if your Blinker Left is On                      | true/false            |
-| BlinkerRightOn            | Shows if your Blinker Right is On                     | true/false            |
-| HazardLightsOn            | Shows if your Hazard Lights are On                    | true/false            |
-|                           |                                                       |                       |
-| Wear Engine               | Shows the Damage of your Engine                       | Dynamic Text          |
-| Wear Transmission         | Shows the Damage of your Transmission                 | Dynamic Text          |
-| Wear Cabin                | Shows the Damage of your Cabin                        | Dynamic Text          |
-| Wear Chassis              | Shows the Damage of your Chassis                      | Dynamic Text          |
-| Wear Wheels               | Shows the Damage of your Wheels                       | Dynamic Text          |
-|                           |                                                       |                       |
-| LightsDashboardValue      | Shows the Value of the Dashboard                      | Dynamic Text          |
-| LightsDashboardOn         | Shows if the Dashboard Light is On                    | true/false            |
-| LightsParkingOn           | Shows if the Parking Lights are On                    | true/false            |
-| LightsBeamLowOn           | Shows if the Beam Low Lights are On                   | true/false            |
-| LightsBeamHighOn          | Shows if the Beam High Lights are On                  | true/false            |
-| LightsAuxFrontOn          | Shows if the Fronts Extra Lights are On               | true/false            |
-| LightsAuxRoofOn           | Shows if the Roof Extra Lights are On                 | true/false            |
-| LightsBeaconOn            | Shows if the Beacons are On                           | true/false            |
-| LightsBrakeOn             | Shows if the Brake Lights are On                      | true/false            |
-| LightsReverseOn           | Shows if the Reverse Lights are On                    | true/false            |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Truck.Truck_Make           | Truck Brand / Manufacturer                            | Text                  |
+| Nybo.ETS2.Truck.Model                | Truck Model Name                                      | Text                  |
+| Nybo.ETS2.Truck.Speed                | Current Speed (Unit based on settings)                | Number (Text)         |
+| Nybo.ETS2.Truck.EngineRPM            | Current Engine RPM                                    | Number (Text)         |
+| Nybo.ETS2.Truck.Gear                 | Current Gear (D1, R1, N, 1, 2, etc.)                  | Text                  |
+| Nybo.ETS2.Truck.CruiseControlOn      | Cruise Control status                                 | true/false            |
+| Nybo.ETS2.Truck.CruiseControlSpeed   | Set Cruise Control Speed                              | Number (Text)         |
+| Nybo.ETS2.Truck.Odometer             | Total distance driven                                 | Number (Text)         |
+| Nybo.ETS2.Truck.EngineOn             | Engine status                                         | true/false            |
+| Nybo.ETS2.Truck.ElectricOn           | Electronics status                                    | true/false            |
+| Nybo.ETS2.Truck.WipersOn             | Wipers status                                         | true/false            |
+| Nybo.ETS2.Truck.ParkBrakeOn          | Parking Brake status                                  | true/false            |
+| Nybo.ETS2.Truck.MotorBrakeOn         | Engine Brake status                                   | true/false            |
+| Nybo.ETS2.Truck.Retarder             | Retarder step (0, 1, 2, 3)                            | Number (Text)         |
+| Nybo.ETS2.Truck.Fuel                 | Current Fuel amount                                   | Number (Text)         |
+| Nybo.ETS2.Truck.FuelCapacity         | Maximum Fuel Capacity                                 | Number (Text)         |
+| Nybo.ETS2.Truck.FuelConsumption      | Average Fuel Consumption                              | Number (Text)         |
+| Nybo.ETS2.Truck.AdBlue               | Current AdBlue level                                  | Number (Text)         |
+| Nybo.ETS2.Truck.OilTemp              | Oil Temperature (Unit based on settings)              | Text (e.g. 80 C°)     |
+| Nybo.ETS2.Truck.WaterTemp            | Water Temperature (Unit based on settings)            | Text                  |
+| Nybo.ETS2.Truck.wearEngine           | Engine Damage %                                       | Text (0-100%)         |
+| Nybo.ETS2.Truck.wearTransmission     | Transmission Damage %                                 | Text                  |
+| Nybo.ETS2.Truck.wearCabin            | Cabin Damage %                                        | Text                  |
+| Nybo.ETS2.Truck.wearChassis          | Chassis Damage %                                      | Text                  |
+| Nybo.ETS2.Truck.wearWheels           | Wheels Damage %                                       | Text                  |
+| Nybo.ETS2.Truck.LightsDashboardOn    | Dashboard lights status                               | true/false            |
+| Nybo.ETS2.Truck.LightsParkingOn      | Parking lights status                                 | true/false            |
+| Nybo.ETS2.Truck.LightsBeamLowOn      | Low Beam lights status                                | true/false            |
+| Nybo.ETS2.Truck.LightsBeamHighOn     | High Beam lights status                               | true/false            |
+| Nybo.ETS2.Truck.LightsBeaconOn       | Beacon lights status                                  | true/false            |
+| Nybo.ETS2.Truck.LightsBrakeOn        | Brake lights status                                   | true/false            |
+| Nybo.ETS2.Truck.LightsReverseOn      | Reverse lights status                                 | true/false            |
+| Nybo.ETS2.Truck.HazardLightsOn       | Hazard lights status                                  | true/false            |
+| Nybo.ETS2.Truck.BlinkerLeftOn        | Left blinker status                                   | true/false            |
+| Nybo.ETS2.Truck.BlinkerRightOn       | Right blinker status                                  | true/false            |
 
 ### Trailer States
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| TrailerAttached           | Shows if an Trailer is Attached                       | true/false            |
-| TrailerName               | Shows the Trailer Name (If one has an Name)           | Dynamic Text          |
-| TrailerChainType          | Shows what kind of Trailer is it (Single, Double)     | Dynamic Text          |
-|                           |                                                       |                       |
-| Cargo                     | Shows loaded Cargo                                    | Dynamic Text          |
-| Cargo ID                  | Shows loaded Cargo ID                                 | Dynamic Text          |
-|                           |                                                       |                       |
-| CargoLoaded               | Shows if Cargo is Loaded                              | true/false            |
-| CargoType                 | Shows what kind of Cargo is Loaded                    | Dynamic Text          |
-| CargoDamage               | Shows the Cargo Damage                                | Dynamic Text          |
-| CargoMass                 | Shows the Cargo Weight                                | Dynamic Text          |
-|                           |                                                       |                       |
-| Wear Trailer              | Shows the Damage of the Trailer                       | Dynamic Text          |
-| Wear Chassis              | Shows the Damage of the Trailer Chassis               | Dynamic Text          |
-| Wear Wheels               | Shows the Damage of the Trailer Wheels                | Dynamic Text          |
-
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Trailer.TrailerAttached    | Shows if a Trailer is currently attached               | true/false            |
+| Nybo.ETS2.Trailer.TrailerName        | Name of the attached trailer                          | Text / "-"            |
+| Nybo.ETS2.Trailer.TrailerChainType   | Type of trailer coupling (Single, Double, etc.)       | Text                  |
+| Nybo.ETS2.Trailer.Wear               | Overall Trailer Damage                                 | Text (0-100%)         |
+| Nybo.ETS2.Trailer.wearChassis        | Trailer Chassis Damage                                | Text                  |
+| Nybo.ETS2.Trailer.wearWheels         | Trailer Wheels Damage                                 | Text                  |
+| Nybo.ETS2.Trailer.Cargo              | Name of the loaded cargo                              | Text                  |
+| Nybo.ETS2.Trailer.CargoID            | Internal ID of the cargo                              | Text                  |
+| Nybo.ETS2.Trailer.CargoLoaded        | Is cargo currently loaded                             | true/false            |
+| Nybo.ETS2.Trailer.CargoType          | Type of cargo                                         | Text                  |
+| Nybo.ETS2.Trailer.CargoDamage        | Damage to the cargo                                   | Text (0-100%)         |
+| Nybo.ETS2.Trailer.CargoMass          | Weight of the cargo (Unit based on settings)          | Text                  |
 
 ### Job States
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| JobIncome                 | Shows the Income of the Current Job                   | Dynamic Text          |
-| JobRemainingTime          | Shows the Remaining Time of the Current Job           | Dynamic Text          |
-| JobSourceCity             | Shows the Source City of the Current Job              | Dynamic Text          |
-| JobSourceCompany          | Shows the Source Company of the Current Job           | Dynamic Text          |
-| JobDestinationCity        | Shows the Destination City of the Current Job         | Dynamic Text          |
-| JobDestinationCompany     | Shows the Destination Company of the Current Job      | Dynamic Text          |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Job.JobIncome              | Expected income (Converted to user currency)          | Text (e.g. $ 5,000)   |
+| Nybo.ETS2.Job.JobRemainingTime       | Time left until deadline (Day D, HH:MM)               | Text / "Overdue"      |
+| Nybo.ETS2.Job.JobSourceCity          | Starting City                                         | Text                  |
+| Nybo.ETS2.Job.JobSourceCompany       | Shipping Company                                      | Text                  |
+| Nybo.ETS2.Job.JobDestinationCity     | Target City                                           | Text                  |
+| Nybo.ETS2.Job.JobDestinationCompany  | Target Company                                        | Text                  |
 
 ### Navigation States
     
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| SpeedLimit                | Shows the Speedlimit of the Road                      | Dynamic Text          |
-| SpeedLimitSign            | Shows the Speedlimit of the Road as an Image          | Dynamic Image         |
-| EstimatedDistance         | Shows the Estimated Distance                          | Dynamic Text          |
-| EstimatedTime             | Shows the Estimated Time                              | Dynamic Text          |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Navigation.SpeedLimit      | Current speed limit (Unit based on settings)          | Number (Text)         |
+| Nybo.ETS2.Navigation.SpeedLimitSign  | Dynamic speed limit sign image                        | Image                 |
+| Nybo.ETS2.Navigation.estimatedDistance| Distance to target                                    | Text (e.g. 450 KM)    |
+| Nybo.ETS2.Navigation.estimatedTime    | Estimated time of arrival (Day D, HH:MM)              | Text                  |
 
 ### TruckersMP States
 
-| State                     | Description                                           | Available Values      |
-|---------------------------|:-----------------------------------------------------:|----------------------:|
-| Servers                   | Shows you how many Servers are Online                 | Dynamic Text          |
-| ServerName                | Shows you the Server Name of the selected Server      | Dynamic Text          |
-| ServerPlayers             | Shows you all Online Players of the selected Server   | Dynamic Text          |
-| ServerPlayerQueue         | Shows you all Players in queue of the selected Server | Dynamic text          |
-| APIOnline                 | Shows you if the TruckersMP API is Online             | true/false            |
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.TruckersMP.Servers         | Total number of servers online                        | Number (Text)         |
+| Nybo.ETS2.TruckersMP.ServerName       | Name of the selected TMP server                       | Text                  |
+| Nybo.ETS2.TruckersMP.ServerPlayers    | Current player count on selected server               | Number (Text)         |
+| Nybo.ETS2.TruckersMP.ServerPlayerQueue| Players in queue for selected server                  | Number (Text)         |
+| Nybo.ETS2.TruckersMP.APIOnline       | Status of the TruckersMP API                          | true/false            |
 
+### Settings Reflection States
+*These states show the current configuration of the plugin.*
+
+| State ID                             | Description                                           | Available Values      |
+|--------------------------------------|:-----------------------------------------------------:|----------------------:|
+| Nybo.ETS2.Setting.currencyUnit       | Active currency code                                  | e.g. EUR, USD         |
+| Nybo.ETS2.Setting.speedUnit          | Active speed unit                                     | Kilometer / Miles     |
+| Nybo.ETS2.Setting.fluidUnit          | Active fluid volume unit                              | Liters / Gallons      |
+| Nybo.ETS2.Setting.weightUnit         | Active weight unit                                    | Tons / Pounds / etc.  |
+| Nybo.ETS2.Setting.tempUnit           | Active temperature unit                               | Celsius / Fahrenheit  |
+| Nybo.ETS2.Setting.fluidConUnit       | Active consumption unit                               | e.g. Liters / KM      |
 
 
 ## Actions
 
-| Action                    | Description                                           |
+| Action ID                 | Description                                           |
 |---------------------------|:-----------------------------------------------------:|
-| Open/Close Settings       | Opens or Closes the Settings Menu                     |
+| setting_speed             | Toggles between Kilometer and Miles                   |
+| setting_fluid             | Toggles through Fluid units (Liter / US Gal / UK Gal) |
+| setting_fluidCon          | Toggles through Consumption units                     |
+| setting_weight            | Toggles through Weight units (kg / tons / pounds)     |
+| setting_temp              | Toggles between Celsius and Fahrenheit                |
+| setting_time              | Toggles between EU and US Time Format                 |

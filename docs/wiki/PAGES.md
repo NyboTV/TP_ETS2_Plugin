@@ -1,59 +1,40 @@
-# Own Page
+# Dashboard Pages
 
-The best way to learn how to create your own page, is to look up the Default Page.
+## Own Page
 
+The best way to learn how to create your own page is to look at the **Default Page** included with the plugin. 
 
---------------------------------------------------------------
---------------------------------------------------------------
+### Page Structure
+V2 of the plugin uses high-frequency telemetry. When creating a page, you can use:
+1. **Dynamic Text Updaters**: For simple text values like fuel, speed numbers, or city names.
+2. **Dynamic Gauges**: For the visual speedometer, RPM, and fuel needles. These are generated on-the-fly as Base64 images.
 
-# User Pages
+---
 
-## Dashboard by Gargamosch 
-### ATS Truck Control Dashboard 4.0
+## User Pages
 
-Gargamosch:
-Here is a ReadMe how to use my Page: [Click Me](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/Readme.txt)
-This Page Requires Plugin Version 3.2.6+
+### Dashboard by Gargamosch 
+### ATS Truck Control Dashboard 4.0 / 5.0
 
-Preview: 
+Gargamosch's dashboards are a great example of high-quality pages created for this plugin. 
 
-<img href="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/preview1.png?raw=true" src="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/preview1.png?raw=true" width="400" height="250" />
-<img href="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/preview2.png?raw=true" src="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/preview2.png?raw=true" width="400" height="250" />
+- **ReadMe (Multi-Language)**: [Click Here](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/readme.pdf)
+- **Requires**: Plugin Version 2.0+ (V2)
 
-Download: [ATS Truck Control Dashboard 4.0 - Page 1](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/ATS_3.2.6-EN-P1.tpz2)
+**Preview**: 
+![Preview 1](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview1.jpg?raw=true)
+![Preview 2](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview2.jpg?raw=true)
 
-Download: [ATS Truck Control Dashboard 4.0 - Page 2](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/ATS_3.2.6-EN-P2.tpz2)
+---
 
-Download: [ATS Truck Control Dashboard 4.0 German Edition - Page 1](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/ATS_3.2.6-DE-P1.tpz2)
+## How to customize Gauge Styles
 
-Download: [ATS Truck Control Dashboard 4.0 German Edition - Page 2](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Pages/official/gargamosch/ats_truck_control_dashboard_4.0/ATS_3.2.6-DE-P2.tpz2)
+V2 introduced a more robust design system. You can now tweak the appearance of the gauges by editing the `config/designs.json` file.
 
+### Available Customizations:
+- **Colors**: Change the background, needle, tick, and text colors.
+- **Shapes**: Toggle between `circle` and `square` gauges.
+- **Patterns**: Choose background patterns like `none`, `grid`, or `carbon`.
+- **Needles**: Switch between `classic` and `sport` needle shapes.
 
--------------
-
-### ATS Truck Control Dashboard 5.0
-
-Gargamosch:
-Here is a ReadMe how to use my Page: [Click Me](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/readme.pdf) (Multi Language)
-This Page Requires Plugin Version 3.2.6+
-
-Preview: 
-
-<img href="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview1.jpg?raw=true" src="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview1.jpg?raw=true" width="400" height="250" />
-<img href="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview2.jpg?raw=true" src="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview2.jpg?raw=true" width="400" height="250" />
-
-Download: [ATS Truck Control Dashboard 5.0 - Multi Language](https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/ATS_Advanced_Multilang.tpz2)
-
-
-
-
--------------------------------------------------------------------------
--------------------------------------------------------------------------
-# How to replace the Gauge Style
-
-Want to create your own gauge style? If you want to create your own style: Please make sure NOT to change the positions of the numbers and/or the degrees of the arrow! Currently it is only allowed to change the color, the design (Whether Retro or Modern) or the font.
-
-If you have downloaded a different design, then replace the original images in the following path with the downloaded images:
-"%appdata%/TouchPortal/Plugins/ETS2_Dashboard/images".
-
-It is important that the file names are exactly the same! Means: If you replace e.g. the "RPMGauge" the new file must have the same name as the old one: "RPMGauge.png". Also the file type must remain the same!
+*Note: Changes in `designs.json` require a restart of the plugin to take full effect in most cases, or will update on the next gauge refresh.*
