@@ -131,8 +131,8 @@ The plugin creates a `config/cfg.json` file where you can tweak:
 ## Third Party Software
 - **Funbit** - Original Telemetry Server - [Github](https://github.com/Funbit/ets2-telemetry-server)
 - **mike-koch** - [OLD] Telemetry Server before 2.6.0 - [Github](https://github.com/mike-koch/ets2-telemetry-server)
-- **PauloTNCunha** - [NEW] Telemetry Server since Version 2.6.0 - [Github](https://github.com/PauloTNCunha/TelemetryServer4)
-- **TruckSim-Telemetry**: Underlying Node.js library for reading memory.
+- **PauloTNCunha** - [OLD] Telemetry Server since Version 2.6.0 - [Github](https://github.com/PauloTNCunha/TelemetryServer4)
+- **TruckSim-Telemetry**: [NEW] Underlying Node.js library for reading memory. [Github](https://github.com/kniffen/TruckSim-Telemetry)
 
 <br>
 
