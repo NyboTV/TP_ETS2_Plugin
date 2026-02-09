@@ -1,0 +1,16 @@
+{
+    "gauge": {
+        "backgroundColor": "#1a1a1a",
+        "borderColor": "#333",
+        "tickColor": "#fff",
+        "textColor": "#eee",
+        "titleColor": "#aaa",
+        "unitColor": "#888",
+        "needleColor": "#ff3333",
+        "redZoneColor": "#cc0000",
+        "fontFamily": "Arial",
+        "shape": "circle",
+        "backgroundPattern": "none",
+        "needleShape": "classic"
+    }
+}

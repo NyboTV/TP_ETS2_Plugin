@@ -1,0 +1,952 @@
+{
+  "api": 7,
+  "version": 5,
+  "name": "TP ETS2 Plugin",
+  "id": "TP_ETS2_Plugin",
+  "plugin_start_cmd_windows": "\"%TP_PLUGIN_FOLDER%ETS2_Dashboard\\ETS2_Dashboard.exe\"",
+  "plugin_start_cmd_linux": "%TP_PLUGIN_FOLDER%ETS2_Dashboard/ETS2_Dashboard",
+  "plugin_start_cmd_mac": "%TP_PLUGIN_FOLDER%ETS2_Dashboard/ETS2_Dashboard",
+  "configuration": {
+    "colorDark": "#f54242",
+    "colorLight": "#f5a442",
+    "parentCategory": "games"
+  },
+  "settings": [
+    {
+      "name": "Refresh_Interval",
+      "default": "200",
+      "type": "number",
+      "minValue": 50,
+      "maxValue": 1000
+    },
+    {
+      "name": "Currency",
+      "default": "EUR",
+      "type": "text",
+      "maxLength": 3
+    },
+    {
+      "name": "TruckersMP_Server",
+      "default": "1",
+      "type": "text"
+    },
+    {
+      "name": "AutoUpdate",
+      "default": "True",
+      "type": "text"
+    },
+    {
+      "name": "PreRelease",
+      "default": "False",
+      "type": "text"
+    },
+    {
+      "name": "OfflineMode",
+      "default": "False",
+      "type": "text"
+    }
+  ],
+  "categories": [
+    {
+      "id": "Game_Events",
+      "name": "ETS2 Dashboard",
+      "actions": [
+        {
+          "id": "setting_speed",
+          "prefix": "Speed Unit:",
+          "name": "Fast Switch Speed Unit",
+          "type": "communicate",
+          "tryInline": "true",
+          "format": "Unit: Fast Switch your Speed Unit"
+        },
+        {
+          "id": "setting_fluid",
+          "prefix": "Fluid Unit:",
+          "name": "Fast Switch Fluid Unit",
+          "type": "communicate",
+          "tryInline": "true",
+          "format": "Fluid Unit: Fast Switch your Fluid Unit"
+        },
+        {
+          "id": "setting_fluidCon",
+          "prefix": "Fluid Consumption Unit:",
+          "name": "Fast Switch Fluid Consumption Unit",
+          "type": "communicate",
+          "tryInline": "true",
+          "format": "Fluid Unit: Fast Switch your Fluid Consumption Unit"
+        },
+        {
+          "id": "setting_weight",
+          "prefix": "Weight Unit:",
+          "name": "Fast Switch Weight Unit",
+          "type": "communicate",
+          "tryInline": "true",
+          "format": "Weight: Fast Switch your Weight"
+        },
+        {
+          "id": "setting_temp",
+          "prefix": "Temp Unit:",
+          "name": "Fast Switch Temp Unit",
+          "type": "communicate",
+          "tryInline": "true",
+          "format": "Temp: Fast Switch your Temp"
+        },
+        {
+          "id": "setting_time",
+          "prefix": "Time Format:",
+          "name": "Fast Switch Time Format",
+          "type": "communicate",
+          "tryInline": "true",
+          "format": "Time: Fast Switch your Time Format"
+        }
+      ],
+      "events": [
+        {
+          "id": "event_EngineOn",
+          "name": "Engine Status",
+          "format": "If Engine is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.EngineOn"
+        },
+        {
+          "id": "event_ElectricOn",
+          "name": "Electric Status",
+          "format": "If Electric is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.ElectricOn"
+        },
+        {
+          "id": "event_WipersOn",
+          "name": "Wipers Status",
+          "format": "If Wipers are $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.WipersOn"
+        },
+        {
+          "id": "event_ParkBrakeOn",
+          "name": "Park Brake Status",
+          "format": "If Park Brake is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.ParkBrakeOn"
+        },
+        {
+          "id": "event_Retarder",
+          "name": "Retarder Status",
+          "format": "If Retarder is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "1",
+            "2",
+            "3"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.Retarder"
+        },
+        {
+          "id": "event_FuelWarningOn",
+          "name": "Fuel Status",
+          "format": "If Fuel Warning Light is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.FuelWarningOn"
+        },
+        {
+          "id": "event_AdBlueWarningOn",
+          "name": "AdBlue Status",
+          "format": "If AdBlue Warning Light is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.AdBlueWarningOn"
+        },
+        {
+          "id": "event_AirPressureWarningOn",
+          "name": "Air Pressure Status",
+          "format": "If AirPressure is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.AirPressureWarningOn"
+        },
+        {
+          "id": "event_OilPressureWarningOn",
+          "name": "Oil Pressure Status",
+          "format": "If Oil Pressure is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.OilPressureWarningOn"
+        },
+        {
+          "id": "event_WaterTempWarningOn",
+          "name": "Water Temp Status",
+          "format": "If Water Temp Warning Light is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.WaterTempWarningOn"
+        },
+        {
+          "id": "event_BatteryVoltageWarningOn",
+          "name": "Battery Status",
+          "format": "If Battery Voltage is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.BatteryVoltageWarningOn"
+        },
+        {
+          "id": "event_BlinkerLeftActive",
+          "name": "Blinker Left Status",
+          "format": "If Blinker Left is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.BlinkerLeftActive"
+        },
+        {
+          "id": "event_BlinkerRightActive",
+          "name": "Blinker Right Status",
+          "format": "If Blinker Right is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.BlinkerRightActive"
+        },
+        {
+          "id": "event_HazardLightsOn",
+          "name": "Hazard Lights Status",
+          "format": "If Hazard Lights are $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.HazardLightsOn"
+        },
+        {
+          "id": "event_LightsDashboardOn",
+          "name": "Dashboard Lights Status",
+          "format": "If Dashboards Lights are $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.LightsDashboardOn"
+        },
+        {
+          "id": "event_TrailerAttached",
+          "name": "Trailer Status",
+          "format": "If Trailer is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.TrailerAttached"
+        },
+        {
+          "id": "event_CargoLoaded",
+          "name": "Cargo Status",
+          "format": "If Cargo is $val then",
+          "type": "communicate",
+          "valueType": "choice",
+          "valueChoices": [
+            "true",
+            "false"
+          ],
+          "valueStateId": "Nybo.ETS2.Truck.CargoLoaded"
+        }
+      ],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Usage.CPU_Usage",
+          "type": "text",
+          "desc": "ETS2:Shows current CPU Usage",
+          "default": "ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Usage.MEM_Usage",
+          "type": "text",
+          "desc": "ETS2:Shows current Memory Usage",
+          "default": "ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Usage.Storage_Usage",
+          "type": "text",
+          "desc": "ETS2:Shows current Storage Usage",
+          "default": "ERROR"
+        }
+      ]
+    },
+    {
+      "id": "Main_States",
+      "name": "Main States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Setting.currencyUnit",
+          "type": "text",
+          "desc": "ETS2:Shows current Currency Setting",
+          "default": "SETTING ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.speedUnit",
+          "type": "text",
+          "desc": "ETS2:Shows current Speed Unit",
+          "default": "SETTING ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.fluidUnit",
+          "type": "text",
+          "desc": "ETS2:Shows current Fluid Unit",
+          "default": "SETTING ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.fluidConUnit",
+          "type": "text",
+          "desc": "ETS2:Shows current Fluid Consumption Unit",
+          "default": "SETTING ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.weightUnit",
+          "type": "text",
+          "desc": "ETS2:Shows current Weight Unit",
+          "default": "SETTING ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.tempUnit",
+          "type": "text",
+          "desc": "ETS2:Shows current Temp Unit",
+          "default": "SETTING ERROR"
+        }
+      ]
+    },
+    {
+      "id": "Game_States",
+      "name": "Game States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Game.ConnectedStatus",
+          "type": "text",
+          "desc": "ETS2:Connection Status",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Game.GameType",
+          "type": "text",
+          "desc": "ETS2:Game Type",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.IsPaused",
+          "type": "text",
+          "desc": "ETS2:Is Paused",
+          "default": "false"
+        }
+      ]
+    },
+    {
+      "id": "World_States",
+      "name": "World States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.World.Time",
+          "type": "text",
+          "desc": "ETS2:Ingame Time",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Driver_States",
+      "name": "Driver States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Driver.NextRestTime",
+          "type": "text",
+          "desc": "ETS2:Next Rest Time",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Gauge_States",
+      "name": "Gauge States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Gauges.SpeedGauge",
+          "type": "text",
+          "desc": "ETS2:Speed Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.RPMGauge",
+          "type": "text",
+          "desc": "ETS2:RPM Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.FuelGauge",
+          "type": "text",
+          "desc": "ETS2:Fuel Gauge",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Truck_States",
+      "name": "Truck States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Truck.Truck_Make",
+          "type": "text",
+          "desc": "ETS2:Truck Make",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.Model",
+          "type": "text",
+          "desc": "ETS2:Truck Model",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.CruiseControlSpeed",
+          "type": "text",
+          "desc": "ETS2:Cruise Control Speed",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.CruiseControlOn",
+          "type": "text",
+          "desc": "ETS2:Cruise Control On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.Odometer",
+          "type": "text",
+          "desc": "ETS2:Shows Odometer",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.Speed",
+          "type": "text",
+          "desc": "ETS2:Speed",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.EngineRPM",
+          "type": "text",
+          "desc": "ETS2:RPM",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.Gear",
+          "type": "text",
+          "desc": "ETS2:Gear",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.EngineOn",
+          "type": "text",
+          "desc": "ETS2:Engine On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.ElectricOn",
+          "type": "text",
+          "desc": "ETS2:Electric On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.WipersOn",
+          "type": "text",
+          "desc": "ETS2:Wipers On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.ParkBrakeOn",
+          "type": "text",
+          "desc": "ETS2:Park Brake On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.MotorBrakeOn",
+          "type": "text",
+          "desc": "ETS2:Motor Brake On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.Retarder",
+          "type": "text",
+          "desc": "ETS2:Retarder",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.Fuel",
+          "type": "text",
+          "desc": "ETS2:Fuel",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.FuelConsumption",
+          "type": "text",
+          "desc": "ETS2:Fuel Consumption",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AdBlue",
+          "type": "text",
+          "desc": "ETS2:AdBlue",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AirPressure",
+          "type": "text",
+          "desc": "ETS2:Air Pressure",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.OilTemp",
+          "type": "text",
+          "desc": "ETS2:Oil Temp",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.WaterTemp",
+          "type": "text",
+          "desc": "ETS2:Water Temp",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BatteryVoltage",
+          "type": "text",
+          "desc": "ETS2:Battery Voltage",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.FuelCapacity",
+          "type": "text",
+          "desc": "ETS2:Fuel Capacity",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.FuelWarningOn",
+          "type": "text",
+          "desc": "ETS2:Fuel Warning On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AdBlueWarningOn",
+          "type": "text",
+          "desc": "ETS2:AdBlue Warning On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AirPressureWarningOn",
+          "type": "text",
+          "desc": "ETS2:Air Pressure Warning on",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AirPressureEmergencyOn",
+          "type": "text",
+          "desc": "ETS2:Air Pressure Emergency On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.OilPressureWarningOn",
+          "type": "text",
+          "desc": "ETS2:Oil Pressure Warning On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.WaterTempWarningOn",
+          "type": "text",
+          "desc": "ETS2:Water Temp Warning On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BatteryVoltageWarningOn",
+          "type": "text",
+          "desc": "ETS2:Battery Voltage Warning On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BlinkerLeftActive",
+          "type": "text",
+          "desc": "ETS2:Blinker Left Active",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BlinkerRightActive",
+          "type": "text",
+          "desc": "ETS2:Blinker Right Active",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BlinkerLeftOn",
+          "type": "text",
+          "desc": "ETS2:Blinker Left On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BlinkerRightOn",
+          "type": "text",
+          "desc": "ETS2:Blinker Right On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.HazardLightsOn",
+          "type": "text",
+          "desc": "ETS2:Hazard Lights On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.wearEngine",
+          "type": "text",
+          "desc": "ETS2:Wear Engine ",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.wearTransmission",
+          "type": "text",
+          "desc": "ETS2:Wear Transmission",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.wearCabin",
+          "type": "text",
+          "desc": "ETS2:Wear Cabin",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.wearChassis",
+          "type": "text",
+          "desc": "ETS2:Wear Chassis",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.wearWheels",
+          "type": "text",
+          "desc": "ETS2:Wear Wheels",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsDashboardValue",
+          "type": "text",
+          "desc": "ETS2:Lights Dashboard Value",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsDashboardOn",
+          "type": "text",
+          "desc": "ETS2:Lights Dashboard On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsParkingOn",
+          "type": "text",
+          "desc": "ETS2:Lights Parking On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsBeamLowOn",
+          "type": "text",
+          "desc": "ETS2:Lights Beam Low On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsBeamHighOn",
+          "type": "text",
+          "desc": "ETS2:Lights Beam High On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsAuxFrontOn",
+          "type": "text",
+          "desc": "ETS2:Lights Aux Front On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsAuxRoofOn",
+          "type": "text",
+          "desc": "ETS2:Lights Aux Roof On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsBeaconOn",
+          "type": "text",
+          "desc": "ETS2:Lights Beacon On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsBrakeOn",
+          "type": "text",
+          "desc": "ETS2:Lights Brake On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LightsReverseOn",
+          "type": "text",
+          "desc": "ETS2:Lights Reverse On",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Trailer_States",
+      "name": "Trailer States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Trailer.TrailerAttached",
+          "type": "text",
+          "desc": "ETS2:Trailer Attached",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.TrailerName",
+          "type": "text",
+          "desc": "ETS2:Trailer Name",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.TrailerChainType",
+          "type": "text",
+          "desc": "ETS2:TrailerChainType",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.Cargo",
+          "type": "text",
+          "desc": "ETS2:Cargo",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.CargoID",
+          "type": "text",
+          "desc": "ETS2:Cargo ID",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.CargoLoaded",
+          "type": "text",
+          "desc": "ETS2:Cargo Loaded",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.CargoType",
+          "type": "text",
+          "desc": "ETS2:Cargo Type",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.CargoDamage",
+          "type": "text",
+          "desc": "ETS2:Cargo Damage",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.CargoMass",
+          "type": "text",
+          "desc": "ETS2:Cargo Mass",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.Wear",
+          "type": "text",
+          "desc": "ETS2:Wear",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.wearChassis",
+          "type": "text",
+          "desc": "ETS2:Wear Chassis",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.wearWheels",
+          "type": "text",
+          "desc": "ETS2:Wear Wheels",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Job_States",
+      "name": "Job States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Job.JobIncome",
+          "type": "text",
+          "desc": "ETS2:Job Income",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.JobRemainingTime",
+          "type": "text",
+          "desc": "ETS2:Job Remaining Time",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.JobSourceCity",
+          "type": "text",
+          "desc": "ETS2:Job Source City",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.JobSourceCompany",
+          "type": "text",
+          "desc": "ETS2:Job Source Company",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.JobDestinationCity",
+          "type": "text",
+          "desc": "ETS2:Job Destination City",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.JobDestinationCompany",
+          "type": "text",
+          "desc": "ETS2:Job Destination Company",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "Navigation_States",
+      "name": "Navigation States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Navigation.SpeedLimit",
+          "type": "text",
+          "desc": "ETS2:Speedlimit",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Navigation.SpeedLimitSign",
+          "type": "text",
+          "desc": "ETS2:Speedlimit Sign",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Navigation.estimatedDistance",
+          "type": "text",
+          "desc": "ETS2:Estimated Distance",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Navigation.estimatedTime",
+          "type": "text",
+          "desc": "ETS2:Estimated Time",
+          "default": "-"
+        }
+      ]
+    },
+    {
+      "id": "TruckersMP_States",
+      "name": "TruckersMP States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.TruckersMP.Servers",
+          "type": "text",
+          "desc": "ETS2:Servers",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.TruckersMP.ServerName",
+          "type": "text",
+          "desc": "ETS2:Server Name",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.TruckersMP.ServerPlayers",
+          "type": "text",
+          "desc": "ETS2:Server Players",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.TruckersMP.ServerPlayerQueue",
+          "type": "text",
+          "desc": "ETS2:Server Player Queue",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.TruckersMP.APIOnline",
+          "type": "text",
+          "desc": "ETS2:API Online",
+          "default": "-"
+        }
+      ]
+    }
+  ]
+}

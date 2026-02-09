@@ -1,8 +1,0 @@
-{
-  "version": "4.1.5",
-  "refreshInterval": 200,
-  "debug": false,
-  "firstInstall": false,
-  "UpdateCheck": true,
-  "OfflineMode": false
-}

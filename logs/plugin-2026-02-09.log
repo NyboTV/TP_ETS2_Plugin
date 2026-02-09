@@ -1,0 +1,765 @@
+[2026-02-09 06:27:18] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:27:18] [ERROR]: Error preloading navigation images: TypeError: Jimp.read is not a function
+[2026-02-09 06:27:18] [ERROR]: Error loading gauge assets: TypeError: Jimp.read is not a function
+[2026-02-09 06:27:18] [INFO]: Configs loaded successfully
+[2026-02-09 06:27:18] [DEBUG]: StateManager starting...
+[2026-02-09 06:27:18] [DEBUG]: StateManager listeners registered
+[2026-02-09 06:27:18] [INFO]: Starting polling with interval 2000ms
+[2026-02-09 06:27:18] [INFO]: Plugin initialization complete.
+[2026-02-09 06:27:18] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 06:27:18] [INFO]: [TouchPortal] Settings received
+[2026-02-09 06:27:20] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:20] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:20] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:20] [DEBUG]: Sent 60 updates
+[2026-02-09 06:27:22] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:22] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:22] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:24] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:24] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:24] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:26] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:26] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:26] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:28] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:28] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:28] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:30] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:30] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:30] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:30] [DEBUG]: Sent 2 updates
+[2026-02-09 06:27:32] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:32] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:32] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:34] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:34] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:34] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:36] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:36] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:36] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:38] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:38] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:38] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:40] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:40] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:40] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:42] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:42] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:42] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:42] [DEBUG]: Sent 1 updates
+[2026-02-09 06:27:44] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:44] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:44] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:46] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:46] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:46] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:48] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:48] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:48] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:50] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:50] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:50] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:52] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:52] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:52] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:54] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:54] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:54] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:56] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:56] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:56] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:27:56] [DEBUG]: Sent 1 updates
+[2026-02-09 06:27:58] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:27:58] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:27:58] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:00] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:00] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:00] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:02] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:02] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:02] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:02] [DEBUG]: Sent 2 updates
+[2026-02-09 06:28:04] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:04] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:04] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:06] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:06] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:06] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:09] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:09] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:09] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:10] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:10] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:10] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:13] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:13] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:13] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:15] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:15] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:15] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:15] [DEBUG]: Sent 3 updates
+[2026-02-09 06:28:17] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:17] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:17] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:17] [DEBUG]: Sent 3 updates
+[2026-02-09 06:28:19] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:19] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:19] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:19] [DEBUG]: Sent 3 updates
+[2026-02-09 06:28:21] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:21] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:21] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:21] [DEBUG]: Sent 3 updates
+[2026-02-09 06:28:23] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:23] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:23] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:23] [DEBUG]: Sent 2 updates
+[2026-02-09 06:28:25] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:25] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:25] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:27] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:27] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:27] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:27] [DEBUG]: Sent 1 updates
+[2026-02-09 06:28:29] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:29] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:29] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:31] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:31] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:31] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:33] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:33] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:33] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:35] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:35] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:35] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:35] [DEBUG]: Sent 1 updates
+[2026-02-09 06:28:37] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:37] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:37] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:39] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:39] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:39] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:41] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:41] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:41] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:43] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:43] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:43] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:43] [DEBUG]: Sent 1 updates
+[2026-02-09 06:28:45] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:45] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:45] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:47] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:47] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:47] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:49] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:49] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:49] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:51] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:51] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:51] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:53] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:53] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:53] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:55] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:55] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:55] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:57] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:57] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:57] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:28:59] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:28:59] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:28:59] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:01] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:01] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:01] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:03] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:03] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:03] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:03] [DEBUG]: Sent 1 updates
+[2026-02-09 06:29:05] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:05] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:05] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:07] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:07] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:07] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:09] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:09] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:09] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:11] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:11] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:11] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:11] [DEBUG]: Sent 2 updates
+[2026-02-09 06:29:13] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:13] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:13] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:15] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:15] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:15] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:17] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:17] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:17] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:19] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:19] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:19] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:21] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:21] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:21] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:23] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:23] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:23] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:23] [DEBUG]: Sent 1 updates
+[2026-02-09 06:29:25] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:25] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:25] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:27] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:27] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:27] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:29] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:29] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:29] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:31] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:31] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:31] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:33] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:33] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:33] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:35] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:35] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:35] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:36] [INFO]: Shutting down...
+[2026-02-09 06:29:43] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:29:43] [ERROR]: Error preloading navigation images: TypeError: Jimp.read is not a function
+[2026-02-09 06:29:43] [ERROR]: Error loading gauge assets: TypeError: Jimp.read is not a function
+[2026-02-09 06:29:43] [INFO]: Configs loaded successfully
+[2026-02-09 06:29:43] [DEBUG]: StateManager starting...
+[2026-02-09 06:29:43] [DEBUG]: StateManager listeners registered
+[2026-02-09 06:29:43] [INFO]: Starting polling with interval 2000ms
+[2026-02-09 06:29:44] [INFO]: Plugin initialization complete.
+[2026-02-09 06:29:44] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 06:29:44] [INFO]: [TouchPortal] Settings received
+[2026-02-09 06:29:45] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:45] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:45] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:45] [DEBUG]: Sent 60 updates
+[2026-02-09 06:29:47] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:47] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:47] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:47] [DEBUG]: Sent 1 updates
+[2026-02-09 06:29:49] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:49] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:49] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:52] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:29:52] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:29:52] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:29:52] [INFO]: Shutting down...
+[2026-02-09 06:30:15] [DEBUG]: Jimp type: object
+[2026-02-09 06:30:15] [DEBUG]: Jimp keys: defaultPlugins,defaultFormats,JimpMime,Jimp,ResizeStrategy,distance,compareHashes,PNGColorType,PNGFilterType,BmpCompression,HorizontalAlign,VerticalAlign,BlendMode,loadFont,measureText,measureTextHeight,diff,intToRGBA,rgbaToInt,colorDiff,limit255,cssColorToHex
+[2026-02-09 06:30:15] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:30:15] [ERROR]: Error preloading navigation images: TypeError: Jimp.read is not a function
+[2026-02-09 06:30:15] [ERROR]: Error loading gauge assets: TypeError: Jimp.read is not a function
+[2026-02-09 06:30:15] [INFO]: Configs loaded successfully
+[2026-02-09 06:30:15] [DEBUG]: StateManager starting...
+[2026-02-09 06:30:15] [DEBUG]: StateManager listeners registered
+[2026-02-09 06:30:15] [INFO]: Starting polling with interval 2000ms
+[2026-02-09 06:30:15] [INFO]: Plugin initialization complete.
+[2026-02-09 06:30:15] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 06:30:15] [INFO]: [TouchPortal] Settings received
+[2026-02-09 06:30:17] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:30:17] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:30:17] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:30:17] [DEBUG]: Sent 60 updates
+[2026-02-09 06:30:18] [INFO]: Shutting down...
+[2026-02-09 06:32:37] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:32:37] [INFO]: Configs loaded successfully
+[2026-02-09 06:32:37] [DEBUG]: StateManager starting...
+[2026-02-09 06:32:37] [DEBUG]: StateManager listeners registered
+[2026-02-09 06:32:37] [INFO]: Starting polling with interval 2000ms
+[2026-02-09 06:32:37] [INFO]: Plugin initialization complete.
+[2026-02-09 06:32:37] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 06:32:37] [INFO]: [TouchPortal] Settings received
+[2026-02-09 06:32:39] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:39] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:39] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:39] [DEBUG]: Sent 60 updates
+[2026-02-09 06:32:41] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:41] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:41] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:43] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:43] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:43] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:43] [DEBUG]: Sent 1 updates
+[2026-02-09 06:32:45] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:45] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:45] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:45] [DEBUG]: Sent 3 updates
+[2026-02-09 06:32:47] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:47] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:47] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:49] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:49] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:49] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:49] [DEBUG]: Sent 1 updates
+[2026-02-09 06:32:51] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:51] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:51] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:53] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:53] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:53] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:32:55] [DEBUG]: Emitting data. Listeners: 1
+[2026-02-09 06:32:55] [DEBUG]: StateManager received data keys: game,truck,shifter,trailerCount,trailers,trailer,job,cargo,navigation,finedEvent,jobEvent,tollgateEvent,ferryEvent,trainEvent
+[2026-02-09 06:32:55] [DEBUG]: Mapped 60 states from telemetry data.
+[2026-02-09 06:34:11] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:34:11] [INFO]: Configs loaded successfully
+[2026-02-09 06:34:11] [INFO]: Log level set to: info
+[2026-02-09 06:34:11] [INFO]: Starting polling with interval 200ms
+[2026-02-09 06:34:11] [INFO]: Plugin initialization complete.
+[2026-02-09 06:34:11] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 06:34:11] [INFO]: [TouchPortal] Settings received
+[2026-02-09 06:40:44] [INFO]: Shutting down...
+[2026-02-09 06:42:21] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:42:21] [INFO]: Configs loaded successfully
+[2026-02-09 06:42:21] [INFO]: Log level set to: info
+[2026-02-09 06:42:21] [INFO]: [SetupService] Starting First Setup...
+[2026-02-09 06:42:30] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:42:30] [INFO]: Configs loaded successfully
+[2026-02-09 06:42:30] [INFO]: Log level set to: info
+[2026-02-09 06:42:30] [INFO]: [SetupService] Starting First Setup...
+[2026-02-09 06:42:34] [INFO]: [SetupService] Installing Telemetry Server...
+[2026-02-09 06:48:53] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:48:53] [INFO]: Configs loaded successfully
+[2026-02-09 06:48:53] [INFO]: Log level set to: info
+[2026-02-09 06:48:53] [INFO]: [SetupService] Starting First Setup...
+[2026-02-09 06:49:01] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:49:01] [INFO]: Configs loaded successfully
+[2026-02-09 06:49:01] [INFO]: Log level set to: info
+[2026-02-09 06:49:01] [INFO]: [SetupService] Starting First Setup...
+[2026-02-09 06:49:06] [INFO]: [SetupService] Telemetry setup skipped.
+[2026-02-09 06:49:28] [INFO]: [SetupService] First Setup Complete.
+[2026-02-09 06:49:28] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 06:49:28] [INFO]: Starting Telemetry Server at D:\Dieser-PC\Dokumente\GitHub\TP_ETS2_Plugin\V2\server\Ets2Telemetry.exe
+[2026-02-09 06:49:28] [INFO]: Starting polling with interval 200ms
+[2026-02-09 06:49:28] [INFO]: Plugin initialization complete.
+[2026-02-09 06:49:28] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 06:49:28] [INFO]: [TouchPortal] Settings received
+[2026-02-09 06:49:28] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 06:52:34] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 06:52:34] [INFO]: Configs loaded successfully
+[2026-02-09 06:52:34] [INFO]: Log level set to: info
+[2026-02-09 06:52:34] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 06:52:34] [INFO]: Starting polling with interval 200ms
+[2026-02-09 06:52:34] [INFO]: Plugin initialization complete.
+[2026-02-09 06:52:34] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 06:52:34] [INFO]: [TouchPortal] Settings received
+[2026-02-09 06:52:35] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 06:52:41] [INFO]: Shutting down...
+[2026-02-09 07:00:09] [INFO]: Shutting down...
+[2026-02-09 07:01:05] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:01:05] [INFO]: Configs loaded successfully
+[2026-02-09 07:01:05] [INFO]: Log level set to: info
+[2026-02-09 07:01:05] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:01:05] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:01:05] [INFO]: Plugin initialization complete.
+[2026-02-09 07:01:05] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:01:05] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:01:06] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:02:21] [INFO]: Shutting down...
+[2026-02-09 07:05:50] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:05:50] [INFO]: Configs loaded successfully
+[2026-02-09 07:05:50] [INFO]: Log level set to: info
+[2026-02-09 07:05:50] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:05:51] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:05:51] [INFO]: Plugin initialization complete.
+[2026-02-09 07:05:51] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:05:51] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:05:51] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:05:55] [INFO]: Shutting down...
+[2026-02-09 07:06:27] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:06:27] [INFO]: Configs loaded successfully
+[2026-02-09 07:06:27] [INFO]: Log level set to: info
+[2026-02-09 07:06:27] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:06:27] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:06:27] [INFO]: Plugin initialization complete.
+[2026-02-09 07:06:27] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:06:27] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:06:27] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:06:30] [INFO]: Shutting down...
+[2026-02-09 07:11:22] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:11:22] [INFO]: Configs loaded successfully
+[2026-02-09 07:11:22] [INFO]: Log level set to: info
+[2026-02-09 07:11:22] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:11:23] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:11:23] [INFO]: Plugin initialization complete.
+[2026-02-09 07:11:23] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:11:23] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:11:23] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:12:11] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:12:11] [INFO]: Configs loaded successfully
+[2026-02-09 07:12:11] [INFO]: Log level set to: info
+[2026-02-09 07:12:11] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:12:11] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:12:11] [INFO]: Plugin initialization complete.
+[2026-02-09 07:12:11] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:12:11] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:12:11] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:12:23] [INFO]: Shutting down...
+[2026-02-09 07:12:31] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:12:31] [INFO]: Configs loaded successfully
+[2026-02-09 07:12:31] [INFO]: Log level set to: info
+[2026-02-09 07:12:31] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:12:31] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:12:31] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:12:31] [INFO]: Plugin initialization complete.
+[2026-02-09 07:12:31] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:12:31] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:12:33] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:12:33] [INFO]: Configs loaded successfully
+[2026-02-09 07:12:33] [INFO]: Log level set to: info
+[2026-02-09 07:12:33] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:12:33] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:12:33] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:12:33] [INFO]: Plugin initialization complete.
+[2026-02-09 07:12:33] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:12:33] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:12:36] [INFO]: Shutting down...
+[2026-02-09 07:15:43] [INFO]: Shutting down...
+[2026-02-09 07:15:45] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:15:45] [INFO]: Configs loaded successfully
+[2026-02-09 07:15:45] [INFO]: Log level set to: info
+[2026-02-09 07:15:45] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:15:45] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:15:45] [INFO]: Plugin initialization complete.
+[2026-02-09 07:15:45] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:15:45] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:15:46] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:15:56] [INFO]: Shutting down...
+[2026-02-09 07:15:57] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:15:57] [INFO]: Configs loaded successfully
+[2026-02-09 07:15:57] [INFO]: Log level set to: info
+[2026-02-09 07:15:57] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:15:57] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:15:58] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:15:58] [INFO]: Plugin initialization complete.
+[2026-02-09 07:15:58] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:15:58] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:17:46] [INFO]: Shutting down...
+[2026-02-09 07:17:48] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:17:48] [INFO]: Configs loaded successfully
+[2026-02-09 07:17:48] [INFO]: Log level set to: info
+[2026-02-09 07:17:48] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:17:49] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:17:49] [INFO]: Plugin initialization complete.
+[2026-02-09 07:17:49] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:17:49] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:17:49] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:18:59] [INFO]: Shutting down...
+[2026-02-09 07:19:01] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:19:01] [INFO]: Configs loaded successfully
+[2026-02-09 07:19:01] [INFO]: Log level set to: info
+[2026-02-09 07:19:01] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:19:02] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:19:02] [INFO]: Plugin initialization complete.
+[2026-02-09 07:19:02] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:19:02] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:19:02] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:19:09] [INFO]: Shutting down...
+[2026-02-09 07:19:13] [INFO]: Shutting down...
+[2026-02-09 07:19:30] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:19:30] [INFO]: Configs loaded successfully
+[2026-02-09 07:19:30] [INFO]: Log level set to: info
+[2026-02-09 07:19:30] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:19:30] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:19:30] [INFO]: Plugin initialization complete.
+[2026-02-09 07:19:30] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:19:30] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:19:30] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:21:14] [INFO]: Shutting down...
+[2026-02-09 07:21:24] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:21:24] [INFO]: Configs loaded successfully
+[2026-02-09 07:21:24] [INFO]: Log level set to: info
+[2026-02-09 07:21:24] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:21:25] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:21:25] [INFO]: Plugin initialization complete.
+[2026-02-09 07:21:25] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:21:25] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:21:25] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:21:28] [INFO]: Shutting down...
+[2026-02-09 07:22:50] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:22:50] [INFO]: Configs loaded successfully
+[2026-02-09 07:22:50] [INFO]: Log level set to: info
+[2026-02-09 07:22:50] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:22:50] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:22:50] [INFO]: Plugin initialization complete.
+[2026-02-09 07:22:50] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:22:50] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:22:51] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:25:51] [INFO]: Shutting down...
+[2026-02-09 07:26:29] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:26:29] [INFO]: Configs loaded successfully
+[2026-02-09 07:26:29] [INFO]: Log level set to: info
+[2026-02-09 07:26:29] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:26:30] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:26:30] [INFO]: Plugin initialization complete.
+[2026-02-09 07:26:30] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:26:30] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:26:30] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:27:46] [INFO]: Shutting down...
+[2026-02-09 07:30:01] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:30:01] [INFO]: Configs loaded successfully
+[2026-02-09 07:30:01] [INFO]: Log level set to: info
+[2026-02-09 07:30:01] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:30:01] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:30:01] [INFO]: Plugin initialization complete.
+[2026-02-09 07:30:01] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:30:01] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:30:01] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:31:40] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:31:40] [INFO]: Configs loaded successfully
+[2026-02-09 07:31:40] [INFO]: Log level set to: info
+[2026-02-09 07:31:40] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:31:40] [INFO]: Starting polling with interval 200ms
+[2026-02-09 07:31:40] [INFO]: Plugin initialization complete.
+[2026-02-09 07:31:40] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:31:40] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:31:40] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:31:55] [INFO]: Shutting down...
+[2026-02-09 07:51:46] [INFO]: Initialized trucksim-telemetry
+[2026-02-09 07:51:46] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:51:46] [INFO]: Configs loaded successfully
+[2026-02-09 07:51:46] [INFO]: Log level set to: info
+[2026-02-09 07:51:46] [INFO]: [SetupService] Starting First Setup...
+[2026-02-09 07:52:05] [INFO]: Initialized trucksim-telemetry
+[2026-02-09 07:52:05] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:52:05] [INFO]: Configs loaded successfully
+[2026-02-09 07:52:05] [INFO]: Log level set to: info
+[2026-02-09 07:52:05] [INFO]: [SetupService] Starting First Setup...
+[2026-02-09 07:52:30] [INFO]: Installed scs-telemetry.dll to G:\SteamLibrary\steamapps\common\Euro Truck Simulator 2\bin\win_x64\plugins\scs-telemetry.dll
+[2026-02-09 07:52:42] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:52:42] [INFO]: Starting Telemetry polling...
+[2026-02-09 07:52:42] [INFO]: Plugin initialization complete.
+[2026-02-09 07:52:42] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:52:42] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:52:43] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:53:44] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:44] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:44] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:45] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:45] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:45] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:45] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:46] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:46] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:46] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:46] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:46] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:47] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:47] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:47] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:47] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:47] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:48] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:48] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:48] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:48] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:48] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:49] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:49] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:49] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:49] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:50] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:50] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:50] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:50] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:50] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:51] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:51] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:51] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:51] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:51] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:52] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:52] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:52] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:52] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:52] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:53] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:53] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:53] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:53] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:54] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:54] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:54] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:54] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:54] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:55] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:55] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:55] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:55] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:55] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:56] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:56] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:56] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:56] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:57] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:57] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:57] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:57] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:57] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:58] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:58] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:58] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:58] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:58] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:59] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:59] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:59] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:59] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:53:59] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:00] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:00] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:00] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:00] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:01] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:01] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:01] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:01] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:01] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:02] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:02] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:02] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:02] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:02] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:03] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:03] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:03] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:03] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:04] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:04] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:04] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:04] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:04] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:05] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:05] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:05] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:05] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:05] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:06] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:06] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:06] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:06] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:07] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:07] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:07] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:07] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:07] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:08] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:08] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:08] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:08] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:08] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:09] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:09] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:09] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:09] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:09] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:10] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:10] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:10] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:10] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:11] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:11] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:11] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:11] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:11] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:12] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:12] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:12] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:12] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:12] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:13] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:13] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:13] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:13] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:14] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:14] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:14] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:14] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:14] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:15] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:15] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:15] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:15] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:15] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:16] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:16] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:16] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:16] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:17] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:17] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:17] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:17] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:17] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:18] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:18] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:18] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:18] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:18] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:19] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:19] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:19] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:19] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:19] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:20] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:20] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:20] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:20] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:21] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:21] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:21] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:21] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:21] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:22] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:22] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:22] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:22] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:22] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:23] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:23] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:23] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:23] [ERROR]: Error in StateManager update: TypeError: Cannot read properties of undefined (reading 'toString')
+[2026-02-09 07:54:23] [INFO]: Shutting down...
+[2026-02-09 07:55:14] [INFO]: Initialized trucksim-telemetry
+[2026-02-09 07:55:14] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:55:14] [INFO]: Configs loaded successfully
+[2026-02-09 07:55:14] [INFO]: Log level set to: info
+[2026-02-09 07:55:14] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:55:14] [INFO]: Starting Telemetry polling...
+[2026-02-09 07:55:14] [INFO]: Plugin initialization complete.
+[2026-02-09 07:55:14] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:55:14] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:55:15] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:55:26] [INFO]: Shutting down...
+[2026-02-09 07:55:29] [INFO]: Initialized trucksim-telemetry
+[2026-02-09 07:55:29] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 07:55:29] [INFO]: Configs loaded successfully
+[2026-02-09 07:55:29] [INFO]: Log level set to: info
+[2026-02-09 07:55:29] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 07:55:29] [INFO]: Starting Telemetry polling...
+[2026-02-09 07:55:29] [INFO]: Plugin initialization complete.
+[2026-02-09 07:55:29] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 07:55:29] [INFO]: [TouchPortal] Settings received
+[2026-02-09 07:55:29] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 07:55:39] [INFO]: Connected to Simulator
+[2026-02-09 08:02:59] [INFO]: Initialized trucksim-telemetry
+[2026-02-09 08:02:59] [INFO]: Starting TP_ETS2_Plugin V2...
+[2026-02-09 08:02:59] [INFO]: Configs loaded successfully
+[2026-02-09 08:02:59] [INFO]: Log level set to: info
+[2026-02-09 08:02:59] [INFO]: [UpdateService] Checking for updates...
+[2026-02-09 08:02:59] [INFO]: Starting Telemetry polling...
+[2026-02-09 08:02:59] [INFO]: Plugin initialization complete.
+[2026-02-09 08:02:59] [INFO]: [TouchPortal] Connected to Touch Portal!
+[2026-02-09 08:02:59] [INFO]: [TouchPortal] Settings received
+[2026-02-09 08:03:00] [INFO]: Connected to Simulator
+[2026-02-09 08:03:00] [INFO]: [UpdateService] New version found: 4.1.0
+[2026-02-09 08:03:06] [INFO]: Shutting down...
+[2026-02-09 08:03:41] [INFO]: Shutting down...

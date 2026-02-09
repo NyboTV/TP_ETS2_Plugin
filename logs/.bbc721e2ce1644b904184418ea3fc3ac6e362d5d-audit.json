@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Dieser-PC\\Dokumente\\GitHub\\TP_ETS2_Plugin\\V2\\logs\\.bbc721e2ce1644b904184418ea3fc3ac6e362d5d-audit.json",
+    "files": [
+        {
+            "date": 1770614838347,
+            "name": "D:\\Dieser-PC\\Dokumente\\GitHub\\TP_ETS2_Plugin\\V2\\logs\\plugin-2026-02-09.log",
+            "hash": "20392fcb13cc53ab354f1f2d743196913d73653eff7f70f3e605c2be29336a9f"
+        }
+    ],
+    "hashType": "sha256"
+}

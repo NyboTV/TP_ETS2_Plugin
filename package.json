@@ -1,77 +1,79 @@
 {
-  "name": "tp_ets2_plugin",
-  "version": "4.1.5",
-  "description": "Euro Truck Simulator 2 Plugin for TouchPortal",
-  "main": "src/bin/plugin.js",
-  "scripts": {
-    "test": "electron . --debugging",
-    "testNewFunction": "electron . --debugging --testing",
-    "testNoServer": "electron . --debugging --noServer",
-    "testNoServerNewFunction": "electron . --debugging --noServer --testing",
-    "release": "npx electron-packager --overwrite --ignore='Pages' --ignore='src/bin/interface' --ignore='src/bin/logs' --ignore='src/bin/server' --ignore='src/bin/tmp' --ignore='src/bin/config' --ignore='src/bin/images' --ignore='src/bin/logs' --ignore='TODO.LIST' --ignore='SECURITY.md' --ignore='README.md' --ignore='LICENSE' --ignore='.gitignore' --ignore='_config.yml' --ignore='src/build' --ignore='Installers' --ignore='.vscode' --ignore='.github' . ETS2_Dashboard && node ./src/build/build.js --release",
-    "pack": "node ./src/build/build.js --release"
-  },
-  "bin": {
-    "main": "src/bin/plugin.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NyboTV/TP_ETS2_Plugin.git"
-  },
-  "keywords": [
-    "touchportal",
-    "tp",
-    "plugin",
-    "ets2",
-    "Euro",
-    "Truck",
-    "Simulator",
-    "2",
-    "Dashboard",
-    "ETS2",
-    "Dashboard",
-    "ETS",
-    "Dashboard",
-    "ETS2",
-    "Plugin",
-    "TouchPortal",
-    "Plugin",
-    "Touch",
-    "Portal"
-  ],
-  "author": "NyboTV",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NyboTV/TP_ETS2_Plugin/issues"
-  },
-  "homepage": "https://github.com/NyboTV/TP_ETS2_Plugin#readme",
-  "dependencies": {
-    "adm-zip": "^0.5.10",
-    "archiver": "^7.0.0",
-    "axios": "^1.4.0",
-    "check-internet-connected": "^2.0.6",
-    "current-currency": "^1.6.2",
-    "download": "^7.0.0",
-    "download-file": "^0.1.5",
-    "electron-progressbar": "^2.2.1",
-    "fs": "^0.0.1-security",
-    "fs-extra": "^11.1.1",
-    "get-folder-size": "^2.0.0",
-    "jimp": "^0.22.8",
-    "moment-timezone": "^0.5.45",
-    "node-fetch": "^3.3.1",
-    "path": "^0.12.7",
-    "pidusage": "^3.0.2",
-    "prompt": "^1.3.0",
-    "replace-json-property": "^1.9.0",
-    "request": "^2.88.2",
-    "self-reload-json": "^0.4.0",
-    "touchportal-api": "^3.2.1",
-    "winston": "^3.12.0",
-    "winston-daily-rotate-file": "^5.0.0"
-  },
-  "devDependencies": {
-    "electron": "^29.1.0",
-    "electron-packager": "^17.1.1"
-  }
+    "name": "tp_ets2_plugin",
+    "version": "5.0.9",
+    "description": "Euro Truck Simulator 2 Plugin for TouchPortal",
+    "main": "dist/main.js",
+    "bin": {
+        "ETS2_Dashboard": "dist/main.js"
+    },
+    "scripts": {
+        "start": "ts-node src/main.ts",
+        "build": "tsc",
+        "pack": "node scripts/build.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "pkg": {
+        "scripts": [
+            "dist/**/*.js"
+        ],
+        "assets": [
+            "node_modules/canvas/**/*",
+            "node_modules/trucksim-telemetry/**/*"
+        ],
+        "outputPath": "build"
+    },
+    "author": "NyboTV",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/NyboTV/TP_ETS2_Plugin.git"
+    },
+    "keywords": [
+        "touchportal",
+        "tp",
+        "plugin",
+        "ets2",
+        "Euro",
+        "Truck",
+        "Simulator",
+        "2",
+        "Dashboard",
+        "ETS2",
+        "Dashboard",
+        "ETS",
+        "Dashboard",
+        "ETS2",
+        "Plugin",
+        "TouchPortal",
+        "Plugin",
+        "Touch",
+        "Portal"
+    ],
+    "bugs": {
+        "url": "https://github.com/NyboTV/TP_ETS2_Plugin/issues"
+    },
+    "homepage": "https://github.com/NyboTV/TP_ETS2_Plugin#readme",
+    "dependencies": {
+        "@types/adm-zip": "^0.5.7",
+        "adm-zip": "^0.5.16",
+        "axios": "^1.6.0",
+        "canvas": "^3.2.1",
+        "current-currency": "^1.6.2",
+        "find-process": "^2.0.0",
+        "fs-extra": "^11.2.0",
+        "touchportal-api": "^3.2.1",
+        "trucksim-telemetry": "^1.0.0",
+        "winston": "^3.11.0",
+        "winston-daily-rotate-file": "^5.0.0",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^11.0.4",
+        "@types/node": "^20.11.0",
+        "electron": "^29.1.0",
+        "electron-builder": "^24.9.1",
+        "pkg": "^5.8.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^4.9.5"
+    }
 }

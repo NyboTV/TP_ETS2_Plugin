@@ -2,24 +2,16 @@
 
 <div align="center">
   <strong>ETS2 Dashboard Plugin for Touch Portal</strong><br>
-  A Plugin to show your Euro Truck Dashboard onto your Tablett<br>
-  <sub>Available for Windows Only || This Project is still in Work!! (Just dont have much time)</sub>
+  A Plugin to show your Euro Truck Dashboard onto your Tablet<br>
+  <sub>Powered by trucksim-telemetry & Node.js</sub>
 </div>
 
 <br>
 
 <div align="center">
-  <!-- Version -->
-  <a href="https://nybotv.github.io/TP_ETS2_Plugin/">
-    <img src="https://badge.fury.io/gh/NyboTV%2FTP_ETS2_Plugin.svg" alt="website">
-  </a>
   <!-- License -->
   <a href="LICENSE">
-    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin"></a>
-  </a>
-  <!-- Downloads total -->
-  <a href="https://github.com/NyboTV/TP_ETS2_Plugin/releases">
-    <img src="https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/total.svg" alt="total download">
+    <img alt="GitHub license" src="https://img.shields.io/github/license/NyboTV/TP_ETS2_Plugin">
   </a>
   <!-- Downloads latest release -->
   <a href="https://github.com/NyboTV/TP_ETS2_Plugin/releases/latest">
@@ -27,101 +19,67 @@
   </a>
 </div>
 
-<div align="center">
-  <h3>
-    <a href="https://nybotv.github.io/TP_ETS2_Plugin/">
-      Website
-    </a>
-    <span> | </span>
-    <a href="#features">
-      Features
-    </a>
-    <span> | </span>
-    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/projects/1">
-      Roadmap
-    </a><span> | </span>
-    <a href="#download-and-installation">
-      Downloads
-    </a>
-    <span> | </span>
-    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki">
-      Wiki
-    </a>
-    <span> | </span>
-    <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages">
-      Pages
-    </a>
-    <span> | </span>
-    <a href="#Third-Party-Software">
-      Third Party Software
-    </a>
-    <span> | </span>
-    <a href="#Contributors">
-      Contributors
-    </a>
-    <span> | </span>
-    <a href="https://discord.gg/PvXJsxpGFe">
-      Discord
-    </a>
-  </h3>
-</div>
-<br />
-
-<h2 align="center">ETS2 Dashboard Plugin</h2>
+<br>
 
 ## Features
 
-- Nearly Real time refresh Rate
-- Truck Information
-- TruckersMP Information
-- Job Information
-- Game Information
-- more comming soon!
+- **Real-time Telemetry**: High-frequency data polling from ETS2/ATS.
+- **Cross-Platform**: Support for Windows, Linux, and MacOS (Client-side).
+- **Smart Installation**: Automatically detects your game path and installs the required SCS Telemetry DLL.
+- **Native Gauges**: Generates Speed, RPM, and Fuel gauge images dynamically.
+- **Job Info**: Live job data including income, destination, and deadlines.
+- **Navigation**: Speed limits, estimated time, and distance.
 
-If you want to see Planned Features, see [Roadmap](https://github.com/NyboTV/TP_ETS2_Plugin/projects/1)
+<br>
 
-## Download and Installation
+## Installation
 
-| ![](https://raw.githubusercontent.com/wiki/ryanoasis/nerd-fonts/screenshots/v1.0.x/windows-pass-sm.png)                                                                                                          |   
-|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-[![latest version](https://img.shields.io/github/downloads/NyboTV/TP_ETS2_Plugin/latest/ETS2_Dashboard.tpp.svg)](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp) | 
+### Prerequisites
+- **Touch Portal** installed and running.
+- **Euro Truck Simulator 2** or **American Truck Simulator** installed.
 
-Want to see new features of the latest version? Please refer to [CHANGELOG](CHANGELOG.md).
+### Setup Guide
 
+1. **Download** the latest `.tpp` file from the [Releases Page](https://github.com/NyboTV/TP_ETS2_Plugin/releases).
+2. Open **Touch Portal**, go to **Settings** -> **Plug-ins** -> **Import Plug-in**.
+3. Select the downloaded `.tpp` file.
+4. **Trust the Plugin**: If prompted "Do you trust this plugin?", select **"Trust Always"**.
+5. **Restart Touch Portal**: This is crucial for the plugin to initialize correctly.
+6. **First Run Setup**:  
+   - Upon restart, the plugin will launch a Setup Wizard.
+   - It will attempt to **auto-detect** your ETS2/ATS installation path.
+   - Confirm the installation of the **SCS Telemetry DLL** (`scs-telemetry.dll`).
+   - Choose your preferred units (km/h vs mph) to install the default Dashboard Page.
 
-1. Download the [Plugin](https://github.com/NyboTV/Tp_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp) file.
-2. Open Touch Portal go to the Gear (Upper right corner) and click on "Import plug-in"
-3. Choose your downloaded .tpp File and click "Open"
-4. After the Import you will see "Plug-in imported successful". Click on "ok" 
-`NOTE: If you get a "Warning" about to "Trust" the Plugin, Click on "No"!! You need to do a Step before you can use the Plugin.`
-6. Now you have to go into my Plugins Folder by pressing "Win+R" and type in: "%appdata%/Touchportal/plugins/ETS2_Dashboard"
-7. Now go into "Server" and execute "Ets2Telemetry.exe". 
-8. Now it should appear a Window. Press on Install.
-9. Now restart the Touch Portal app 
-`NOTE: Make sure you fully close Touch Portal using System Tray icon to exit`
-6. After TP is open again, TP will ask you, if you want to trust the Plugin. Click on "Trust always".
-7. Now the Plugin is installed and you can create your first ETS2 Page!
+### Manual DLL Installation (If Auto-Install fails)
+If the setup cannot find your game folder:
+1. Copy the `scs-telemetry.dll` from the plugin folder (`%appdata%/TouchPortal/plugins/TP_ETS2_Plugin/bin/scs-sdk-plugin/windows/`).
+2. Paste it into your game's plugin directory:  
+   `[Steam Library]/steamapps/common/Euro Truck Simulator 2/bin/win_x64/plugins/`
 
-`If you get an Window with an Warning Message: "Another ETS2/ATS Telemtry Server instance is already running", Just Close it. It is just an Reminder. Ignore it.`
+<br>
 
+## Configuration
 
-## Authors
-- **Nico/Nybo** - Plugin Creator - [NyboTV](https://github.com/NyboTV)
-- **Gargamosch** - Page Creator - [Discord: Gargamosch#6706]()
+The plugin creates a `config/cfg.json` file where you can tweak:
+- `refreshInterval`: Polling rate in milliseconds (Default: 200).
+- `OfflineMode`: Disable currency conversion if internet is unavailable.
 
+<br>
 
-## Third Party Software
-- **Funbit** - Original Telemetry Server - [Github](https://github.com/Funbit/ets2-telemetry-server)
-- **mike-koch** - [OLD] Telemetry Server before 2.6.0 - [Github](https://github.com/mike-koch/ets2-telemetry-server)
-- **PauloTNCunha** - [NEW] Telemetry Server since Version 2.6.0 - [Github](https://github.com/PauloTNCunha/TelemetryServer4)
-    
-   
-## Contributors
-- **Gitago** - Help with Fixing the plugin! 
-- **Pjiesco** - Help with updating the plugin!    
-    
+## Documentation & Wiki
+
+For detailed information on available States, Events, and Actions, please visit our **[GitHub Wiki](https://github.com/NyboTV/TP_ETS2_Plugin/wiki)** or check the `docs` folder included in this repository.
+
+<br>
+
+## Credits
+
+- **NyboTV**: Plugin Creator
+- **TruckSim-Telemetry**: Underlying Node.js library for reading memory.
+
+<br>
 
 ## License
-This project is licensed under the MIT - see the [LICENSE](LICENSE) file for details
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNyboTV%2FTP_ETS2_Plugin?ref=badge_large)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

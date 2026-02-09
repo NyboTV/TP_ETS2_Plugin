@@ -1,8 +1,8 @@
 {
-  "version": "3.9.9-alpha",
   "refreshInterval": 200,
-  "debug": false,
-  "firstInstall": false,
+  "TruckersMPServer": 1,
   "UpdateCheck": true,
-  "OfflineMode": false
+  "OfflineMode": false,
+  "firstInstall": false,
+  "debug": false
 }
