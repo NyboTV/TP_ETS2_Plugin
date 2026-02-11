@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import { z } from 'zod';
+import { EventEmitter } from 'events';
 import { logger } from './LoggerService';
 
 const CONFIG_DIR = path.join(process.cwd(), 'config');
@@ -10,13 +11,14 @@ const USER_CFG_PATH = path.join(CONFIG_DIR, 'usercfg.json');
 // --- Schemas ---
 
 const CfgSchema = z.object({
-    refreshInterval: z.number().min(50).default(200),
+    refreshInterval: z.number().min(10).default(50),
     TruckersMPServer: z.number().default(1),
     UpdateCheck: z.boolean().default(true),
     OfflineMode: z.boolean().default(false),
     firstInstall: z.boolean().default(false),
     debug: z.boolean().default(false),
-    version: z.string().optional()
+    version: z.string().optional(),
+    previewPage: z.string().optional()
 });
 
 const UserCfgSchema = z.object({
@@ -43,21 +45,43 @@ const UserCfgSchema = z.object({
     truckersmpStates: z.boolean().default(true)
 });
 
+const GaugeDesignSchema = z.object({
+    backgroundColor: z.string().default('#1a1a1a'),
+    borderColor: z.string().default('#333'),
+    tickColor: z.string().default('#fff'),
+    textColor: z.string().default('#eee'),
+    titleColor: z.string().default('#aaa'),
+    unitColor: z.string().default('#888'),
+    needleColor: z.string().default('#ff3333'),
+    redZoneColor: z.string().default('#cc0000'),
+    fontFamily: z.string().default('Arial'),
+    shape: z.enum(['circle', 'square']).default('circle'),
+    backgroundPattern: z.enum(['none', 'grid', 'carbon']).default('none'),
+    needleShape: z.enum(['classic', 'sport']).default('classic'),
+    showNumber: z.boolean().default(true),
+    showLabel: z.boolean().default(true),
+    showUnit: z.boolean().default(true),
+    // Accessibility
+    titleFontScale: z.number().default(1.0),
+    unitFontScale: z.number().default(1.0),
+    numberFontScale: z.number().default(1.0),
+    tickWidthMajor: z.number().default(3),
+    tickWidthMinor: z.number().default(1),
+    needleWidthScale: z.number().default(1.0),
+    scaleFontScale: z.number().default(1.0)
+});
+
 const DesignSchema = z.object({
-    gauge: z.object({
-        backgroundColor: z.string().default('#1a1a1a'),
-        borderColor: z.string().default('#333'),
-        tickColor: z.string().default('#fff'),
-        textColor: z.string().default('#eee'),
-        titleColor: z.string().default('#aaa'),
-        unitColor: z.string().default('#888'),
-        needleColor: z.string().default('#ff3333'),
-        redZoneColor: z.string().default('#cc0000'),
-        fontFamily: z.string().default('Arial'),
-        shape: z.enum(['circle', 'square']).default('circle'),
-        backgroundPattern: z.enum(['none', 'grid', 'carbon']).default('none'),
-        needleShape: z.enum(['classic', 'sport']).default('classic')
-    })
+    speed: GaugeDesignSchema.default({}),
+    rpm: GaugeDesignSchema.default({}),
+    fuel: GaugeDesignSchema.default({}),
+    air: GaugeDesignSchema.default({}),
+    water: GaugeDesignSchema.default({}),
+    oilTemp: GaugeDesignSchema.default({}),
+    oilPressure: GaugeDesignSchema.default({}),
+    battery: GaugeDesignSchema.default({}),
+    adblue: GaugeDesignSchema.default({}),
+    pedals: GaugeDesignSchema.default({})
 });
 
 export type CfgType = z.infer<typeof CfgSchema>;
@@ -66,15 +90,21 @@ export type DesignCfgType = z.infer<typeof DesignSchema>;
 
 const DESIGN_CFG_PATH = path.join(CONFIG_DIR, 'designs.json');
 
-class ConfigService {
+class ConfigService extends EventEmitter {
     private _cfg: CfgType;
     private _userCfg: UserCfgType;
     private _designCfg: DesignCfgType;
+    private saveTimeout: NodeJS.Timeout | null = null;
 
     constructor() {
+        super();
         this._cfg = CfgSchema.parse({});
         this._userCfg = UserCfgSchema.parse({ Basics: {}, Modules: {} });
-        this._designCfg = DesignSchema.parse({ gauge: {} });
+        this._designCfg = DesignSchema.parse({
+            speed: {}, rpm: {}, fuel: {},
+            air: {}, water: {}, oilTemp: {}, oilPressure: {},
+            battery: {}, adblue: {}, pedals: {}
+        });
     }
 
     public async loadConfigs() {
@@ -113,8 +143,31 @@ class ConfigService {
 
             logger.info('Configs loaded successfully');
 
+            // Setup 5-second reload for designs.json
+            setInterval(() => this.reloadDesignConfig(), 5000);
+
         } catch (error) {
             logger.error(`Error loading configs: ${error}`);
+        }
+    }
+
+    private async reloadDesignConfig() {
+        try {
+            if (await fs.pathExists(DESIGN_CFG_PATH)) {
+                const raw = await fs.readJSON(DESIGN_CFG_PATH);
+                const result = DesignSchema.safeParse(raw);
+                if (result.success) {
+                    // Check if anything actually changed before updating (optional but cleaner)
+                    const newStr = JSON.stringify(result.data);
+                    const oldStr = JSON.stringify(this._designCfg);
+                    if (newStr !== oldStr) {
+                        this._designCfg = result.data;
+                        logger.info('[ConfigService] Designs reloaded (Changes detected in designs.json)');
+                    }
+                }
+            }
+        } catch (e) {
+            // Ignore reload errors during development/editing
         }
     }
 
@@ -122,24 +175,44 @@ class ConfigService {
     public get userCfg() { return this._userCfg; }
     public get designCfg() { return this._designCfg; }
 
+    private async debouncedSave() {
+        if (this.saveTimeout) clearTimeout(this.saveTimeout);
+        this.saveTimeout = setTimeout(async () => {
+            await this.saveAll();
+            this.saveTimeout = null;
+        }, 100); // Wait 100ms for more changes
+    }
+
+    private async saveAll() {
+        try {
+            await Promise.all([
+                fs.writeJSON(CFG_PATH, this._cfg, { spaces: 2 }),
+                fs.writeJSON(USER_CFG_PATH, this._userCfg, { spaces: 2 }),
+                fs.writeJSON(DESIGN_CFG_PATH, this._designCfg, { spaces: 2 })
+            ]);
+            logger.debug('[ConfigService] All configs saved to disk');
+        } catch (e) {
+            logger.error(`Failed to save configs: ${e}`);
+        }
+    }
+
     public async saveCfg() {
-        try { await fs.writeJSON(CFG_PATH, this._cfg, { spaces: 2 }); }
-        catch (e) { logger.error(`Failed to save cfg.json: ${e}`); }
+        this.debouncedSave();
     }
 
     public async saveUserCfg() {
-        try { await fs.writeJSON(USER_CFG_PATH, this._userCfg, { spaces: 2 }); }
-        catch (e) { logger.error(`Failed to save usercfg.json: ${e}`); }
+        this.debouncedSave();
     }
 
     public async saveDesignCfg() {
-        try { await fs.writeJSON(DESIGN_CFG_PATH, this._designCfg, { spaces: 2 }); }
-        catch (e) { logger.error(`Failed to save designs.json: ${e}`); }
+        this.debouncedSave();
     }
 
     public updateCfg(key: keyof CfgType, value: any) {
+        if ((this._cfg as any)[key] === value) return; // No change
         (this._cfg as any)[key] = value;
         this.saveCfg();
+        this.emit('configChanged', { key, value });
     }
 
     public updateUserCfg(section: keyof UserCfgType, key: string, value: any) {
@@ -149,6 +222,7 @@ class ConfigService {
             (this._userCfg as any)[section] = value;
         }
         this.saveUserCfg();
+        this.emit('userConfigChanged', { section, key, value });
     }
 }
 

@@ -137,25 +137,18 @@ class DialogService {
 
     // Linux (Zenity)
     private async runZenityShow(message: string, title: string, buttons: DialogButtons, icon: DialogIcon): Promise<string> {
-        // Map icon to type
         let type = '--info';
-        if (icon === 'Error') type = '--error';
-        if (icon === 'Warning') type = '--warning';
+        if (icon === 'Error' || icon === 'Stop') type = '--error';
+        if (icon === 'Warning' || icon === 'Exclamation') type = '--warning';
         if (icon === 'Question') type = '--question';
 
-        // simple zenity doesn't support custom buttons easily like MessageBox
-        // It returns 0 for OK/Yes, 1 for Cancel/No.
-        // We map standard buttons
+        const extraArgs = buttons === 'YesNo' ? '--ok-label="Yes" --cancel-label="No"' : '';
 
         try {
-            await this.execPromise(`zenity ${type} --text="${message}" --title="${title}"`);
-            // If success (exit code 0), return OK or Yes
-            if (buttons.includes('Yes')) return 'Yes';
-            return 'OK';
+            await this.execPromise(`zenity ${type} --text="${message}" --title="${title}" ${extraArgs}`);
+            return buttons === 'YesNo' ? 'Yes' : 'OK';
         } catch (e) {
-            // Exit code 1 usually means Cancel/No
-            if (buttons.includes('No')) return 'No';
-            return 'Cancel';
+            return buttons === 'YesNo' ? 'No' : 'Cancel';
         }
     }
 
@@ -181,21 +174,22 @@ class DialogService {
 
     // MacOS (OsaScript)
     private async runOsaShow(message: string, title: string, buttons: DialogButtons, icon: DialogIcon): Promise<string> {
-        // display dialog "message" with title "title" buttons {"OK"} default button "OK" with icon note
         let iconStr = 'note';
-        if (icon === 'Error') iconStr = 'stop';
-        if (icon === 'Warning') iconStr = 'caution';
+        if (icon === 'Error' || icon === 'Stop') iconStr = 'stop';
+        if (icon === 'Warning' || icon === 'Exclamation') iconStr = 'caution';
 
         let btns = '{"OK"}';
         if (buttons === 'YesNo') btns = '{"Yes", "No"}';
+        else if (buttons === 'OKCancel') btns = '{"OK", "Cancel"}';
+        else if (buttons === 'YesNoCancel') btns = '{"Yes", "No", "Cancel"}';
 
         const script = `display dialog "${message}" with title "${title}" buttons ${btns} default button 1 with icon ${iconStr}`;
         try {
             const res = await this.execPromise(`osascript -e '${script}'`);
-            // Result: "button returned:OK"
             if (res.includes('button returned:OK')) return 'OK';
             if (res.includes('button returned:Yes')) return 'Yes';
             if (res.includes('button returned:No')) return 'No';
+            if (res.includes('button returned:Cancel')) return 'Cancel';
             return 'OK';
         } catch {
             return 'Cancel';

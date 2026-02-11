@@ -7,6 +7,8 @@ build/
 dist_package/
 scripts/tmp/
 
+user_reports/
+
 # Logs
 logs/
 *.log
@@ -33,3 +35,6 @@ Thumbs.db
 
 # TypeScript
 tsconfig.tsbuildinfo
+
+# Telemetry Data
+.telemetry_data

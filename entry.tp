@@ -14,9 +14,9 @@
   "settings": [
     {
       "name": "Refresh_Interval",
-      "default": "200",
+      "default": "50",
       "type": "number",
-      "minValue": 50,
+      "minValue": 10,
       "maxValue": 1000
     },
     {
@@ -43,6 +43,11 @@
     {
       "name": "OfflineMode",
       "default": "False",
+      "type": "text"
+    },
+    {
+      "name": "Preview Download (Direct .tpz2 file)",
+      "default": "https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/ATS_Advanced_Multilang.tpz2",
       "type": "text"
     }
   ],
@@ -307,26 +312,7 @@
           "valueStateId": "Nybo.ETS2.Truck.CargoLoaded"
         }
       ],
-      "states": [
-        {
-          "id": "Nybo.ETS2.Usage.CPU_Usage",
-          "type": "text",
-          "desc": "ETS2:Shows current CPU Usage",
-          "default": "ERROR"
-        },
-        {
-          "id": "Nybo.ETS2.Usage.MEM_Usage",
-          "type": "text",
-          "desc": "ETS2:Shows current Memory Usage",
-          "default": "ERROR"
-        },
-        {
-          "id": "Nybo.ETS2.Usage.Storage_Usage",
-          "type": "text",
-          "desc": "ETS2:Shows current Storage Usage",
-          "default": "ERROR"
-        }
-      ]
+      "states": []
     },
     {
       "id": "Main_States",
@@ -369,6 +355,36 @@
           "type": "text",
           "desc": "ETS2:Shows current Temp Unit",
           "default": "SETTING ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.timeFormat",
+          "type": "text",
+          "desc": "ETS2:Shows current Time Format",
+          "default": "SETTING ERROR"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.RefreshInterval",
+          "type": "text",
+          "desc": "ETS2:Setting Refresh Interval",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.TruckersMPServer",
+          "type": "text",
+          "desc": "ETS2:Setting TruckersMP Server",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.OfflineMode",
+          "type": "text",
+          "desc": "ETS2:Setting Offline Mode",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Setting.AutoUpdate",
+          "type": "text",
+          "desc": "ETS2:Setting Auto Update",
+          "default": "true"
         }
       ]
     },
@@ -395,6 +411,54 @@
           "type": "text",
           "desc": "ETS2:Is Paused",
           "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Game.Version",
+          "type": "text",
+          "desc": "ETS2:Game Version",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.TelemetryVersion",
+          "type": "text",
+          "desc": "ETS2:Telemetry Version",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.PluginVersion",
+          "type": "text",
+          "desc": "ETS2:Plugin Version",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.Scale",
+          "type": "text",
+          "desc": "ETS2:Map Scale",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.Timestamp",
+          "type": "text",
+          "desc": "ETS2:Timestamp (Raw)",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.SimulationTimestamp",
+          "type": "text",
+          "desc": "ETS2:Sim Timestamp (Raw)",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.RenderTimestamp",
+          "type": "text",
+          "desc": "ETS2:Render Timestamp (Raw)",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Game.MultiplayerOffset",
+          "type": "text",
+          "desc": "ETS2:Multiplayer Time Offset",
+          "default": "-"
         }
       ]
     },
@@ -423,6 +487,42 @@
           "type": "text",
           "desc": "ETS2:Next Rest Time",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Driver.SleepState",
+          "type": "text",
+          "desc": "ETS2:Sleep State",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Driver.LastFineAmount",
+          "type": "text",
+          "desc": "ETS2:Last Fine Amount",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Driver.LastFineOffence",
+          "type": "text",
+          "desc": "ETS2:Last Fine Offence",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Driver.InputThrottle",
+          "type": "text",
+          "desc": "ETS2:Input Throttle (%)",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Driver.InputBrake",
+          "type": "text",
+          "desc": "ETS2:Input Brake (%)",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Driver.InputClutch",
+          "type": "text",
+          "desc": "ETS2:Input Clutch (%)",
+          "default": "-"
         }
       ]
     },
@@ -448,6 +548,48 @@
           "id": "Nybo.ETS2.Gauges.FuelGauge",
           "type": "text",
           "desc": "ETS2:Fuel Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.AirPressureGauge",
+          "type": "text",
+          "desc": "ETS2:Air Pressure Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.WaterTempGauge",
+          "type": "text",
+          "desc": "ETS2:Water Temp Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.OilTempGauge",
+          "type": "text",
+          "desc": "ETS2:Oil Temp Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.OilPressureGauge",
+          "type": "text",
+          "desc": "ETS2:Oil Pressure Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.BatteryGauge",
+          "type": "text",
+          "desc": "ETS2:Battery Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.AdBlueGauge",
+          "type": "text",
+          "desc": "ETS2:AdBlue Gauge",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Gauges.PedalMonitor",
+          "type": "text",
+          "desc": "ETS2:Pedal Monitor",
           "default": "-"
         }
       ]
@@ -504,6 +646,18 @@
           "id": "Nybo.ETS2.Truck.Gear",
           "type": "text",
           "desc": "ETS2:Gear",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.HShifterSlot",
+          "type": "text",
+          "desc": "ETS2:H-Shifter Slot",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.HShifterSelector",
+          "type": "text",
+          "desc": "ETS2:H-Shifter Selector",
           "default": "-"
         },
         {
@@ -764,7 +918,19 @@
           "id": "Nybo.ETS2.Trailer.TrailerAttached",
           "type": "text",
           "desc": "ETS2:Trailer Attached",
-          "default": "-"
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.TrailerCount",
+          "type": "text",
+          "desc": "ETS2:Trailer Count",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.TotalWear",
+          "type": "text",
+          "desc": "ETS2:Trailer Total Wear (%)",
+          "default": "0%"
         },
         {
           "id": "Nybo.ETS2.Trailer.TrailerName",
@@ -775,13 +941,127 @@
         {
           "id": "Nybo.ETS2.Trailer.TrailerChainType",
           "type": "text",
-          "desc": "ETS2:TrailerChainType",
+          "desc": "ETS2:Trailer Chain Type",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.TrailerBodyType",
+          "type": "text",
+          "desc": "ETS2:Trailer Body Type",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.Wear",
+          "type": "text",
+          "desc": "ETS2:Trailer Wear (Total)",
+          "default": "0%"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.wearChassis",
+          "type": "text",
+          "desc": "ETS2:Trailer Wear Chassis",
+          "default": "0%"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.wearWheels",
+          "type": "text",
+          "desc": "ETS2:Trailer Wear Wheels",
+          "default": "0%"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.1.Attached",
+          "type": "text",
+          "desc": "ETS2:Trailer 1 Attached",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.1.Name",
+          "type": "text",
+          "desc": "ETS2:Trailer 1 Name",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.1.Brand",
+          "type": "text",
+          "desc": "ETS2:Trailer 1 Brand",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.1.LicensePlate",
+          "type": "text",
+          "desc": "ETS2:Trailer 1 License Plate",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.1.WearChassis",
+          "type": "text",
+          "desc": "ETS2:Trailer 1 Wear Chassis",
+          "default": "0%"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.2.Attached",
+          "type": "text",
+          "desc": "ETS2:Trailer 2 Attached",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.2.Name",
+          "type": "text",
+          "desc": "ETS2:Trailer 2 Name",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.2.Brand",
+          "type": "text",
+          "desc": "ETS2:Trailer 2 Brand",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.2.LicensePlate",
+          "type": "text",
+          "desc": "ETS2:Trailer 2 License Plate",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.2.WearChassis",
+          "type": "text",
+          "desc": "ETS2:Trailer 2 Wear Chassis",
+          "default": "0%"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.3.Attached",
+          "type": "text",
+          "desc": "ETS2:Trailer 3 Attached",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.3.Name",
+          "type": "text",
+          "desc": "ETS2:Trailer 3 Name",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.3.Brand",
+          "type": "text",
+          "desc": "ETS2:Trailer 3 Brand",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.3.LicensePlate",
+          "type": "text",
+          "desc": "ETS2:Trailer 3 License Plate",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.3.WearChassis",
+          "type": "text",
+          "desc": "ETS2:Trailer 3 Wear Chassis",
+          "default": "0%"
         },
         {
           "id": "Nybo.ETS2.Trailer.Cargo",
           "type": "text",
-          "desc": "ETS2:Cargo",
+          "desc": "ETS2:Cargo Name",
           "default": "-"
         },
         {
@@ -793,43 +1073,19 @@
         {
           "id": "Nybo.ETS2.Trailer.CargoLoaded",
           "type": "text",
-          "desc": "ETS2:Cargo Loaded",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Trailer.CargoType",
-          "type": "text",
-          "desc": "ETS2:Cargo Type",
-          "default": "-"
+          "desc": "ETS2:Cargo LoadedStatus",
+          "default": "false"
         },
         {
           "id": "Nybo.ETS2.Trailer.CargoDamage",
           "type": "text",
-          "desc": "ETS2:Cargo Damage",
-          "default": "-"
+          "desc": "ETS2:Cargo Damage (%)",
+          "default": "0%"
         },
         {
           "id": "Nybo.ETS2.Trailer.CargoMass",
           "type": "text",
           "desc": "ETS2:Cargo Mass",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Trailer.Wear",
-          "type": "text",
-          "desc": "ETS2:Wear",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Trailer.wearChassis",
-          "type": "text",
-          "desc": "ETS2:Wear Chassis",
-          "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Trailer.wearWheels",
-          "type": "text",
-          "desc": "ETS2:Wear Wheels",
           "default": "-"
         }
       ]
@@ -875,6 +1131,72 @@
           "type": "text",
           "desc": "ETS2:Job Destination Company",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.OnJob",
+          "type": "text",
+          "desc": "ETS2:Job Active",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Job.SpecialJob",
+          "type": "text",
+          "desc": "ETS2:Special Job",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Job.Market",
+          "type": "text",
+          "desc": "ETS2:Job Market",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.PlannedDistance",
+          "type": "text",
+          "desc": "ETS2:Planned Distance",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Job.Cargo",
+          "type": "text",
+          "desc": "ETS2:Cargo Name",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.CargoID",
+          "type": "text",
+          "desc": "ETS2:Cargo ID",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.CargoMass",
+          "type": "text",
+          "desc": "ETS2:Cargo Mass",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.CargoLoaded",
+          "type": "text",
+          "desc": "ETS2:Cargo LoadedStatus",
+          "default": "false"
+        },
+        {
+          "id": "Nybo.ETS2.Job.CargoDamage",
+          "type": "text",
+          "desc": "ETS2:Cargo Damage(%)",
+          "default": "0%"
+        },
+        {
+          "id": "Nybo.ETS2.Job.UnitCount",
+          "type": "text",
+          "desc": "ETS2:Cargo Unit Count",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Job.UnitMass",
+          "type": "text",
+          "desc": "ETS2:Cargo Unit Mass",
+          "default": "-"
         }
       ]
     },
@@ -906,7 +1228,19 @@
           "id": "Nybo.ETS2.Navigation.estimatedTime",
           "type": "text",
           "desc": "ETS2:Estimated Time",
+          "default": "0D, 00:00"
+        },
+        {
+          "id": "Nybo.ETS2.Navigation.ETA",
+          "type": "text",
+          "desc": "ETS2:Navigation ETA (Arrival)",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Navigation.Progress",
+          "type": "text",
+          "desc": "ETS2:Navigation Progress (%)",
+          "default": "0%"
         }
       ]
     },

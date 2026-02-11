@@ -19,7 +19,7 @@ const main = async () => {
             const pkg = fs.readJSONSync(pkgPath);
             version = pkg.version || 'unknown';
         }
-        logger.info(`Starting TP_ETS2_Plugin V2 (version ${version})...`);
+        logger.info(`Starting TP_ETS2_Plugin (version ${version})...`);
 
         // Load Configs
         // Check for Config Backup (Restore after update)
@@ -55,6 +55,15 @@ const main = async () => {
 
         // Start Telemetry
         await telemetryService.start();
+
+        // Listen for Refresh Interval Changes
+        configService.on('configChanged', (data) => {
+            if (data.key === 'refreshInterval') {
+                logger.info(`[MAIN] Refresh Interval changed to ${data.value}ms. Restarting telemetry...`);
+                telemetryService.start();
+            }
+        });
+
         truckersMPService.start();
 
         // Connect to Touch Portal

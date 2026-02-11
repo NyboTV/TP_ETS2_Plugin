@@ -14,12 +14,20 @@ export const mapSettingsStates = () => {
     states.push({ id: 'Nybo.ETS2.Setting.weightUnit', value: weights[b.weight] || "Tons" });
 
     states.push({ id: 'Nybo.ETS2.Setting.tempUnit', value: b.temp });
+    states.push({ id: 'Nybo.ETS2.Setting.timeFormat', value: b.timeFormat });
 
     // Fluid Consumption Unit Label
     let fluidConUnit = `Liters / ${b.unit}`;
     if (b.fluidCon === 1) fluidConUnit = `US Gallons / ${b.unit}`;
     if (b.fluidCon === 2) fluidConUnit = `UK Gallons / ${b.unit}`;
     states.push({ id: 'Nybo.ETS2.Setting.fluidConUnit', value: fluidConUnit });
+
+    // Plugin Settings
+    const c = configService.cfg;
+    states.push({ id: 'Nybo.ETS2.Setting.RefreshInterval', value: `${c.refreshInterval}ms` });
+    states.push({ id: 'Nybo.ETS2.Setting.TruckersMPServer', value: c.TruckersMPServer.toString() });
+    states.push({ id: 'Nybo.ETS2.Setting.OfflineMode', value: c.OfflineMode.toString() });
+    states.push({ id: 'Nybo.ETS2.Setting.AutoUpdate', value: c.UpdateCheck.toString() });
 
     return states;
 };

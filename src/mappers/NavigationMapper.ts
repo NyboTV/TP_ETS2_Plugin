@@ -86,30 +86,49 @@ export const mapNavigationStates = async (telemetry: any) => {
     states.push({ id: 'Nybo.ETS2.Navigation.SpeedLimit', value: speedLimit.toString() });
     states.push({ id: 'Nybo.ETS2.Navigation.SpeedLimitSign', value: speedLimitBase64 });
 
-    // Distance
+    // 2. Distance and Progress
+    let distKm = dist / 1000;
     let distanceStr = '';
     if (basics.unit === 'Miles') {
-        const miles = dist / 1609.344; // meters to miles
+        const miles = dist / 1609.344;
         distanceStr = `${miles.toFixed(2)} Miles`;
     } else {
-        const km = dist / 1000;
-        distanceStr = `${km.toFixed(2)} KM`;
+        distanceStr = `${distKm.toFixed(2)} KM`;
     }
     states.push({ id: 'Nybo.ETS2.Navigation.estimatedDistance', value: distanceStr });
 
-    // Time (Estimated Time / ETA)
-    // routeTime is Seconds Remaining.
+    // Progress Calculation
+    const plannedKm = telemetry.plannedDistanceKm || 0;
+    let progress = 0;
+    if (plannedKm > 0) {
+        progress = Math.max(0, Math.min(100, Math.round(((plannedKm - distKm) / plannedKm) * 100)));
+    }
+    states.push({ id: 'Nybo.ETS2.Navigation.Progress', value: `${progress}%` });
+
+    // 3. Timing (Remaining Time & absolute ETA)
+    const absTimeMinutes = telemetry.timeAbs || 0; // minutes since Monday 00:00
+
     if (time > 0) {
-        const t = Math.floor(time);
+        const t = Math.floor(time); // seconds
         const days = Math.floor(t / (24 * 3600));
         const hours = Math.floor((t % (24 * 3600)) / 3600);
         const mins = Math.floor((t % 3600) / 60);
 
-        // Format: "DD, HH:MM"
-        const displayTime = `${days}D, ${hours}:${mins.toString().padStart(2, '0')}`;
-        states.push({ id: 'Nybo.ETS2.Navigation.estimatedTime', value: displayTime });
+        states.push({ id: 'Nybo.ETS2.Navigation.estimatedTime', value: `${days}D, ${hours}:${mins.toString().padStart(2, '0')}` });
+
+        // ETA Calculation
+        const arrivalMinutes = absTimeMinutes + Math.floor(time / 60);
+        const totalDays = Math.floor(arrivalMinutes / (24 * 60));
+        const dayOfWeek = totalDays % 7;
+        const arrivalHour = Math.floor((arrivalMinutes % (24 * 60)) / 60);
+        const arrivalMin = Math.floor(arrivalMinutes % 60);
+
+        const dayNames = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+        const etaStr = `${dayNames[dayOfWeek]} ${arrivalHour.toString().padStart(2, '0')}:${arrivalMin.toString().padStart(2, '0')}`;
+        states.push({ id: 'Nybo.ETS2.Navigation.ETA', value: etaStr });
     } else {
-        states.push({ id: 'Nybo.ETS2.Navigation.estimatedTime', value: '0D, 0:00' });
+        states.push({ id: 'Nybo.ETS2.Navigation.estimatedTime', value: '0D, 00:00' });
+        states.push({ id: 'Nybo.ETS2.Navigation.ETA', value: '-' });
     }
 
     return states;

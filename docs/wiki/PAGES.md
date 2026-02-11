@@ -5,7 +5,7 @@
 The best way to learn how to create your own page is to look at the **Default Page** included with the plugin. 
 
 ### Page Structure
-V2 of the plugin uses high-frequency telemetry. When creating a page, you can use:
+The plugin uses high-frequency telemetry. When creating a page, you can use:
 1. **Dynamic Text Updaters**: For simple text values like fuel, speed numbers, or city names.
 2. **Dynamic Gauges**: For the visual speedometer, RPM, and fuel needles. These are generated on-the-fly as Base64 images.
 
@@ -37,4 +37,3 @@ V2 introduced a more robust design system. You can now tweak the appearance of t
 - **Patterns**: Choose background patterns like `none`, `grid`, or `carbon`.
 - **Needles**: Switch between `classic` and `sport` needle shapes.
 
-*Note: Changes in `designs.json` require a restart of the plugin to take full effect in most cases, or will update on the next gauge refresh.*

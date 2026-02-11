@@ -1,13 +1,13 @@
 import axios from 'axios';
 import fs from 'fs-extra';
 import path from 'path';
+import os from 'os';
 import { logger } from './LoggerService';
 import { configService } from './ConfigService';
 import { spawn } from 'child_process';
-
 import { dialogService } from './DialogService';
 
-const DOWNLOAD_DIR = path.join(process.env.USERPROFILE || '', 'Downloads');
+const DOWNLOAD_DIR = path.join(os.homedir(), 'Downloads');
 const REPO_URL = 'https://api.github.com/repos/NyboTV/TP_ETS2_Plugin/releases';
 
 class UpdateService {
@@ -80,7 +80,12 @@ class UpdateService {
     }
 
     private isNewerVersion(newVer: string, oldVer: string): boolean {
-        const parseVersion = (v: string) => v.replace(/^v/, '').split('.').map(n => parseInt(n, 10) || 0);
+        const parseVersion = (v: string) => v
+            .replace(/^v/, '')
+            .split('-')[0] // Take only the part before any suffix like -alpha
+            .split('.')
+            .map(n => parseInt(n.replace(/[^0-9]/g, ''), 10) || 0);
+
         const v1 = parseVersion(newVer);
         const v2 = parseVersion(oldVer);
 
@@ -146,7 +151,10 @@ class UpdateService {
     }
 
     private install(filePath: string) {
-        const cmd = process.platform === 'win32' ? 'start' : 'open';
+        let cmd = 'start';
+        if (process.platform === 'darwin') cmd = 'open';
+        else if (process.platform === 'linux') cmd = 'xdg-open';
+
         // Executing the .tpp file
         spawn(cmd, ['', filePath], { shell: true, detached: true }).unref();
 

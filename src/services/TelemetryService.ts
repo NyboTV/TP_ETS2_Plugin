@@ -21,7 +21,10 @@ export class TelemetryService {
     public start() {
         if (!this.telemetry) return;
 
-        logger.info('Starting Telemetry polling...');
+        // Cleanup existing interval if any
+        if (this.interval) clearInterval(this.interval);
+
+        logger.info(`Starting Telemetry polling (Interval: ${configService.cfg.refreshInterval}ms)...`);
 
         this.interval = setInterval(() => {
             const data = this.telemetry.data.current;

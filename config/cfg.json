@@ -1,9 +1,10 @@
 {
-  "version": "5.0.13",
-  "refreshInterval": 200,
+  "refreshInterval": 50,
   "TruckersMPServer": 1,
   "UpdateCheck": true,
   "OfflineMode": false,
   "firstInstall": false,
-  "debug": false
+  "debug": false,
+  "version": "5.0.24",
+  "previewPage": "https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/ATS_Advanced_Multilang.tpz2"
 }

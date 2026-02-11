@@ -145,6 +145,7 @@
 | Nybo.ETS2.Setting.weightUnit         | Active weight unit                                    | Tons / Pounds / etc.  |
 | Nybo.ETS2.Setting.tempUnit           | Active temperature unit                               | Celsius / Fahrenheit  |
 | Nybo.ETS2.Setting.fluidConUnit       | Active consumption unit                               | e.g. Liters / KM      |
+| Nybo.ETS2.Setting.timeFormat         | Active time format                                    | EU / US               |
 
 
 ## Actions

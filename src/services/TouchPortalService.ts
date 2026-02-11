@@ -40,57 +40,71 @@ class TouchPortalService {
     }
 
     private handleSettings(data: any) {
-        // Data is an array of settings objects (from V1 analysis)
-        // V1 accessed: data[0].Refresh_Interval, data[1].Currency, etc.
-        // BUT `touchportal-api` might return an array of {name, value} or a mapped object depending on version.
-        // V1 used `touchportal-api` directly.
-        // Let's assume the data structure is a list of settings. 
-        // Actually, usually `check-internet-connected` etc were used in V1.
-        // Let's iterate or find by name to be safe.
+        logger.info(`[TouchPortal] Processing settings update...`);
+        if (!data) {
+            logger.warn(`[TouchPortal] Received empty/null settings data`);
+            return;
+        }
+        logger.info(`[TouchPortal] Raw data: ${JSON.stringify(data)}`);
 
-        // V1 Logic:
-        // data[0].Refresh_Interval
-        // data[1].Currency
-        // ...
-        // This relies on order. Safer to find by key if possible, but let's stick to V1 parity if TP sends fixed order.
-        // However, standard TP API sends array of { "Name": "...", "Value": "..." }.
-
-        // Let's try to parse flexibly.
         const settings = data.reduce((acc: any, item: any) => {
-            // If item has keys "Name" and "Value", map them.
-            // Or if it's already a dictionary.
-            // V1 Code: `data[0].Refresh_Interval`. This implies data is an array of objects, each having ONE key?
-            // Or `data` is the array of settings values directly.
-
-            // Let's look at V1: `data[0].Refresh_Interval`. 
-            // This suggests: [ { "Refresh_Interval": "200" }, { "Currency": "EUR" }, ... ]
-            // We will loop and merge.
-            Object.keys(item).forEach(key => {
-                acc[key] = item[key];
-            });
+            // Standard TP API: [{ "Name": "Refresh_Interval", "Value": "200" }, ...]
+            if (item.Name && item.Value !== undefined) {
+                acc[item.Name] = item.Value;
+            } else {
+                // Fallback for [{ "Refresh_Interval": "200" }] format
+                Object.keys(item).forEach(key => {
+                    acc[key] = item[key];
+                });
+            }
             return acc;
         }, {});
 
-        if (settings.Refresh_Interval) configService.updateCfg('refreshInterval', Number(settings.Refresh_Interval));
-        if (settings.TruckersMP_Server) configService.updateCfg('TruckersMPServer', Number(settings.TruckersMP_Server));
+        logger.debug(`[TouchPortal] Mapped settings: ${JSON.stringify(settings)}`);
 
-        if (settings.AutoUpdate) configService.updateCfg('UpdateCheck', settings.AutoUpdate.toLowerCase() === 'true');
-        if (settings.OfflineMode) configService.updateCfg('OfflineMode', settings.OfflineMode.toLowerCase() === 'true');
+        if (settings.Refresh_Interval !== undefined) {
+            const val = Number(settings.Refresh_Interval);
+            if (!isNaN(val)) {
+                logger.info(`[TouchPortal] Setting Sync: Refresh_Interval -> ${val}ms`);
+                configService.updateCfg('refreshInterval', val);
+            }
+        }
 
-        if (settings.Currency) configService.updateUserCfg('Basics', 'currency', settings.Currency);
-        if (settings.PreRelease) configService.updateUserCfg('PreRelease', 'PreRelease', settings.PreRelease.toLowerCase() === 'true'); // ConfigService UserCfg structure is flat for PreRelease? No, UserCfgSchema has PreRelease at root.
+        if (settings.TruckersMP_Server !== undefined) {
+            const val = Number(settings.TruckersMP_Server);
+            if (!isNaN(val)) {
+                logger.info(`[TouchPortal] Setting Sync: TruckersMP_Server -> ${val}`);
+                configService.updateCfg('TruckersMPServer', val);
+            }
+        }
 
-        // Fix for PreRelease accessing root of UserCfg
-        // ConfigService.updateUserCfg params: (section, key, value)
-        // My definition: updateUserCfg(section: keyof UserCfgType, key: string, value: any)
-        // If section is 'Basics' -> _userCfg.Basics[key] = value.
-        // If section is 'PreRelease' -> _userCfg.PreRelease = value. (logic in ConfigService:125)
+        if (settings.AutoUpdate !== undefined) {
+            const val = settings.AutoUpdate.toString().toLowerCase() === 'true';
+            logger.info(`[TouchPortal] Setting Sync: AutoUpdate -> ${val}`);
+            configService.updateCfg('UpdateCheck', val);
+        }
 
-        if (settings.PreRelease) {
-            // We need to pass 'PreRelease' as section, and key is ignored/dummy?
-            // Checking ConfigService.ts:125 -> (this._userCfg as any)[section] = value;
-            // Yes.
-            configService.updateUserCfg('PreRelease', '', settings.PreRelease.toLowerCase() === 'true');
+        if (settings.OfflineMode !== undefined) {
+            const val = settings.OfflineMode.toString().toLowerCase() === 'true';
+            logger.info(`[TouchPortal] Setting Sync: OfflineMode -> ${val}`);
+            configService.updateCfg('OfflineMode', val);
+        }
+
+        if (settings.Currency) {
+            logger.info(`[TouchPortal] Setting Sync: Currency -> ${settings.Currency}`);
+            configService.updateUserCfg('Basics', 'currency', settings.Currency);
+        }
+
+        if (settings.PreRelease !== undefined) {
+            const val = settings.PreRelease.toString().toLowerCase() === 'true';
+            logger.info(`[TouchPortal] Setting Sync: PreRelease -> ${val}`);
+            configService.updateUserCfg('PreRelease', '', val);
+        }
+
+        const valPreview = settings['Preview Download (Direct .tpz2 file)'];
+        if (valPreview !== undefined) {
+            logger.info(`[TouchPortal] Setting Sync: previewPage -> ${valPreview}`);
+            configService.updateCfg('previewPage', valPreview);
         }
     }
 

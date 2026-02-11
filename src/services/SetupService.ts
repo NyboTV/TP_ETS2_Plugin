@@ -1,15 +1,12 @@
 import fs from 'fs-extra';
 import path from 'path';
+import os from 'os';
 import AdmZip from 'adm-zip';
 import axios from 'axios';
 import { logger } from './LoggerService';
 import { configService } from './ConfigService';
 import { spawn, exec } from 'child_process';
 import { dialogService } from './DialogService';
-
-// V1 URL: "https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/" + download_File
-// We should probably check if these assets still exist or use updated ones.
-const DEFAULT_PAGE_BASE_URL = 'https://github.com/NyboTV/TP_ETS2_Plugin/raw/master/src/build/defaultPage/';
 
 class SetupService {
 
@@ -21,7 +18,7 @@ class SetupService {
         try {
             // Welcome
             await dialogService.show(
-                "Welcome to the TP ETS2 Plugin V2 Setup!\nWe will guide you through the installation.",
+                "Welcome to the TP ETS2 Plugin Setup!\nWe will guide you through the installation.",
                 "ETS2 Plugin Setup",
                 "OK",
                 "Information"
@@ -48,20 +45,7 @@ class SetupService {
             );
 
             if (pageRes === 'Yes') {
-                const unit = await dialogService.showSelectionDialog(
-                    "Choose Units",
-                    "Select your preferred units for the default page:",
-                    ["KMH (Kilometers)", "MPH (Miles)"],
-                    0
-                );
-
-                if (unit && unit !== 'Cancel') {
-                    // Save unit preference
-                    const isMiles = unit.includes("MPH");
-                    configService.updateUserCfg('Basics', 'unit', isMiles ? 'Miles' : 'Kilometer');
-
-                    await this.installPages(isMiles);
-                }
+                await this.installPages();
             }
 
             // Finish
@@ -109,19 +93,25 @@ class SetupService {
                 return;
             }
 
-            // Target: bin/win_x64/plugins/scs-telemetry.dll
-            // Note: V2 is currently running on Windows (based on fs usage). 
-            // If cross-platform, we need logic to detect OS or ask user. 
-            // For now assuming Windows context as per previous impl.
-            const pluginsDir = path.join(gamePath, 'bin', 'win_x64', 'plugins');
+            // Target: bin/[platform_arch]/plugins/scs-telemetry.dll
+            let archDir = 'win_x64';
+            let pluginSubFolder = 'windows';
+            let pluginFile = 'scs-telemetry.dll';
+
+            if (process.platform === 'linux') {
+                archDir = 'bin/linux_x64'; // Common ETS2 Linux path structure
+                pluginSubFolder = 'linux';
+                pluginFile = 'scs-telemetry.so';
+            }
+
+            const pluginsDir = path.join(gamePath, 'bin', archDir, 'plugins');
             await fs.ensureDir(pluginsDir);
 
-            // Source: ./bin/scs-sdk-plugin/windows/scs-telemetry.dll
-            // We moved it to V2/bin/scs-sdk-plugin/windows/scs-telemetry.dll
-            const sourceDll = path.join(process.cwd(), 'bin', 'scs-sdk-plugin', 'windows', 'scs-telemetry.dll');
+            // Source: ./bin/scs-sdk-plugin/[platform]/scs-telemetry.[ext]
+            const sourceDll = path.join(process.cwd(), 'bin', 'scs-sdk-plugin', pluginSubFolder, pluginFile);
 
             if (await fs.pathExists(sourceDll)) {
-                const destDll = path.join(pluginsDir, 'scs-telemetry.dll');
+                const destDll = path.join(pluginsDir, pluginFile);
                 await fs.copy(sourceDll, destDll, { overwrite: true });
                 logger.info(`Installed scs-telemetry.dll to ${destDll}`);
                 await dialogService.show(`Plugin installed successfully to:\n${destDll}`, "Success", "OK", "Information");
@@ -205,50 +195,71 @@ class SetupService {
         });
     }
 
-    private async installPages(isMiles: boolean) {
+    private async installPages() {
         try {
-            const zipFileName = isMiles ? 'ETS2_Dashboard_MPH.zip' : 'ETS2_Dashboard_KMH.zip';
-            const downloadUrl = `https://github.com/NyboTV/TP_ETS2_Plugin/releases/latest/download/${zipFileName}`;
-            const zipPath = path.join(process.env.USERPROFILE || '', 'Downloads', zipFileName);
+            let downloadUrl = configService.cfg.previewPage;
+            if (!downloadUrl) {
+                logger.warn('[SetupService] No previewPage URL configured in cfg.json');
+                return;
+            }
 
-            // Using axios to download
-            const writer = fs.createWriteStream(zipPath);
+            // GitHub Fix: Replace /blob/ with /raw/ to get the actual file content
+            if (downloadUrl.includes('github.com') && downloadUrl.includes('/blob/')) {
+                downloadUrl = downloadUrl.replace('/blob/', '/raw/');
+                logger.info(`[SetupService] Transformed GitHub URL to raw: ${downloadUrl}`);
+            }
+
+            // Extract filename from URL or default to ETS2_Page.tpz2
+            const urlParts = downloadUrl.split('/');
+            const fileName = urlParts[urlParts.length - 1] || 'ETS2_Dashboard.tpz2';
+            const downloadPath = path.join(os.homedir(), 'Downloads', fileName);
+
+            logger.info(`[SetupService] Downloading pages from ${downloadUrl}...`);
 
             const response = await axios({
                 url: downloadUrl,
                 method: 'GET',
-                responseType: 'stream'
+                responseType: 'arraybuffer' // Download as buffer for validation
             });
 
-            response.data.pipe(writer);
-
-            await new Promise((resolve, reject) => {
-                writer.on('finish', () => resolve(true));
-                writer.on('error', (e) => reject(e));
-            });
-
-            // Extract
-            const zip = new AdmZip(zipPath);
-
-            // Extract to temp
-            const extractPath = path.join(process.env.USERPROFILE || '', 'Downloads', 'ETS2_Pages_Temp');
-            zip.extractAllTo(extractPath, true);
-
-            // Find .tpz files and execute them
-            const files = await fs.readdir(extractPath);
-            const tpzFiles = files.filter(f => f.endsWith('.tpz'));
-
-            for (const tpz of tpzFiles) {
-                const fullPath = path.join(extractPath, tpz);
-                exec(`"${fullPath}"`); // Open with default app (Touch Portal)
+            const data = response.data as Buffer;
+            const contentSnippet = data.slice(0, 100).toString().toLowerCase();
+            if (contentSnippet.includes('<!doctype html') || contentSnippet.includes('<html')) {
+                throw new Error("Downloaded content appears to be an HTML page instead of a binary file. Please check the URL.");
             }
 
-            // Clean up
-            // fs.remove(extractPath); // fast cleanup might lock files being opened
+            await fs.writeFile(downloadPath, data);
+
+            logger.info(`[SetupService] Pages downloaded to ${downloadPath}`);
+
+            await dialogService.show(
+                "The page file has been downloaded.\n\nNOTE: This is a third-party page managed by Gargamosch. For any issues related to the page design or layout, please contact him directly.\n\nTouch Portal will now open to import the pages.",
+                "Importing Pages",
+                "OK",
+                "Information"
+            );
+
+            // Open with default app
+            let cmd = 'start "" ';
+            if (process.platform === 'darwin') cmd = 'open ';
+            else if (process.platform === 'linux') cmd = 'xdg-open ';
+
+            try {
+                exec(`${cmd}"${downloadPath}"`);
+                logger.info(`[SetupService] Executed ${downloadPath}`);
+            } catch (err) {
+                logger.error(`[SetupService] Failed to execute download: ${err}`);
+                await dialogService.show(
+                    `Could not automatically start the import.\nPlease manually import the file from your Downloads folder:\n\n${downloadPath}`,
+                    "Manual Import Required",
+                    "OK",
+                    "Warning"
+                );
+            }
 
         } catch (e) {
             logger.error(`Failed to install Pages: ${e}`);
-            await dialogService.show(`Failed to download/install pages: ${e}`, "Error");
+            await dialogService.show(`Failed to download pages: ${e}\n\nPlease try again later or install manually.`, "Error", "OK", "Error");
         }
     }
 }

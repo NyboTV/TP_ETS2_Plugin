@@ -126,8 +126,9 @@ async function build() {
             if (await fs.pathExists(stagingCfgPath)) {
                 const cfg = await fs.readJson(stagingCfgPath);
                 cfg.version = newVersion;
+                cfg.firstInstall = true; // Set true ONLY for the package
                 await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
-                console.log(`- Injected version ${newVersion} into packaged cfg.json`);
+                console.log(`- Injected version ${newVersion} and set firstInstall: true into packaged cfg.json`);
             }
 
             // Copy platform-specific SCS plugin

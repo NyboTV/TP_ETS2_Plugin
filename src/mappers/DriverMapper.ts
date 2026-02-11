@@ -1,16 +1,45 @@
 export const mapDriverStates = (telemetry: any) => {
-    const nextRestStopTime = telemetry.nextRestStopTime;
     const states: { id: string, value: string }[] = [];
 
-    if (!nextRestStopTime) return states;
+    // restStop: Time until next rest stop (in in-game minutes)
+    const restStopMinutes = telemetry.restStop;
 
-    // V1 format: 0001-01-01T15:00:00Z -> HH:MM
+    if (restStopMinutes === undefined || restStopMinutes === null) {
+        return states;
+    }
+
     try {
-        const parts = nextRestStopTime.split(/[-T:Z]/);
-        // [0]=Year, [1]=Month, [2]=Day, [3]=Hour, [4]=Min
-        const hh = parts[3];
-        const mm = parts[4];
-        states.push({ id: 'Nybo.ETS2.Driver.NextRestTime', value: `${hh}:${mm}` });
+        // 1. Fatigue Logic (Müdigkeit)
+        if (restStopMinutes <= 0) {
+            states.push({ id: 'Nybo.ETS2.Driver.NextRestTime', value: '00:00' });
+            states.push({ id: 'Nybo.ETS2.Driver.SleepState', value: 'Sofort Pause machen!' });
+        } else {
+            const hours = Math.floor(restStopMinutes / 60);
+            const minutes = Math.floor(restStopMinutes % 60);
+            const hh = hours.toString().padStart(2, '0');
+            const mm = minutes.toString().padStart(2, '0');
+            states.push({ id: 'Nybo.ETS2.Driver.NextRestTime', value: `${hh}:${mm}` });
+
+            if (restStopMinutes < 60) states.push({ id: 'Nybo.ETS2.Driver.SleepState', value: 'Dringend Pause!' });
+            else if (restStopMinutes < 180) states.push({ id: 'Nybo.ETS2.Driver.SleepState', value: 'Müde' });
+            else states.push({ id: 'Nybo.ETS2.Driver.SleepState', value: 'Ausgeruht' });
+        }
+
+        // 2. Last Fine (Strafe)
+        // Note: telemetry.fined is a special event, but trucksim-telemetry often exposes 
+        // the last value in the cumulative object or events. 
+        // Check if fineAmount and fineOffence are available in telemetry root.
+        if (telemetry.fineAmount > 0) {
+            states.push({ id: 'Nybo.ETS2.Driver.LastFineAmount', value: `${telemetry.fineAmount}€` });
+            states.push({ id: 'Nybo.ETS2.Driver.LastFineOffence', value: telemetry.fineOffence || 'Unbekannt' });
+        }
+
+        // 3. Input Monitor (%)
+        // Scaling 0-1 to 0-100%
+        states.push({ id: 'Nybo.ETS2.Driver.InputThrottle', value: `${Math.round((telemetry.userThrottle || 0) * 100)}%` });
+        states.push({ id: 'Nybo.ETS2.Driver.InputBrake', value: `${Math.round((telemetry.userBrake || 0) * 100)}%` });
+        states.push({ id: 'Nybo.ETS2.Driver.InputClutch', value: `${Math.round((telemetry.userClutch || 0) * 100)}%` });
+
     } catch (e) {
         states.push({ id: 'Nybo.ETS2.Driver.NextRestTime', value: 'Error' });
     }

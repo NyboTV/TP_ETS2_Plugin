@@ -35,8 +35,7 @@ const createPattern = (ctx: any, type: string, color: string) => {
 };
 
 // Helper to draw a generic gauge background
-const drawGaugeBackground = (ctx: any, title: string, min: number, max: number, steps: number, unit: string, isFuel: boolean = false) => {
-    const design = configService.designCfg.gauge;
+const drawGaugeBackground = (ctx: any, title: string, min: number, max: number, steps: number, unit: string, design: any, isFuel: boolean = false) => {
 
     ctx.save();
 
@@ -91,7 +90,7 @@ const drawGaugeBackground = (ctx: any, title: string, min: number, max: number, 
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = `bold 20px ${design.fontFamily}`;
+    ctx.font = `bold ${Math.round(20 * design.scaleFontScale)}px ${design.fontFamily}`;
     ctx.fillStyle = design.textColor;
 
     for (let i = 0; i <= steps; i++) {
@@ -107,7 +106,8 @@ const drawGaugeBackground = (ctx: any, title: string, min: number, max: number, 
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
-        ctx.lineWidth = 3;
+        const isMajor = i % 2 === 0; // In drawGaugeBackground, numbers are every 2nd step
+        ctx.lineWidth = isMajor ? design.tickWidthMajor : design.tickWidthMinor;
         ctx.strokeStyle = design.tickColor;
         ctx.stroke();
 
@@ -138,18 +138,22 @@ const drawGaugeBackground = (ctx: any, title: string, min: number, max: number, 
     }
 
     // Title
-    ctx.font = `bold 24px ${design.fontFamily}`;
-    ctx.fillStyle = design.titleColor;
-    ctx.fillText(title, CENTER_X, CENTER_Y - 50);
+    if (design.showLabel) {
+        ctx.font = `bold ${Math.round(24 * design.titleFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.titleColor;
+        ctx.fillText(title, CENTER_X, CENTER_Y - 50);
+    }
 
     // Unit
-    ctx.font = `18px ${design.fontFamily}`;
-    ctx.fillStyle = design.unitColor;
-    ctx.fillText(unit, CENTER_X, CENTER_Y + 80);
+    if (design.showUnit) {
+        ctx.font = `${Math.round(18 * design.unitFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.unitColor;
+        ctx.fillText(unit, CENTER_X, CENTER_Y + 80);
+    }
 };
 
-const drawNeedle = (ctx: any, value: number, min: number, max: number) => {
-    const design = configService.designCfg.gauge;
+
+const drawNeedle = (ctx: any, value: number, min: number, max: number, design: any) => {
     const startAngle = 0.75 * Math.PI;
     const endAngle = 2.25 * Math.PI;
     const totalAngle = endAngle - startAngle;
@@ -167,25 +171,25 @@ const drawNeedle = (ctx: any, value: number, min: number, max: number) => {
     ctx.fillStyle = design.needleColor;
 
     if (design.needleShape === 'sport') {
-        // Sport Needle: Tapered, sharper
-        ctx.moveTo(0, -3);
-        ctx.lineTo(RADIUS - 10, 0); // Long tip
-        ctx.lineTo(0, 3);
+        const nw = 3 * design.needleWidthScale;
+        ctx.moveTo(0, -nw);
+        ctx.lineTo(RADIUS - 10, 0);
+        ctx.lineTo(0, nw);
     } else {
-        // Classic Needle
-        // Draw Needle pointing RIGHT (0 radians) by default
-        ctx.moveTo(0, -5);
+        const nw = 5 * design.needleWidthScale;
+        ctx.moveTo(0, -nw);
         ctx.lineTo(RADIUS - 30, 0);
-        ctx.lineTo(0, 5);
+        ctx.lineTo(0, nw);
     }
 
     ctx.fill();
 
     // Center cap
     ctx.beginPath();
-    ctx.arc(0, 0, 10, 0, 2 * Math.PI);
+    ctx.arc(0, 0, 10 * design.needleWidthScale, 0, 2 * Math.PI);
     ctx.fillStyle = design.borderColor;
     ctx.fill();
+    ctx.lineWidth = 2 * design.needleWidthScale;
     ctx.stroke();
 
     ctx.restore();
@@ -236,8 +240,7 @@ const getSpeedAngle = (value: number, max: number, startAngle: number, totalAngl
 };
 
 // Custom Speedometer Background (Realistic Style)
-const drawSpeedometerBackground = (ctx: any, max: number, unit: string) => {
-    const design = configService.designCfg.gauge;
+const drawSpeedometerBackground = (ctx: any, max: number, unit: string, design: any) => {
     const isKmh = unit === 'KM/H';
 
     // 1. Draw Base (Shape/Pattern)
@@ -270,7 +273,7 @@ const drawSpeedometerBackground = (ctx: any, max: number, unit: string) => {
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = `bold 18px ${design.fontFamily}`;
+    ctx.font = `bold ${Math.round(18 * design.scaleFontScale)}px ${design.fontFamily}`;
     ctx.fillStyle = design.textColor;
 
     // We iterate through value space, calculate mapped angle
@@ -313,7 +316,7 @@ const drawSpeedometerBackground = (ctx: any, max: number, unit: string) => {
         const x2 = CENTER_X + outerR * Math.cos(angle);
         const y2 = CENTER_Y + outerR * Math.sin(angle);
 
-        ctx.lineWidth = isMajor ? 3 : 1;
+        ctx.lineWidth = isMajor ? design.tickWidthMajor : design.tickWidthMinor;
         ctx.strokeStyle = design.tickColor;
         ctx.globalAlpha = isMajor ? 1.0 : 0.6;
 
@@ -349,18 +352,22 @@ const drawSpeedometerBackground = (ctx: any, max: number, unit: string) => {
     }
 
     // Title
-    ctx.font = `bold 24px ${design.fontFamily}`;
-    ctx.fillStyle = design.titleColor;
-    ctx.fillText("SPEED", CENTER_X, CENTER_Y - 50);
+    if (design.showLabel) {
+        ctx.font = `bold ${Math.round(24 * design.titleFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.titleColor;
+        ctx.fillText("SPEED", CENTER_X, CENTER_Y - 50);
+    }
 
     // Unit
-    ctx.font = `18px ${design.fontFamily}`;
-    ctx.fillStyle = design.unitColor;
-    ctx.fillText(unit, CENTER_X, CENTER_Y + 80);
+    if (design.showUnit) {
+        ctx.font = `${Math.round(18 * design.unitFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.unitColor;
+        ctx.fillText(unit, CENTER_X, CENTER_Y + 80);
+    }
 };
 
-const drawSpeedNeedle = (ctx: any, value: number, max: number, unit: string) => {
-    const design = configService.designCfg.gauge;
+
+const drawSpeedNeedle = (ctx: any, value: number, max: number, unit: string, design: any) => {
     const startAngle = 0.75 * Math.PI;
     const endAngle = 2.25 * Math.PI;
     const totalAngle = endAngle - startAngle;
@@ -382,59 +389,67 @@ const drawSpeedNeedle = (ctx: any, value: number, max: number, unit: string) => 
     ctx.fillStyle = design.needleColor;
 
     if (design.needleShape === 'sport') {
-        ctx.moveTo(0, -3);
+        const nw = 3 * design.needleWidthScale;
+        ctx.moveTo(0, -nw);
         ctx.lineTo(RADIUS - 10, 0);
-        ctx.lineTo(0, 3);
+        ctx.lineTo(0, nw);
     } else {
-        ctx.moveTo(0, -5);
+        const nw = 5 * design.needleWidthScale;
+        ctx.moveTo(0, -nw);
         ctx.lineTo(RADIUS - 30, 0);
-        ctx.lineTo(0, 5);
+        ctx.lineTo(0, nw);
     }
 
     ctx.fill();
 
     // Center cap
     ctx.beginPath();
-    ctx.arc(0, 0, 10, 0, 2 * Math.PI);
+    ctx.arc(0, 0, 10 * design.needleWidthScale, 0, 2 * Math.PI);
     ctx.fillStyle = design.borderColor;
     ctx.fill();
+    ctx.lineWidth = 2 * design.needleWidthScale;
     ctx.stroke();
 
     ctx.restore();
 };
 
 const getSpeedGauge = (speed: number, unit: string) => {
-    const design = configService.designCfg.gauge;
+    const design = configService.designCfg.speed;
     const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
     const ctx = canvas.getContext('2d');
 
     const isMiles = unit === 'miles';
-    // Max need to accommodate the 20s step logic niceley.
-    // 100 + 6 * 20 = 220.
     const max = isMiles ? 130 : 220;
+    drawSpeedometerBackground(ctx, max, isMiles ? 'MPH' : 'KM/H', design);
 
-    drawSpeedometerBackground(ctx, max, isMiles ? 'MPH' : 'KM/H');
+    if (design.showNumber) {
+        // Dynamic Speed Text
+        ctx.font = `bold ${Math.round(40 * design.numberFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.textColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(Math.round(speed).toString(), CENTER_X, CENTER_Y + 120);
 
-    // Dynamic Speed Text
-    ctx.font = `bold 40px ${design.fontFamily}`;
-    ctx.fillStyle = design.textColor;
-    ctx.textAlign = 'center';
-    ctx.fillText(Math.round(speed).toString(), CENTER_X, CENTER_Y + 120);
+        // Unit Text below number
+        if (design.showUnit) {
+            ctx.font = `${Math.round(16 * design.numberFontScale)}px ${design.fontFamily}`;
+            ctx.fillText(isMiles ? 'MPH' : 'KM/H', CENTER_X, CENTER_Y + 150);
+        }
+    }
 
-    drawSpeedNeedle(ctx, speed, max, isMiles ? 'MPH' : 'KM/H');
+    drawSpeedNeedle(ctx, speed, max, isMiles ? 'MPH' : 'KM/H', design);
 
     return canvas.toBuffer('image/png').toString('base64');
 };
 
 const getRPMGauge = (rpm: number, maxRpm: number) => {
-    const design = configService.designCfg.gauge;
+    const design = configService.designCfg.rpm;
     const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
     const ctx = canvas.getContext('2d');
 
     // Use telemetry max, default to 3000 if 0 or missing
     const max = maxRpm > 0 ? maxRpm : 3000;
 
-    drawGaugeBackground(ctx, 'RPM', 0, max, 10, 'RPM');
+    drawGaugeBackground(ctx, 'RPM', 0, max, 10, 'RPM', design);
 
     // Draw Red Zone (Last 10%)
     const startAngle = 0.75 * Math.PI; // 135 degrees
@@ -449,35 +464,95 @@ const getRPMGauge = (rpm: number, maxRpm: number) => {
     ctx.strokeStyle = design.redZoneColor || '#cc0000'; // Fallback just in case
     ctx.stroke();
 
-    drawNeedle(ctx, rpm, 0, max);
+    drawNeedle(ctx, rpm, 0, max, design);
 
     // Dynamic Text
-    ctx.font = `bold 30px ${design.fontFamily}`;
-    ctx.fillStyle = design.textColor;
-    ctx.textAlign = 'center';
-    ctx.fillText(Math.round(rpm).toString(), CENTER_X, CENTER_Y + 120);
+    if (design.showNumber) {
+        ctx.font = `bold ${Math.round(30 * design.numberFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.textColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(Math.round(rpm).toString(), CENTER_X, CENTER_Y + 120);
+    }
 
     return canvas.toBuffer('image/png').toString('base64');
 };
 
 const getFuelGauge = (fuel: number, capacity: number) => {
-    const design = configService.designCfg.gauge;
+    const design = configService.designCfg.fuel;
     const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
     const ctx = canvas.getContext('2d');
 
     // Fuel Gauge: E - 1/2 - F
     // Steps = 2 (0=E, 1=1/2, 2=F)
-    drawGaugeBackground(ctx, 'FUEL', 0, capacity, 2, '', true);
+    drawGaugeBackground(ctx, 'FUEL', 0, capacity, 2, '', design, true);
 
-    drawNeedle(ctx, fuel, 0, capacity);
+    drawNeedle(ctx, fuel, 0, capacity, design);
 
-    // Dynamic Text (Show Liters still? Or just rely on needle? User said "Typische Füllstandsanzeige")
-    // Usually car dashboards don't show liters. But showing it below is useful info.
-    // Let's keep it smaller.
-    ctx.font = `bold 24px ${design.fontFamily}`;
-    ctx.fillStyle = design.textColor;
-    ctx.textAlign = 'center';
-    ctx.fillText(`${Math.round(fuel)} L`, CENTER_X, CENTER_Y + 120);
+    if (design.showNumber) {
+        ctx.font = `bold ${Math.round(24 * design.numberFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.textColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(`${Math.round(fuel)} L`, CENTER_X, CENTER_Y + 120);
+    }
+
+    return canvas.toBuffer('image/png').toString('base64');
+};
+
+const getGenericGauge = (value: number, min: number, max: number, steps: number, title: string, unit: string, designKey: keyof typeof configService.designCfg) => {
+    const design = (configService.designCfg as any)[designKey];
+    const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
+    const ctx = canvas.getContext('2d');
+
+    drawGaugeBackground(ctx, title, min, max, steps, unit, design);
+    drawNeedle(ctx, value, min, max, design);
+
+    if (design.showNumber) {
+        ctx.font = `bold ${Math.round(24 * design.numberFontScale)}px ${design.fontFamily}`;
+        ctx.fillStyle = design.textColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(`${value.toFixed(1)}${unit ? ' ' + unit : ''}`, CENTER_X, CENTER_Y + 120);
+    }
+
+    return canvas.toBuffer('image/png').toString('base64');
+};
+
+const getPedalMonitor = (throttle: number, brake: number, clutch: number) => {
+    const design = configService.designCfg.pedals;
+    const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
+    const ctx = canvas.getContext('2d');
+
+    // Draw Background
+    ctx.fillStyle = design.backgroundColor;
+    ctx.fillRect(0, 0, GAUGE_WIDTH, GAUGE_HEIGHT);
+
+    const barWidth = 60;
+    const barHeight = 300;
+    const spacing = 40;
+    const startX = (GAUGE_WIDTH - (3 * barWidth + 2 * spacing)) / 2;
+    const startY = (GAUGE_HEIGHT - barHeight) / 2;
+
+    const drawPedal = (x: number, value: number, color: string, label: string) => {
+        // Outline
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, startY, barWidth, barHeight);
+
+        // Fill bar (bottom-up)
+        const fillH = barHeight * value;
+        ctx.fillStyle = color;
+        ctx.fillRect(x, startY + barHeight - fillH, barWidth, fillH);
+
+        // Label
+        ctx.font = `bold 18px ${design.fontFamily}`;
+        ctx.fillStyle = design.textColor;
+        ctx.textAlign = 'center';
+        ctx.fillText(label, x + barWidth / 2, startY + barHeight + 30);
+        ctx.fillText(`${Math.round(value * 100)}%`, x + barWidth / 2, startY - 20);
+    };
+
+    drawPedal(startX, throttle, '#4caf50', 'Gas');
+    drawPedal(startX + barWidth + spacing, brake, '#f44336', 'Bremse');
+    drawPedal(startX + 2 * (barWidth + spacing), clutch, '#2196f3', 'Kuppl.');
 
     return canvas.toBuffer('image/png').toString('base64');
 };
@@ -488,26 +563,33 @@ export const mapGaugeStates = async (telemetry: any) => {
     const unit = basics.unit.toLowerCase();
 
     // Speed (telemetry.speed is m/s)
-    let speed = telemetry.speed;
-    if (unit === 'miles') {
-        speed = speed * 2.236936;
-    } else {
-        // Default km/h
-        speed = speed * 3.6;
-    }
+    let speed = telemetry.speed || 0;
+    if (unit === 'miles') speed = speed * 2.236936;
+    else speed = speed * 3.6;
     if (speed < 0) speed = Math.abs(speed);
 
-    // RPM
-    const rpm = telemetry.engineRpm;
-    const maxRpm = telemetry.engineRpmMax;
-
-    // Fuel
-    const fuel = telemetry.fuel;
-    const capacity = telemetry.fuelCapacity;
-
+    // Basic Gauges
     states.push({ id: 'Nybo.ETS2.Gauges.SpeedGauge', value: getSpeedGauge(speed, unit) });
-    states.push({ id: 'Nybo.ETS2.Gauges.RPMGauge', value: getRPMGauge(rpm, maxRpm) });
-    states.push({ id: 'Nybo.ETS2.Gauges.FuelGauge', value: getFuelGauge(fuel, capacity) });
+    states.push({ id: 'Nybo.ETS2.Gauges.RPMGauge', value: getRPMGauge(telemetry.engineRpm || 0, telemetry.engineRpmMax || 0) });
+    states.push({ id: 'Nybo.ETS2.Gauges.FuelGauge', value: getFuelGauge(telemetry.fuel || 0, telemetry.fuelCapacity || 0) });
+
+    // Technical Gauges (Conversions)
+    const airBar = (telemetry.airPressure || 0) / 14.5038;
+    const oilBar = (telemetry.oilPressure || 0) / 14.5038;
+    const adbluePct = telemetry.adblueCapacity > 0 ? (telemetry.adblue / telemetry.adblueCapacity) * 100 : 0;
+
+    states.push({ id: 'Nybo.ETS2.Gauges.AirPressureGauge', value: getGenericGauge(airBar, 0, 16, 8, 'AIR', 'Bar', 'air') });
+    states.push({ id: 'Nybo.ETS2.Gauges.WaterTempGauge', value: getGenericGauge(telemetry.waterTemperature || 0, 0, 120, 6, 'WATER', '°C', 'water') });
+    states.push({ id: 'Nybo.ETS2.Gauges.OilTempGauge', value: getGenericGauge(telemetry.oilTemperature || 0, 0, 150, 5, 'OIL TEMP', '°C', 'oilTemp') });
+    states.push({ id: 'Nybo.ETS2.Gauges.OilPressureGauge', value: getGenericGauge(oilBar, 0, 10, 5, 'OIL PRES', 'Bar', 'oilPressure') });
+    states.push({ id: 'Nybo.ETS2.Gauges.BatteryGauge', value: getGenericGauge(telemetry.batteryVoltage || 0, 0, 30, 6, 'BATTERY', 'V', 'battery') });
+    states.push({ id: 'Nybo.ETS2.Gauges.AdBlueGauge', value: getGenericGauge(adbluePct, 0, 100, 4, 'ADBLUE', '%', 'adblue') });
+
+    // Pedal Monitor
+    states.push({
+        id: 'Nybo.ETS2.Gauges.PedalMonitor',
+        value: getPedalMonitor(telemetry.userThrottle || 0, telemetry.userBrake || 0, telemetry.userClutch || 0)
+    });
 
     return states;
 }
