@@ -16,14 +16,10 @@ export const mapGameStates = (telemetry: any) => {
     states.push({ id: 'Nybo.ETS2.Game.TelemetryVersion', value: `${telemetry.telemetryVersionGameMajor ?? 0}.${telemetry.telemetryVersionGameMinor ?? 0}` });
     states.push({ id: 'Nybo.ETS2.Game.PluginVersion', value: (telemetry.telemetryPluginRevision ?? 0).toString() });
 
-    // Simulation
-    states.push({ id: 'Nybo.ETS2.Game.Scale', value: (telemetry.scale ?? 0).toString() });
-
     // Timestamps (BigInt to String)
     states.push({ id: 'Nybo.ETS2.Game.Timestamp', value: (telemetry.time ?? 0n).toString() });
     states.push({ id: 'Nybo.ETS2.Game.SimulationTimestamp', value: (telemetry.simulatedTime ?? 0n).toString() });
     states.push({ id: 'Nybo.ETS2.Game.RenderTimestamp', value: (telemetry.renderTime ?? 0n).toString() });
-    states.push({ id: 'Nybo.ETS2.Game.MultiplayerOffset', value: (telemetry.multiplayerTimeOffset ?? 0n).toString() });
 
     return states;
 };

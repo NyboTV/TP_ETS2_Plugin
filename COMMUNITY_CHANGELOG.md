@@ -42,6 +42,22 @@ Enhanced system info for better troubleshooting and transparency:
 - **Live ETA**: See your absolute arrival time (e.g., "Tue 14:45") based on in-game time.
 - **Route Progress**: A new percentage indicator shows how much of your journey is completed.
 
+## 🏗️ Multi-Trailer Support
+- **Up to 3 Trailers**: Full support for B-Doubles, HCTs, and Triples.
+- **Enhanced Metadata**: Individual Brand, Name, and License Plate info for each trailer.
+- **Detailed Wear**: Track wear for Chassis, Wheels, and Body separately.
+
+## 🚛 Enhanced Truck Data
+- **Technical Precision**: Differential Ratio and Retarder Steps are now mapped.
+- **Improved Indicators**: New `BlinkerState` combines all turn signal logic.
+- **Identification**: Truck License Plates and Countries are now visible.
+- **Auxiliary Lighting**: Full support for Front and Roof auxiliary lights.
+
+## 🌍 World & Environment
+- **Refined Organization**: Map Scale and Multiplayer Offset moved to World States.
+- **Improved Time**: New `DayOfWeek` and absolute `NextRestStopTime` states.
+- **Cleaner UI**: Added a standalone `TimeHHMM` state for simplified dashboards.
+
 ## ⚙️ Plugin Settings
 - **Transparency**: You can now see and use the current `Refresh Interval`, `TruckersMP Server` status, and `Offline Mode` directly in Touch Portal as states.
 
@@ -54,6 +70,24 @@ Enhanced system info for better troubleshooting and transparency:
 
 ## 📜 New State IDs (Raw List)
 Here is a list of all new IDs you can use in Touch Portal:
+
+### Trailer (N = 1, 2, or 3)
+- `Nybo.ETS2.Trailer.Count` (Total attached trailers)
+- `Nybo.ETS2.Trailer.TotalWear` (Average wear of all trailers)
+- `Nybo.ETS2.Trailer.N.Attached` (Boolean)
+- `Nybo.ETS2.Trailer.N.Name` / `Nybo.ETS2.Trailer.N.Brand`
+- `Nybo.ETS2.Trailer.N.LicensePlate` / `Nybo.ETS2.Trailer.N.WearChassis`
+
+### Truck
+- `Nybo.ETS2.Truck.BlinkerState` ("Left", "Right", "Hazard", "Off")
+- `Nybo.ETS2.Truck.LicensePlate` / `Nybo.ETS2.Truck.LicensePlateCountry`
+- `Nybo.ETS2.Truck.DifferentialRatio` / `Nybo.ETS2.Truck.RetarderStepCount`
+- `Nybo.ETS2.Truck.LightsAuxFrontOn` / `Nybo.ETS2.Truck.LightsAuxRoofOn`
+
+### World
+- `Nybo.ETS2.World.TimeHHMM` / `Nybo.ETS2.World.DayOfWeek`
+- `Nybo.ETS2.World.NextRestStopTime`
+- `Nybo.ETS2.World.MapScale` / `Nybo.ETS2.World.MultiplayerOffset`
 
 ### Settings
 - `Nybo.ETS2.Setting.RefreshInterval`

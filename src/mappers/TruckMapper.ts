@@ -60,6 +60,7 @@ export const mapTruckStates = (telemetry: any) => {
     states.push({ id: 'Nybo.ETS2.Truck.ParkBrakeOn', value: (truck.parkBrake ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.MotorBrakeOn', value: (truck.motorBrake ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.Retarder', value: (truck.retarderBrake ?? 0).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.RetarderStepCount', value: (truck.retarderStepCount ?? 0).toString() });
 
     // --- Fluids ---
     let fuel = truck.fuel;
@@ -107,9 +108,15 @@ export const mapTruckStates = (telemetry: any) => {
         states.push({ id: 'Nybo.ETS2.Truck.WaterTemp', value: `${Math.floor(waterTemp)} C°` });
     }
 
+    // Brake Temperature (Average of all wheels if available, or just first)
+    const brakeTemp = truck.brakeTemperature || 0;
+    states.push({ id: 'Nybo.ETS2.Truck.BrakeTemperature', value: `${Math.round(brakeTemp)} °C` });
+
     // --- Usage/Sim info ---
-    states.push({ id: 'Nybo.ETS2.Truck.Truck_Make', value: truck.truckBrand });
-    states.push({ id: 'Nybo.ETS2.Truck.Model', value: truck.truckName });
+    states.push({ id: 'Nybo.ETS2.Truck.Truck_Make', value: truck.truckBrand || '-' });
+    states.push({ id: 'Nybo.ETS2.Truck.Model', value: truck.truckName || '-' });
+    states.push({ id: 'Nybo.ETS2.Truck.LicensePlate', value: truck.licensePlate || '-' });
+    states.push({ id: 'Nybo.ETS2.Truck.LicensePlateCountry', value: truck.licensePlateCountry || '-' });
 
     // Weights / Wear
     states.push({ id: 'Nybo.ETS2.Truck.wearEngine', value: `${Math.round((truck.wearEngine || 0) * 100)}%` });
@@ -127,7 +134,11 @@ export const mapTruckStates = (telemetry: any) => {
     states.push({ id: 'Nybo.ETS2.Truck.LightsBrakeOn', value: (truck.lightsBrake ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.LightsReverseOn', value: (truck.lightsReverse ?? false).toString() });
 
-    // Hazards
+    // Aux Lights
+    states.push({ id: 'Nybo.ETS2.Truck.LightsAuxFrontOn', value: (truck.lightsAuxFront ?? 0).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.LightsAuxRoofOn', value: (truck.lightsAuxRoof ?? 0).toString() });
+
+    // Hazards & Blinker State
     const left = truck.blinkerLeftOn;
     const right = truck.blinkerRightOn;
 
@@ -135,16 +146,18 @@ export const mapTruckStates = (telemetry: any) => {
         hazardLightsOn = true;
         hazardCounter = 0;
     }
+    if (hazardCounter < 10) hazardCounter++;
+    else hazardLightsOn = false;
 
-    if (hazardCounter < 10) {
-        hazardCounter++;
-    } else {
-        hazardLightsOn = false;
-    }
+    let blinkerState = "Off";
+    if (hazardLightsOn) blinkerState = "Hazard";
+    else if (left) blinkerState = "Left";
+    else if (right) blinkerState = "Right";
 
     states.push({ id: 'Nybo.ETS2.Truck.HazardLightsOn', value: hazardLightsOn.toString() });
     states.push({ id: 'Nybo.ETS2.Truck.BlinkerLeftOn', value: (left ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.BlinkerRightOn', value: (right ?? false).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.BlinkerState', value: blinkerState });
 
     // --- Warnings & Indicators ---
     states.push({ id: 'Nybo.ETS2.Truck.FuelWarningOn', value: (truck.fuelWarning ?? false).toString() });
@@ -155,6 +168,15 @@ export const mapTruckStates = (telemetry: any) => {
     states.push({ id: 'Nybo.ETS2.Truck.WaterTempWarningOn', value: (truck.waterTemperatureWarning ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.BatteryVoltageWarningOn', value: (truck.batteryVoltageWarning ?? false).toString() });
 
+    // Warning Factors (Thresholds)
+    states.push({ id: 'Nybo.ETS2.Truck.FuelWarningFactor', value: (truck.fuelWarningFactor ?? 0).toFixed(2) });
+    states.push({ id: 'Nybo.ETS2.Truck.AdBlueWarningFactor', value: (truck.adblueWarningFactor ?? 0).toFixed(2) });
+    states.push({ id: 'Nybo.ETS2.Truck.AirPressureWarningFactor', value: (truck.airPressureWarningFactor ?? 0).toFixed(2) });
+    states.push({ id: 'Nybo.ETS2.Truck.AirPressureEmergencyWarningFactor', value: (truck.airPressureEmergencyWarningFactor ?? 0).toFixed(2) });
+    states.push({ id: 'Nybo.ETS2.Truck.OilPressureWarningFactor', value: (truck.oilPressureWarningFactor ?? 0).toFixed(2) });
+    states.push({ id: 'Nybo.ETS2.Truck.WaterTempWarningFactor', value: (truck.waterTemperatureWarningFactor ?? 0).toFixed(2) });
+    states.push({ id: 'Nybo.ETS2.Truck.BatteryVoltageWarningFactor', value: (truck.batteryVoltageWarningFactor ?? 0).toFixed(2) });
+
     // Blinkers Active (Blinking state)
     states.push({ id: 'Nybo.ETS2.Truck.BlinkerLeftActive', value: (truck.blinkerLeftActive ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.BlinkerRightActive', value: (truck.blinkerRightActive ?? false).toString() });
@@ -162,10 +184,22 @@ export const mapTruckStates = (telemetry: any) => {
     // --- Technical Values ---
     states.push({ id: 'Nybo.ETS2.Truck.BatteryVoltage', value: (truck.batteryVoltage ?? 0).toFixed(1) });
     states.push({ id: 'Nybo.ETS2.Truck.AirPressure', value: Math.round(truck.airPressure ?? 0).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.DifferentialRatio', value: (truck.gearDifferential ?? 0).toFixed(2) });
+    states.push({ id: 'Nybo.ETS2.Truck.RetarderStepCount', value: (truck.retarderStepCount ?? 0).toString() });
 
     // H-Shifter Position
     states.push({ id: 'Nybo.ETS2.Truck.HShifterSlot', value: (truck.hshifterSlot ?? 0).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.HShifterSelector', value: (truck.hshifterSelector ?? 0).toString() });
+
+    // Shifter Tech
+    states.push({ id: 'Nybo.ETS2.Truck.ShifterType', value: truck.shifterType || 'Unknown' });
+    states.push({ id: 'Nybo.ETS2.Truck.ForwardGears', value: (truck.forwardGears ?? 0).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.ReverseGears', value: (truck.reverseGears ?? 0).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.SelectorCount', value: (truck.selectorCount ?? 0).toString() });
+
+    // Axle Lift
+    states.push({ id: 'Nybo.ETS2.Truck.LiftAxleOn', value: (truck.liftAxle ?? false).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.LiftAxleIndicatorOn', value: (truck.liftAxleIndicator ?? false).toString() });
 
     return states;
 };

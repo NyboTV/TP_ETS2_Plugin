@@ -88,5 +88,11 @@ export const mapJobStates = (telemetry: any) => {
     states.push({ id: 'Nybo.ETS2.Job.CargoMass', value: formatMass(telemetry.cargoMass || 0) });
     states.push({ id: 'Nybo.ETS2.Job.UnitMass', value: formatMass(telemetry.unitMass || 0) });
 
+    // IDs
+    states.push({ id: 'Nybo.ETS2.Job.SourceCityID', value: telemetry.citySrcId || '-' });
+    states.push({ id: 'Nybo.ETS2.Job.SourceCompanyID', value: telemetry.compSrcId || '-' });
+    states.push({ id: 'Nybo.ETS2.Job.DestinationCityID', value: telemetry.cityDstId || '-' });
+    states.push({ id: 'Nybo.ETS2.Job.DestinationCompanyID', value: telemetry.compDstId || '-' });
+
     return states;
 };

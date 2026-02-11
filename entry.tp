@@ -431,12 +431,6 @@
           "default": "-"
         },
         {
-          "id": "Nybo.ETS2.Game.Scale",
-          "type": "text",
-          "desc": "ETS2:Map Scale",
-          "default": "-"
-        },
-        {
           "id": "Nybo.ETS2.Game.Timestamp",
           "type": "text",
           "desc": "ETS2:Timestamp (Raw)",
@@ -453,12 +447,6 @@
           "type": "text",
           "desc": "ETS2:Render Timestamp (Raw)",
           "default": "-"
-        },
-        {
-          "id": "Nybo.ETS2.Game.MultiplayerOffset",
-          "type": "text",
-          "desc": "ETS2:Multiplayer Time Offset",
-          "default": "-"
         }
       ]
     },
@@ -471,7 +459,37 @@
         {
           "id": "Nybo.ETS2.World.Time",
           "type": "text",
-          "desc": "ETS2:Ingame Time",
+          "desc": "ETS2:World Time (Day X, HH:MM)",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.World.TimeHHMM",
+          "type": "text",
+          "desc": "ETS2:World Time (HH:MM)",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.World.DayOfWeek",
+          "type": "text",
+          "desc": "ETS2:World Day of Week",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.World.NextRestStopTime",
+          "type": "text",
+          "desc": "ETS2:World Next Rest Arrival",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.World.MapScale",
+          "type": "text",
+          "desc": "ETS2:World Map Scale",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.World.MultiplayerOffset",
+          "type": "text",
+          "desc": "ETS2:World Multiplayer Offset",
           "default": "-"
         }
       ]
@@ -607,6 +625,18 @@
           "default": "-"
         },
         {
+          "id": "Nybo.ETS2.Truck.LicensePlate",
+          "type": "text",
+          "desc": "ETS2:Truck License Plate",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LicensePlateCountry",
+          "type": "text",
+          "desc": "ETS2:Truck License Plate Country",
+          "default": "-"
+        },
+        {
           "id": "Nybo.ETS2.Truck.Model",
           "type": "text",
           "desc": "ETS2:Truck Model",
@@ -661,6 +691,30 @@
           "default": "-"
         },
         {
+          "id": "Nybo.ETS2.Truck.ShifterType",
+          "type": "text",
+          "desc": "ETS2:Shifter Type",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.ForwardGears",
+          "type": "text",
+          "desc": "ETS2:Forward Gear Count",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.ReverseGears",
+          "type": "text",
+          "desc": "ETS2:Reverse Gear Count",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.SelectorCount",
+          "type": "text",
+          "desc": "ETS2:Selector Count",
+          "default": "-"
+        },
+        {
           "id": "Nybo.ETS2.Truck.EngineOn",
           "type": "text",
           "desc": "ETS2:Engine On",
@@ -693,7 +747,13 @@
         {
           "id": "Nybo.ETS2.Truck.Retarder",
           "type": "text",
-          "desc": "ETS2:Retarder",
+          "desc": "ETS2:Retarder Level",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.RetarderStepCount",
+          "type": "text",
+          "desc": "ETS2:Retarder Max Steps",
           "default": "-"
         },
         {
@@ -739,9 +799,33 @@
           "default": "-"
         },
         {
+          "id": "Nybo.ETS2.Truck.DifferentialRatio",
+          "type": "text",
+          "desc": "ETS2:Differential Ratio",
+          "default": "-"
+        },
+        {
           "id": "Nybo.ETS2.Truck.FuelCapacity",
           "type": "text",
           "desc": "ETS2:Fuel Capacity",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BrakeTemperature",
+          "type": "text",
+          "desc": "ETS2:Brake Temperature",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LiftAxleOn",
+          "type": "text",
+          "desc": "ETS2:Lift Axle On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.LiftAxleIndicatorOn",
+          "type": "text",
+          "desc": "ETS2:Lift Axle Ind. On",
           "default": "-"
         },
         {
@@ -817,6 +901,12 @@
           "default": "-"
         },
         {
+          "id": "Nybo.ETS2.Truck.BlinkerState",
+          "type": "text",
+          "desc": "ETS2:Blinker State (Text)",
+          "default": "-"
+        },
+        {
           "id": "Nybo.ETS2.Truck.wearEngine",
           "type": "text",
           "desc": "ETS2:Wear Engine ",
@@ -879,13 +969,13 @@
         {
           "id": "Nybo.ETS2.Truck.LightsAuxFrontOn",
           "type": "text",
-          "desc": "ETS2:Lights Aux Front On",
+          "desc": "ETS2:Lights Aux Front Status (0-2)",
           "default": "-"
         },
         {
           "id": "Nybo.ETS2.Truck.LightsAuxRoofOn",
           "type": "text",
-          "desc": "ETS2:Lights Aux Roof On",
+          "desc": "ETS2:Lights Aux Roof Status (0-2)",
           "default": "-"
         },
         {
@@ -904,6 +994,48 @@
           "id": "Nybo.ETS2.Truck.LightsReverseOn",
           "type": "text",
           "desc": "ETS2:Lights Reverse On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.FuelWarningFactor",
+          "type": "text",
+          "desc": "ETS2:Fuel Warning Factor",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AdBlueWarningFactor",
+          "type": "text",
+          "desc": "ETS2:AdBlue Warning Factor",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AirPressureWarningFactor",
+          "type": "text",
+          "desc": "ETS2:Air Pressure Warning Factor",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.AirPressureEmergencyWarningFactor",
+          "type": "text",
+          "desc": "ETS2:Air Emergency Factor",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.OilPressureWarningFactor",
+          "type": "text",
+          "desc": "ETS2:Oil Pressure Factor",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.WaterTempWarningFactor",
+          "type": "text",
+          "desc": "ETS2:Water Temp Factor",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Truck.BatteryVoltageWarningFactor",
+          "type": "text",
+          "desc": "ETS2:Battery Voltage Factor",
           "default": "-"
         }
       ]
@@ -1087,6 +1219,24 @@
           "type": "text",
           "desc": "ETS2:Cargo Mass",
           "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.BrakeTemperature",
+          "type": "text",
+          "desc": "ETS2:Trailer Brake Temp",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.LiftAxleOn",
+          "type": "text",
+          "desc": "ETS2:Trailer Lift Axle On",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Trailer.LiftAxleIndicatorOn",
+          "type": "text",
+          "desc": "ETS2:Trailer Lift Axle Ind. On",
+          "default": "-"
         }
       ]
     },
@@ -1196,6 +1346,30 @@
           "id": "Nybo.ETS2.Job.UnitMass",
           "type": "text",
           "desc": "ETS2:Cargo Unit Mass",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.SourceCityID",
+          "type": "text",
+          "desc": "ETS2:Job Source City ID",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.SourceCompanyID",
+          "type": "text",
+          "desc": "ETS2:Job Source Company ID",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.DestinationCityID",
+          "type": "text",
+          "desc": "ETS2:Job Destination City ID",
+          "default": "-"
+        },
+        {
+          "id": "Nybo.ETS2.Job.DestinationCompanyID",
+          "type": "text",
+          "desc": "ETS2:Job Destination Company ID",
           "default": "-"
         }
       ]

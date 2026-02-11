@@ -10,6 +10,7 @@ import { mapTrailerStates } from '../mappers/TrailerMapper';
 import { mapJobStates } from '../mappers/JobMapper';
 import { mapGaugeStates } from '../mappers/GaugeMapper';
 import { mapSettingsStates } from '../mappers/SettingsMapper';
+import { mapEventStates } from '../mappers/EventMapper';
 
 export class StateManager {
     private cache: Record<string, string> = {};
@@ -65,6 +66,7 @@ export class StateManager {
             updates.push(...mapWorldStates(snapshot));
             updates.push(...mapTrailerStates(snapshot));
             updates.push(...mapJobStates(snapshot));
+            updates.push(...mapEventStates(snapshot));
             updates.push(...await mapGaugeStates(snapshot));
             updates.push(...mapSettingsStates());
 
