@@ -45,8 +45,23 @@ async function build() {
         console.log('Incrementing version...');
         const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
         const pkgJson = await fs.readJson(pkgJsonPath);
-        const versionParts = pkgJson.version.split('.');
-        versionParts[2] = parseInt(versionParts[2]) + 1;
+
+        const versionParts = pkgJson.version.split('.').map(id => {
+            // Remove any suffix like -alpha or -beta before parsing
+            return parseInt(id.split('-')[0]);
+        });
+
+        // Carry-over logic: x.y.9 -> x.(y+1).0 | x.9.9 -> (x+1).0.0
+        versionParts[2]++; // Always increment patch
+        if (versionParts[2] > 9) {
+            versionParts[2] = 0;
+            versionParts[1]++;
+            if (versionParts[1] > 9) {
+                versionParts[1] = 0;
+                versionParts[0]++;
+            }
+        }
+
         const newVersion = versionParts.join('.');
         pkgJson.version = newVersion;
         await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 4 });

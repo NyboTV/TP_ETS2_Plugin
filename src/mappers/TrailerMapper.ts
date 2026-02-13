@@ -5,7 +5,6 @@ export const mapTrailerStates = (telemetry: any) => {
     const states: { id: string, value: string }[] = [];
     const basics = configService.userCfg.Basics;
 
-    // 1. Aggregated Data
     const attachedTrailers = trailers.filter((t: any) => t.attached);
     states.push({ id: 'Nybo.ETS2.Trailer.TrailerAttached', value: (attachedTrailers.length > 0).toString() });
     states.push({ id: 'Nybo.ETS2.Trailer.TrailerCount', value: attachedTrailers.length.toString() });
@@ -13,7 +12,6 @@ export const mapTrailerStates = (telemetry: any) => {
     let totalWearSum = 0;
     if (attachedTrailers.length > 0) {
         attachedTrailers.forEach((t: any) => {
-            // Average of chassis, wheels, body for this trailer
             const avgWear = ((t.wearChassis || 0) + (t.wearWheels || 0) + (t.wearBody || 0)) / 3;
             totalWearSum += avgWear;
         });
@@ -23,7 +21,6 @@ export const mapTrailerStates = (telemetry: any) => {
         states.push({ id: 'Nybo.ETS2.Trailer.TotalWear', value: '0%' });
     }
 
-    // 2. Individual Trailer Data (Up to 3)
     for (let i = 0; i < 3; i++) {
         const trailer = trailers[i];
         const n = i + 1;
@@ -37,7 +34,6 @@ export const mapTrailerStates = (telemetry: any) => {
             states.push({ id: `Nybo.ETS2.Trailer.${n}.LicensePlate`, value: trailer.licensePlate || '-' });
             states.push({ id: `Nybo.ETS2.Trailer.${n}.WearChassis`, value: `${Math.round((trailer.wearChassis || 0) * 100)}%` });
 
-            // Aliases for Trailer 1 (Backward Compatibility)
             if (n === 1) {
                 states.push({ id: 'Nybo.ETS2.Trailer.TrailerName', value: trailer.name || '-' });
                 states.push({ id: 'Nybo.ETS2.Trailer.TrailerChainType', value: trailer.chainType || '-' });
@@ -63,7 +59,6 @@ export const mapTrailerStates = (telemetry: any) => {
         }
     }
 
-    // 3. Cargo Data (Aggregated/Main)
     const massKg = telemetry.cargoMass || 0;
     const massTons = Math.round(massKg / 1000);
     states.push({ id: 'Nybo.ETS2.Trailer.Cargo', value: telemetry.cargo || '-' });

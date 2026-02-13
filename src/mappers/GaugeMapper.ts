@@ -680,7 +680,6 @@ export const mapGaugeStates = async (telemetry: any) => {
     processGauge('Nybo.ETS2.Gauges.AdBlueGauge', adbluePct, 100, () =>
         getGenericGauge(adbluePct, 0, 100, 4, 'ADBLUE', '%', 'adblue'), 10, 5000);
 
-    // 5. Pedal Monitor (Slow - 2s throttle, 2s force)
     const pedalsVal = (telemetry.userThrottle || 0) + (telemetry.userBrake || 0) + (telemetry.userClutch || 0);
     processGauge('Nybo.ETS2.Gauges.PedalMonitor', pedalsVal, 3, () =>
         getPedalMonitor(telemetry.userThrottle || 0, telemetry.userBrake || 0, telemetry.userClutch || 0), 20, 2000);
