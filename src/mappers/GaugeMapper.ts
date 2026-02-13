@@ -415,58 +415,61 @@ const drawSpeedNeedle = (ctx: any, value: number, max: number, unit: string, des
 
 const getSpeedGauge = (speed: number, unit: string) => {
     const design = configService.designCfg.speed;
-    const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
-    const ctx = canvas.getContext('2d');
-
     const isMiles = unit === 'miles';
     const max = isMiles ? 130 : 220;
-    drawSpeedometerBackground(ctx, max, isMiles ? 'MPH' : 'KM/H', design);
+    const unitText = isMiles ? 'MPH' : 'KM/H';
+    const cacheKey = `speed_${max}_${unitText}_${JSON.stringify(design)}`;
+
+    const bgCanvas = getCachedBackground(cacheKey, (ctx) => {
+        drawSpeedometerBackground(ctx, max, unitText, design);
+    });
+
+    const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(bgCanvas, 0, 0);
 
     if (design.showNumber) {
-        // Dynamic Speed Text
         ctx.font = `bold ${Math.round(40 * design.numberFontScale)}px ${design.fontFamily}`;
         ctx.fillStyle = design.textColor;
         ctx.textAlign = 'center';
         ctx.fillText(Math.round(speed).toString(), CENTER_X, CENTER_Y + 120);
 
-        // Unit Text below number
         if (design.showUnit) {
             ctx.font = `${Math.round(16 * design.numberFontScale)}px ${design.fontFamily}`;
-            ctx.fillText(isMiles ? 'MPH' : 'KM/H', CENTER_X, CENTER_Y + 150);
+            ctx.fillText(unitText, CENTER_X, CENTER_Y + 150);
         }
     }
 
-    drawSpeedNeedle(ctx, speed, max, isMiles ? 'MPH' : 'KM/H', design);
-
-    return canvas.toBuffer('image/png').toString('base64');
+    drawSpeedNeedle(ctx, speed, max, unitText, design);
+    return canvas.toBuffer('image/png', { compressionLevel: 3 }).toString('base64');
 };
 
 const getRPMGauge = (rpm: number, maxRpm: number) => {
     const design = configService.designCfg.rpm;
+    const max = maxRpm > 0 ? maxRpm : 3000;
+    const cacheKey = `rpm_${max}_${JSON.stringify(design)}`;
+
+    const bgCanvas = getCachedBackground(cacheKey, (ctx) => {
+        drawGaugeBackground(ctx, 'RPM', 0, max, 10, 'RPM', design);
+
+        const startAngle = 0.75 * Math.PI;
+        const endAngle = 2.25 * Math.PI;
+        const totalAngle = endAngle - startAngle;
+        const redZoneStart = startAngle + (0.9 * totalAngle);
+
+        ctx.beginPath();
+        ctx.arc(CENTER_X, CENTER_Y, RADIUS - 10, redZoneStart, endAngle);
+        ctx.lineWidth = 15;
+        ctx.strokeStyle = design.redZoneColor || '#cc0000';
+        ctx.stroke();
+    });
+
     const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
     const ctx = canvas.getContext('2d');
-
-    // Use telemetry max, default to 3000 if 0 or missing
-    const max = maxRpm > 0 ? maxRpm : 3000;
-
-    drawGaugeBackground(ctx, 'RPM', 0, max, 10, 'RPM', design);
-
-    // Draw Red Zone (Last 10%)
-    const startAngle = 0.75 * Math.PI; // 135 degrees
-    const endAngle = 2.25 * Math.PI;   // 405 degrees
-    const totalAngle = endAngle - startAngle;
-
-    const redZoneStart = startAngle + (0.9 * totalAngle);
-
-    ctx.beginPath();
-    ctx.arc(CENTER_X, CENTER_Y, RADIUS - 10, redZoneStart, endAngle);
-    ctx.lineWidth = 15;
-    ctx.strokeStyle = design.redZoneColor || '#cc0000'; // Fallback just in case
-    ctx.stroke();
+    ctx.drawImage(bgCanvas, 0, 0);
 
     drawNeedle(ctx, rpm, 0, max, design);
 
-    // Dynamic Text
     if (design.showNumber) {
         ctx.font = `bold ${Math.round(30 * design.numberFontScale)}px ${design.fontFamily}`;
         ctx.fillStyle = design.textColor;
@@ -474,17 +477,20 @@ const getRPMGauge = (rpm: number, maxRpm: number) => {
         ctx.fillText(Math.round(rpm).toString(), CENTER_X, CENTER_Y + 120);
     }
 
-    return canvas.toBuffer('image/png').toString('base64');
+    return canvas.toBuffer('image/png', { compressionLevel: 3 }).toString('base64');
 };
 
 const getFuelGauge = (fuel: number, capacity: number) => {
     const design = configService.designCfg.fuel;
+    const cacheKey = `fuel_${capacity}_${JSON.stringify(design)}`;
+
+    const bgCanvas = getCachedBackground(cacheKey, (ctx) => {
+        drawGaugeBackground(ctx, 'FUEL', 0, capacity, 2, '', design, true);
+    });
+
     const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
     const ctx = canvas.getContext('2d');
-
-    // Fuel Gauge: E - 1/2 - F
-    // Steps = 2 (0=E, 1=1/2, 2=F)
-    drawGaugeBackground(ctx, 'FUEL', 0, capacity, 2, '', design, true);
+    ctx.drawImage(bgCanvas, 0, 0);
 
     drawNeedle(ctx, fuel, 0, capacity, design);
 
@@ -495,15 +501,21 @@ const getFuelGauge = (fuel: number, capacity: number) => {
         ctx.fillText(`${Math.round(fuel)} L`, CENTER_X, CENTER_Y + 120);
     }
 
-    return canvas.toBuffer('image/png').toString('base64');
+    return canvas.toBuffer('image/png', { compressionLevel: 3 }).toString('base64');
 };
 
 const getGenericGauge = (value: number, min: number, max: number, steps: number, title: string, unit: string, designKey: keyof typeof configService.designCfg) => {
     const design = (configService.designCfg as any)[designKey];
+    const cacheKey = `generic_${title}_${min}_${max}_${steps}_${unit}_${JSON.stringify(design)}`;
+
+    const bgCanvas = getCachedBackground(cacheKey, (ctx) => {
+        drawGaugeBackground(ctx, title, min, max, steps, unit, design);
+    });
+
     const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
     const ctx = canvas.getContext('2d');
+    ctx.drawImage(bgCanvas, 0, 0);
 
-    drawGaugeBackground(ctx, title, min, max, steps, unit, design);
     drawNeedle(ctx, value, min, max, design);
 
     if (design.showNumber) {
@@ -513,17 +525,33 @@ const getGenericGauge = (value: number, min: number, max: number, steps: number,
         ctx.fillText(`${value.toFixed(1)}${unit ? ' ' + unit : ''}`, CENTER_X, CENTER_Y + 120);
     }
 
-    return canvas.toBuffer('image/png').toString('base64');
+    return canvas.toBuffer('image/png', { compressionLevel: 3 }).toString('base64');
 };
 
 const getPedalMonitor = (throttle: number, brake: number, clutch: number) => {
     const design = configService.designCfg.pedals;
+    const cacheKey = `pedals_bg_${JSON.stringify(design)}`;
+
+    const bgCanvas = getCachedBackground(cacheKey, (ctx) => {
+        ctx.fillStyle = design.backgroundColor;
+        ctx.fillRect(0, 0, GAUGE_WIDTH, GAUGE_HEIGHT);
+
+        const barWidth = 60;
+        const barHeight = 300;
+        const spacing = 40;
+        const startX = (GAUGE_WIDTH - (3 * barWidth + 2 * spacing)) / 2;
+        const startY = (GAUGE_HEIGHT - barHeight) / 2;
+
+        ctx.strokeStyle = '#555';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(startX, startY, barWidth, barHeight);
+        ctx.strokeRect(startX + barWidth + spacing, startY, barWidth, barHeight);
+        ctx.strokeRect(startX + 2 * (barWidth + spacing), startY, barWidth, barHeight);
+    });
+
     const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
     const ctx = canvas.getContext('2d');
-
-    // Draw Background
-    ctx.fillStyle = design.backgroundColor;
-    ctx.fillRect(0, 0, GAUGE_WIDTH, GAUGE_HEIGHT);
+    ctx.drawImage(bgCanvas, 0, 0);
 
     const barWidth = 60;
     const barHeight = 300;
@@ -531,18 +559,11 @@ const getPedalMonitor = (throttle: number, brake: number, clutch: number) => {
     const startX = (GAUGE_WIDTH - (3 * barWidth + 2 * spacing)) / 2;
     const startY = (GAUGE_HEIGHT - barHeight) / 2;
 
-    const drawPedal = (x: number, value: number, color: string, label: string) => {
-        // Outline
-        ctx.strokeStyle = '#555';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(x, startY, barWidth, barHeight);
-
-        // Fill bar (bottom-up)
+    const drawPedalOverlay = (x: number, value: number, color: string, label: string) => {
         const fillH = barHeight * value;
         ctx.fillStyle = color;
         ctx.fillRect(x, startY + barHeight - fillH, barWidth, fillH);
 
-        // Label
         ctx.font = `bold 18px ${design.fontFamily}`;
         ctx.fillStyle = design.textColor;
         ctx.textAlign = 'center';
@@ -550,46 +571,119 @@ const getPedalMonitor = (throttle: number, brake: number, clutch: number) => {
         ctx.fillText(`${Math.round(value * 100)}%`, x + barWidth / 2, startY - 20);
     };
 
-    drawPedal(startX, throttle, '#4caf50', 'Gas');
-    drawPedal(startX + barWidth + spacing, brake, '#f44336', 'Bremse');
-    drawPedal(startX + 2 * (barWidth + spacing), clutch, '#2196f3', 'Kuppl.');
+    drawPedalOverlay(startX, throttle, '#4caf50', 'Gas');
+    drawPedalOverlay(startX + barWidth + spacing, brake, '#f44336', 'Bremse');
+    drawPedalOverlay(startX + 2 * (barWidth + spacing), clutch, '#2196f3', 'Kuppl.');
 
-    return canvas.toBuffer('image/png').toString('base64');
+    return canvas.toBuffer('image/png', { compressionLevel: 3 }).toString('base64');
+};
+
+// --- Caching System ---
+const backgroundCache: Record<string, Canvas> = {};
+const lastRenderValues: Record<string, number> = {};
+const lastRenderTime: Record<string, number> = {};
+
+const RENDER_THROTTLE_MS = 100; // Standard: Max 10 FPS
+const SIGNIFICANT_CHANGE_PCT = 0.005; // 0.5% change
+
+const shouldReRender = (id: string, value: number, max: number, multiplier: number = 1, forceIntervalMs: number = 500): boolean => {
+    const now = Date.now();
+    const lastTime = lastRenderTime[id] || 0;
+    const lastVal = lastRenderValues[id] ?? -999;
+
+    const throttleTime = RENDER_THROTTLE_MS * multiplier;
+
+    // Force render if enough time passed
+    if (now - lastTime > forceIntervalMs) return true;
+
+    // Check for significant change
+    const diff = Math.abs(value - lastVal);
+    const threshold = max * SIGNIFICANT_CHANGE_PCT;
+
+    if (diff > threshold) {
+        if (now - lastTime >= throttleTime) return true;
+    }
+
+    return false;
+};
+
+const getCachedBackground = (key: string, drawFn: (ctx: CanvasRenderingContext2D) => void): Canvas => {
+    if (backgroundCache[key]) return backgroundCache[key];
+
+    const canvas = createCanvas(GAUGE_WIDTH, GAUGE_HEIGHT);
+    const ctx = canvas.getContext('2d');
+    drawFn(ctx);
+    backgroundCache[key] = canvas;
+    logger.debug(`[GaugeMapper] Cached background: ${key}`);
+    return canvas;
 };
 
 export const mapGaugeStates = async (telemetry: any) => {
     const states: { id: string, value: string }[] = [];
+    if (!telemetry) return states;
+
     const basics = configService.userCfg.Basics;
     const unit = basics.unit.toLowerCase();
 
-    // Speed (telemetry.speed is m/s)
+    // Mapping helper
+    const processGauge = (id: string, value: number, max: number, renderFn: () => string, multiplier: number = 1, forceInterval: number = 500) => {
+        if (shouldReRender(id, value, max, multiplier, forceInterval)) {
+            const result = renderFn();
+            lastRenderValues[id] = value;
+            lastRenderTime[id] = Date.now();
+            states.push({ id, value: result });
+        }
+    };
+
+    // 1. Speed (Fast - 100ms throttle, 500ms force)
     let speed = telemetry.speed || 0;
     if (unit === 'miles') speed = speed * 2.236936;
     else speed = speed * 3.6;
     if (speed < 0) speed = Math.abs(speed);
 
-    // Basic Gauges
-    states.push({ id: 'Nybo.ETS2.Gauges.SpeedGauge', value: getSpeedGauge(speed, unit) });
-    states.push({ id: 'Nybo.ETS2.Gauges.RPMGauge', value: getRPMGauge(telemetry.engineRpm || 0, telemetry.engineRpmMax || 0) });
-    states.push({ id: 'Nybo.ETS2.Gauges.FuelGauge', value: getFuelGauge(telemetry.fuel || 0, telemetry.fuelCapacity || 0) });
+    processGauge('Nybo.ETS2.Gauges.SpeedGauge', speed, unit === 'miles' ? 130 : 220, () => getSpeedGauge(speed, unit));
 
-    // Technical Gauges (Conversions)
+    // 2. RPM (Fast - 100ms throttle, 500ms force)
+    const rpm = telemetry.engineRpm || 0;
+    const maxRpm = telemetry.engineRpmMax || 3000;
+    processGauge('Nybo.ETS2.Gauges.RPMGauge', rpm, maxRpm, () => getRPMGauge(rpm, maxRpm));
+
+    // 3. Fuel (Ultra Slow - x10 throttle (1s), 5s force)
+    const fuel = telemetry.fuel || 0;
+    const fuelCap = telemetry.fuelCapacity || 100;
+    processGauge('Nybo.ETS2.Gauges.FuelGauge', fuel, fuelCap, () => getFuelGauge(fuel, fuelCap), 10, 5000);
+
+    // 4. Technical Gauges (Ultra Slow - x10 throttle (1s), 5s force)
+    // Air Pressure
     const airBar = (telemetry.airPressure || 0) / 14.5038;
+    processGauge('Nybo.ETS2.Gauges.AirPressureGauge', airBar, 16, () => getGenericGauge(airBar, 0, 16, 8, 'AIR', 'Bar', 'air'), 10, 5000);
+
+    // Water Temp
+    processGauge('Nybo.ETS2.Gauges.WaterTempGauge', telemetry.waterTemperature || 0, 120, () =>
+        getGenericGauge(telemetry.waterTemperature || 0, 0, 120, 6, 'WATER', '°C', 'water'), 10, 5000);
+
+    // Oil Temp
+    processGauge('Nybo.ETS2.Gauges.OilTempGauge', telemetry.oilTemperature || 0, 150, () =>
+        getGenericGauge(telemetry.oilTemperature || 0, 0, 150, 5, 'OIL TEMP', '°C', 'oilTemp'), 10, 5000);
+
+    // Oil Pressure
     const oilBar = (telemetry.oilPressure || 0) / 14.5038;
-    const adbluePct = telemetry.adblueCapacity > 0 ? (telemetry.adblue / telemetry.adblueCapacity) * 100 : 0;
+    processGauge('Nybo.ETS2.Gauges.OilPressureGauge', oilBar, 10, () =>
+        getGenericGauge(oilBar, 0, 10, 5, 'OIL PRES', 'Bar', 'oilPressure'), 10, 5000);
 
-    states.push({ id: 'Nybo.ETS2.Gauges.AirPressureGauge', value: getGenericGauge(airBar, 0, 16, 8, 'AIR', 'Bar', 'air') });
-    states.push({ id: 'Nybo.ETS2.Gauges.WaterTempGauge', value: getGenericGauge(telemetry.waterTemperature || 0, 0, 120, 6, 'WATER', '°C', 'water') });
-    states.push({ id: 'Nybo.ETS2.Gauges.OilTempGauge', value: getGenericGauge(telemetry.oilTemperature || 0, 0, 150, 5, 'OIL TEMP', '°C', 'oilTemp') });
-    states.push({ id: 'Nybo.ETS2.Gauges.OilPressureGauge', value: getGenericGauge(oilBar, 0, 10, 5, 'OIL PRES', 'Bar', 'oilPressure') });
-    states.push({ id: 'Nybo.ETS2.Gauges.BatteryGauge', value: getGenericGauge(telemetry.batteryVoltage || 0, 0, 30, 6, 'BATTERY', 'V', 'battery') });
-    states.push({ id: 'Nybo.ETS2.Gauges.AdBlueGauge', value: getGenericGauge(adbluePct, 0, 100, 4, 'ADBLUE', '%', 'adblue') });
+    // Battery Voltage
+    processGauge('Nybo.ETS2.Gauges.BatteryGauge', telemetry.batteryVoltage || 0, 30, () =>
+        getGenericGauge(telemetry.batteryVoltage || 0, 0, 30, 6, 'BATTERY', 'V', 'battery'), 10, 5000);
 
-    // Pedal Monitor
-    states.push({
-        id: 'Nybo.ETS2.Gauges.PedalMonitor',
-        value: getPedalMonitor(telemetry.userThrottle || 0, telemetry.userBrake || 0, telemetry.userClutch || 0)
-    });
+    // AdBlue
+    const adbluePct = (telemetry.adblueCapacity > 0) ? (telemetry.adblue / telemetry.adblueCapacity) * 100 : 0;
+    processGauge('Nybo.ETS2.Gauges.AdBlueGauge', adbluePct, 100, () =>
+        getGenericGauge(adbluePct, 0, 100, 4, 'ADBLUE', '%', 'adblue'), 10, 5000);
+
+    // 5. Pedal Monitor (Slow - 2s throttle, 2s force)
+    const pedalsVal = (telemetry.userThrottle || 0) + (telemetry.userBrake || 0) + (telemetry.userClutch || 0);
+    processGauge('Nybo.ETS2.Gauges.PedalMonitor', pedalsVal, 3, () =>
+        getPedalMonitor(telemetry.userThrottle || 0, telemetry.userBrake || 0, telemetry.userClutch || 0), 20, 2000);
 
     return states;
-}
+};

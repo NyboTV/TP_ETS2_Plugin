@@ -127,6 +127,7 @@ export const mapTruckStates = (telemetry: any) => {
 
     // Lights
     states.push({ id: 'Nybo.ETS2.Truck.LightsDashboardOn', value: ((truck.lightsDashboard ?? 0) > 0).toString() });
+    states.push({ id: 'Nybo.ETS2.Truck.LightsDashboardValue', value: (truck.lightsDashboard ?? 0).toFixed(2) });
     states.push({ id: 'Nybo.ETS2.Truck.LightsParkingOn', value: (truck.lightsParking ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.LightsBeamLowOn', value: (truck.lightsBeamLow ?? false).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.LightsBeamHighOn', value: (truck.lightsBeamHigh ?? false).toString() });
@@ -185,7 +186,6 @@ export const mapTruckStates = (telemetry: any) => {
     states.push({ id: 'Nybo.ETS2.Truck.BatteryVoltage', value: (truck.batteryVoltage ?? 0).toFixed(1) });
     states.push({ id: 'Nybo.ETS2.Truck.AirPressure', value: Math.round(truck.airPressure ?? 0).toString() });
     states.push({ id: 'Nybo.ETS2.Truck.DifferentialRatio', value: (truck.gearDifferential ?? 0).toFixed(2) });
-    states.push({ id: 'Nybo.ETS2.Truck.RetarderStepCount', value: (truck.retarderStepCount ?? 0).toString() });
 
     // H-Shifter Position
     states.push({ id: 'Nybo.ETS2.Truck.HShifterSlot', value: (truck.hshifterSlot ?? 0).toString() });

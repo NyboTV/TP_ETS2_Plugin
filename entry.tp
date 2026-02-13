@@ -1455,6 +1455,38 @@
           "default": "-"
         }
       ]
+    },
+    {
+      "id": "Event_States",
+      "name": "Event States",
+      "events": [],
+      "actions": [],
+      "states": [
+        {
+          "id": "Nybo.ETS2.Event.RefuelAmount",
+          "type": "text",
+          "desc": "ETS2:Last Refuel Amount",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Event.TollgatePayAmount",
+          "type": "text",
+          "desc": "ETS2:Last Tollgate Paid",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Event.FerryPayAmount",
+          "type": "text",
+          "desc": "ETS2:Last Ferry Paid",
+          "default": "0"
+        },
+        {
+          "id": "Nybo.ETS2.Event.TrainPayAmount",
+          "type": "text",
+          "desc": "ETS2:Last Train Paid",
+          "default": "0"
+        }
+      ]
     }
   ]
 }

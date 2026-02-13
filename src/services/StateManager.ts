@@ -42,49 +42,44 @@ export class StateManager {
     }
 
     public async update(data: any) {
-        if (this.isUpdating) {
-            logger.debug('[StateManager] Update already in progress, skipping...');
-            return;
-        }
-
+        if (this.isUpdating) return;
         this.isUpdating = true;
 
-        // Snapshot data to prevent inconsistencies due to the library's 60Hz internal loop
-        // We use a safe clone that handles BigInt if necessary.
-        const snapshot = this.clone(data);
-
         try {
+            // Snapshot only necessary top-level objects to avoid deep recursion
+            // For trucksim-telemetry, we mostly need the current state.
+            const snapshot = {
+                ...data,
+                truck: data.truck ? { ...data.truck } : {},
+                trailer: data.trailer ? [...data.trailer] : [],
+                job: data.job ? { ...data.job } : {},
+                navigation: data.navigation ? { ...data.navigation } : {},
+            };
+
             const updates: { id: string, value: string }[] = [];
 
-            // Run mappers with the consistent snapshot
-            updates.push(...mapTruckStates(snapshot));
-            updates.push(...mapGameStates(snapshot));
-            const navUpdates = await mapNavigationStates(snapshot);
-            updates.push(...navUpdates);
+            // Run mappers in parallel where possible (some are async)
+            const [
+                truck, game, nav, driver, world, trailer, job, events, gauges
+            ] = await Promise.all([
+                mapTruckStates(snapshot),
+                mapGameStates(snapshot),
+                mapNavigationStates(snapshot),
+                mapDriverStates(snapshot),
+                mapWorldStates(snapshot),
+                mapTrailerStates(snapshot),
+                mapJobStates(snapshot),
+                mapEventStates(snapshot),
+                mapGaugeStates(snapshot)
+            ]);
 
-            updates.push(...mapDriverStates(snapshot));
-            updates.push(...mapWorldStates(snapshot));
-            updates.push(...mapTrailerStates(snapshot));
-            updates.push(...mapJobStates(snapshot));
-            updates.push(...mapEventStates(snapshot));
-            updates.push(...await mapGaugeStates(snapshot));
-            updates.push(...mapSettingsStates());
+            updates.push(...truck, ...game, ...nav, ...driver, ...world, ...trailer, ...job, ...events, ...gauges, ...mapSettingsStates());
 
             // Diff against cache
-            const changedUpdates: { id: string, value: string }[] = [];
-
-            for (const u of updates) {
-                const cached = this.cache[u.id];
-                if (cached !== u.value) {
-                    this.cache[u.id] = u.value;
-                    changedUpdates.push(u);
-                }
-            }
+            const changedUpdates: { id: string, value: string }[] = changedUpdatesOnly(updates, this.cache);
 
             if (changedUpdates.length > 0) {
-                // Send to TP
                 touchPortalService.updateStates(changedUpdates);
-                // logger.debug(`Sent ${changedUpdates.length} updates`);
             }
 
         } catch (error) {
@@ -93,23 +88,19 @@ export class StateManager {
             this.isUpdating = false;
         }
     }
-
-    private clone(obj: any): any {
-        if (obj === null || typeof obj !== 'object') return obj;
-        if (typeof obj === 'bigint') return obj;
-
-        if (Array.isArray(obj)) {
-            return obj.map(item => this.clone(item));
-        }
-
-        const copy: any = {};
-        for (const key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                copy[key] = this.clone(obj[key]);
-            }
-        }
-        return copy;
-    }
 }
+
+// Helper to avoid redundant cache checks and property access
+const changedUpdatesOnly = (updates: any[], cache: Record<string, string>) => {
+    const changed: any[] = [];
+    for (let i = 0; i < updates.length; i++) {
+        const u = updates[i];
+        if (cache[u.id] !== u.value) {
+            cache[u.id] = u.value;
+            changed.push(u);
+        }
+    }
+    return changed;
+};
 
 export const stateManager = new StateManager();
