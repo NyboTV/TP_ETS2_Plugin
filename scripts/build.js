@@ -16,12 +16,65 @@ const platforms = [
     { name: 'mac', pkg: 'node18-macos-x64', ext: '', scs: 'macos' }
 ];
 
+// ANSI Colors
+const colors = {
+    reset: "\x1b[0m",
+    bright: "\x1b[1m",
+    dim: "\x1b[2m",
+    underscore: "\x1b[4m",
+    blink: "\x1b[5m",
+    reverse: "\x1b[7m",
+    hidden: "\x1b[8m",
+
+    fg: {
+        black: "\x1b[30m",
+        red: "\x1b[31m",
+        green: "\x1b[32m",
+        yellow: "\x1b[33m",
+        blue: "\x1b[34m",
+        magenta: "\x1b[35m",
+        cyan: "\x1b[36m",
+        white: "\x1b[37m",
+        crimson: "\x1b[38m"
+    },
+    bg: {
+        black: "\x1b[40m",
+        red: "\x1b[41m",
+        green: "\x1b[42m",
+        yellow: "\x1b[43m",
+        blue: "\x1b[44m",
+        magenta: "\x1b[45m",
+        cyan: "\x1b[46m",
+        white: "\x1b[47m",
+        crimson: "\x1b[48m"
+    }
+};
+
+const log = {
+    header: (msg) => console.log(`\n${colors.fg.cyan}${colors.bright}>>> ${msg} <<<${colors.reset}`),
+    step: (msg) => console.log(`${colors.fg.blue}➜ ${msg}${colors.reset}`),
+    success: (msg) => console.log(`${colors.fg.green}✔ ${msg}${colors.reset}`),
+    info: (msg) => console.log(`${colors.dim}  ${msg}${colors.reset}`),
+    warn: (msg) => console.log(`${colors.fg.yellow}⚠ ${msg}${colors.reset}`),
+    error: (msg) => console.error(`${colors.fg.red}✖ ${msg}${colors.reset}`),
+    box: (lines) => {
+        const maxLength = Math.max(...lines.map(l => l.length));
+        const border = '='.repeat(maxLength + 4);
+        console.log(`${colors.fg.magenta}${border}`);
+        lines.forEach(l => {
+            const padding = ' '.repeat(maxLength - l.length);
+            console.log(`| ${l}${padding} |`);
+        });
+        console.log(`${border}${colors.reset}`);
+    }
+};
+
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-const askQuestion = (query) => new Promise(resolve => rl.question(query, resolve));
+const askQuestion = (query) => new Promise(resolve => rl.question(`${colors.fg.white}${query}${colors.reset}`, resolve));
 
 async function ThroughDirectory(Directory, Files = [], Folder = []) {
     const items = await fs.readdir(Directory);
@@ -39,10 +92,10 @@ async function ThroughDirectory(Directory, Files = [], Folder = []) {
 
 async function runBuild() {
     try {
-        console.log('\n--- Starting Build Process (V1 Parity) ---');
+        log.header('Starting Build Process (V1 Parity)');
 
         // 1. Cleanup
-        console.log('Cleaning up...');
+        log.step('Cleaning up...');
         await fs.remove(DIST_DIR);
         await fs.remove(BUILD_DIR);
         await fs.remove(TMP_DIR);
@@ -50,7 +103,7 @@ async function runBuild() {
         await fs.ensureDir(DIST_DIR);
 
         // 2. Versioning
-        console.log('Incrementing version...');
+        log.step('Incrementing version...');
         const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
         const pkgJson = await fs.readJson(pkgJsonPath);
 
@@ -73,35 +126,35 @@ async function runBuild() {
         const newVersion = versionParts.join('.');
         pkgJson.version = newVersion;
         await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 4 });
-        console.log(`Version updated to: ${newVersion}`);
+        log.success(`Version updated to: ${newVersion}`);
 
-        console.log('Updating entry.tp version...');
+        log.info('Updating entry.tp version...');
         const entryTpPath = path.join(ROOT_DIR, 'entry.tp');
         const entryTp = await fs.readJson(entryTpPath);
         entryTp.version = parseInt(newVersion.split('.')[0]);
         await fs.writeJson(entryTpPath, entryTp, { spaces: 2 });
 
-        console.log('Updating root cfg.json version...');
+        log.info('Updating root cfg.json version...');
         const rootCfgPath = path.join(ROOT_DIR, 'config', 'cfg.json');
         if (await fs.pathExists(rootCfgPath)) {
             const cfg = await fs.readJson(rootCfgPath);
             cfg.version = newVersion;
             await fs.writeJson(rootCfgPath, cfg, { spaces: 2 });
-            console.log(`- Updated root cfg.json to version ${newVersion}`);
+            log.success(`Updated root cfg.json to version ${newVersion}`);
         }
 
         // 3. Compile
-        console.log('Compiling TypeScript...');
+        log.step('Compiling TypeScript...');
         execSync('npm run build', { stdio: 'inherit', cwd: ROOT_DIR });
 
         // 4. PKG Binary Generation
-        console.log('Generating binaries with pkg...');
+        log.step('Generating binaries with pkg...');
         const targets = platforms.map(p => p.pkg).join(',');
         execSync(`npx pkg . --targets ${targets} --out-path build`, { stdio: 'inherit', cwd: ROOT_DIR });
 
         // 5. Packaging loop
         for (const platform of platforms) {
-            console.log(`\nPackaging for ${platform.name}...`);
+            log.header(`Packaging for ${platform.name}...`);
             const stagingPath = path.join(TMP_DIR, platform.name, APP_NAME);
             await fs.ensureDir(stagingPath);
 
@@ -113,20 +166,20 @@ async function runBuild() {
 
             if (await fs.pathExists(binarySource)) {
                 await fs.copy(binarySource, binaryDest);
-                console.log(`- Copied binary: ${path.basename(binarySource)} -> ${APP_NAME}${platform.ext}`);
+                log.info(`Copied binary: ${path.basename(binarySource)} -> ${APP_NAME}${platform.ext}`);
             } else {
                 const altSource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
                 if (await fs.pathExists(altSource)) {
                     await fs.copy(altSource, binaryDest);
-                    console.log(`- Copied binary (alt): ${path.basename(altSource)} -> ${APP_NAME}${platform.ext}`);
+                    log.info(`Copied binary (alt): ${path.basename(altSource)} -> ${APP_NAME}${platform.ext}`);
                 } else {
                     const files = await fs.readdir(BUILD_DIR);
                     const match = files.find(f => f.startsWith(pkgBaseName) && f.includes(platform.name));
                     if (match) {
                         await fs.copy(path.join(BUILD_DIR, match), binaryDest);
-                        console.log(`- Copied binary (match): ${match} -> ${APP_NAME}${platform.ext}`);
+                        log.info(`Copied binary (match): ${match} -> ${APP_NAME}${platform.ext}`);
                     } else {
-                        console.warn(`! Binary source not found for ${platform.name}`);
+                        log.warn(`Binary source not found for ${platform.name}`);
                     }
                 }
             }
@@ -141,7 +194,7 @@ async function runBuild() {
                 cfg.version = newVersion;
                 cfg.firstInstall = true;
                 await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
-                console.log(`- Injected version ${newVersion} and set firstInstall: true into packaged cfg.json`);
+                log.info(`Injected version ${newVersion} and set firstInstall: true`);
             }
 
             const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);
@@ -149,7 +202,7 @@ async function runBuild() {
                 await fs.copy(scsSource, path.join(stagingPath, 'bin', 'scs-sdk-plugin', platform.scs));
             }
 
-            console.log('- Generating files.json...');
+            log.info('Generating files.json...');
             const { Files, Folder } = await ThroughDirectory(stagingPath);
             const allItems = [...Folder, ...Files];
             const relativeItems = allItems.map(item => {
@@ -162,47 +215,47 @@ async function runBuild() {
             const zip = new AdmZip();
             zip.addLocalFolder(stagingPath, APP_NAME);
             zip.writeZip(zipPath);
-            console.log(`- Created: ${path.basename(zipPath)}`);
+            log.success(`Created: ${path.basename(zipPath)}`);
         }
 
-        console.log('Final cleanup...');
+        log.step('Final cleanup...');
         await fs.remove(TMP_DIR);
         await fs.remove(BUILD_DIR);
         await fs.remove(path.join(ROOT_DIR, 'dist'));
 
-        console.log('\n--- Build Completed Successfully! ---');
-        console.log(`Packages are in: ${DIST_DIR}`);
+        log.header('Build Completed Successfully!');
+        log.success(`Packages are in: ${DIST_DIR}`);
         return newVersion;
 
     } catch (e) {
-        console.error('Build failed:', e);
+        log.error(`Build failed: ${e.message}`);
         throw e;
     }
 }
 
 async function runGitUpload(version) {
-    console.log('\n--- Starting Git Upload ---');
+    log.header('Starting Git Upload');
     try {
         if (!version) {
             const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
             version = pkgJson.version;
         }
 
-        console.log('Staging files...');
+        log.step('Staging files...');
         execSync('git add .', { stdio: 'inherit', cwd: ROOT_DIR });
 
-        console.log('Committing...');
+        log.step('Committing...');
         try {
             execSync(`git commit -m "Bump version to v${version}"`, { stdio: 'inherit', cwd: ROOT_DIR });
         } catch (e) {
-            console.log('Nothing to commit or commit failed (ignoring if just empty).');
+            log.info('Nothing to commit or commit failed (ignoring if just empty).');
         }
 
-        console.log('Pushing to remote...');
+        log.step('Pushing to remote...');
         execSync('git push', { stdio: 'inherit', cwd: ROOT_DIR });
-        console.log('Git Upload Completed!');
+        log.success('Git Upload Completed!');
     } catch (e) {
-        console.error('Git Upload failed:', e.message);
+        log.error(`Git Upload failed: ${e.message}`);
     }
 }
 
@@ -243,73 +296,121 @@ async function getChangelogInfo() {
     return { title, body: body.join('\n').trim() };
 }
 
+async function checkAndInstallGh() {
+    try {
+        execSync('gh --version', { stdio: 'ignore' });
+        return true;
+    } catch (e) {
+        log.warn('GitHub CLI not found.');
+        log.step('Attempting auto-install via winget...');
+        try {
+            // --accept-source-agreements --accept-package-agreements to avoid prompts blocking
+            execSync('winget install GitHub.cli --accept-source-agreements --accept-package-agreements', { stdio: 'inherit' });
+            log.success('GitHub CLI installed.');
+
+            // Check if available immediately (often not due to PATH)
+            try {
+                execSync('gh --version', { stdio: 'ignore' });
+                return true;
+            } catch (err) {
+                log.warn('GitHub CLI installed but not found in current PATH.');
+                log.info('Please RESTART this terminal/script and try "Full Release" again.');
+                return false;
+            }
+        } catch (installErr) {
+            log.error('Auto-install failed. Please manually install: winget install GitHub.cli');
+            return false;
+        }
+    }
+}
+
+async function checkGhAuth() {
+    try {
+        // Check if logged in
+        execSync('gh auth status', { stdio: 'ignore' });
+        return true;
+    } catch (e) {
+        log.warn('Not logged in to GitHub.');
+        log.step('Starting interactive login...');
+        try {
+            execSync('gh auth login', { stdio: 'inherit' });
+            return true;
+        } catch (authErr) {
+            log.error('Authentication failed or cancelled.');
+            return false;
+        }
+    }
+}
+
 async function runAutoRelease(version) {
-    console.log('\n--- Starting Auto Release Preparation ---');
+    log.header('Starting Auto Release Preparation');
     try {
         const { title, body } = await getChangelogInfo();
-        console.log(`\nDetected Release Info from CHANGELOG.md:`);
-        console.log(`Title: ${title}`);
-        console.log(`Body Length: ${body.length} chars`);
+        log.box([
+            'Detected Release Info from CHANGELOG.md:',
+            `Title: ${title}`,
+            `Body Length: ${body.length} chars`
+        ]);
 
         const confirm = await askQuestion('\nIs this correct? (y/n): ');
         if (confirm.toLowerCase() !== 'y') {
-            console.log('Aborting release creation.');
+            log.warn('Aborting release creation.');
             return;
         }
 
-        // Check for gh cli
+        // 1. Check/Install GH CLI
+        if (!await checkAndInstallGh()) return;
+
+        // 2. Check/Perform Auth
+        if (!await checkGhAuth()) return;
+
+        // 3. Create Release
+        // Construct notes file
+        const noteFile = path.join(TMP_DIR, 'release_notes.txt');
+        await fs.ensureDir(TMP_DIR);
+        await fs.writeFile(noteFile, body);
+
+        const assets = await fs.readdir(DIST_DIR);
+        const assetPaths = assets.map(a => path.join(DIST_DIR, a)).map(p => `"${p}"`).join(' ');
+
+        log.step('Creating GitHub Release...');
+        const cmd = `gh release create v${version} -t "${title}" -F "${noteFile}" ${assetPaths}`;
+        log.info(`Executing: ${cmd}`);
+
         try {
-            execSync('gh --version', { stdio: 'ignore' });
-
-            // If gh exists, create release
-            console.log('GitHub CLI found. Creating release...');
-            // Construct command carefully. 
-            // -t title, -n notes
-            // We need to escape quotes in body for command line if passing directly, 
-            // but spawn/execSync might be tricky with large multiline strings.
-            // Better to write body to a temp file.
-            const noteFile = path.join(TMP_DIR, 'release_notes.txt');
-            await fs.ensureDir(TMP_DIR);
-            await fs.writeFile(noteFile, body);
-
-            const assets = await fs.readdir(DIST_DIR);
-            const assetPaths = assets.map(a => path.join(DIST_DIR, a)).map(p => `"${p}"`).join(' ');
-
-            const cmd = `gh release create v${version} -t "${title}" -F "${noteFile}" ${assetPaths}`;
-            console.log(`Executing: ${cmd}`);
             execSync(cmd, { stdio: 'inherit', cwd: ROOT_DIR });
-
-            await fs.remove(noteFile);
-            console.log('Release created successfully!');
-
+            log.success('Release created successfully!');
         } catch (e) {
-            console.warn('\n! GitHub CLI (gh) not found or failed.');
-            console.log('To automate this heavily, please install "gh" (GitHub CLI).');
-            console.log('\n--- MANUAL RELEASE INSTRUCTIONS ---');
-            console.log(`1. Go to https://github.com/NyboTV/TP_ETS2_Plugin/releases/new`);
-            console.log(`2. Tag version: v${version}`);
-            console.log(`3. Release title: ${title}`);
-            console.log(`4. Description: (Copy from CHANGELOG.md)`);
-            console.log(`5. Drag & Drop files from: ${DIST_DIR}`);
+            throw e;
+        } finally {
+            await fs.remove(noteFile);
         }
 
     } catch (e) {
-        console.error('Auto Release failed:', e);
+        log.error(`Auto Release failed: ${e.message}`);
+        log.info('If this was a network/auth error, you can try again.');
+        log.header('MANUAL RELEASE FALLBACK');
+        log.box([
+            `1. Go to https://github.com/NyboTV/TP_ETS2_Plugin/releases/new`,
+            `2. Tag version: v${version}`,
+            `3. Upload files from: ${DIST_DIR}`
+        ]);
     }
 }
 
 async function mainMenu() {
     console.clear();
-    console.log('==========================================');
-    console.log('   ETS2 Dashboard - Build & Release Tool  ');
-    console.log('==========================================');
-    console.log('1. Simple Build (Clean, Version++, Pack)');
-    console.log('2. Git Upload (Add, Commit, Push)');
-    console.log('3. Full Release (Build + Git + GH Release)');
-    console.log('4. Exit');
-    console.log('==========================================');
+    log.box([
+        '   ETS2 Dashboard - Build & Release Tool  ',
+        '   v1.0.0 Interactive                     '
+    ]);
+    console.log(`${colors.fg.cyan}1.${colors.reset} Simple Build ${colors.dim}(Clean, Version++, Pack)${colors.reset}`);
+    console.log(`${colors.fg.cyan}2.${colors.reset} Git Upload ${colors.dim}(Add, Commit, Push)${colors.reset}`);
+    console.log(`${colors.fg.cyan}3.${colors.reset} Full Release ${colors.dim}(Build + Git + GH Release)${colors.reset}`);
+    console.log(`${colors.fg.cyan}4.${colors.reset} Exit`);
+    console.log('');
 
-    const answer = await askQuestion('Select an option (1-4): ');
+    const answer = await askQuestion(`Select an option (${colors.fg.cyan}1-4${colors.fg.white}): `);
 
     if (answer === '1') {
         await runBuild();
@@ -323,7 +424,7 @@ async function mainMenu() {
     } else if (answer === '4') {
         process.exit(0);
     } else {
-        console.log('Invalid selection.');
+        log.error('Invalid selection.');
     }
 
     rl.close();
