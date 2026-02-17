@@ -296,40 +296,33 @@ async function getChangelogInfo() {
     return { title, body: body.join('\n').trim() };
 }
 
-async function checkGhAuth() {
-    try {
-        // Check if gh exists first
-        execSync('gh --version', { stdio: 'ignore' });
 
+function getGhPath() {
+    try {
+        execSync('gh --version', { stdio: 'ignore' });
+        return 'gh';
+    } catch {
+        const commonPaths = [
+            path.join(process.env.LOCALAPPDATA, 'Microsoft', 'WinGet', 'Links', 'gh.exe'),
+            path.join(process.env.LOCALAPPDATA, 'GitHub CLI', 'gh.exe'),
+            path.join(process.env.ProgramFiles, 'GitHub CLI', 'gh.exe'),
+            path.join(process.env['ProgramFiles(x86)'], 'GitHub CLI', 'gh.exe')
+        ];
+
+        const found = commonPaths.find(p => fs.existsSync(p));
+        if (found) {
+            return `"${found}"`;
+        }
+        return null;
+    }
+}
+
+async function checkGhAuth(ghPath) {
+    try {
         // Check if logged in
-        execSync('gh auth status', { stdio: 'ignore' });
+        execSync(`${ghPath} auth status`, { stdio: 'ignore' });
         return true;
     } catch (e) {
-        // Check if it was missing or just not auth
-        let ghPath = 'gh';
-        try {
-            execSync('gh --version', { stdio: 'ignore' });
-        } catch {
-            // Try to find it in common locations
-            const commonPaths = [
-                path.join(process.env.LOCALAPPDATA, 'Microsoft', 'WinGet', 'Links', 'gh.exe'),
-                path.join(process.env.LOCALAPPDATA, 'GitHub CLI', 'gh.exe'),
-                path.join(process.env.ProgramFiles, 'GitHub CLI', 'gh.exe'),
-                path.join(process.env['ProgramFiles(x86)'], 'GitHub CLI', 'gh.exe')
-            ];
-
-            const found = commonPaths.find(p => fs.existsSync(p));
-            if (found) {
-                log.info(`Found GitHub CLI at: ${found}`);
-                log.info('It seems it is not in your PATH. Using absolute path for now.');
-                ghPath = `"${found}"`;
-            } else {
-                log.warn('GitHub CLI (gh) not found in PATH or common locations.');
-                log.info('Please install it manually or ensure it is in your PATH.');
-                return false;
-            }
-        }
-
         log.warn('Not logged in to GitHub.');
         log.step('Starting interactive login...');
         try {
@@ -358,13 +351,22 @@ async function runAutoRelease(version) {
             return;
         }
 
-        // 1. Check/Perform Auth (includes existence check)
-        if (!await checkGhAuth()) {
-            // Fallback to manual if auth/check fails
-            throw new Error('GitHub CLI check or auth failed.');
+        // 1. Resolve GH Path
+        const ghPath = getGhPath();
+        if (!ghPath) {
+            log.warn('GitHub CLI (gh) not found in PATH or common locations.');
+            log.info('Please install it manually or ensure it is in your PATH.');
+            throw new Error('GitHub CLI not found.');
+        } else if (ghPath !== 'gh') {
+            log.info(`Using GitHub CLI at: ${ghPath}`);
         }
 
-        // 2. Create Release
+        // 2. Check/Perform Auth
+        if (!await checkGhAuth(ghPath)) {
+            throw new Error('GitHub CLI authentication failed.');
+        }
+
+        // 3. Create Release
         // Construct notes file
         const noteFile = path.join(TMP_DIR, 'release_notes.txt');
         await fs.ensureDir(TMP_DIR);
@@ -374,7 +376,7 @@ async function runAutoRelease(version) {
         const assetPaths = assets.map(a => path.join(DIST_DIR, a)).map(p => `"${p}"`).join(' ');
 
         log.step('Creating GitHub Release...');
-        const cmd = `gh release create v${version} -t "${title}" -F "${noteFile}" ${assetPaths}`;
+        const cmd = `${ghPath} release create v${version} -t "${title}" -F "${noteFile}" ${assetPaths}`;
         log.info(`Executing: ${cmd}`);
 
         try {
