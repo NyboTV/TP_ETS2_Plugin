@@ -80,8 +80,11 @@ export const mapTrailerStates = (telemetry: any) => {
     const mainTrailer = trailers[0];
     if (mainTrailer && mainTrailer.attached) {
         states.push({ id: 'Nybo.ETS2.Trailer.BrakeTemperature', value: `${Math.round(mainTrailer.brakeTemperature || 0)} °C` });
-        states.push({ id: 'Nybo.ETS2.Trailer.LiftAxleOn', value: (mainTrailer.liftAxle ?? false).toString() });
-        states.push({ id: 'Nybo.ETS2.Trailer.LiftAxleIndicatorOn', value: (mainTrailer.liftAxleIndicator ?? false).toString() });
+
+        // Fix: Use truck.trailerLiftAxle / truck.trailerLiftAxleIndicator as these are the correct properties for the active trailer
+        const truck = telemetry.truck || {};
+        states.push({ id: 'Nybo.ETS2.Trailer.LiftAxleOn', value: (truck.trailerLiftAxle ?? false).toString() });
+        states.push({ id: 'Nybo.ETS2.Trailer.LiftAxleIndicatorOn', value: (truck.trailerLiftAxleIndicator ?? false).toString() });
     } else {
         states.push({ id: 'Nybo.ETS2.Trailer.BrakeTemperature', value: '0 °C' });
         states.push({ id: 'Nybo.ETS2.Trailer.LiftAxleOn', value: 'false' });

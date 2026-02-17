@@ -1,4 +1,4 @@
-# V5.1.0 - High-Performance Gauges & Telemetry Expansion
+# V5.1.2 - High-Performance Gauges & Telemetry Expansion
 
 This major update focuses on extreme performance optimizations and a massive expansion of the telemetry data available to Touch Portal.
 

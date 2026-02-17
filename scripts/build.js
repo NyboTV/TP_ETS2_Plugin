@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const { execSync } = require('child_process');
 const AdmZip = require('adm-zip');
+const readline = require('readline');
 
 const APP_NAME = 'ETS2_Dashboard';
 const ROOT_DIR = path.join(__dirname, '..');
@@ -14,6 +15,13 @@ const platforms = [
     { name: 'linux', pkg: 'node18-linux-x64', ext: '', scs: 'linux' },
     { name: 'mac', pkg: 'node18-macos-x64', ext: '', scs: 'macos' }
 ];
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const askQuestion = (query) => new Promise(resolve => rl.question(query, resolve));
 
 async function ThroughDirectory(Directory, Files = [], Folder = []) {
     const items = await fs.readdir(Directory);
@@ -29,9 +37,9 @@ async function ThroughDirectory(Directory, Files = [], Folder = []) {
     return { Files, Folder };
 }
 
-async function build() {
+async function runBuild() {
     try {
-        console.log('--- Starting Refined Build Process (V1 Parity) ---');
+        console.log('\n--- Starting Build Process (V1 Parity) ---');
 
         // 1. Cleanup
         console.log('Cleaning up...');
@@ -88,7 +96,6 @@ async function build() {
 
         // 4. PKG Binary Generation
         console.log('Generating binaries with pkg...');
-        // We run pkg for all targets at once
         const targets = platforms.map(p => p.pkg).join(',');
         execSync(`npx pkg . --targets ${targets} --out-path build`, { stdio: 'inherit', cwd: ROOT_DIR });
 
@@ -98,13 +105,8 @@ async function build() {
             const stagingPath = path.join(TMP_DIR, platform.name, APP_NAME);
             await fs.ensureDir(stagingPath);
 
-            // Copy Binary
-            // pkg naming convention: [name]-[target][ext]
-            // We'll try to find the binary by name pattern
             const pkgBaseName = 'tp_ets2_plugin';
             let binarySource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.name}${platform.ext}`);
-
-            // On Windows, pkg might output as .exe
             if (platform.name === 'win' && !binarySource.endsWith('.exe')) binarySource += '.exe';
 
             const binaryDest = path.join(stagingPath, `${APP_NAME}${platform.ext}`);
@@ -113,13 +115,11 @@ async function build() {
                 await fs.copy(binarySource, binaryDest);
                 console.log(`- Copied binary: ${path.basename(binarySource)} -> ${APP_NAME}${platform.ext}`);
             } else {
-                // Try alternate naming in case of pkg variation
                 const altSource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
                 if (await fs.pathExists(altSource)) {
                     await fs.copy(altSource, binaryDest);
                     console.log(`- Copied binary (alt): ${path.basename(altSource)} -> ${APP_NAME}${platform.ext}`);
                 } else {
-                    // One last try: just searching the dir
                     const files = await fs.readdir(BUILD_DIR);
                     const match = files.find(f => f.startsWith(pkgBaseName) && f.includes(platform.name));
                     if (match) {
@@ -131,28 +131,24 @@ async function build() {
                 }
             }
 
-            // Copy Folders
             await fs.copy(path.join(ROOT_DIR, 'config'), path.join(stagingPath, 'config'));
             await fs.copy(path.join(ROOT_DIR, 'entry.tp'), path.join(stagingPath, 'entry.tp'));
             await fs.copy(path.join(ROOT_DIR, 'LICENSE'), path.join(stagingPath, 'LICENSE'));
 
-            // Inject version into packaged cfg.json
             const stagingCfgPath = path.join(stagingPath, 'config', 'cfg.json');
             if (await fs.pathExists(stagingCfgPath)) {
                 const cfg = await fs.readJson(stagingCfgPath);
                 cfg.version = newVersion;
-                cfg.firstInstall = true; // Set true ONLY for the package
+                cfg.firstInstall = true;
                 await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
                 console.log(`- Injected version ${newVersion} and set firstInstall: true into packaged cfg.json`);
             }
 
-            // Copy platform-specific SCS plugin
             const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);
             if (await fs.pathExists(scsSource)) {
                 await fs.copy(scsSource, path.join(stagingPath, 'bin', 'scs-sdk-plugin', platform.scs));
             }
 
-            // 6. Generate files.json (V1 Parity)
             console.log('- Generating files.json...');
             const { Files, Folder } = await ThroughDirectory(stagingPath);
             const allItems = [...Folder, ...Files];
@@ -162,16 +158,13 @@ async function build() {
             });
             await fs.writeJson(path.join(stagingPath, 'config', 'files.json'), relativeItems, { spaces: 2 });
 
-            // 7. Zip into .tpp
             const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${newVersion}.tpp`);
             const zip = new AdmZip();
-            // Important: Zip root contains the folder name "ETS2_Dashboard"
             zip.addLocalFolder(stagingPath, APP_NAME);
             zip.writeZip(zipPath);
             console.log(`- Created: ${path.basename(zipPath)}`);
         }
 
-        // Cleanup intermediate folders
         console.log('Final cleanup...');
         await fs.remove(TMP_DIR);
         await fs.remove(BUILD_DIR);
@@ -179,11 +172,161 @@ async function build() {
 
         console.log('\n--- Build Completed Successfully! ---');
         console.log(`Packages are in: ${DIST_DIR}`);
+        return newVersion;
 
     } catch (e) {
         console.error('Build failed:', e);
-        process.exit(1);
+        throw e;
     }
 }
 
-build();
+async function runGitUpload(version) {
+    console.log('\n--- Starting Git Upload ---');
+    try {
+        if (!version) {
+            const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
+            version = pkgJson.version;
+        }
+
+        console.log('Staging files...');
+        execSync('git add .', { stdio: 'inherit', cwd: ROOT_DIR });
+
+        console.log('Committing...');
+        try {
+            execSync(`git commit -m "Bump version to v${version}"`, { stdio: 'inherit', cwd: ROOT_DIR });
+        } catch (e) {
+            console.log('Nothing to commit or commit failed (ignoring if just empty).');
+        }
+
+        console.log('Pushing to remote...');
+        execSync('git push', { stdio: 'inherit', cwd: ROOT_DIR });
+        console.log('Git Upload Completed!');
+    } catch (e) {
+        console.error('Git Upload failed:', e.message);
+    }
+}
+
+async function getChangelogInfo() {
+    const changelogPath = path.join(ROOT_DIR, 'CHANGELOG.md');
+    if (!await fs.pathExists(changelogPath)) {
+        throw new Error('CHANGELOG.md not found!');
+    }
+
+    const content = await fs.readFile(changelogPath, 'utf-8');
+    const lines = content.split('\n');
+    let title = '';
+    let body = [];
+    let foundTitle = false;
+
+    // The first line starting with # is the title
+    // Everything after until the next # (or end) is the body
+    for (const line of lines) {
+        if (line.trim().startsWith('# ')) {
+            if (!foundTitle) {
+                // Remove '# ' and special chars from title if needed, or keep as is.
+                // User said: "V5.1.0 - High-Per..." is the title.
+                // We'll take the raw text after '# '
+                title = line.trim().substring(2).trim();
+                foundTitle = true;
+            } else {
+                // Stop at next main header if we want strict single release, 
+                // but usually changelogs have subsections like ## Features.
+                // If we hit another # V... then we stop.
+                if (line.trim().match(/^#\s+V\d+/)) break;
+                body.push(line);
+            }
+        } else if (foundTitle) {
+            body.push(line);
+        }
+    }
+
+    return { title, body: body.join('\n').trim() };
+}
+
+async function runAutoRelease(version) {
+    console.log('\n--- Starting Auto Release Preparation ---');
+    try {
+        const { title, body } = await getChangelogInfo();
+        console.log(`\nDetected Release Info from CHANGELOG.md:`);
+        console.log(`Title: ${title}`);
+        console.log(`Body Length: ${body.length} chars`);
+
+        const confirm = await askQuestion('\nIs this correct? (y/n): ');
+        if (confirm.toLowerCase() !== 'y') {
+            console.log('Aborting release creation.');
+            return;
+        }
+
+        // Check for gh cli
+        try {
+            execSync('gh --version', { stdio: 'ignore' });
+
+            // If gh exists, create release
+            console.log('GitHub CLI found. Creating release...');
+            // Construct command carefully. 
+            // -t title, -n notes
+            // We need to escape quotes in body for command line if passing directly, 
+            // but spawn/execSync might be tricky with large multiline strings.
+            // Better to write body to a temp file.
+            const noteFile = path.join(TMP_DIR, 'release_notes.txt');
+            await fs.ensureDir(TMP_DIR);
+            await fs.writeFile(noteFile, body);
+
+            const assets = await fs.readdir(DIST_DIR);
+            const assetPaths = assets.map(a => path.join(DIST_DIR, a)).map(p => `"${p}"`).join(' ');
+
+            const cmd = `gh release create v${version} -t "${title}" -F "${noteFile}" ${assetPaths}`;
+            console.log(`Executing: ${cmd}`);
+            execSync(cmd, { stdio: 'inherit', cwd: ROOT_DIR });
+
+            await fs.remove(noteFile);
+            console.log('Release created successfully!');
+
+        } catch (e) {
+            console.warn('\n! GitHub CLI (gh) not found or failed.');
+            console.log('To automate this heavily, please install "gh" (GitHub CLI).');
+            console.log('\n--- MANUAL RELEASE INSTRUCTIONS ---');
+            console.log(`1. Go to https://github.com/NyboTV/TP_ETS2_Plugin/releases/new`);
+            console.log(`2. Tag version: v${version}`);
+            console.log(`3. Release title: ${title}`);
+            console.log(`4. Description: (Copy from CHANGELOG.md)`);
+            console.log(`5. Drag & Drop files from: ${DIST_DIR}`);
+        }
+
+    } catch (e) {
+        console.error('Auto Release failed:', e);
+    }
+}
+
+async function mainMenu() {
+    console.clear();
+    console.log('==========================================');
+    console.log('   ETS2 Dashboard - Build & Release Tool  ');
+    console.log('==========================================');
+    console.log('1. Simple Build (Clean, Version++, Pack)');
+    console.log('2. Git Upload (Add, Commit, Push)');
+    console.log('3. Full Release (Build + Git + GH Release)');
+    console.log('4. Exit');
+    console.log('==========================================');
+
+    const answer = await askQuestion('Select an option (1-4): ');
+
+    if (answer === '1') {
+        await runBuild();
+    } else if (answer === '2') {
+        const pkg = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
+        await runGitUpload(pkg.version);
+    } else if (answer === '3') {
+        const newVersion = await runBuild();
+        await runGitUpload(newVersion);
+        await runAutoRelease(newVersion);
+    } else if (answer === '4') {
+        process.exit(0);
+    } else {
+        console.log('Invalid selection.');
+    }
+
+    rl.close();
+}
+
+mainMenu();
