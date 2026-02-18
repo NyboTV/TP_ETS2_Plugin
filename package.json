@@ -73,7 +73,7 @@
         "@types/fs-extra": "^11.0.4",
         "@types/node": "^20.11.0",
         "electron": "^29.1.0",
-        "electron-builder": "^24.9.1",
+        "electron-builder": "^26.7.0",
         "pkg": "^5.8.1",
         "ts-node": "^10.9.2",
         "typescript": "^4.9.5"
