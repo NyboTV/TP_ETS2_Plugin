@@ -90,57 +90,70 @@ async function ThroughDirectory(Directory, Files = [], Folder = []) {
     return { Files, Folder };
 }
 
-async function runBuild() {
+async function bumpVersion() {
+    log.step('Incrementing version...');
+    const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
+    const pkgJson = await fs.readJson(pkgJsonPath);
+
+    const versionParts = pkgJson.version.split('.').map(id => {
+        return parseInt(id.split('-')[0]);
+    });
+
+    versionParts[2]++; // Always increment patch
+    if (versionParts[2] > 9) {
+        versionParts[2] = 0;
+        versionParts[1]++;
+        if (versionParts[1] > 9) {
+            versionParts[1] = 0;
+            versionParts[0]++;
+        }
+    }
+
+    const newVersion = versionParts.join('.');
+    pkgJson.version = newVersion;
+    await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 4 });
+    log.success(`Version updated to: ${newVersion}`);
+
+    log.info('Updating entry.tp version...');
+    const entryTpPath = path.join(ROOT_DIR, 'entry.tp');
+    const entryTp = await fs.readJson(entryTpPath);
+    entryTp.version = parseInt(newVersion.split('.')[0]);
+    await fs.writeJson(entryTpPath, entryTp, { spaces: 2 });
+
+    log.info('Updating root cfg.json version...');
+    const rootCfgPath = path.join(ROOT_DIR, 'config', 'cfg.json');
+    if (await fs.pathExists(rootCfgPath)) {
+        const cfg = await fs.readJson(rootCfgPath);
+        cfg.version = newVersion;
+        await fs.writeJson(rootCfgPath, cfg, { spaces: 2 });
+        log.success(`Updated root cfg.json to version ${newVersion}`);
+    }
+    return newVersion;
+}
+
+async function runBuild({ isCi = false, targetPlatform = null } = {}) {
     try {
-        log.header('Starting Build Process (V1 Parity)');
+        log.header(isCi ? `Starting CI Build for ${targetPlatform}` : 'Starting Full Local Build');
 
         // 1. Cleanup
         log.step('Cleaning up...');
-        await fs.remove(DIST_DIR);
+        if (!isCi) {
+            await fs.remove(DIST_DIR);
+        }
         await fs.remove(BUILD_DIR);
         await fs.remove(TMP_DIR);
         await fs.remove(path.join(ROOT_DIR, 'dist'));
         await fs.ensureDir(DIST_DIR);
 
         // 2. Versioning
-        log.step('Incrementing version...');
-        const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
-        const pkgJson = await fs.readJson(pkgJsonPath);
-
-        const versionParts = pkgJson.version.split('.').map(id => {
-            // Remove any suffix like -alpha or -beta before parsing
-            return parseInt(id.split('-')[0]);
-        });
-
-        // Carry-over logic: x.y.9 -> x.(y+1).0 | x.9.9 -> (x+1).0.0
-        versionParts[2]++; // Always increment patch
-        if (versionParts[2] > 9) {
-            versionParts[2] = 0;
-            versionParts[1]++;
-            if (versionParts[1] > 9) {
-                versionParts[1] = 0;
-                versionParts[0]++;
-            }
-        }
-
-        const newVersion = versionParts.join('.');
-        pkgJson.version = newVersion;
-        await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 4 });
-        log.success(`Version updated to: ${newVersion}`);
-
-        log.info('Updating entry.tp version...');
-        const entryTpPath = path.join(ROOT_DIR, 'entry.tp');
-        const entryTp = await fs.readJson(entryTpPath);
-        entryTp.version = parseInt(newVersion.split('.')[0]);
-        await fs.writeJson(entryTpPath, entryTp, { spaces: 2 });
-
-        log.info('Updating root cfg.json version...');
-        const rootCfgPath = path.join(ROOT_DIR, 'config', 'cfg.json');
-        if (await fs.pathExists(rootCfgPath)) {
-            const cfg = await fs.readJson(rootCfgPath);
-            cfg.version = newVersion;
-            await fs.writeJson(rootCfgPath, cfg, { spaces: 2 });
-            log.success(`Updated root cfg.json to version ${newVersion}`);
+        let currentVersion;
+        if (!isCi) {
+            currentVersion = await bumpVersion();
+        } else {
+            const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
+            const pkgJson = await fs.readJson(pkgJsonPath);
+            currentVersion = pkgJson.version;
+            log.info(`Using existing version: ${currentVersion}`);
         }
 
         // 3. Compile
@@ -149,11 +162,14 @@ async function runBuild() {
 
         // 4. PKG Binary Generation
         log.step('Generating binaries with pkg...');
-        const targets = platforms.map(p => p.pkg).join(',');
+        const activePlatforms = targetPlatform ? platforms.filter(p => p.name === targetPlatform) : platforms;
+        if (activePlatforms.length === 0) throw new Error(`Platform ${targetPlatform} not found.`);
+
+        const targets = activePlatforms.map(p => p.pkg).join(',');
         execSync(`npx pkg . --targets ${targets} --out-path build`, { stdio: 'inherit', cwd: ROOT_DIR });
 
         // 5. Packaging loop
-        for (const platform of platforms) {
+        for (const platform of activePlatforms) {
             log.header(`Packaging for ${platform.name}...`);
             const stagingPath = path.join(TMP_DIR, platform.name, APP_NAME);
             await fs.ensureDir(stagingPath);
@@ -191,10 +207,10 @@ async function runBuild() {
             const stagingCfgPath = path.join(stagingPath, 'config', 'cfg.json');
             if (await fs.pathExists(stagingCfgPath)) {
                 const cfg = await fs.readJson(stagingCfgPath);
-                cfg.version = newVersion;
+                cfg.version = currentVersion;
                 cfg.firstInstall = true;
                 await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
-                log.info(`Injected version ${newVersion} and set firstInstall: true`);
+                log.info(`Injected version ${currentVersion} and set firstInstall: true`);
             }
 
             const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);
@@ -211,7 +227,7 @@ async function runBuild() {
             });
             await fs.writeJson(path.join(stagingPath, 'config', 'files.json'), relativeItems, { spaces: 2 });
 
-            const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${newVersion}.tpp`);
+            const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${currentVersion}.tpp`);
             const zip = new AdmZip();
             zip.addLocalFolder(stagingPath, APP_NAME);
             zip.writeZip(zipPath);
@@ -225,7 +241,7 @@ async function runBuild() {
 
         log.header('Build Completed Successfully!');
         log.success(`Packages are in: ${DIST_DIR}`);
-        return newVersion;
+        return currentVersion;
 
     } catch (e) {
         log.error(`Build failed: ${e.message}`);
@@ -271,20 +287,12 @@ async function getChangelogInfo() {
     let body = [];
     let foundTitle = false;
 
-    // The first line starting with # is the title
-    // Everything after until the next # (or end) is the body
     for (const line of lines) {
         if (line.trim().startsWith('# ')) {
             if (!foundTitle) {
-                // Remove '# ' and special chars from title if needed, or keep as is.
-                // User said: "V5.1.0 - High-Per..." is the title.
-                // We'll take the raw text after '# '
                 title = line.trim().substring(2).trim();
                 foundTitle = true;
             } else {
-                // Stop at next main header if we want strict single release, 
-                // but usually changelogs have subsections like ## Features.
-                // If we hit another # V... then we stop.
                 if (line.trim().match(/^#\s+V\d+/)) break;
                 body.push(line);
             }
@@ -295,7 +303,6 @@ async function getChangelogInfo() {
 
     return { title, body: body.join('\n').trim() };
 }
-
 
 function getGhPath() {
     try {
@@ -319,7 +326,6 @@ function getGhPath() {
 
 async function checkGhAuth(ghPath) {
     try {
-        // Check if logged in
         execSync(`${ghPath} auth status`, { stdio: 'ignore' });
         return true;
     } catch (e) {
@@ -335,9 +341,11 @@ async function checkGhAuth(ghPath) {
     }
 }
 
-async function runAutoRelease(version) {
-    log.header('Starting Auto Release Preparation');
+async function runReleasePrepare() {
+    log.header('Starting Release Preparation');
     try {
+        const version = await bumpVersion();
+
         const { title, body } = await getChangelogInfo();
         log.box([
             'Detected Release Info from CHANGELOG.md:',
@@ -366,22 +374,22 @@ async function runAutoRelease(version) {
             throw new Error('GitHub CLI authentication failed.');
         }
 
-        // 3. Create Release
-        // Construct notes file
+        // 3. Git commit & push
+        await runGitUpload(version);
+
+        // 4. Create Release
         const noteFile = path.join(TMP_DIR, 'release_notes.txt');
         await fs.ensureDir(TMP_DIR);
         await fs.writeFile(noteFile, body);
 
-        const assets = await fs.readdir(DIST_DIR);
-        const assetPaths = assets.map(a => path.join(DIST_DIR, a)).map(p => `"${p}"`).join(' ');
-
         log.step('Creating GitHub Release...');
-        const cmd = `${ghPath} release create v${version} -t "${title}" -F "${noteFile}" ${assetPaths}`;
+        // OMIT ASSETS because the github action will build and attach them!
+        const cmd = `${ghPath} release create v${version} -t "${title}" -F "${noteFile}"`;
         log.info(`Executing: ${cmd}`);
 
         try {
             execSync(cmd, { stdio: 'inherit', cwd: ROOT_DIR });
-            log.success('Release created successfully!');
+            log.success('GitHub Release created! GitHub Actions will now build and attach the artifacts.');
         } catch (e) {
             throw e;
         } finally {
@@ -389,26 +397,29 @@ async function runAutoRelease(version) {
         }
 
     } catch (e) {
-        log.error(`Auto Release failed: ${e.message}`);
-        log.info('If this was a network/auth error, you can try again.');
-        log.header('MANUAL RELEASE FALLBACK');
-        log.box([
-            `1. Go to https://github.com/NyboTV/TP_ETS2_Plugin/releases/new`,
-            `2. Tag version: v${version}`,
-            `3. Upload files from: ${DIST_DIR}`
-        ]);
+        log.error(`Release Prep failed: ${e.message}`);
     }
 }
 
 async function mainMenu() {
+    const args = process.argv.slice(2);
+    const ciArg = args.find(a => a.startsWith('--ci-platform='));
+
+    if (ciArg) {
+        const platform = ciArg.split('=')[1];
+        await runBuild({ isCi: true, targetPlatform: platform });
+        process.exit(0);
+        return;
+    }
+
     console.clear();
     log.box([
         '   ETS2 Dashboard - Build & Release Tool  ',
-        '   v1.0.0 Interactive                     '
+        '   v2.0.0 Interactive                     '
     ]);
-    console.log(`${colors.fg.cyan}1.${colors.reset} Simple Build ${colors.dim}(Clean, Version++, Pack)${colors.reset}`);
+    console.log(`${colors.fg.cyan}1.${colors.reset} Simple Build ${colors.dim}(Clean, Version++, Pack All Local)${colors.reset}`);
     console.log(`${colors.fg.cyan}2.${colors.reset} Git Upload ${colors.dim}(Add, Commit, Push)${colors.reset}`);
-    console.log(`${colors.fg.cyan}3.${colors.reset} Full Release ${colors.dim}(Build + Git + GH Release)${colors.reset}`);
+    console.log(`${colors.fg.cyan}3.${colors.reset} Full Release ${colors.dim}(Version++, Git, Create GH Release -> Triggers CI)${colors.reset}`);
     console.log(`${colors.fg.cyan}4.${colors.reset} Exit`);
     console.log('');
 
@@ -420,9 +431,7 @@ async function mainMenu() {
         const pkg = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
         await runGitUpload(pkg.version);
     } else if (answer === '3') {
-        const newVersion = await runBuild();
-        await runGitUpload(newVersion);
-        await runAutoRelease(newVersion);
+        await runReleasePrepare();
     } else if (answer === '4') {
         process.exit(0);
     } else {
@@ -433,3 +442,4 @@ async function mainMenu() {
 }
 
 mainMenu();
+
