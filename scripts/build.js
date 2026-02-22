@@ -131,6 +131,39 @@ async function bumpVersion() {
     return newVersion;
 }
 
+async function patchTelemetry() {
+    log.step('Patching trucksim-telemetry for Linux JS compatibility...');
+    const telemetryPath = path.join(ROOT_DIR, 'node_modules', 'trucksim-telemetry', 'dist', 'buffer', 'getBuffer.js');
+    if (await fs.pathExists(telemetryPath)) {
+        let code = await fs.readFile(telemetryPath, 'utf8');
+        
+        const patchStr = `const getBuffer = function (config = (0, createConfig_1.createConfig)()) {
+    try {
+        const buffer = scsSDKTelemetry_node_1.default.getBuffer(config.sharedMemoryName);
+        return buffer;
+    } catch (err) {
+        if (process.platform === 'linux') {
+            try {
+                // Fallback to pure JS file reading on Linux
+                const fs = require('fs');
+                return fs.readFileSync('/dev/shm/' + config.sharedMemoryName);
+            } catch (fsErr) {
+                return null;
+            }
+        }
+        return null;
+    }
+};`;
+        
+        code = code.replace(/const getBuffer = function \([\s\S]*?\nexports\.getBuffer = getBuffer;/m, patchStr + '\nexports.getBuffer = getBuffer;');
+        
+        await fs.writeFile(telemetryPath, code, 'utf8');
+        log.success('Patched telemetry module successfully.');
+    } else {
+        log.warn('trucksim-telemetry module not found! Cannot patch.');
+    }
+}
+
 async function runBuild({ isCi = false, targetPlatform = null } = {}) {
     try {
         log.header(isCi ? `Starting CI Build for ${targetPlatform}` : 'Starting Full Local Build');
