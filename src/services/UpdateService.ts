@@ -6,15 +6,18 @@ import { logger } from './LoggerService';
 import { configService } from './ConfigService';
 import { spawn } from 'child_process';
 import { dialogService } from './DialogService';
+import semver from 'semver';
 
+// Fetch the package.json from the master branch directly to avoid GitHub API Rate Limits
+const UPDATE_URL = 'https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/package.json';
+// GitHub always points this URL to the latest Release asset
+const DOWNLOAD_URL = 'https://github.com/NyboTV/TP_ETS2_Plugin/releases/latest/download/ETS2_Dashboard.tpp';
 const DOWNLOAD_DIR = path.join(os.homedir(), 'Downloads');
-const REPO_URL = 'https://api.github.com/repos/NyboTV/TP_ETS2_Plugin/releases';
 
 class UpdateService {
 
     private getPackageVersion(): string {
         try {
-            // In pkg, bundled assets are relative to __dirname (dist/services/...)
             const pkgPath = path.join(__dirname, '..', '..', 'package.json');
             if (fs.existsSync(pkgPath)) {
                 const pkg = fs.readJSONSync(pkgPath);
@@ -27,80 +30,72 @@ class UpdateService {
     }
 
     public async checkForUpdates() {
-        if (!configService.cfg.UpdateCheck) return;
+        if (!configService.cfg.UpdateCheck || configService.cfg.OfflineMode) {
+            logger.info('[UpdateService] Update check disabled by settings.');
+            return;
+        }
 
-        logger.info('[UpdateService] Checking for updates...');
+        logger.info('[UpdateService] Checking for updates via raw GitHub package.json...');
 
         try {
-            const response = await axios.get(REPO_URL);
-            if (!response.data || response.data.length === 0) return;
+            const response = await axios.get(UPDATE_URL);
+            if (!response.data || !response.data.version) {
+                logger.warn('[UpdateService] Could not parse version from remote config.');
+                return;
+            }
 
-            const latestRelease = response.data[0];
-            const latestVersion = latestRelease.tag_name;
+            const latestVersion = response.data.version;
             const currentVersion = configService.cfg.version || this.getPackageVersion();
 
             logger.info(`[UpdateService] Current version: ${currentVersion} | Latest version: ${latestVersion}`);
 
-            // V1 Logic: Check PreRelease
-            if (latestRelease.prerelease && !configService.userCfg.PreRelease) {
-                logger.info('[UpdateService] Newest version is a pre-release and not allowed in settings.');
+            // Ensure versions are semver valid before comparing
+            const validLatest = semver.valid(semver.coerce(latestVersion));
+            const validCurrent = semver.valid(semver.coerce(currentVersion));
+
+            if (!validLatest || !validCurrent) {
+                logger.error('[UpdateService] Invalid version format detected, aborting update check.');
                 return;
             }
 
-            if (this.isNewerVersion(latestVersion, currentVersion)) {
+            const isPreRelease = semver.prerelease(latestVersion) !== null;
+            if (isPreRelease && !configService.userCfg.PreRelease) {
+                logger.info('[UpdateService] Newest version is a pre-release and not allowed in user settings.');
+                return;
+            }
+
+            if (semver.gt(validLatest, validCurrent)) {
                 logger.info(`[UpdateService] New version found: ${latestVersion}`);
 
                 const updateRes = await dialogService.show(
-                    `We found a new Update! Version: ${latestVersion}\n\nInstall?`,
+                    `We found a new Update! Version: ${latestVersion}\n\nDo you want to download and install it now?`,
                     "ETS2 Dashboard Update",
                     'YesNo',
                     'Question'
                 );
 
                 if (updateRes === 'Yes') {
-                    const asset = latestRelease.assets.find((a: any) => a.name.endsWith('.tpp'));
-                    if (asset) {
-                        await dialogService.show(
-                            "The update will download shortly. If the import doesn't start automatically, please run the .tpp file from your Downloads folder manually.",
-                            "ETS2 Dashboard Update",
-                            'OK',
-                            'Warning'
-                        );
+                    await dialogService.show(
+                        "The update will download shortly. If Touch Portal does not automatically prompt the import screen, please run the .tpp file from your Downloads folder manually.",
+                        "ETS2 Dashboard Update",
+                        'OK',
+                        'Information'
+                    );
 
-                        await this.downloadAndInstall(asset.browser_download_url, latestVersion);
-                    }
+                    await this.downloadAndInstall(DOWNLOAD_URL, latestVersion);
                 }
             } else {
                 logger.info('[UpdateService] Up to date.');
             }
 
         } catch (error) {
-            logger.error(`[UpdateService] Error: ${error}`);
+            logger.error(`[UpdateService] Error fetching update info: ${error}`);
         }
-    }
-
-    private isNewerVersion(newVer: string, oldVer: string): boolean {
-        const parseVersion = (v: string) => v
-            .replace(/^v/, '')
-            .split('-')[0] // Take only the part before any suffix like -alpha
-            .split('.')
-            .map(n => parseInt(n.replace(/[^0-9]/g, ''), 10) || 0);
-
-        const v1 = parseVersion(newVer);
-        const v2 = parseVersion(oldVer);
-
-        for (let i = 0; i < Math.max(v1.length, v2.length); i++) {
-            const n1 = v1[i] || 0;
-            const n2 = v2[i] || 0;
-            if (n1 > n2) return true;
-            if (n1 < n2) return false;
-        }
-        return false;
     }
 
     private async downloadAndInstall(url: string, version: string) {
         try {
-            logger.info(`[UpdateService] Downloading ${version}...`);
+            logger.info(`[UpdateService] Downloading update file for ${version}...`);
             const dest = path.join(DOWNLOAD_DIR, 'ETS2_Dashboard.tpp');
 
             await this.backupConfig(version);
@@ -111,32 +106,54 @@ class UpdateService {
                 responseType: 'stream'
             });
 
+            const totalLength = response.headers['content-length'];
+            let downloadedProgress = 0;
+            let lastLogStep = 0;
+
+            response.data.on('data', (chunk: any) => {
+                downloadedProgress += chunk.length;
+                if (totalLength) {
+                    const progress = Math.round((downloadedProgress / totalLength) * 100);
+                    // Log progress at 25%, 50%, 75% thresholds
+                    if (progress >= lastLogStep + 25) {
+                        lastLogStep = progress;
+                        logger.debug(`[UpdateService] Download progress: ${progress}%`);
+                    }
+                }
+            });
+
             const writer = fs.createWriteStream(dest);
             response.data.pipe(writer);
 
             return new Promise((resolve, reject) => {
                 writer.on('finish', async () => {
-                    logger.info('[UpdateService] Download finished.');
+                    logger.info('[UpdateService] Download finished successfully.');
 
-                    // V1 waited 1.5s then 0.2s then started install
+                    // Wait a moment to ensure file handles are released
                     await new Promise(r => setTimeout(r, 1500));
 
                     this.install(dest);
                     resolve(true);
                 });
-                writer.on('error', reject);
+                writer.on('error', (err) => {
+                    logger.error(`[UpdateService] File write error: ${err}`);
+                    reject(err);
+                });
             });
 
         } catch (error) {
-            logger.error(`[UpdateService] Failed: ${error}`);
+            logger.error(`[UpdateService] Download Failed: ${error}`);
         }
     }
 
     private async backupConfig(newVersion: string) {
         try {
-            const backupDir = path.join(DOWNLOAD_DIR, 'ETS2_Dashboard-Backup'); // V1 compatible
+            // Keep backup inside the plugin directory instead of the user's personal Downloads folder
+            const backupDir = path.join(process.cwd(), 'backups', 'config_backup');
             await fs.ensureDir(backupDir);
-            await fs.emptyDir(backupDir); // Clear old backups if any
+            await fs.emptyDir(backupDir);
+
+            logger.debug(`[UpdateService] Creating settings backup at ${backupDir}`);
             await fs.copy(path.join(process.cwd(), 'config'), backupDir);
 
             const cfgPath = path.join(backupDir, 'cfg.json');
@@ -145,21 +162,21 @@ class UpdateService {
                 cfg.version = newVersion;
                 await fs.writeJSON(cfgPath, cfg, { spaces: 2 });
             }
+            logger.info('[UpdateService] Configuration backup completed.');
         } catch (e) {
             logger.error(`[UpdateService] Backup failed: ${e}`);
         }
     }
 
     private install(filePath: string) {
-        let cmd = 'start';
-        if (process.platform === 'darwin') cmd = 'open';
-        else if (process.platform === 'linux') cmd = 'xdg-open';
+        let cmd = 'start "" ';
+        if (process.platform === 'darwin') cmd = 'open ';
+        else if (process.platform === 'linux') cmd = 'xdg-open ';
 
-        // Executing the .tpp file
-        spawn(cmd, ['', filePath], { shell: true, detached: true }).unref();
+        logger.info(`[UpdateService] Executing ${filePath} to import into Touch Portal...`);
+        spawn(`${cmd}"${filePath}"`, { shell: true, detached: true }).unref();
 
-        logger.info('[UpdateService] Exiting for update...');
-        // V1 used exit()
+        logger.info('[UpdateService] Exiting plugin for update process...');
         process.exit(0);
     }
 }

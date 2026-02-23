@@ -5,6 +5,16 @@ This documentation will help you understand all the features, states, and action
 
 ---
 
+## 🛠️ Installation
+
+1. Download the latest `.tpp` release file.
+2. **Execute** the downloaded file (double-click). If prompted with "Open With...", select **Touch Portal** or search for it.
+   - *Alternatively:* Open Touch Portal, click the gear icon (Settings), go to **Plugins**, and click **Import Plug-in**. Select the `.tpp` file.
+3. When prompted, click **"Trust Always"**.
+4. Touch Portal should be restarted and run the automated Setup Wizard to install the Telemetry plugin.
+
+---
+
 ## 🚀 Quick Start Guide
 
 The easiest way to get your dashboard running is to follow these steps in order:
