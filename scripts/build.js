@@ -1,6 +1,8 @@
 const fs = require('fs-extra');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, exec } = require('child_process');
+const util = require('util');
+const execAsync = util.promisify(exec);
 const AdmZip = require('adm-zip');
 const readline = require('readline');
 
@@ -13,9 +15,9 @@ const TMP_DIR = path.join(ROOT_DIR, 'scripts', 'tmp');
 const PKG_OUT_DIR = path.join(TMP_DIR, 'pkg_binaries');
 
 const platforms = [
-    { name: 'win', pkg: 'node18-win-x64', ext: '.exe', scs: 'windows', wsl: false },
-    { name: 'linux', pkg: 'node18-linux-x64', ext: '', scs: 'linux', wsl: true },
-    { name: 'mac', pkg: 'node18-macos-x64', ext: '', scs: 'macos', wsl: true } // macOS built via WSL so linux modules are bundled or fetched if prebuilt
+    { name: 'win', pkg: 'node18-win-x64', pkgName: 'win', ext: '.exe', scs: 'windows', wsl: false },
+    { name: 'linux', pkg: 'node18-linux-x64', pkgName: 'linux', ext: '', scs: 'linux', wsl: true },
+    { name: 'mac', pkg: 'node18-macos-x64', pkgName: 'macos', ext: '', scs: 'macos', wsl: true } // macOS built via WSL so linux modules are bundled or fetched if prebuilt
 ];
 
 // ANSI Colors for premium UI
@@ -45,8 +47,32 @@ const log = {
     info: (msg) => console.log(`${colors.dim}  ${msg}${colors.reset}`),
     warn: (msg) => console.log(`${colors.fg.yellow}⚠ ${msg}${colors.reset}`),
     error: (msg) => console.error(`\n${colors.fg.red}${colors.bright}✖ ${msg}${colors.reset}\n`),
+    error: (msg) => console.error(`\n${colors.fg.red}${colors.bright}✖ ${msg}${colors.reset}\n`),
     divider: () => console.log(`${colors.dim}${"─".repeat(50)}${colors.reset}`)
 };
+
+class Spinner {
+    constructor(text) {
+        this.text = text;
+        this.chars = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+        this.index = 0;
+        this.timer = null;
+    }
+    start() {
+        process.stdout.write('\x1B[?25l'); // Hide cursor
+        this.timer = setInterval(() => {
+            process.stdout.write(`\r${colors.fg.cyan}${this.chars[this.index]}${colors.reset} ${this.text}`);
+            this.index = (this.index + 1) % this.chars.length;
+        }, 80);
+        return this;
+    }
+    stop(success = true, finalText = null) {
+        clearInterval(this.timer);
+        process.stdout.write('\x1B[?25h'); // Show cursor
+        const symbol = success ? `${colors.fg.green}✔${colors.reset}` : `${colors.fg.red}✖${colors.reset}`;
+        process.stdout.write(`\r${symbol} ${finalText || this.text}\n`);
+    }
+}
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -110,9 +136,10 @@ async function getChangelogInfo() {
 
 async function runCommand(cmd, cwd = ROOT_DIR, env = undefined) {
     try {
-        execSync(cmd, { stdio: 'inherit', cwd, env: env || process.env });
+        await execAsync(cmd, { cwd, env: env || process.env });
     } catch (e) {
-        throw new Error(`Command failed: ${cmd}`);
+        // Only throw a concise error, suppress noisy raw logs
+        throw new Error(`Command failed: ${cmd}\n${e.message}`);
     }
 }
 
@@ -198,7 +225,7 @@ async function setCustomVersion(newVersion) {
 
 // The main compile phase for a SPECIFIC env (windows native vs WSL)
 async function compileAndPackageEnv(isWsl, targetPlatforms) {
-    log.step(`Preparing node_modules via ${isWsl ? 'WSL (Linux)' : 'Windows native'}...`);
+    const envName = isWsl ? 'WSL (Linux/Mac)' : 'Windows native';
 
     // 1. Clean temp & outputs
     await fs.remove(path.join(ROOT_DIR, 'node_modules'));
@@ -207,89 +234,110 @@ async function compileAndPackageEnv(isWsl, targetPlatforms) {
     await fs.ensureDir(PKG_OUT_DIR);
 
     // 2. Install
-    if (isWsl) {
-        log.info('Running npm install in WSL (grabbing linux native modules)...');
-        // Use bash -lic to load nvm if installed
-        await runCommand(`wsl --exec bash -lic "npm install"`);
-    } else {
-        log.info('Running npm install in Windows...');
-        await runCommand('npm install');
+    const installSpinner = new Spinner(`Installing node_modules via ${envName}...`).start();
+    try {
+        if (isWsl) {
+            await runCommand(`wsl --exec bash -lic "npm install"`);
+        } else {
+            await runCommand('npm install');
+        }
+        installSpinner.stop(true);
+    } catch (err) {
+        installSpinner.stop(false);
+        throw err;
     }
 
     // 3. Compile TS
-    log.step(`Compiling TypeScript (${isWsl ? 'WSL' : 'Windows'})...`);
-    if (isWsl) {
-        await runCommand(`wsl --exec bash -lic "npm run build"`);
-    } else {
-        await runCommand('npm run build');
+    const tsSpinner = new Spinner(`Compiling TypeScript (${envName})...`).start();
+    try {
+        if (isWsl) {
+            await runCommand(`wsl --exec bash -lic "npm run build"`);
+        } else {
+            await runCommand('npm run build');
+        }
+        tsSpinner.stop(true);
+    } catch (err) {
+        tsSpinner.stop(false);
+        throw err;
     }
 
     // 4. PKG
     const targets = targetPlatforms.map(p => p.pkg).join(',');
-    log.step(`Packaging binaries with pkg targets: ${targets}`);
-    if (isWsl) {
-        await runCommand(`wsl --exec bash -lic "npx pkg . --targets ${targets} --out-path scripts/tmp/pkg_binaries"`);
-    } else {
-        await runCommand(`npx pkg . --targets ${targets} --out-path ${PKG_OUT_DIR}`);
+    const pkgSpinner = new Spinner(`Packaging binaries (${targets})...`).start();
+    try {
+        if (isWsl) {
+            await runCommand(`wsl --exec bash -lic "npx pkg . --targets ${targets} --out-path scripts/tmp/pkg_binaries"`);
+        } else {
+            await runCommand(`npx pkg . --targets ${targets} --out-path ${PKG_OUT_DIR}`);
+        }
+        pkgSpinner.stop(true);
+    } catch (err) {
+        pkgSpinner.stop(false);
+        throw err;
     }
 }
 
 async function prepareTppUploads(targetPlatforms, version) {
     for (const platform of targetPlatforms) {
-        log.step(`Assembling .tpp for ${platform.name}...`);
-        const stagingPath = path.join(TMP_DIR, platform.name, APP_NAME);
-        await fs.ensureDir(stagingPath);
+        const tppSpinner = new Spinner(`Assembling .tpp for ${platform.name}...`).start();
+        try {
+            const stagingPath = path.join(TMP_DIR, platform.name, APP_NAME);
+            await fs.ensureDir(stagingPath);
 
-        const pkgBaseName = 'tp_ets2_plugin';
-        let binarySource = path.join(PKG_OUT_DIR, `${pkgBaseName}-${platform.name}${platform.ext}`);
-        if (platform.name === 'win' && !binarySource.endsWith('.exe')) binarySource += '.exe';
-        const binaryDest = path.join(stagingPath, `${APP_NAME}${platform.ext}`);
+            const pkgBaseName = 'tp_ets2_plugin';
+            let binarySource = path.join(PKG_OUT_DIR, `${pkgBaseName}-${platform.pkgName}${platform.ext}`);
+            if (platform.name === 'win' && !binarySource.endsWith('.exe')) binarySource += '.exe';
+            const binaryDest = path.join(stagingPath, `${APP_NAME}${platform.ext}`);
 
-        if (await fs.pathExists(binarySource)) {
-            await fs.copy(binarySource, binaryDest);
-        } else {
-            const altSource = path.join(PKG_OUT_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
-            const exactSource = path.join(PKG_OUT_DIR, `${pkgBaseName}${platform.ext}`);
-            if (await fs.pathExists(altSource)) {
-                await fs.copy(altSource, binaryDest);
-            } else if (await fs.pathExists(exactSource)) {
-                await fs.copy(exactSource, binaryDest);
+            if (await fs.pathExists(binarySource)) {
+                await fs.copy(binarySource, binaryDest);
             } else {
-                log.warn(`Warning: Exact binary source not found for ${platform.name}, skipping TPP assemble.`);
-                continue;
+                const altSource = path.join(PKG_OUT_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
+                const exactSource = path.join(PKG_OUT_DIR, `${pkgBaseName}${platform.ext}`);
+                if (await fs.pathExists(altSource)) {
+                    await fs.copy(altSource, binaryDest);
+                } else if (await fs.pathExists(exactSource)) {
+                    await fs.copy(exactSource, binaryDest);
+                } else {
+                    log.warn(`Warning: Exact binary source not found for ${platform.name}, skipping TPP assemble.`);
+                    continue;
+                }
             }
+
+            // Copy configs and metadata
+            await fs.copy(path.join(ROOT_DIR, 'config'), path.join(stagingPath, 'config'));
+            await fs.copy(path.join(ROOT_DIR, 'entry.tp'), path.join(stagingPath, 'entry.tp'));
+            if (await fs.pathExists(path.join(ROOT_DIR, 'LICENSE'))) {
+                await fs.copy(path.join(ROOT_DIR, 'LICENSE'), path.join(stagingPath, 'LICENSE'));
+            }
+
+            const stagingCfgPath = path.join(stagingPath, 'config', 'cfg.json');
+            if (await fs.pathExists(stagingCfgPath)) {
+                const cfg = await fs.readJson(stagingCfgPath);
+                cfg.version = version;
+                cfg.firstInstall = true;
+                await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
+            }
+
+            const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);
+            if (await fs.pathExists(scsSource)) {
+                await fs.copy(scsSource, path.join(stagingPath, 'bin', 'scs-sdk-plugin', platform.scs));
+            }
+
+            const { Files, Folder } = await ThroughDirectory(stagingPath);
+            const allItems = [...Folder, ...Files];
+            const relativeItems = allItems.map(item => path.relative(stagingPath, item).split(path.sep).join('/'));
+            await fs.writeJson(path.join(stagingPath, 'config', 'files.json'), relativeItems, { spaces: 2 });
+
+            const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${version}.tpp`);
+            const zip = new AdmZip();
+            zip.addLocalFolder(stagingPath, APP_NAME);
+            zip.writeZip(zipPath);
+            tppSpinner.stop(true, `Created: ${path.basename(zipPath)}`);
+        } catch (err) {
+            tppSpinner.stop(false);
+            throw err;
         }
-
-        // Copy configs and metadata
-        await fs.copy(path.join(ROOT_DIR, 'config'), path.join(stagingPath, 'config'));
-        await fs.copy(path.join(ROOT_DIR, 'entry.tp'), path.join(stagingPath, 'entry.tp'));
-        if (await fs.pathExists(path.join(ROOT_DIR, 'LICENSE'))) {
-            await fs.copy(path.join(ROOT_DIR, 'LICENSE'), path.join(stagingPath, 'LICENSE'));
-        }
-
-        const stagingCfgPath = path.join(stagingPath, 'config', 'cfg.json');
-        if (await fs.pathExists(stagingCfgPath)) {
-            const cfg = await fs.readJson(stagingCfgPath);
-            cfg.version = version;
-            cfg.firstInstall = true;
-            await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
-        }
-
-        const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);
-        if (await fs.pathExists(scsSource)) {
-            await fs.copy(scsSource, path.join(stagingPath, 'bin', 'scs-sdk-plugin', platform.scs));
-        }
-
-        const { Files, Folder } = await ThroughDirectory(stagingPath);
-        const allItems = [...Folder, ...Files];
-        const relativeItems = allItems.map(item => path.relative(stagingPath, item).split(path.sep).join('/'));
-        await fs.writeJson(path.join(stagingPath, 'config', 'files.json'), relativeItems, { spaces: 2 });
-
-        const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${version}.tpp`);
-        const zip = new AdmZip();
-        zip.addLocalFolder(stagingPath, APP_NAME);
-        zip.writeZip(zipPath);
-        log.success(`Created: ${path.basename(zipPath)}`);
     }
 }
 
@@ -327,12 +375,13 @@ async function runBuildProcess(platformsToBuild) {
         await fs.remove(TMP_DIR); // Removes intermediate staging and pkg_binaries
 
         // Restore cleanly for IDE usage
-        log.info('Restoring local node_modules via Windows...');
+        const restoreSpinner = new Spinner('Restoring local node_modules via Windows for workspace...').start();
         await runCommand('npm install');
+        restoreSpinner.stop(true);
 
         log.success(`Build process complete. Packages in ${DIST_DIR}`);
     } catch (e) {
-        log.error(`Build process failed: ${e.message}`);
+        log.error(`Process halted: ${e.message}`);
     }
 }
 
@@ -340,21 +389,20 @@ async function runGitUpload() {
     log.header('Starting Git Upload');
     const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
 
+    const gitSpinner = new Spinner('Staging, Committing, and Pushing to remote...').start();
     try {
-        log.step('Staging files...');
         await runCommand('git add .');
 
-        log.step('Committing...');
         try {
             await runCommand(`git commit -m "Bump version to v${pkgJson.version}"`);
         } catch {
-            log.info('Nothing to commit or commit failed.');
+            // Nothing to commit
         }
 
-        log.step('Pushing to remote...');
         await runCommand('git push');
-        log.success('Git upload complete.');
+        gitSpinner.stop(true, 'Git upload complete.');
     } catch (e) {
+        gitSpinner.stop(false);
         log.error(`Git upload failed: ${e.message}`);
     }
 }
@@ -391,28 +439,36 @@ async function runGitHubRelease(mode = 'draft') {
         const noteFile = path.join(ROOT_DIR, 'release_notes.txt');
         await fs.writeFile(noteFile, body);
 
-        log.step('Creating new draft release...');
+        const relSpinner = new Spinner('Creating new draft release on GitHub...').start();
         try {
             await runCommand(`${ghPath} release create v${version} -t "${title}" -F "${noteFile}" -d ${assetPaths}`);
-            log.success('Draft release created!');
+            relSpinner.stop(true, 'Draft release created!');
+        } catch (e) {
+            relSpinner.stop(false);
+            throw e;
         } finally {
             await fs.remove(noteFile);
         }
     } else if (mode === 'replace') {
-        log.step('Fetching latest release...');
-        const latestTagCmd = `${ghPath} release view --json tagName -q ".tagName"`;
-        let latestTag = '';
+        const relSpinner = new Spinner('Fetching latest release and updating assets...').start();
         try {
-            latestTag = execSync(latestTagCmd).toString().trim();
-        } catch {
-            log.error('Could not find latest release.');
-            return;
-        }
+            const latestTagCmd = `${ghPath} release view --json tagName -q ".tagName"`;
+            let latestTag = '';
+            try {
+                latestTag = execSync(latestTagCmd).toString().trim();
+            } catch {
+                relSpinner.stop(false);
+                log.error('Could not find latest release.');
+                return;
+            }
 
-        log.info(`Updating release ${latestTag} with new assets...`);
-        // Upload with --clobber to replace
-        await runCommand(`${ghPath} release upload ${latestTag} ${assetPaths} --clobber`);
-        log.success('Upload complete.');
+            // Upload with --clobber to replace
+            await runCommand(`${ghPath} release upload ${latestTag} ${assetPaths} --clobber`);
+            relSpinner.stop(true, `Updated release ${latestTag} with new assets.`);
+        } catch (e) {
+            relSpinner.stop(false);
+            throw e;
+        }
     }
 }
 
