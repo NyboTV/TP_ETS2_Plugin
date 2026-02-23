@@ -28,8 +28,8 @@ Gargamosch's dashboards are a great example of high-quality pages created for th
 - **Requires**: Plugin Version 2.0+ (V2)
 
 **Preview**: 
-![Preview 1](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats-ets2/preview/page1.png?raw=true)
-![Preview 2](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats-ets2/preview/page2.png?raw=true)
+<img src="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats-ets2/preview/page1.jpg?raw=true" width="400">
+<img src="https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats-ets2/preview/page2.jpg?raw=true" width="400">
 
 ---
 
