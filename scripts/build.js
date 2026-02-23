@@ -6,9 +6,11 @@ const readline = require('readline');
 
 const APP_NAME = 'ETS2_Dashboard';
 const ROOT_DIR = path.join(__dirname, '..');
-const DIST_DIR = path.join(ROOT_DIR, 'dist_package');
-const BUILD_DIR = path.join(ROOT_DIR, 'build');
+// We will output final TPP packages to the 'build' folder to reduce clutter
+const DIST_DIR = path.join(ROOT_DIR, 'build');
+// We use a dedicated temp directory for intermediate pkg binaries and staging
 const TMP_DIR = path.join(ROOT_DIR, 'scripts', 'tmp');
+const PKG_OUT_DIR = path.join(TMP_DIR, 'pkg_binaries');
 
 const platforms = [
     { name: 'win', pkg: 'node18-win-x64', ext: '.exe', scs: 'windows', wsl: false },
@@ -168,14 +170,41 @@ async function incrementVersion(type = 'patch') {
     return newVersion;
 }
 
+async function setCustomVersion(newVersion) {
+    const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
+    const pkgJson = await fs.readJson(pkgJsonPath);
+
+    pkgJson.version = newVersion;
+    await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 4 });
+    log.success(`Version updated to: ${newVersion}`);
+
+    const entryTpPath = path.join(ROOT_DIR, 'entry.tp');
+    if (await fs.pathExists(entryTpPath)) {
+        const entryTp = await fs.readJson(entryTpPath);
+        const major = parseInt(newVersion.split('.')[0]);
+        if (!isNaN(major)) {
+            entryTp.version = major;
+        }
+        await fs.writeJson(entryTpPath, entryTp, { spaces: 2 });
+    }
+
+    const rootCfgPath = path.join(ROOT_DIR, 'config', 'cfg.json');
+    if (await fs.pathExists(rootCfgPath)) {
+        const cfg = await fs.readJson(rootCfgPath);
+        cfg.version = newVersion;
+        await fs.writeJson(rootCfgPath, cfg, { spaces: 2 });
+    }
+}
+
 // The main compile phase for a SPECIFIC env (windows native vs WSL)
 async function compileAndPackageEnv(isWsl, targetPlatforms) {
     log.step(`Preparing node_modules via ${isWsl ? 'WSL (Linux)' : 'Windows native'}...`);
 
-    // 1. Clean node_modules to force native rebuilds
+    // 1. Clean temp & outputs
     await fs.remove(path.join(ROOT_DIR, 'node_modules'));
     await fs.remove(path.join(ROOT_DIR, 'dist'));
-    await fs.remove(BUILD_DIR);
+    await fs.remove(PKG_OUT_DIR);
+    await fs.ensureDir(PKG_OUT_DIR);
 
     // 2. Install
     if (isWsl) {
@@ -199,9 +228,9 @@ async function compileAndPackageEnv(isWsl, targetPlatforms) {
     const targets = targetPlatforms.map(p => p.pkg).join(',');
     log.step(`Packaging binaries with pkg targets: ${targets}`);
     if (isWsl) {
-        await runCommand(`wsl --exec bash -lic "npx pkg . --targets ${targets} --out-path build"`);
+        await runCommand(`wsl --exec bash -lic "npx pkg . --targets ${targets} --out-path scripts/tmp/pkg_binaries"`);
     } else {
-        await runCommand(`npx pkg . --targets ${targets} --out-path build`);
+        await runCommand(`npx pkg . --targets ${targets} --out-path ${PKG_OUT_DIR}`);
     }
 }
 
@@ -212,15 +241,15 @@ async function prepareTppUploads(targetPlatforms, version) {
         await fs.ensureDir(stagingPath);
 
         const pkgBaseName = 'tp_ets2_plugin';
-        let binarySource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.name}${platform.ext}`);
+        let binarySource = path.join(PKG_OUT_DIR, `${pkgBaseName}-${platform.name}${platform.ext}`);
         if (platform.name === 'win' && !binarySource.endsWith('.exe')) binarySource += '.exe';
         const binaryDest = path.join(stagingPath, `${APP_NAME}${platform.ext}`);
 
         if (await fs.pathExists(binarySource)) {
             await fs.copy(binarySource, binaryDest);
         } else {
-            const altSource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
-            const exactSource = path.join(BUILD_DIR, `${pkgBaseName}${platform.ext}`);
+            const altSource = path.join(PKG_OUT_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
+            const exactSource = path.join(PKG_OUT_DIR, `${pkgBaseName}${platform.ext}`);
             if (await fs.pathExists(altSource)) {
                 await fs.copy(altSource, binaryDest);
             } else if (await fs.pathExists(exactSource)) {
@@ -295,9 +324,7 @@ async function runBuildProcess(platformsToBuild) {
         }
 
         log.step('Final cleanup...');
-        await fs.remove(TMP_DIR);
-        await fs.remove(BUILD_DIR);
-        await fs.remove(path.join(ROOT_DIR, 'dist'));
+        await fs.remove(TMP_DIR); // Removes intermediate staging and pkg_binaries
 
         // Restore cleanly for IDE usage
         log.info('Restoring local node_modules via Windows...');
@@ -391,16 +418,52 @@ async function runGitHubRelease(mode = 'draft') {
 
 // ==== CLI MENU ====
 
+async function promptForVersionAndBuild(platformsToBuild) {
+    const pkg = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
+    const currentVersion = pkg.version;
+    const customVersion = await ask(`Enter version to build (leave blank for v${currentVersion}): `);
+
+    if (customVersion.trim() !== '') {
+        await setCustomVersion(customVersion.trim());
+    }
+
+    await runBuildProcess(platformsToBuild);
+}
+
+async function showBuildSubMenu() {
+    console.log();
+    console.log(`${colors.fg.cyan}1.${colors.reset} Build -> Windows Only`);
+    console.log(`${colors.fg.cyan}2.${colors.reset} Build -> Linux & Mac (via WSL)`);
+    console.log(`${colors.fg.cyan}3.${colors.reset} Build -> All Platforms`);
+    console.log(`${colors.fg.cyan}4.${colors.reset} Back to Main Menu\n`);
+
+    const choice = await ask(`Select platform option (1-4): `);
+    if (choice === '1') await promptForVersionAndBuild([platforms[0]]);
+    else if (choice === '2') await promptForVersionAndBuild([platforms[1], platforms[2]]);
+    else if (choice === '3') await promptForVersionAndBuild(platforms);
+    else if (choice === '4') return;
+    else log.error('Invalid choice.');
+}
+
+async function showReleaseSubMenu() {
+    console.log();
+    console.log(`${colors.fg.cyan}1.${colors.reset} Draft New Release`);
+    console.log(`${colors.fg.cyan}2.${colors.reset} Replace Latest Release Assets`);
+    console.log(`${colors.fg.cyan}3.${colors.reset} Back to Main Menu\n`);
+
+    const choice = await ask(`Select release option (1-3): `);
+    if (choice === '1') await runGitHubRelease('draft');
+    else if (choice === '2') await runGitHubRelease('replace');
+    else if (choice === '3') return;
+    else log.error('Invalid choice.');
+}
+
 const menuOptions = [
-    { label: 'Build -> Windows Only', action: () => runBuildProcess([platforms[0]]) },
-    { label: 'Build -> Linux & Mac (via WSL)', action: () => runBuildProcess([platforms[1], platforms[2]]) },
-    { label: 'Build -> All Platforms', action: () => runBuildProcess(platforms) },
-    { label: 'Bump Version (Patch)', action: () => incrementVersion('patch') },
+    { label: 'Build Packages', action: showBuildSubMenu },
     { label: 'Git Push Everything', action: () => runGitUpload() },
-    { label: 'GH Release -> Draft New', action: () => runGitHubRelease('draft') },
-    { label: 'GH Release -> Replace Latest Assets', action: () => runGitHubRelease('replace') },
+    { label: 'GitHub Release', action: showReleaseSubMenu },
     {
-        label: 'Full CI Workflow (Bump, Build All, Git Push, Release)', action: async () => {
+        label: 'Full CI Workflow (Patch Version, Build All, Git Push, Release)', action: async () => {
             await incrementVersion('patch');
             await runBuildProcess(platforms);
             await runGitUpload();
