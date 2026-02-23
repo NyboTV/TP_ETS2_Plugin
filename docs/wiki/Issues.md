@@ -23,6 +23,15 @@ Ensure that the Telemetry SDK was correctly installed during the initial setup p
     4. Go into the folder `bin\win_x64\plugins\` *(create the `plugins` folder if it does not exist)*
     5. Paste the `scs-telemetry.dll` inside.
 
+### 4. Linux/Mac: Plugin won't start after installation
+If you are on Linux or macOS and the plugin does not start automatically or fails to run:
+Touch Portal might have extracted the `.tpp` file without preserving the necessary UNIX executable permissions for the plugin binary.
+- **Fix**: You must manually add the executable flag to the plugin file.
+    1. Open your terminal and navigate to the plugin folder:
+       `cd ~/.config/TouchPortal/plugins/TP_ETS2_Plugin/` (or the respective path on your system)
+    2. Run the following command: `chmod +x ETS2_Dashboard` or `chmod +x TP_ETS2_Plugin` (depending on the binary name).
+    3. Restart Touch Portal.
+
 ---
 
 ## 🐛 Known (Minor) Bugs

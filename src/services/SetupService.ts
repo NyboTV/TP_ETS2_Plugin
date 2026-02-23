@@ -110,7 +110,7 @@ class SetupService {
             let pluginFile = 'scs-telemetry.dll';
 
             if (process.platform === 'linux') {
-                archDir = 'bin/linux_x64'; // Common ETS2 Linux path structure
+                archDir = 'linux_x64'; // Common ETS2 Linux path structure
                 pluginSubFolder = 'linux';
                 pluginFile = 'scs-telemetry.so';
             }
@@ -119,7 +119,8 @@ class SetupService {
             await fs.ensureDir(pluginsDir);
 
             // Source: ./bin/scs-sdk-plugin/[platform]/scs-telemetry.[ext]
-            const sourceDll = path.join(process.cwd(), 'bin', 'scs-sdk-plugin', pluginSubFolder, pluginFile);
+            const basePath = process.pkg ? path.dirname(process.execPath) : process.cwd();
+            const sourceDll = path.join(basePath, 'bin', 'scs-sdk-plugin', pluginSubFolder, pluginFile);
 
             if (await fs.pathExists(sourceDll)) {
                 const destDll = path.join(pluginsDir, pluginFile);

@@ -333,6 +333,15 @@ async function prepareTppUploads(targetPlatforms, version) {
             const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${version}.tpp`);
             const zip = new AdmZip();
             zip.addLocalFolder(stagingPath, APP_NAME);
+
+            // Attempt to preserve UNIX executable permissions for Mac and Linux binaries
+            if (platform.name === 'linux' || platform.name === 'mac') {
+                const exeEntry = zip.getEntry(`${APP_NAME}/${APP_NAME}${platform.ext}`);
+                if (exeEntry) {
+                    exeEntry.header.attr = 0o100755 << 16; // UNIX permissions 755
+                }
+            }
+
             zip.writeZip(zipPath);
             tppSpinner.stop(true, `Created: ${path.basename(zipPath)}`);
         } catch (err) {
