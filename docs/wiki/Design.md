@@ -1,13 +1,17 @@
-# Design Guide - TP ETS2 Plugin
+# 🎨 Customizing Gauge Designs
 
-You can customize the appearance of the gauges by editing the file `config/designs.json`.
+Don't like the default colors of the Speedometer or RPM gauge? The plugin allows you to completely restyle the visual gauges by editing the local `config/designs.json` file.
 
 > [!TIP]
-> **Live Reloading**: The plugin reloads the `designs.json` every **5 seconds**. You don't need to restart the plugin to see your changes!
+> **Live Reloading**: The plugin reloads the `designs.json` every **5 seconds**. You don't need to restart the plugin to see your color changes happen in real-time on your tablet!
 
-## Configuration File: `config/designs.json`
+---
 
-Each gauge type (`speed`, `rpm`, `fuel`) can be configured independently.
+## 📝 The `designs.json` File
+
+Located in `%appdata%/TouchPortal/plugins/ETS2_Dashboard/config/designs.json`.
+
+You can configure each gauge type (`speed`, `rpm`, `fuel`) independently. Below is an example block:
 
 ```json
 {
@@ -25,49 +29,54 @@ Each gauge type (`speed`, `rpm`, `fuel`) can be configured independently.
     "backgroundPattern": "none",
     "needleShape": "classic",
     "showNumber": true,
-    "showLabel": true,
-    "titleFontScale": 1.0,
-    "unitFontScale": 1.0,
-    "numberFontScale": 1.0,
-    "scaleFontScale": 1.0,
-    "tickWidthMajor": 3,
-    "tickWidthMinor": 1,
-    "needleWidthScale": 1.0
-  },
-  "rpm": { ... },
-  "fuel": { ... }
-}
+...
 ```
 
-## Options
+---
+
+## 🖌️ Available Style Properties
+
+You can use standard Hex Codes (e.g., `#ff0000`), HTML Color Names (`red`), or RGB (`rgb(255, 0, 0)`) for all color values.
 
 ### Colors
-You can use Hex Codes (e.g., `#ff0000`), Names (`red`), or RGB (`rgb(255, 0, 0)`).
+| Property | Description |
+| :--- | :--- |
+| **`backgroundColor`** | Background color of the gauge face. |
+| **`borderColor`** | Color of the outer ring/border and the needle cap. |
+| **`tickColor`** | Color of the marker lines (ticks). |
+| **`textColor`** | Color of the numbers along the circular scale. |
+| **`titleColor`** | Color of the title text (e.g., "SPEED"). |
+| **`unitColor`** | Color of the unit text (e.g., "km/h"). |
+| **`needleColor`** | Color of the needle. |
+| **`redZoneColor`** | Color of the RPM red zone *(Only available for the `rpm` gauge object)*. |
 
-*   **backgroundColor**: Background color of the gauge.
-*   **borderColor**: Color of the outer ring/border and the needle cap.
-*   **tickColor**: Color of the marks (lines).
-*   **textColor**: Color of the numbers on the scale.
-*   **titleColor**: Color of the title (e.g., "SPEED").
-*   **unitColor**: Color of the unit text (e.g., "km/h").
-*   **needleColor**: Color of the needle.
-*   **redZoneColor**: Color of the RPM red zone (only for RPM gauge).
+### Shapes & Patterns 
+| Property | Valid Values | Description |
+| :--- | :--- | :--- |
+| **`shape`** | `"circle"`, `"square"` | Defines the outer shape of the gauge icon. |
+| **`backgroundPattern`**| `"none"`, `"grid"`, `"carbon"` | Overlays a subtle texture onto the gauge background. |
+| **`needleShape`** | `"classic"`, `"sport"` | Changes the geometric shape of the moving needle. |
+| **`showNumber`** | `true`, `false` | Toggles the large digital value in the center bottom. |
+| **`showLabel`** | `true`, `false` | Toggles the Title and Unit text visibility. |
 
-### Visibility & Labels
-*   **showNumber**: Set to `false` to hide the digital value in the center.
-*   **showLabel**: Set to `false` to hide the Title and Unit text.
+### Typography & Sizing
 
-### Accessibility & Scaling
-*   **fontFamily**: Font to use (e.g., "Arial", "Consolas").
-*   **titleFontScale**: Multiplier for the Title font size.
-*   **unitFontScale**: Multiplier for the Unit font size.
-*   **numberFontScale**: Multiplier for the central digital value.
-*   **scaleFontScale**: Multiplier for the numbers on the gauge scale.
-*   **tickWidthMajor**: Thickness of the main ticks.
-*   **tickWidthMinor**: Thickness of the smaller ticks.
-*   **needleWidthScale**: Multiplier for the needle thickness and center cap.
+You can tweak the thickness and fonts of elements using these multipliers:
 
-### Style
-*   **shape**: Shape of the gauge (`"circle"` or `"square"`).
-*   **backgroundPattern**: Pattern for the background (`"none"`, `"grid"`, `"carbon"`).
-*   **needleShape**: Shape of the needle (`"classic"` or `"sport"`).
+- **`fontFamily`**: The system font to use (e.g., "Arial", "Consolas").
+- **`titleFontScale`**: Multiplier for the Title font size *(e.g. 1.5)*.
+- **`unitFontScale`**: Multiplier for the Unit font size.
+- **`numberFontScale`**: Multiplier for the central digital value size.
+- **`scaleFontScale`**: Multiplier for the numbers plotted on the gauge scale.
+- **`tickWidthMajor`**: Thickness of the main, large ticks *(pixels)*.
+- **`tickWidthMinor`**: Thickness of the smaller, intermediate ticks *(pixels)*.
+- **`needleWidthScale`**: Multiplier for the needle thickness and its center cap.
+
+---
+<br/>
+
+<div align="center">
+  <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages">⬅️ Previous: Dashboard Pages</a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;
+  <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action)">Next: Plugin Data Reference ➔</a>
+</div>

@@ -1,43 +1,33 @@
-# ETS2 Dashboard Plugin Wiki
+# 🏠 Home
 
-Welcome to the ETS2 Dashboard Wiki! This documentation will help you understand all the features, states, and actions available in the plugin so you can create beautiful and functional Touch Portal pages.
-
-## Navigation
-
-- [Plugin Data (Events, States, Actions)](DATA.md)
-  - [Events](DATA.md#events)
-  - [States](DATA.md#states)
-    - [Game States](DATA.md#game-states)
-    - [World States](DATA.md#world-states)
-    - [Driver States](DATA.md#driver-states)
-    - [Gauge States](DATA.md#gauge-states)
-    - [Truck States](DATA.md#truck-states)
-    - [Trailer States](DATA.md#trailer-states)
-    - [Job States](DATA.md#job-states)
-    - [Navigation States](DATA.md#navigation-states)
-    - [TruckersMP States](DATA.md#truckersmp-states)
-  - [Actions](DATA.md#actions)
-- [Settings & Configuration](SETTINGS.md)
-  - [Supported Currencies](SETTINGS.md#supported-currencies)
-- [Dashboard Pages](PAGES.md)
-  - [Your Page](PAGES.md#own-page)
-  - [User Pages](PAGES.md#user-pages)
+Welcome to the **ETS2 & ATS Dashboard Plugin Wiki**! 🚚✨
+This documentation will help you understand all the features, states, and actions available in the plugin so you can create beautiful and functional Touch Portal pages.
 
 ---
 
-## How to create a Button
+## 🚀 Quick Start Guide
 
-### Dynamic Text (e.g., Gear or Speed)
-1. Click on a Button in Touch Portal.
-2. Go to the **Logic** tab in the left sidebar.
-3. Select **"Dynamic Text Updater"**.
-4. Click the **"+"** and navigate to `TP_ETS2_Plugin` to find the state you want (e.g., `Nybo.ETS2.Truck.Gear`).
-5. Click **Save**.
+The easiest way to get your dashboard running is to follow these steps in order:
 
-### Gauges & Images (e.g., Speedometer)
-1. Click on a Button in Touch Portal.
-2. Go to the **Values** tab.
-3. Add a **"When plug-in state changes"** or **"When button state changes"** event.
-4. Set it to trigger when the gauge state (e.g., `Nybo.ETS2.Gauges.SpeedGauge`) changes.
-5. In the "On Event" flow, go to **Visuals** -> **"Change visuals by plug-in state"**.
-6. Set it to **"Change the Icon with the value from the plug-in state"** and select your gauge state.
+1. **[Configuration & Settings](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Settings)** ⚙️
+   Learn how to configure the plugin inside Touch Portal (Currencies, Refresh Rates, Units).
+
+2. **[Creating Dashboard Pages](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages)** 📱
+   Learn how to bind dynamic text and gauges to your tablet, or download ready-to-use Community Dashboards.
+
+3. **[Customizing Gauge Designs](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Design)** 🎨
+   Don't like the default look? Learn how to change the colors, needles, and backgrounds of the dynamic gauges.
+
+4. **[Plugin Data Reference](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Plugin-Data-(Events,-States,-Action))** 📊
+   A massive reference list of all `150+` game states (Speed, Damage, Cargo, Navigation) you can use on your buttons.
+
+5. **[Troubleshooting](https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Issues)** 🔧
+   Game not connecting? Values flickering? Find the solutions here.
+
+---
+<br/>
+
+<div align="center">
+  <b>Follow the guide:</b><br/>
+  <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Settings">Next: Configuration & Settings ➔</a>
+</div>

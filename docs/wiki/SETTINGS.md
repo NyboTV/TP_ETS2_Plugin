@@ -1,58 +1,56 @@
-# Settings
+# ⚙️ Configuration & Settings
 
-The plugin can be configured through Touch Portal's Settings tab or manually via the configuration files in the `config/` directory.
-
-## Plugin Settings (Touch Portal)
-
-These settings appear in the Touch Portal Desktop app once the plugin is installed.
-
-| Setting Name        | Description                                                                 | Default |
-|---------------------|-----------------------------------------------------------------------------|---------|
-| Refresh_Interval    | Polling rate in milliseconds for game telemetry (Min: 50ms)                 | 200     |
-| Currency            | Three-letter currency code for job income (e.g., EUR, USD, GBP)             | EUR     |
-| AutoUpdate          | Enable or disable the automatic update check on startup                     | true    |
-| OfflineMode         | If true, disables currency conversion to prevent errors when offline        | false   |
-| TruckersMP_Server   | The Server ID for TruckersMP status updates (e.g. 1 for Simulation 1)       | 1       |
-| PreRelease          | Enable checking for Pre-Release versions (Beta features)                    | false   |
+The plugin is highly customizable. You can configure it directly through Touch Portal's Settings tab, or for advanced tweaks, by modifying the JSON configuration files manually.
 
 ---
 
-## Configuration Files
+## 📱 Plugin Settings (Touch Portal Desktop)
 
-For advanced users, you can manually edit the following files in `%appdata%/TouchPortal/plugins/ETS2_Dashboard/config/`:
+These settings appear in the Touch Portal Desktop app once the plugin is installed. To access them, click the gear icon ⚙️ in Touch Portal and go to `Settings -> Plugins -> TP_ETS2_Plugin`.
 
-### `cfg.json`
-Stores core plugin behavior settings like `UpdateCheck`, `OfflineMode`, and the current `version`.
+| Setting Name | Description | Default |
+| :--- | :--- | :--- |
+| **Refresh_Interval** | Polling rate in milliseconds for game telemetry.<br>*(Lower = Smoother gauges, but higher CPU usage. Min: 50ms)* | `50` |
+| **Currency** | Three-letter currency code used to calculate your job income.<br>*(e.g., EUR, USD, GBP)* | `EUR/USD` |
+| **AutoUpdate** | Enable or disable the automatic new version check on startup. | `true` |
+| **OfflineMode** | If true, disables all internet API requests (Auto-Updater and TruckersMP server fetching) to prevent errors when you have no connection. | `false` |
+| **TruckersMP_Server** | The Server ID used to fetch TruckersMP server statuses.<br>*(e.g., '1' for Simulation 1)* | `1` |
+| **PreRelease** | Opt-in to receive notifications for Beta/Pre-Release versions. | `false` |
 
-### `usercfg.json`
-Stores user preferences for units and module toggles:
-- **Basics**: Units for speed (Kilometer/Miles), fluids (Liter/Gallons), weight (Tons/Pounds), and temperature (Celsius/Fahrenheit).
-- **Modules**: Allows disabling specific state tracking (e.g., `trailerStates`, `jobStates`) to save resources.
+> [!TIP]
+> **Currency**: If you use ATS, the default currency is USD. If you use ETS2, the default currency is EUR.
+---
 
-### `designs.json`
-Allows you to customize the visual appearance of the dynamic gauges (Colors, Shapes, Patterns).
+## 💱 Supported Currencies
+The plugin uses an internal reference file (`config/currency.json`) to convert the base game currency into your preferred local currency based on static exchange rates.
+
+*Commonly used codes:*
+- `EUR` (Euro)
+- `USD` (United States Dollar)
+- `GBP` (Pound Sterling)
+- `CAD` (Canadian Dollar)
+- `PLN` (Polish Złoty)
+- `CZK` (Czech Koruna)
+- `CHF` (Swiss Franc)
+- `JPY` (Japanese Yen)
 
 ---
 
-## Supported Currencies
+## 📐 Technical Units (User Preferences)
 
-The plugin uses an external API for currency conversion. Most world currencies are supported, including:
+The plugin remembers your preferred units independently of the game settings. You can toggle these values live on your tablet using the [Plugin Actions](Data_Reference.md#-plugin-actions).
 
-| Code | Name                 | Code | Name                 |
-|------|----------------------|------|----------------------|
-| EUR  | Euro                 | USD  | United States Dollar |
-| GBP  | Pound Sterling       | CAD  | Canadian Dollar      |
-| PLN  | Polish Złoty         | CZK  | Czech Koruna         |
-| HUF  | Hungarian Forint     | SEK  | Swedish Krona        |
-| CHF  | Swiss Franc          | JPY  | Japanese Yen         |
-
-*Note: If `OfflineMode` is on, the plugin will assume 1:1 conversion or just show the base game currency.*
+- **Speed**: `Kilometers` or `Miles`
+- **Fluid Volumes**: `Liters`, `US Gallons`, or `UK Gallons`
+- **Weight**: `Kilograms`, `Tons`, `US Pounds`, or `UK Pounds`
+- **Temperature**: `Celsius` or `Fahrenheit`
+- **Time Format**: `EU (24h)` or `US (12h AM/PM)`
 
 ---
+<br/>
 
-## Technical Units
-
-- **Speed**: Kilometer per hour or Miles per hour.
-- **Fluid**: Liters, US Gallons, or UK Gallons.
-- **Weight**: Tons, US Tons, UK Tons, or Pounds (Lbs).
-- **Temperature**: Celsius or Fahrenheit.
+<div align="center">
+  <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Home">⬅️ Previous: Home</a>
+  &nbsp;&nbsp; | &nbsp;&nbsp;
+  <a href="https://github.com/NyboTV/TP_ETS2_Plugin/wiki/Pages">Next: Creating Dashboard Pages ➔</a>
+</div>
