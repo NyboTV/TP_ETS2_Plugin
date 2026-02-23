@@ -20,6 +20,7 @@ const main = async () => {
             version = pkg.version || 'unknown';
         }
         logger.info(`Starting TP_ETS2_Plugin (version ${version})...`);
+        logger.debug(`[MAIN] Initializing with process.argv: ${JSON.stringify(process.argv)}`);
 
         // Load Configs
         // Check for Config Backup (Restore after update)
@@ -43,8 +44,10 @@ const main = async () => {
         // Set Log Level
         logger.level = configService.cfg.debug ? 'debug' : 'info';
         logger.info(`Log level set to: ${logger.level}`);
+        logger.debug(`[MAIN] Active configuration loaded: ${JSON.stringify(configService.cfg)}`);
 
         // Run First Setup if needed
+        logger.debug('[MAIN] Checking if first setup is required...');
         await setupService.runFirstSetup();
 
         // Check for Updates
@@ -67,6 +70,7 @@ const main = async () => {
         truckersMPService.start();
 
         // Connect to Touch Portal
+        logger.info('[MAIN] Connecting to Touch Portal...');
         touchPortalService.connect();
 
         logger.info('Plugin initialization complete.');

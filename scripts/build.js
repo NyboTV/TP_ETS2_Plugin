@@ -8,8 +8,8 @@ const readline = require('readline');
 
 const APP_NAME = 'ETS2_Dashboard';
 const ROOT_DIR = path.join(__dirname, '..');
-// We will output final TPP packages to the 'build' folder to reduce clutter
-const DIST_DIR = path.join(ROOT_DIR, 'build');
+// We will output final TPP packages to the 'Releases' folder to avoid conflicts
+const DIST_DIR = path.join(ROOT_DIR, 'Releases');
 // We use a dedicated temp directory for intermediate pkg binaries and staging
 const TMP_DIR = path.join(ROOT_DIR, 'scripts', 'tmp');
 const PKG_OUT_DIR = path.join(TMP_DIR, 'pkg_binaries');
@@ -230,6 +230,7 @@ async function compileAndPackageEnv(isWsl, targetPlatforms) {
     // 1. Clean temp & outputs
     await fs.remove(path.join(ROOT_DIR, 'node_modules'));
     await fs.remove(path.join(ROOT_DIR, 'dist'));
+    await fs.remove(path.join(ROOT_DIR, 'build'));
     await fs.remove(PKG_OUT_DIR);
     await fs.ensureDir(PKG_OUT_DIR);
 
@@ -373,6 +374,8 @@ async function runBuildProcess(platformsToBuild) {
 
         log.step('Final cleanup...');
         await fs.remove(TMP_DIR); // Removes intermediate staging and pkg_binaries
+        await fs.remove(path.join(ROOT_DIR, 'dist')); // Removes tsc output
+        await fs.remove(path.join(ROOT_DIR, 'build')); // Clean up any old build folders
 
         // Restore cleanly for IDE usage
         const restoreSpinner = new Spinner('Restoring local node_modules via Windows for workspace...').start();

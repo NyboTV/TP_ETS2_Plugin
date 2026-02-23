@@ -111,20 +111,25 @@ class TouchPortalService {
     private handleAction(data: any) {
         const basics = configService.userCfg.Basics;
 
+        logger.debug(`[TouchPortal] Executing action logic for ${data.actionId}`);
+
         switch (data.actionId) {
             case 'setting_speed':
                 const newUnit = basics.unit === 'Kilometer' ? 'Miles' : 'Kilometer';
+                logger.info(`[TouchPortal] Toggle Speed Unit: ${basics.unit} -> ${newUnit}`);
                 configService.updateUserCfg('Basics', 'unit', newUnit);
                 break;
 
             case 'setting_fluid':
                 // 0: Liter, 1: US, 2: UK
                 let newFluid = (basics.fluid + 1) % 3;
+                logger.info(`[TouchPortal] Toggle Fluid Unit: ${basics.fluid} -> ${newFluid}`);
                 configService.updateUserCfg('Basics', 'fluid', newFluid);
                 break;
 
             case 'setting_fluidCon':
                 let newFluidCon = (basics.fluidCon + 1) % 3;
+                logger.info(`[TouchPortal] Toggle Fluid Consumption Unit: ${basics.fluidCon} -> ${newFluidCon}`);
                 configService.updateUserCfg('Basics', 'fluidCon', newFluidCon);
                 break;
 
@@ -132,16 +137,19 @@ class TouchPortalService {
                 // 0: kg, 1: tons, 2: us pounds, 3: uk pounds (V1: 0,1,2,3)
                 // V1 logic: 0->1, 1->2, 2->3, 3->0
                 let newWeight = (basics.weight + 1) % 4;
+                logger.info(`[TouchPortal] Toggle Weight Unit: ${basics.weight} -> ${newWeight}`);
                 configService.updateUserCfg('Basics', 'weight', newWeight);
                 break;
 
             case 'setting_temp':
                 const newTemp = basics.temp === 'Celsius' ? 'Fahrenheit' : 'Celsius';
+                logger.info(`[TouchPortal] Toggle Temp Unit: ${basics.temp} -> ${newTemp}`);
                 configService.updateUserCfg('Basics', 'temp', newTemp);
                 break;
 
             case 'setting_time':
                 const newTime = basics.timeFormat === 'EU' ? 'US' : 'EU';
+                logger.info(`[TouchPortal] Toggle Time Format: ${basics.timeFormat} -> ${newTime}`);
                 configService.updateUserCfg('Basics', 'timeFormat', newTime);
                 break;
         }

@@ -28,7 +28,10 @@ export class TelemetryService {
 
         this.interval = setInterval(() => {
             const data = this.telemetry.data.current;
-            if (!data) return;
+            if (!data) {
+                logger.debug('[TelemetryService] No data available from trucksim-telemetry. Retrying...');
+                return;
+            }
 
             const connected = data.sdkActive && !data.paused;
 
@@ -48,6 +51,7 @@ export class TelemetryService {
 
     private async processData(data: any) {
         try {
+            logger.debug(`[TelemetryService] Processing incoming data frame (SDK Active: ${data.sdkActive}, Paused: ${data.paused})`);
             await stateManager.update(data);
         } catch (error) {
             logger.error(`Error processing telemetry: ${error}`);

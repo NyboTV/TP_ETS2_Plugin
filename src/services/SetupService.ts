@@ -33,7 +33,10 @@ class SetupService {
             );
 
             if (installRes === 'Yes') {
+                logger.debug('[SetupService] User chose to install SCS Plugin.');
                 await this.installScsPlugin();
+            } else {
+                logger.info('[SetupService] User skipped SCS Plugin installation.');
             }
 
             // 2. Install TouchPortal Pages
@@ -45,7 +48,10 @@ class SetupService {
             );
 
             if (pageRes === 'Yes') {
+                logger.debug('[SetupService] User chose to install default TouchPortal Pages.');
                 await this.installPages();
+            } else {
+                logger.info('[SetupService] User skipped TouchPortal Pages installation.');
             }
 
             // Finish
@@ -79,13 +85,18 @@ class SetupService {
                     "Question"
                 );
                 if (res === 'Yes') {
+                    logger.debug(`[SetupService] Auto-detected game path approved: ${detectedPath}`);
                     gamePath = detectedPath;
+                } else {
+                    logger.debug('[SetupService] Auto-detected game path rejected by user.');
                 }
             }
 
             // Fallback to manual
             if (!gamePath) {
+                logger.info('[SetupService] Prompting user to manually select game path...');
                 gamePath = await dialogService.selectFolder("Select your ETS2 or ATS Installation Folder (e.g. steamapps/common/Euro Truck Simulator 2)");
+                logger.debug(`[SetupService] Manually selected path: ${gamePath}`);
             }
 
             if (!gamePath) {
@@ -140,6 +151,7 @@ class SetupService {
                 const match = stdout.match(/SteamPath\s+REG_SZ\s+(.*)/);
                 if (match && match[1]) {
                     steamPath = match[1].trim();
+                    logger.debug(`[SetupService] Steam path detected via registry: ${steamPath}`);
                 }
             } catch (e) {
                 logger.warn(`Could not detect Steam path via registry: ${e}`);

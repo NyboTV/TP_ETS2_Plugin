@@ -14,16 +14,22 @@ The plugin uses high-frequency telemetry. When creating a page, you can use:
 ## User Pages
 
 ### Dashboard by Gargamosch 
-### ATS Truck Control Dashboard 4.0 / 5.0
+### ATS & ETS2 Dashboard
 
 Gargamosch's dashboards are a great example of high-quality pages created for this plugin. 
 
-- **ReadMe (Multi-Language)**: [Click Here](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/readme.pdf)
+**ReadMe Instructions (Available Languages)**:
+- 🇬🇧 [English (EN)](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats-ets2/readme/readme-en.pdf)
+- 🇩🇪 [Deutsch (DE)](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats-ets2/readme/readme-de.pdf)
+- 🇪🇸 [Español (ES)](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats-ets2/readme/readme-es.pdf)
+- 🇫🇷 [Français (FR)](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats-ets2/readme/readme-fr.pdf)
+- 🇵🇹 [Português (PT)](https://raw.githubusercontent.com/NyboTV/TP_ETS2_Plugin/master/Pages/official/gargamosch/ats-ets2/readme/readme-pt.pdf)
+
 - **Requires**: Plugin Version 2.0+ (V2)
 
 **Preview**: 
-![Preview 1](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview1.jpg?raw=true)
-![Preview 2](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/preview2.jpg?raw=true)
+![Preview 1](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats-ets2/preview/page1.png?raw=true)
+![Preview 2](https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats-ets2/preview/page2.png?raw=true)
 
 ---
 

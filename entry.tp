@@ -47,7 +47,7 @@
     },
     {
       "name": "Preview Download (Direct .tpz2 file)",
-      "default": "https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats_truck_control_dashboard_5.0/ATS_Advanced_Multilang.tpz2",
+      "default": "https://github.com/NyboTV/TP_ETS2_Plugin/blob/master/Pages/official/gargamosch/ats-ets2/ATS-ETS2.tpz2",
       "type": "text"
     }
   ],
