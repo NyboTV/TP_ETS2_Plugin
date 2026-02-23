@@ -11,23 +11,17 @@ const BUILD_DIR = path.join(ROOT_DIR, 'build');
 const TMP_DIR = path.join(ROOT_DIR, 'scripts', 'tmp');
 
 const platforms = [
-    { name: 'win', pkg: 'node18-win-x64', ext: '.exe', scs: 'windows' },
-    { name: 'linux', pkg: 'node18-linux-x64', ext: '', scs: 'linux' },
-    { name: 'mac', pkg: 'node18-macos-x64', ext: '', scs: 'macos' }
+    { name: 'win', pkg: 'node18-win-x64', ext: '.exe', scs: 'windows', wsl: false },
+    { name: 'linux', pkg: 'node18-linux-x64', ext: '', scs: 'linux', wsl: true },
+    { name: 'mac', pkg: 'node18-macos-x64', ext: '', scs: 'macos', wsl: true } // macOS built via WSL so linux modules are bundled or fetched if prebuilt
 ];
 
-// ANSI Colors
+// ANSI Colors for premium UI
 const colors = {
     reset: "\x1b[0m",
     bright: "\x1b[1m",
     dim: "\x1b[2m",
-    underscore: "\x1b[4m",
-    blink: "\x1b[5m",
-    reverse: "\x1b[7m",
-    hidden: "\x1b[8m",
-
     fg: {
-        black: "\x1b[30m",
         red: "\x1b[31m",
         green: "\x1b[32m",
         yellow: "\x1b[33m",
@@ -35,38 +29,21 @@ const colors = {
         magenta: "\x1b[35m",
         cyan: "\x1b[36m",
         white: "\x1b[37m",
-        crimson: "\x1b[38m"
     },
     bg: {
-        black: "\x1b[40m",
-        red: "\x1b[41m",
-        green: "\x1b[42m",
-        yellow: "\x1b[43m",
         blue: "\x1b[44m",
         magenta: "\x1b[45m",
-        cyan: "\x1b[46m",
-        white: "\x1b[47m",
-        crimson: "\x1b[48m"
     }
 };
 
 const log = {
-    header: (msg) => console.log(`\n${colors.fg.cyan}${colors.bright}>>> ${msg} <<<${colors.reset}`),
+    header: (msg) => console.log(`\n${colors.fg.cyan}${colors.bright}🚀 ${msg}${colors.reset}\n`),
     step: (msg) => console.log(`${colors.fg.blue}➜ ${msg}${colors.reset}`),
     success: (msg) => console.log(`${colors.fg.green}✔ ${msg}${colors.reset}`),
     info: (msg) => console.log(`${colors.dim}  ${msg}${colors.reset}`),
     warn: (msg) => console.log(`${colors.fg.yellow}⚠ ${msg}${colors.reset}`),
-    error: (msg) => console.error(`${colors.fg.red}✖ ${msg}${colors.reset}`),
-    box: (lines) => {
-        const maxLength = Math.max(...lines.map(l => l.length));
-        const border = '='.repeat(maxLength + 4);
-        console.log(`${colors.fg.magenta}${border}`);
-        lines.forEach(l => {
-            const padding = ' '.repeat(maxLength - l.length);
-            console.log(`| ${l}${padding} |`);
-        });
-        console.log(`${border}${colors.reset}`);
-    }
+    error: (msg) => console.error(`\n${colors.fg.red}${colors.bright}✖ ${msg}${colors.reset}\n`),
+    divider: () => console.log(`${colors.dim}${"─".repeat(50)}${colors.reset}`)
 };
 
 const rl = readline.createInterface({
@@ -74,8 +51,9 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-const askQuestion = (query) => new Promise(resolve => rl.question(`${colors.fg.white}${query}${colors.reset}`, resolve));
+const ask = (query) => new Promise(resolve => rl.question(`${colors.fg.yellow}?${colors.reset} ${colors.bright}${query}${colors.reset}`, resolve));
 
+// Helpers
 async function ThroughDirectory(Directory, Files = [], Folder = []) {
     const items = await fs.readdir(Directory);
     for (const item of items) {
@@ -90,236 +68,28 @@ async function ThroughDirectory(Directory, Files = [], Folder = []) {
     return { Files, Folder };
 }
 
-async function bumpVersion() {
-    log.step('Incrementing version...');
-    const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
-    const pkgJson = await fs.readJson(pkgJsonPath);
-
-    const versionParts = pkgJson.version.split('.').map(id => {
-        return parseInt(id.split('-')[0]);
-    });
-
-    versionParts[2]++; // Always increment patch
-    if (versionParts[2] > 9) {
-        versionParts[2] = 0;
-        versionParts[1]++;
-        if (versionParts[1] > 9) {
-            versionParts[1] = 0;
-            versionParts[0]++;
-        }
-    }
-
-    const newVersion = versionParts.join('.');
-    pkgJson.version = newVersion;
-    await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 4 });
-    log.success(`Version updated to: ${newVersion}`);
-
-    log.info('Updating entry.tp version...');
-    const entryTpPath = path.join(ROOT_DIR, 'entry.tp');
-    const entryTp = await fs.readJson(entryTpPath);
-    entryTp.version = parseInt(newVersion.split('.')[0]);
-    await fs.writeJson(entryTpPath, entryTp, { spaces: 2 });
-
-    log.info('Updating root cfg.json version...');
-    const rootCfgPath = path.join(ROOT_DIR, 'config', 'cfg.json');
-    if (await fs.pathExists(rootCfgPath)) {
-        const cfg = await fs.readJson(rootCfgPath);
-        cfg.version = newVersion;
-        await fs.writeJson(rootCfgPath, cfg, { spaces: 2 });
-        log.success(`Updated root cfg.json to version ${newVersion}`);
-    }
-    return newVersion;
-}
-
-async function patchTelemetry() {
-    log.step('Patching trucksim-telemetry for Linux JS compatibility...');
-    const telemetryPath = path.join(ROOT_DIR, 'node_modules', 'trucksim-telemetry', 'dist', 'buffer', 'getBuffer.js');
-    if (await fs.pathExists(telemetryPath)) {
-        let code = await fs.readFile(telemetryPath, 'utf8');
-        
-        const patchStr = `const getBuffer = function (config = (0, createConfig_1.createConfig)()) {
+function getGhPath() {
     try {
-        const buffer = scsSDKTelemetry_node_1.default.getBuffer(config.sharedMemoryName);
-        return buffer;
-    } catch (err) {
-        if (process.platform === 'linux') {
-            try {
-                // Fallback to pure JS file reading on Linux
-                const fs = require('fs');
-                return fs.readFileSync('/dev/shm/' + config.sharedMemoryName);
-            } catch (fsErr) {
-                return null;
-            }
-        }
-        return null;
-    }
-};`;
-        
-        code = code.replace(/const getBuffer = function \([\s\S]*?\nexports\.getBuffer = getBuffer;/m, patchStr + '\nexports.getBuffer = getBuffer;');
-        
-        await fs.writeFile(telemetryPath, code, 'utf8');
-        log.success('Patched telemetry module successfully.');
-    } else {
-        log.warn('trucksim-telemetry module not found! Cannot patch.');
-    }
-}
-
-async function runBuild({ isCi = false, targetPlatform = null } = {}) {
-    try {
-        log.header(isCi ? `Starting CI Build for ${targetPlatform}` : 'Starting Full Local Build');
-
-        // 1. Cleanup
-        log.step('Cleaning up...');
-        if (!isCi) {
-            await fs.remove(DIST_DIR);
-        }
-        await fs.remove(BUILD_DIR);
-        await fs.remove(TMP_DIR);
-        await fs.remove(path.join(ROOT_DIR, 'dist'));
-        await fs.ensureDir(DIST_DIR);
-
-        // 2. Versioning
-        let currentVersion;
-        if (!isCi) {
-            currentVersion = await bumpVersion();
-        } else {
-            const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
-            const pkgJson = await fs.readJson(pkgJsonPath);
-            currentVersion = pkgJson.version;
-            log.info(`Using existing version: ${currentVersion}`);
-        }
-
-        // 3. Compile
-        log.step('Compiling TypeScript...');
-        execSync('npm run build', { stdio: 'inherit', cwd: ROOT_DIR });
-
-        // 4. PKG Binary Generation
-        log.step('Generating binaries with pkg...');
-        const activePlatforms = targetPlatform ? platforms.filter(p => p.name === targetPlatform) : platforms;
-        if (activePlatforms.length === 0) throw new Error(`Platform ${targetPlatform} not found.`);
-
-        const targets = activePlatforms.map(p => p.pkg).join(',');
-        execSync(`npx pkg . --targets ${targets} --out-path build`, { stdio: 'inherit', cwd: ROOT_DIR });
-
-        // 5. Packaging loop
-        for (const platform of activePlatforms) {
-            log.header(`Packaging for ${platform.name}...`);
-            const stagingPath = path.join(TMP_DIR, platform.name, APP_NAME);
-            await fs.ensureDir(stagingPath);
-
-            const pkgBaseName = 'tp_ets2_plugin';
-            let binarySource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.name}${platform.ext}`);
-            if (platform.name === 'win' && !binarySource.endsWith('.exe')) binarySource += '.exe';
-
-            const binaryDest = path.join(stagingPath, `${APP_NAME}${platform.ext}`);
-
-            if (await fs.pathExists(binarySource)) {
-                await fs.copy(binarySource, binaryDest);
-                log.info(`Copied binary: ${path.basename(binarySource)} -> ${APP_NAME}${platform.ext}`);
-            } else {
-                const altSource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
-                if (await fs.pathExists(altSource)) {
-                    await fs.copy(altSource, binaryDest);
-                    log.info(`Copied binary (alt): ${path.basename(altSource)} -> ${APP_NAME}${platform.ext}`);
-                } else {
-                    const files = await fs.readdir(BUILD_DIR);
-                    const match = files.find(f => f.startsWith(pkgBaseName) && f.includes(platform.name));
-                    if (match) {
-                        await fs.copy(path.join(BUILD_DIR, match), binaryDest);
-                        log.info(`Copied binary (match): ${match} -> ${APP_NAME}${platform.ext}`);
-                    } else {
-                        log.warn(`Binary source not found for ${platform.name}`);
-                    }
-                }
-            }
-
-            await fs.copy(path.join(ROOT_DIR, 'config'), path.join(stagingPath, 'config'));
-            await fs.copy(path.join(ROOT_DIR, 'entry.tp'), path.join(stagingPath, 'entry.tp'));
-            await fs.copy(path.join(ROOT_DIR, 'LICENSE'), path.join(stagingPath, 'LICENSE'));
-
-            const stagingCfgPath = path.join(stagingPath, 'config', 'cfg.json');
-            if (await fs.pathExists(stagingCfgPath)) {
-                const cfg = await fs.readJson(stagingCfgPath);
-                cfg.version = currentVersion;
-                cfg.firstInstall = true;
-                await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
-                log.info(`Injected version ${currentVersion} and set firstInstall: true`);
-            }
-
-            const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);
-            if (await fs.pathExists(scsSource)) {
-                await fs.copy(scsSource, path.join(stagingPath, 'bin', 'scs-sdk-plugin', platform.scs));
-            }
-
-            log.info('Generating files.json...');
-            const { Files, Folder } = await ThroughDirectory(stagingPath);
-            const allItems = [...Folder, ...Files];
-            const relativeItems = allItems.map(item => {
-                let rel = path.relative(stagingPath, item);
-                return rel.split(path.sep).join('/');
-            });
-            await fs.writeJson(path.join(stagingPath, 'config', 'files.json'), relativeItems, { spaces: 2 });
-
-            const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${currentVersion}.tpp`);
-            const zip = new AdmZip();
-            zip.addLocalFolder(stagingPath, APP_NAME);
-            zip.writeZip(zipPath);
-            log.success(`Created: ${path.basename(zipPath)}`);
-        }
-
-        log.step('Final cleanup...');
-        await fs.remove(TMP_DIR);
-        await fs.remove(BUILD_DIR);
-        await fs.remove(path.join(ROOT_DIR, 'dist'));
-
-        log.header('Build Completed Successfully!');
-        log.success(`Packages are in: ${DIST_DIR}`);
-        return currentVersion;
-
-    } catch (e) {
-        log.error(`Build failed: ${e.message}`);
-        throw e;
-    }
-}
-
-async function runGitUpload(version) {
-    log.header('Starting Git Upload');
-    try {
-        if (!version) {
-            const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
-            version = pkgJson.version;
-        }
-
-        log.step('Staging files...');
-        execSync('git add .', { stdio: 'inherit', cwd: ROOT_DIR });
-
-        log.step('Committing...');
-        try {
-            execSync(`git commit -m "Bump version to v${version}"`, { stdio: 'inherit', cwd: ROOT_DIR });
-        } catch (e) {
-            log.info('Nothing to commit or commit failed (ignoring if just empty).');
-        }
-
-        log.step('Pushing to remote...');
-        execSync('git push', { stdio: 'inherit', cwd: ROOT_DIR });
-        log.success('Git Upload Completed!');
-    } catch (e) {
-        log.error(`Git Upload failed: ${e.message}`);
+        execSync('gh --version', { stdio: 'ignore' });
+        return 'gh';
+    } catch {
+        const commonPaths = [
+            path.join(process.env.LOCALAPPDATA || '', 'Microsoft', 'WinGet', 'Links', 'gh.exe'),
+            path.join(process.env.LOCALAPPDATA || '', 'GitHub CLI', 'gh.exe'),
+            path.join(process.env.ProgramFiles || '', 'GitHub CLI', 'gh.exe'),
+            path.join(process.env['ProgramFiles(x86)'] || '', 'GitHub CLI', 'gh.exe')
+        ];
+        const found = commonPaths.find(p => fs.existsSync(p));
+        return found ? `"${found}"` : null;
     }
 }
 
 async function getChangelogInfo() {
     const changelogPath = path.join(ROOT_DIR, 'CHANGELOG.md');
-    if (!await fs.pathExists(changelogPath)) {
-        throw new Error('CHANGELOG.md not found!');
-    }
-
+    if (!await fs.pathExists(changelogPath)) throw new Error('CHANGELOG.md not found!');
     const content = await fs.readFile(changelogPath, 'utf-8');
     const lines = content.split('\n');
-    let title = '';
-    let body = [];
-    let foundTitle = false;
-
+    let title = '', body = [], foundTitle = false;
     for (const line of lines) {
         if (line.trim().startsWith('# ')) {
             if (!foundTitle) {
@@ -333,146 +103,336 @@ async function getChangelogInfo() {
             body.push(line);
         }
     }
-
     return { title, body: body.join('\n').trim() };
 }
 
-function getGhPath() {
+async function runCommand(cmd, cwd = ROOT_DIR, env = undefined) {
     try {
-        execSync('gh --version', { stdio: 'ignore' });
-        return 'gh';
-    } catch {
-        const commonPaths = [
-            path.join(process.env.LOCALAPPDATA, 'Microsoft', 'WinGet', 'Links', 'gh.exe'),
-            path.join(process.env.LOCALAPPDATA, 'GitHub CLI', 'gh.exe'),
-            path.join(process.env.ProgramFiles, 'GitHub CLI', 'gh.exe'),
-            path.join(process.env['ProgramFiles(x86)'], 'GitHub CLI', 'gh.exe')
-        ];
-
-        const found = commonPaths.find(p => fs.existsSync(p));
-        if (found) {
-            return `"${found}"`;
-        }
-        return null;
+        execSync(cmd, { stdio: 'inherit', cwd, env: env || process.env });
+    } catch (e) {
+        throw new Error(`Command failed: ${cmd}`);
     }
 }
 
-async function checkGhAuth(ghPath) {
+// Ensure WSL exists
+function checkWsl() {
     try {
-        execSync(`${ghPath} auth status`, { stdio: 'ignore' });
+        execSync('wsl --status', { stdio: 'ignore' });
         return true;
-    } catch (e) {
-        log.warn('Not logged in to GitHub.');
-        log.step('Starting interactive login...');
-        try {
-            execSync(`${ghPath} auth login`, { stdio: 'inherit' });
-            return true;
-        } catch (authErr) {
-            log.error('Authentication failed or cancelled.');
-            return false;
-        }
+    } catch {
+        return false;
     }
 }
 
-async function runReleasePrepare() {
-    log.header('Starting Release Preparation');
-    try {
-        const version = await bumpVersion();
+// ==== Core Build Logic ====
 
-        const { title, body } = await getChangelogInfo();
-        log.box([
-            'Detected Release Info from CHANGELOG.md:',
-            `Title: ${title}`,
-            `Body Length: ${body.length} chars`
-        ]);
+async function incrementVersion(type = 'patch') {
+    const pkgJsonPath = path.join(ROOT_DIR, 'package.json');
+    const pkgJson = await fs.readJson(pkgJsonPath);
+    let [major, minor, patch] = pkgJson.version.split('-')[0].split('.').map(Number);
 
-        const confirm = await askQuestion('\nIs this correct? (y/n): ');
-        if (confirm.toLowerCase() !== 'y') {
-            log.warn('Aborting release creation.');
-            return;
-        }
+    if (type === 'major') { major++; minor = 0; patch = 0; }
+    else if (type === 'minor') { minor++; patch = 0; }
+    else { patch++; }
 
-        // 1. Resolve GH Path
-        const ghPath = getGhPath();
-        if (!ghPath) {
-            log.warn('GitHub CLI (gh) not found in PATH or common locations.');
-            log.info('Please install it manually or ensure it is in your PATH.');
-            throw new Error('GitHub CLI not found.');
-        } else if (ghPath !== 'gh') {
-            log.info(`Using GitHub CLI at: ${ghPath}`);
-        }
+    const newVersion = `${major}.${minor}.${patch}`;
+    pkgJson.version = newVersion;
+    await fs.writeJson(pkgJsonPath, pkgJson, { spaces: 4 });
+    log.success(`package.json version updated to: ${newVersion}`);
 
-        // 2. Check/Perform Auth
-        if (!await checkGhAuth(ghPath)) {
-            throw new Error('GitHub CLI authentication failed.');
-        }
+    const entryTpPath = path.join(ROOT_DIR, 'entry.tp');
+    if (await fs.pathExists(entryTpPath)) {
+        const entryTp = await fs.readJson(entryTpPath);
+        entryTp.version = major; // Or whatever version integer logic TP needs
+        await fs.writeJson(entryTpPath, entryTp, { spaces: 2 });
+    }
 
-        // 3. Git commit & push
-        await runGitUpload(version);
+    const rootCfgPath = path.join(ROOT_DIR, 'config', 'cfg.json');
+    if (await fs.pathExists(rootCfgPath)) {
+        const cfg = await fs.readJson(rootCfgPath);
+        cfg.version = newVersion;
+        await fs.writeJson(rootCfgPath, cfg, { spaces: 2 });
+    }
 
-        // 4. Create Release
-        const noteFile = path.join(TMP_DIR, 'release_notes.txt');
-        await fs.ensureDir(TMP_DIR);
-        await fs.writeFile(noteFile, body);
+    return newVersion;
+}
 
-        log.step('Creating GitHub Release...');
-        // OMIT ASSETS because the github action will build and attach them!
-        const cmd = `${ghPath} release create v${version} -t "${title}" -F "${noteFile}"`;
-        log.info(`Executing: ${cmd}`);
+// The main compile phase for a SPECIFIC env (windows native vs WSL)
+async function compileAndPackageEnv(isWsl, targetPlatforms) {
+    log.step(`Preparing node_modules via ${isWsl ? 'WSL (Linux)' : 'Windows native'}...`);
 
-        try {
-            execSync(cmd, { stdio: 'inherit', cwd: ROOT_DIR });
-            log.success('GitHub Release created! GitHub Actions will now build and attach the artifacts.');
-        } catch (e) {
-            throw e;
-        } finally {
-            await fs.remove(noteFile);
-        }
+    // 1. Clean node_modules to force native rebuilds
+    await fs.remove(path.join(ROOT_DIR, 'node_modules'));
+    await fs.remove(path.join(ROOT_DIR, 'dist'));
+    await fs.remove(BUILD_DIR);
 
-    } catch (e) {
-        log.error(`Release Prep failed: ${e.message}`);
+    // 2. Install
+    if (isWsl) {
+        log.info('Running npm install in WSL (grabbing linux native modules)...');
+        // Use bash -lic to load nvm if installed
+        await runCommand(`wsl --exec bash -lic "npm install"`);
+    } else {
+        log.info('Running npm install in Windows...');
+        await runCommand('npm install');
+    }
+
+    // 3. Compile TS
+    log.step(`Compiling TypeScript (${isWsl ? 'WSL' : 'Windows'})...`);
+    if (isWsl) {
+        await runCommand(`wsl --exec bash -lic "npm run build"`);
+    } else {
+        await runCommand('npm run build');
+    }
+
+    // 4. PKG
+    const targets = targetPlatforms.map(p => p.pkg).join(',');
+    log.step(`Packaging binaries with pkg targets: ${targets}`);
+    if (isWsl) {
+        await runCommand(`wsl --exec bash -lic "npx pkg . --targets ${targets} --out-path build"`);
+    } else {
+        await runCommand(`npx pkg . --targets ${targets} --out-path build`);
     }
 }
 
-async function mainMenu() {
-    const args = process.argv.slice(2);
-    const ciArg = args.find(a => a.startsWith('--ci-platform='));
+async function prepareTppUploads(targetPlatforms, version) {
+    for (const platform of targetPlatforms) {
+        log.step(`Assembling .tpp for ${platform.name}...`);
+        const stagingPath = path.join(TMP_DIR, platform.name, APP_NAME);
+        await fs.ensureDir(stagingPath);
 
-    if (ciArg) {
-        const platform = ciArg.split('=')[1];
-        await runBuild({ isCi: true, targetPlatform: platform });
-        process.exit(0);
+        const pkgBaseName = 'tp_ets2_plugin';
+        let binarySource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.name}${platform.ext}`);
+        if (platform.name === 'win' && !binarySource.endsWith('.exe')) binarySource += '.exe';
+        const binaryDest = path.join(stagingPath, `${APP_NAME}${platform.ext}`);
+
+        if (await fs.pathExists(binarySource)) {
+            await fs.copy(binarySource, binaryDest);
+        } else {
+            const altSource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
+            if (await fs.pathExists(altSource)) {
+                await fs.copy(altSource, binaryDest);
+            } else {
+                log.warn(`Warning: Exact binary source not found for ${platform.name}, skipping TPP assemble.`);
+                continue;
+            }
+        }
+
+        // Copy configs and metadata
+        await fs.copy(path.join(ROOT_DIR, 'config'), path.join(stagingPath, 'config'));
+        await fs.copy(path.join(ROOT_DIR, 'entry.tp'), path.join(stagingPath, 'entry.tp'));
+        if (await fs.pathExists(path.join(ROOT_DIR, 'LICENSE'))) {
+            await fs.copy(path.join(ROOT_DIR, 'LICENSE'), path.join(stagingPath, 'LICENSE'));
+        }
+
+        const stagingCfgPath = path.join(stagingPath, 'config', 'cfg.json');
+        if (await fs.pathExists(stagingCfgPath)) {
+            const cfg = await fs.readJson(stagingCfgPath);
+            cfg.version = version;
+            cfg.firstInstall = true;
+            await fs.writeJson(stagingCfgPath, cfg, { spaces: 2 });
+        }
+
+        const scsSource = path.join(ROOT_DIR, 'bin', 'scs-sdk-plugin', platform.scs);
+        if (await fs.pathExists(scsSource)) {
+            await fs.copy(scsSource, path.join(stagingPath, 'bin', 'scs-sdk-plugin', platform.scs));
+        }
+
+        const { Files, Folder } = await ThroughDirectory(stagingPath);
+        const allItems = [...Folder, ...Files];
+        const relativeItems = allItems.map(item => path.relative(stagingPath, item).split(path.sep).join('/'));
+        await fs.writeJson(path.join(stagingPath, 'config', 'files.json'), relativeItems, { spaces: 2 });
+
+        const zipPath = path.join(DIST_DIR, `${APP_NAME}_${platform.name}_v${version}.tpp`);
+        const zip = new AdmZip();
+        zip.addLocalFolder(stagingPath, APP_NAME);
+        zip.writeZip(zipPath);
+        log.success(`Created: ${path.basename(zipPath)}`);
+    }
+}
+
+async function runBuildProcess(platformsToBuild) {
+    if (platformsToBuild.some(p => p.wsl) && !checkWsl()) {
+        log.error('WSL is required for Linux/Mac builds but was not found.');
         return;
     }
 
-    console.clear();
-    log.box([
-        '   ETS2 Dashboard - Build & Release Tool  ',
-        '   v2.0.0 Interactive                     '
-    ]);
-    console.log(`${colors.fg.cyan}1.${colors.reset} Simple Build ${colors.dim}(Clean, Version++, Pack All Local)${colors.reset}`);
-    console.log(`${colors.fg.cyan}2.${colors.reset} Git Upload ${colors.dim}(Add, Commit, Push)${colors.reset}`);
-    console.log(`${colors.fg.cyan}3.${colors.reset} Full Release ${colors.dim}(Version++, Git, Create GH Release -> Triggers CI)${colors.reset}`);
-    console.log(`${colors.fg.cyan}4.${colors.reset} Exit`);
-    console.log('');
+    const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
+    const currentVersion = pkgJson.version;
 
-    const answer = await askQuestion(`Select an option (${colors.fg.cyan}1-4${colors.fg.white}): `);
+    // Cleanup
+    log.header(`Starting Build for v${currentVersion}`);
+    await fs.remove(DIST_DIR);
+    await fs.remove(TMP_DIR);
+    await fs.ensureDir(DIST_DIR);
 
-    if (answer === '1') {
-        await runBuild();
-    } else if (answer === '2') {
-        const pkg = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
-        await runGitUpload(pkg.version);
-    } else if (answer === '3') {
-        await runReleasePrepare();
-    } else if (answer === '4') {
-        process.exit(0);
-    } else {
-        log.error('Invalid selection.');
+    const winPlats = platformsToBuild.filter(p => !p.wsl);
+    const wslPlats = platformsToBuild.filter(p => p.wsl);
+
+    try {
+        if (winPlats.length > 0) {
+            await compileAndPackageEnv(false, winPlats);
+            await prepareTppUploads(winPlats, currentVersion);
+        }
+
+        if (wslPlats.length > 0) {
+            await compileAndPackageEnv(true, wslPlats);
+            await prepareTppUploads(wslPlats, currentVersion);
+        }
+
+        log.step('Final cleanup...');
+        await fs.remove(TMP_DIR);
+        await fs.remove(BUILD_DIR);
+        await fs.remove(path.join(ROOT_DIR, 'dist'));
+
+        // Restore cleanly for IDE usage
+        log.info('Restoring local node_modules via Windows...');
+        await runCommand('npm install');
+
+        log.success(`Build process complete. Packages in ${DIST_DIR}`);
+    } catch (e) {
+        log.error(`Build process failed: ${e.message}`);
     }
-
-    rl.close();
 }
 
-mainMenu();
+async function runGitUpload() {
+    log.header('Starting Git Upload');
+    const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
 
+    try {
+        log.step('Staging files...');
+        await runCommand('git add .');
+
+        log.step('Committing...');
+        try {
+            await runCommand(`git commit -m "Bump version to v${pkgJson.version}"`);
+        } catch {
+            log.info('Nothing to commit or commit failed.');
+        }
+
+        log.step('Pushing to remote...');
+        await runCommand('git push');
+        log.success('Git upload complete.');
+    } catch (e) {
+        log.error(`Git upload failed: ${e.message}`);
+    }
+}
+
+async function runGitHubRelease(mode = 'draft') {
+    log.header(`GitHub Release (${mode === 'draft' ? 'Draft New' : 'Update Latest'})`);
+
+    const ghPath = getGhPath();
+    if (!ghPath) {
+        log.error('GitHub CLI (gh) not found.');
+        return;
+    }
+
+    try {
+        log.step('Checking auth...');
+        execSync(`${ghPath} auth status`, { stdio: 'ignore' });
+    } catch {
+        log.warn('Authentication needed.');
+        await runCommand(`${ghPath} auth login`);
+    }
+
+    const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
+    const version = pkgJson.version;
+    const { title, body } = await getChangelogInfo();
+
+    const assets = await fs.readdir(DIST_DIR);
+    if (assets.length === 0) {
+        log.error('No .tpp files found in dist_package/. Build first!');
+        return;
+    }
+    const assetPaths = assets.map(a => `"${path.join(DIST_DIR, a)}"`).join(' ');
+
+    if (mode === 'draft') {
+        const noteFile = path.join(ROOT_DIR, 'release_notes.txt');
+        await fs.writeFile(noteFile, body);
+
+        log.step('Creating new draft release...');
+        try {
+            await runCommand(`${ghPath} release create v${version} -t "${title}" -F "${noteFile}" -d ${assetPaths}`);
+            log.success('Draft release created!');
+        } finally {
+            await fs.remove(noteFile);
+        }
+    } else if (mode === 'replace') {
+        log.step('Fetching latest release...');
+        const latestTagCmd = `${ghPath} release view --json tagName -q ".tagName"`;
+        let latestTag = '';
+        try {
+            latestTag = execSync(latestTagCmd).toString().trim();
+        } catch {
+            log.error('Could not find latest release.');
+            return;
+        }
+
+        log.info(`Updating release ${latestTag} with new assets...`);
+        // Upload with --clobber to replace
+        await runCommand(`${ghPath} release upload ${latestTag} ${assetPaths} --clobber`);
+        log.success('Upload complete.');
+    }
+}
+
+// ==== CLI MENU ====
+
+const menuOptions = [
+    { label: 'Build -> Windows Only', action: () => runBuildProcess([platforms[0]]) },
+    { label: 'Build -> Linux & Mac (via WSL)', action: () => runBuildProcess([platforms[1], platforms[2]]) },
+    { label: 'Build -> All Platforms', action: () => runBuildProcess(platforms) },
+    { label: 'Bump Version (Patch)', action: () => incrementVersion('patch') },
+    { label: 'Git Push Everything', action: () => runGitUpload() },
+    { label: 'GH Release -> Draft New', action: () => runGitHubRelease('draft') },
+    { label: 'GH Release -> Replace Latest Assets', action: () => runGitHubRelease('replace') },
+    {
+        label: 'Full CI Workflow (Bump, Build All, Git Push, Release)', action: async () => {
+            await incrementVersion('patch');
+            await runBuildProcess(platforms);
+            await runGitUpload();
+            await runGitHubRelease('draft');
+        }
+    },
+    { label: 'Exit', action: () => process.exit(0) }
+];
+
+async function showMenu() {
+    console.clear();
+    log.divider();
+    console.log(`${colors.bg.blue}${colors.fg.white}${colors.bright}   ✨ ETS2 TouchPortal Plugin Builder ✨   ${colors.reset}`);
+    log.divider();
+
+    // Read version info
+    try {
+        const pkg = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
+        console.log(`${colors.dim}Current Version: v${pkg.version}${colors.reset}\n`);
+    } catch { }
+
+    menuOptions.forEach((opt, idx) => {
+        console.log(`  ${colors.fg.cyan}${idx + 1}.${colors.reset} ${opt.label}`);
+    });
+    console.log();
+
+    const choice = await ask(`Select an option (1-${menuOptions.length}): `);
+    const idx = parseInt(choice) - 1;
+
+    if (idx >= 0 && idx < menuOptions.length) {
+        await menuOptions[idx].action();
+        console.log();
+        const runAgain = await ask('Run another action? (y/N): ');
+        if (runAgain.toLowerCase() === 'y') {
+            await showMenu();
+        } else {
+            console.log(colors.dim + 'Goodbye!' + colors.reset);
+            process.exit(0);
+        }
+    } else {
+        log.error('Invalid choice, try again.');
+        setTimeout(() => showMenu(), 1500);
+    }
+}
+
+// Start
+showMenu().catch(err => {
+    log.error(`Process fatal error: ${err.message}`);
+    process.exit(1);
+});

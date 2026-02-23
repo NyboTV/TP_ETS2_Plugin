@@ -9,6 +9,8 @@ scripts/tmp/
 
 user_reports/
 
+.github/
+
 # Logs
 logs/
 *.log
