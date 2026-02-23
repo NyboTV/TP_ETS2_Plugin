@@ -1,42 +1,55 @@
-# Dependencies
-node_modules/
+# =========================
+# TP_ETS2_Plugin specific
+# =========================
 
-# Build artifacts
+# Build and Release Outputs
+Releases/
 dist/
 build/
 dist_package/
-scripts/tmp/
 
-user_reports/
-
-.github/
-
-# Logs
+# Telemetry & Logs
 logs/
 *.log
+.telemetry_data
+
+# AI Agent / Automation Folders
+.agent/
+.agents/
+_agent/
+_agents/
+
+# Misc
+user_reports/
+scripts/tmp/
+
+# =========================
+# Node & Dependencies
+# =========================
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# OS issues
-.DS_Store
-Thumbs.db
-
-# Environment and Local Configs
+# =========================
+# Environment & Configs
+# =========================
 .env
 .env.local
 .env.*.local
-# Do not ignore common config but ignore user-specific overrides if they exist
-# usercfg.json
 
-# IDEs
+# =========================
+# IDE & Operating System
+# =========================
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
 *.swp
 *.swo
 
+# =========================
 # TypeScript
+# =========================
 tsconfig.tsbuildinfo
-
-# Telemetry Data
-.telemetry_data
