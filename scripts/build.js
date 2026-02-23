@@ -114,12 +114,23 @@ async function runCommand(cmd, cwd = ROOT_DIR, env = undefined) {
     }
 }
 
-// Ensure WSL exists
+// Ensure WSL exists and its dependencies
 function checkWsl() {
     try {
         execSync('wsl --status', { stdio: 'ignore' });
+    } catch {
+        log.error('WSL is required for Linux/Mac builds but was not found.');
+        return false;
+    }
+
+    try {
+        execSync('wsl --exec bash -lic "command -v g++"', { stdio: 'ignore' });
+        execSync('wsl --exec bash -lic "command -v make"', { stdio: 'ignore' });
         return true;
     } catch {
+        log.error('WSL is missing required build tools (g++ or make) for native addons.');
+        log.info('Please open your WSL terminal (Ubuntu) and install them by running:');
+        console.log(`${colors.fg.cyan}  sudo apt-get update && sudo apt-get install -y build-essential python3${colors.reset}\n`);
         return false;
     }
 }
@@ -209,8 +220,11 @@ async function prepareTppUploads(targetPlatforms, version) {
             await fs.copy(binarySource, binaryDest);
         } else {
             const altSource = path.join(BUILD_DIR, `${pkgBaseName}-${platform.pkg}${platform.ext}`);
+            const exactSource = path.join(BUILD_DIR, `${pkgBaseName}${platform.ext}`);
             if (await fs.pathExists(altSource)) {
                 await fs.copy(altSource, binaryDest);
+            } else if (await fs.pathExists(exactSource)) {
+                await fs.copy(exactSource, binaryDest);
             } else {
                 log.warn(`Warning: Exact binary source not found for ${platform.name}, skipping TPP assemble.`);
                 continue;
@@ -251,9 +265,10 @@ async function prepareTppUploads(targetPlatforms, version) {
 }
 
 async function runBuildProcess(platformsToBuild) {
-    if (platformsToBuild.some(p => p.wsl) && !checkWsl()) {
-        log.error('WSL is required for Linux/Mac builds but was not found.');
-        return;
+    if (platformsToBuild.some(p => p.wsl)) {
+        if (!checkWsl()) {
+            return; // checkWsl prints its own detailed error
+        }
     }
 
     const pkgJson = await fs.readJson(path.join(ROOT_DIR, 'package.json'));
@@ -432,7 +447,16 @@ async function showMenu() {
 }
 
 // Start
-showMenu().catch(err => {
-    log.error(`Process fatal error: ${err.message}`);
-    process.exit(1);
-});
+const args = process.argv.slice(2);
+if (args.includes('--win')) {
+    runBuildProcess([platforms[0]]).catch(err => { log.error(err); process.exit(1); });
+} else if (args.includes('--wsl')) {
+    runBuildProcess([platforms[1], platforms[2]]).catch(err => { log.error(err); process.exit(1); });
+} else if (args.includes('--all')) {
+    runBuildProcess(platforms).catch(err => { log.error(err); process.exit(1); });
+} else {
+    showMenu().catch(err => {
+        log.error(`Process fatal error: ${err.message}`);
+        process.exit(1);
+    });
+}
