@@ -72,8 +72,6 @@
 - **Truck Information**: Detailed truck states, lights, damage, and wear.
 - **TruckersMP**: Live information from TruckersMP servers.
 
-If you want to see Planned Features, see [Roadmap](https://github.com/NyboTV/TP_ETS2_Plugin/projects/1)
-
 <br>
 
 ## Download and Installation
