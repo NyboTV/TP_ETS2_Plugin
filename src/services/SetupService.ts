@@ -112,14 +112,14 @@ class SetupService {
             if (process.platform === 'linux') {
                 archDir = 'linux_x64'; // Common ETS2 Linux path structure
                 pluginSubFolder = 'linux';
-                pluginFile = 'scs-telemetry.so';
+                pluginFile = 'libscs-telemetry.so';
             }
 
             const pluginsDir = path.join(gamePath, 'bin', archDir, 'plugins');
             await fs.ensureDir(pluginsDir);
 
             // Source: ./bin/scs-sdk-plugin/[platform]/scs-telemetry.[ext]
-            const basePath = process.pkg ? path.dirname(process.execPath) : process.cwd();
+            const basePath = (process as any).pkg ? path.dirname(process.execPath) : process.cwd();
             const sourceDll = path.join(basePath, 'bin', 'scs-sdk-plugin', pluginSubFolder, pluginFile);
 
             if (await fs.pathExists(sourceDll)) {
